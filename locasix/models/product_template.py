@@ -4,10 +4,18 @@ class ProductTemplate(models.Model):
     _name = "product.template"
     _inherit = "product.template"
 
-    product_description = fields.Char(string="Description du produit")
+    product_description = fields.Text(string="Description du produit")
 
     weekend_price = fields.Float(string="Prix weekend")
     has_24_price = fields.Boolean(string="A un tarif 24/24", default=False)
     has_multi_price = fields.Boolean(string="A plusieurs tarifs", default=False)
     has_ref_to_condi = fields.Boolean(string="Référence vers les conditions additionnelles", default=False)
-    more_details_link = fields.Char(string="Lien vers plus de détail") 
+    more_details_link = fields.Char(string="Lien vers plus de détail")
+
+    day_price = fields.Float(string="Prix par jour")
+    week_price = fields.Float(string="Prix par semaine")
+    month_price = fields.Float(string="Prix par mois")
+
+    months_2_discount = fields.Float(string="Remise 2 mois")
+    months_3_discount = fields.Float(string="Remise 3 mois")
+    months_6_discount = fields.Float(string="Remise 6 mois")

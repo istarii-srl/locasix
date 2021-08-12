@@ -5,10 +5,39 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
+            <field name="barcode" position="after">
+                <field name="has_ref_to_condi"/>
+                <field name="more_details_link"/>
+            </field>
+
             <page name="general_information" position="after">
                 <page string="Description">
                     <field name="product_description"/>
                 </page>
+            </page>
+            <page string="Tarifs">
+                <group>
+                    <group string="Informations">
+                        <field name="has_24_price"/>
+                        <field name="has_multi_price"/>
+                    </group>
+                    <group string="Tarifs uniques">
+                        <field name="list_price"/>
+                        <field name="weekend_price"/>
+                    </group>
+                </group>
+                <group attrs="{'invisible': [('has_multi_price', '=', False)]}" string="Tarifs multiples" name="multiple_prices">
+                    <group>
+                        <field name="day_price"/>
+                        <field name="week_price"/>
+                        <field name="month_price"/>
+                    </group>
+                    <group>
+                        <field name="months_2_discount"/>
+                        <field name="months_3_discount"/>
+                        <field name="months_6_discount"/>
+                    </group>
+                </group>
             </page>
         </field>
     </record>
