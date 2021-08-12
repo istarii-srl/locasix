@@ -1,0 +1,34 @@
+<odoo>
+    <record model="ir.actions.act_window" id="action_day">
+        <field name="name">Allers et retours</field>
+        <field name="res_model">locasix.day</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="locasix_day_tree">
+        <field name="name">locasix.day.tree</field>
+        <field name="model">locasix.day</field>
+        <field name="arch" type="xml">
+            <tree string="Allers et retours">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="locasix_day_form">
+        <field name="name">locasix.day.form</field>
+        <field name="model">locasix.day</field>
+        <field name="arch" type="xml">
+            <form string="Allers et retours">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="ex: Vente Hergé 3"/>
+                        </h1>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
