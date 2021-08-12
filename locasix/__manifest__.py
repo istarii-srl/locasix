@@ -20,12 +20,14 @@
     'version': '0.4',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management'],
+    'depends': ['base', 'sale_management', 'product'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/locasix_settings.xml',
         'views/day.xml',
+        'views/product_template.xml',
         'views/order.xml',
         'views/menus.xml',
     ],
