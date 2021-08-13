@@ -14,9 +14,9 @@
                     <field name="added_terms"/>
                 </page>
             </page>
-            <field name="product_uom" position="after">
+            <xpath expr="//tree/field[@name='product_uom']" position="after">
                 <field name="has_ref_to_condi" optional="show"/>
-            </field>
+            </xpath>
         </field>
     </record>
 

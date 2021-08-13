@@ -22,3 +22,5 @@ class ProductTemplate(models.Model):
     months_2_discount = fields.Float(string="Remise 2 mois")
     months_3_discount = fields.Float(string="Remise 3 mois")
     months_6_discount = fields.Float(string="Remise 6 mois")
+
+    technical_file = fields.Image(string="Fiche technique")

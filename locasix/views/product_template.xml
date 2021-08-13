@@ -48,6 +48,9 @@
                         </group>
                     </group>
                 </page>
+                <page string='Fiche technique'>
+                    <field name="technical_file"/>
+                </page>
             </page>
 
         </field>
