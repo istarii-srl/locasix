@@ -19,3 +19,8 @@ class OrderLine(models.Model):
     def product_id_change_2(self):
         _logger.info("TEST")
         return
+
+    @api.onchange('product_id')
+    def product_id_change_3(self):
+        _logger.info("TEST 1000")
+        return 
