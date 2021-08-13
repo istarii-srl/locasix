@@ -13,7 +13,7 @@ class ProductTemplate(models.Model):
     more_details_link = fields.Char(string="Lien vers plus de détail")
 
     product_linked_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_linked_id", string="Lié aux produits")
-    product_master_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_master_id", string="Produits liés à lui")
+    product_master_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_master_id", string="Produits liés")
 
     day_price = fields.Float(string="Prix par jour")
     week_price = fields.Float(string="Prix par semaine")
