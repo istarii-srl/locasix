@@ -26,12 +26,12 @@
                         </group>
                     </group>
                     <group attrs="{'invisible': [('has_multi_price', '=', False)]}" string="Tarifs multiples" name="multiple_prices">
-                        <group>
+                        <group string="Prix par période">
                             <field name="day_price"/>
                             <field name="week_price"/>
                             <field name="month_price"/>
                         </group>
-                        <group>
+                        <group string="Remises">
                             <field name="months_2_discount"/>
                             <field name="months_3_discount"/>
                             <field name="months_6_discount"/>
