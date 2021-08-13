@@ -16,11 +16,11 @@ class OrderLine(models.Model):
         return super(OrderLine, self)._prepare_add_missing_fields(values)
 
     @api.onchange('product_id')
-    def product_id_change_2(self):
-        _logger.info("TEST")
+    def product_changed(self):
+        _logger.info("product changed")
+        if self.product_id:
+            product = self.product_id
+            vals = {}
+            vals['has_ref_to_condi'] = product.has_ref_to_condi
+            self.update(vals)
         return
-
-    @api.onchange('product_id')
-    def product_id_change_3(self):
-        _logger.info("TEST 1000")
-        return 
