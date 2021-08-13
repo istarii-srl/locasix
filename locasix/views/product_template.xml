@@ -38,6 +38,16 @@
                         </group>
                     </group>
                 </page>
+                <page string="Liens">
+                    <group>
+                        <group>
+                            <field name="product_master_ids"/>
+                        </group>
+                        <group>
+                            <field name="product_linked_ids"/>
+                        </group>
+                    </group>
+                </page>
             </page>
 
         </field>

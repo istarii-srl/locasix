@@ -9,8 +9,11 @@ class ProductTemplate(models.Model):
     weekend_price = fields.Float(string="Prix weekend")
     has_24_price = fields.Boolean(string="A un tarif 24/24", default=False)
     has_multi_price = fields.Boolean(string="A plusieurs tarifs", default=False)
-    has_ref_to_condi = fields.Boolean(string="Référence vers les conditions additionnelles", default=False)
+    has_ref_to_condi = fields.Boolean(string="Conditions additionnelles", default=False)
     more_details_link = fields.Char(string="Lien vers plus de détail")
+
+    product_linked_ids = fields.One2many(comodel_name="product.template", inverse_name="product_linked_id", string="Lié aux produits")
+    product_master_ids = fields.One2many(comodel_name="product.template", inverse_name="product_master_id", string="Produits liés à lui")
 
     day_price = fields.Float(string="Prix par jour")
     week_price = fields.Float(string="Prix par semaine")
