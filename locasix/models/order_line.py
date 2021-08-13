@@ -14,3 +14,8 @@ class OrderLine(models.Model):
         _logger.info("YOYO")
         _logger.info(values)
         return super(OrderLine, self)._prepare_add_missing_fields(values)
+
+    @api.onchange('product_id')
+    def product_id_change_2(self):
+        _logger.info("TEST")
+        return
