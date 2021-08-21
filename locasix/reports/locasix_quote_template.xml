@@ -7,7 +7,7 @@
         </t>
     </template>
 
-    <template id="locasix_quote_report">
+    <template id="locasix_quote_report_2">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="locasix.locasix_quote_report_document" t-lang="doc.partner_id.lang"/>
