@@ -5,21 +5,42 @@
                 <div class="col" style="width: 235px !important; height: 1245px !important; padding: 0px !important;">
                     <img src="/locasix/static/img/locasix_lateral_bar.png" style="object-fit: contain"/>
                 </div>
-                <div class="col" style="width: 635px !important; height: 1245px !important; padding-left: 35px !important; background-color: blue;">
+                <div class="col" style="width: 635px !important; height: 1245px !important; padding-left: 35px !important;">
                     <div style="height: 65px;"/>
-                    <div style="height: 3px; width: 40px; background-color: red; border-radius: 5px;"/>
-                    <h2>OFFRE DE <br/>PRIX</h2>
-                    <div style="height: 100px;"/>
+                    <div style="height: 3px; width: 40px; background-color: rgb(210, 40, 50); border-radius: 30px;"/>
+                    <div style="height: 15px;"/>
+                    <h2>OFFRE DE 
+                        <br/>PRIX
+                    </h2>
+                    <div style="height: 105px;"/>
                     <div class="row">
-                        <div style="width: 290px; border: 1px solid black;">
-                            <span>YO</span>
+                        <div style="width: 15px;"/>
+                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                            <span>
+                                Nicolas Six Units <br/>
+                                Rue de Tournai 192 <br/>
+                                7330 Stambruges <br/>
+                                0472 92 90 15 <br/>
+                                BE0719889755 <br/>
+                            </span>
                         </div>
-                        <div style="width: 1px;"/>
-                        <div style="width: 290px; border: 1px solid black;">
-                            <span>YO</span>
+                        <div style="width: 10px;"/>
+                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                            <span>
+                                Numéro d'offre : <br/>
+                                Votre référence : <br/>
+                                Date de l'offre : <br/>
+                                Votre contact : <br/>
+                            </span>
                         </div>
                     </div>
-                    
+                    <div style="height: 85px;"/>
+                    <div style="height: 600px;">
+                        <span t-raw="my_html_field"/>
+                    </div>
+                    <div style="height: 100px;">
+                        <img src="/locasix/static/img/locasix_bottom_bar.png" style="object-fit: contain"/>
+                    </div>
                 </div>
             </div>
         </t>
