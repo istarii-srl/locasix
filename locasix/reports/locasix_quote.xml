@@ -11,14 +11,6 @@
         <field name="paperformat_id" ref="locasix.paperformat_quote"/>
     </record>
 
-    <template id="locasix_quote_report">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="doc">
-                <t t-call="locasix.locasix_quote_report_document" t-lang="doc.partner_id.lang"/>
-            </t>
-        </t>
-    </template>
-
     <template id="locasix_quote_report_document">
         <t t-call="web.basic_layout">
             <div class="page">
@@ -26,5 +18,12 @@
             </div>
         </t>
     </template>
-    
+
+    <template id="locasix_quote_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="locasix.locasix_quote_report_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
 </odoo>
