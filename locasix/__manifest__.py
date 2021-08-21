@@ -26,13 +26,14 @@
     'data': [
         'security/ir.model.access.csv',
         'data/locasix_settings.xml',
+        'data/quote_paperformat.xml',
+        'reports/locasix_quote.xml',
         'views/day.xml',
         'views/order_line.xml',
         'views/product_link.xml',
         'views/product_template.xml',
         'views/order.xml',
         'views/menus.xml',
-        'reports/locasix_quote.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
