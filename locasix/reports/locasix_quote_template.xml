@@ -7,15 +7,15 @@
                 </div>
                 <div class="col" style="width: 635px !important; height: 1245px !important; padding-left: 35px !important; background-color: blue;">
                     <div style="height: 65px;"/>
-                    <div style="height: 4px; width: 40px; background-color: red"/>
+                    <div style="height: 3px; width: 40px; background-color: red; border-radius: 5px;"/>
                     <h2>OFFRE DE <br/>PRIX</h2>
                     <div style="height: 100px;"/>
-                    <div class="row" style="padding: 0px !important;">
-                        <div style="width: 295px; border: 1px;">
+                    <div class="row">
+                        <div style="width: 290px; border: 1px solid black;">
                             <span>YO</span>
                         </div>
                         <div style="width: 1px;"/>
-                        <div style="width: 295px; border: 1px;">
+                        <div style="width: 290px; border: 1px solid black;">
                             <span>YO</span>
                         </div>
                     </div>
