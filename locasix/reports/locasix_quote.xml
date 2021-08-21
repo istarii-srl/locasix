@@ -1,0 +1,7 @@
+<odoo>
+    <template id="locasix_quote_report" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <span>YO</span>
+        </xpath>
+    </template>
+</odoo>
