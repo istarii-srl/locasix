@@ -4,7 +4,7 @@
             <div class="header not-first-page">
                 <img src="/locasix/static/img/locasix_header.png"/>
             </div>
-            <div class="page row" style="padding: 35px 15px 35px 15px !important; margin: 0px !important">
+            <div class="page row" style="padding: 20px 15px 20px 15px !important; margin: 0px !important">
                 <div class="col" style="width: 235px !important; height: 1215px !important; padding: 0px !important;">
                     <img src="/locasix/static/img/locasix_lateral_bar.png" style="object-fit: scale-down"/>
                 </div>
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div style="height: 85px;"/>
-                    <div style="height: 500px;">
+                    <div style="height: 470px;">
                         <span t-raw="doc.front_page_body"/>
                     </div>
                     <div style="height: 100px; margin-left: -25px;">
