@@ -56,8 +56,13 @@ class OrderLine(models.Model):
             if line.product_id and line.order_id:
                 links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
                 for link in links:
-                    new_line = self.env["sale.order.line"].create({'order_id': line.order_id.id, 'product_id': link.product_linked_id.id})
-                    new_line.update_line_values()   
+                    no_doublon = True
+                    for order_line in line.order_id.order_line:
+                        if order_line.product_id.id == link.product_linked_id.id:
+                            no_doublon = False
+                    if no_doublon:
+                        new_line = self.env["sale.order.line"].create({'order_id': line.order_id.id, 'product_id': link.product_linked_id.id})
+                        new_line.update_line_values()   
 
     def update_line_values(self):
         if self.product_id:
