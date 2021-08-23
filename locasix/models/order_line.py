@@ -25,6 +25,7 @@ class OrderLine(models.Model):
     @api.onchange('product_id')
     def product_changed(self):
         _logger.info("product changed")
+        _logger.info("self._origin.order_id.id")
         if self.product_id:
             product = self.product_id
             vals = {}
