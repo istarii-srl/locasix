@@ -6,6 +6,9 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <field name="partner_shipping_id" position="after">
+                <field name="weekend_offer"/>
+            </field>
             <page name="other_information" position="before">
                 <page name="front_page" string="Page de garde">
                     <field name="front_page_body"/>
