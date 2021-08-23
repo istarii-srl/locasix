@@ -8,7 +8,14 @@ class OrderLine(models.Model):
     _name = "sale.order.line"
     _inherit = "sale.order.line"
 
-    has_ref_to_condi = fields.Boolean(string="cond. add.", default=False)
+    has_ref_to_condi = fields.Boolean(string="C.A.", default=False)
+    day_price = fields.Float(string="Prix par jour")
+    week_price = fields.Float(string="Prix par semaine")
+    month_price = fields.Float(string="Prix par mois")
+
+    months_2_discount = fields.Float(string="Remise 2 mois")
+    months_3_discount = fields.Float(string="Remise 3 mois")
+    months_6_discount = fields.Float(string="Remise 6 mois")
 
     def _prepare_add_missing_fields(self, values):
         _logger.info("YOYO")
@@ -21,6 +28,12 @@ class OrderLine(models.Model):
         if self.product_id:
             product = self.product_id
             vals = {}
+            vals['day_price'] = product.day_price
+            vals['week_price'] = product.week_price
+            vals['month_price'] = product.month_price
+            vals['months_2_discount'] = product.months_2_discount
+            vals['months_3_discount'] = product.months_3_discount
+            vals['months_6_discount'] =product.months_6_discount
             vals['has_ref_to_condi'] = product.has_ref_to_condi
             self.update(vals)
         return
