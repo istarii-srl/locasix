@@ -22,6 +22,17 @@ class OrderLine(models.Model):
         _logger.info(values)
         return super(OrderLine, self)._prepare_add_missing_fields(values)
 
+
+    @api.model
+    def create(self, vals):
+        _logger.info("IN CREATE")
+        line = super(OrderLine, self).create(vals)
+        if line.product_id and line.order_id:
+            _logger.info("in create lines")
+            links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
+            for link in links:
+                self.env["sale.order.line"].create({'order_id': line.order_id.id, 'product_id': link.product_linked_id.id})
+        return line
     
     def write(self, values):
         res = super(OrderLine, self).write(values)
