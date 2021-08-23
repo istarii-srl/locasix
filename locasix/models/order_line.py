@@ -22,6 +22,16 @@ class OrderLine(models.Model):
         _logger.info(values)
         return super(OrderLine, self)._prepare_add_missing_fields(values)
 
+    
+    def write(self, values):
+        res = super(OrderLine, self).write(values)
+        if 'product_id' in values:
+            links = self.env["locasix.product.link"].search([("product_master_id", "=", product.id)])
+            if self.order_id:
+                for link in links:
+                    self.env["sale.order.line"].create({'order_id': self._origin.order_id.id, 'product_id': link.product_linked_id.id})
+        return res
+
     @api.onchange('product_id', 'order_id')
     def product_changed(self):
         _logger.info("product changed")
@@ -40,9 +50,5 @@ class OrderLine(models.Model):
             vals['months_6_discount'] =product.months_6_discount
             vals['has_ref_to_condi'] = product.has_ref_to_condi
             self.update(vals)
-        if self.order_id and self.product_id:
-            links = self.env["locasix.product.link"].search([("product_master_id", "=", product.id)])
-            if self.order_id:
-                for link in links:
-                    self.env["sale.order.line"].create({'order_id': self._origin.order_id.id, 'product_id': link.product_linked_id.id})
+
         return
