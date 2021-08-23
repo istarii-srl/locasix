@@ -36,8 +36,8 @@ class OrderLine(models.Model):
             vals['months_6_discount'] =product.months_6_discount
             vals['has_ref_to_condi'] = product.has_ref_to_condi
             self.update(vals)
-            links = self.env["locasix.product.link"].search([("product_master_id", "=", product.id)])
-            if self.order_id:
-                for link in links:
-                    self.env["sale.order.line"].create({'order_id': self.order_id.id, 'product_id': link.product_linked_id.id})
+            #links = self.env["locasix.product.link"].search([("product_master_id", "=", product.id)])
+            #if self.order_id:
+            #    for link in links:
+            #        self.env["sale.order.line"].create({'order_id': self.order_id.id, 'product_id': link.product_linked_id.id})
         return
