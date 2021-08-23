@@ -9,9 +9,9 @@ class OrderLine(models.Model):
     _inherit = "sale.order.line"
 
     has_ref_to_condi = fields.Boolean(string="C.A.", default=False)
-    day_price = fields.Float(string="Prix par jour")
-    week_price = fields.Float(string="Prix par semaine")
-    month_price = fields.Float(string="Prix par mois")
+    day_price = fields.Float(string="Prix/jour")
+    week_price = fields.Float(string="Prix/semaine")
+    month_price = fields.Float(string="Prix/mois")
 
     months_2_discount = fields.Float(string="Remise 2 mois")
     months_3_discount = fields.Float(string="Remise 3 mois")
@@ -36,4 +36,7 @@ class OrderLine(models.Model):
             vals['months_6_discount'] =product.months_6_discount
             vals['has_ref_to_condi'] = product.has_ref_to_condi
             self.update(vals)
+            links = self.env["locasix.product.link"].search([("product_master_id", "=", product.id)])
+            for link in links:
+                self.env["sale.order.line"].create({'order_id': self.order_id.id, 'product_id': link.product_linked_id.id})
         return
