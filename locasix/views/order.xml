@@ -20,6 +20,12 @@
             <xpath expr="//tree/field[@name='name']" position="after">
                 <field name="has_ref_to_condi" optional="show"/>
             </xpath>
+            <xpath expr="//tree/field[@name='price_subtotal']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//tree/field[@name='tax_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="after">
                 <field name="day_price" optional="hide"/>
                 <field name="week_price" optional="hide"/>
