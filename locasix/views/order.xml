@@ -33,9 +33,9 @@
                 <field name="day_price" optional="hide"/>
                 <field name="week_price" optional="hide"/>
                 <field name="month_price" optional="hide"/>
-                <field name="months_2_discount" optional="hide"/>
-                <field name="months_3_discount" optional="hide"/>
-                <field name="months_6_discount" optional="hide"/>
+                <field name="months_2_discount" widget="percentage" optional="hide"/>
+                <field name="months_3_discount" widget="percentage" optional="hide"/>
+                <field name="months_6_discount" widget="percentage" optional="hide"/>
             </xpath>
         </field>
     </record>

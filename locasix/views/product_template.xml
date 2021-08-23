@@ -32,9 +32,9 @@
                             <field name="month_price"/>
                         </group>
                         <group string="Remises">
-                            <field name="months_2_discount"/>
-                            <field name="months_3_discount"/>
-                            <field name="months_6_discount"/>
+                            <field name="months_2_discount" widget="percentage"/>
+                            <field name="months_3_discount" widget="percentage"/>
+                            <field name="months_6_discount" widget="percentage"/>
                         </group>
                     </group>
                 </page>
