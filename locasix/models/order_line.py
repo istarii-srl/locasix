@@ -27,11 +27,9 @@ class OrderLine(models.Model):
     def create(self, vals):
         _logger.info("IN CREATE")
         line = super(OrderLine, self).create(vals)
+        _logger.info(line.id)
         if line.product_id and line.order_id:
-            _logger.info("in create lines")
-            links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
-            for link in links:
-                self.env["sale.order.line"].create({'order_id': line.order_id.id, 'product_id': link.product_linked_id.id})
+            line.enforce_links()
         return line
     
     def write(self, values):
@@ -39,11 +37,7 @@ class OrderLine(models.Model):
         _logger.info("in write")
         _logger.info(values)
         if 'product_id' in values:
-            _logger.info("in create lines")
-            links = self.env["locasix.product.link"].search([("product_master_id", "=", self.product_id.id)])
-            if self.order_id:
-                for link in links:
-                    self.env["sale.order.line"].create({'order_id': self._origin.order_id.id, 'product_id': link.product_linked_id.id})
+            self.enforce_links()
         return res
 
     @api.onchange('product_id', 'order_id')
@@ -53,6 +47,19 @@ class OrderLine(models.Model):
         _logger.info(self.order_id.id)
         _logger.info(self._origin.product_id.id)
         _logger.info(self.product_id.id)
+        self.update_line_values
+        return
+
+    def enforce_links(self):
+        _logger.info("in create lines")
+        for line in self:
+            if line.product_id and line.order_id:
+                links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
+                for link in links:
+                    new_line = self.env["sale.order.line"].create({'order_id': line.order_id.id, 'product_id': link.product_linked_id.id})
+                    new_line.update_line_values()   
+
+    def update_line_values(self):
         if self.product_id:
             product = self.product_id
             vals = {}
@@ -64,5 +71,3 @@ class OrderLine(models.Model):
             vals['months_6_discount'] =product.months_6_discount
             vals['has_ref_to_condi'] = product.has_ref_to_condi
             self.update(vals)
-
-        return
