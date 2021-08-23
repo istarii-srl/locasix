@@ -10,12 +10,12 @@ class OrderLine(models.Model):
 
     has_ref_to_condi = fields.Boolean(string="C.A.", default=False)
     day_price = fields.Float(string="Prix/jour")
-    week_price = fields.Float(string="Prix/semaine")
+    week_price = fields.Float(string="Prix/sem.")
     month_price = fields.Float(string="Prix/mois")
 
-    months_2_discount = fields.Float(string="Remise 2 mois")
-    months_3_discount = fields.Float(string="Remise 3 mois")
-    months_6_discount = fields.Float(string="Remise 6 mois")
+    months_2_discount = fields.Float(string="Remise 2")
+    months_3_discount = fields.Float(string="Remise 3")
+    months_6_discount = fields.Float(string="Remise 6")
 
     def _prepare_add_missing_fields(self, values):
         _logger.info("YOYO")
