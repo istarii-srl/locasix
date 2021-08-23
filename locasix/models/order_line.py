@@ -25,7 +25,10 @@ class OrderLine(models.Model):
     
     def write(self, values):
         res = super(OrderLine, self).write(values)
+        _logger.info("in write")
+        _logger.info(values)
         if 'product_id' in values:
+            _logger.info("in create lines")
             links = self.env["locasix.product.link"].search([("product_master_id", "=", self.product_id.id)])
             if self.order_id:
                 for link in links:
