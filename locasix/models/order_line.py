@@ -26,7 +26,7 @@ class OrderLine(models.Model):
     def write(self, values):
         res = super(OrderLine, self).write(values)
         if 'product_id' in values:
-            links = self.env["locasix.product.link"].search([("product_master_id", "=", product.id)])
+            links = self.env["locasix.product.link"].search([("product_master_id", "=", self.product_id.id)])
             if self.order_id:
                 for link in links:
                     self.env["sale.order.line"].create({'order_id': self._origin.order_id.id, 'product_id': link.product_linked_id.id})
