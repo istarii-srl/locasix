@@ -14,8 +14,16 @@
                     <field name="added_terms"/>
                 </page>
             </page>
-            <xpath expr="//tree/field[@name='product_uom']" position="after">
+            <xpath expr="//tree/field[@name='name']" position="after">
                 <field name="has_ref_to_condi" optional="show"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='price_unit']" position="after">
+                <field name="day_price" optional="hide"/>
+                <field name="week_price" optional="hide"/>
+                <field name="month_price" optional="hide"/>
+                <field name="months_2_discount" optional="hide"/>
+                <field name="months_3_discount" optional="hide"/>
+                <field name="months_6_discount" optional="hide"/>
             </xpath>
         </field>
     </record>
