@@ -1,4 +1,5 @@
 from odoo import fields, api, models
+from odoo.exceptions import UserError
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -24,11 +25,27 @@ class OrderLine(models.Model):
     months_6_discount = fields.Float(string="Remise 6")
 
 
-    def _prepare_add_missing_fields(self, values):
-        _logger.info("YOYO")
-        _logger.info(values)
-        return super(OrderLine, self)._prepare_add_missing_fields(values)
+    @api.constrains('sequence')
+    def check_if_in_right_section(self):
+        for line in self:
+            if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
+                top_section = line.retrieve_top_section()
+                if top_section and top_section.category_id:
+                    if top_section.category_id.id != line.product_id.categ_id.id:
+                        raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
 
+    def retrieve_top_section(self):
+        for line in self:
+            seq = line.sequence
+            nearest_top_section_id = False
+
+            for order_line in line.order_id.order_line:
+                if order_line.is_section and order_line.sequence <= seq:
+                    if nearest_top_section_id:
+                        if order_line.sequence > nearest_top_section_id.sequence:
+                            nearest_top_section_id = order_line
+                    else:
+                        nearest_top_section_id = order_line
 
     @api.model
     def create(self, vals):
@@ -65,7 +82,19 @@ class OrderLine(models.Model):
                 if line.product_id.categ_id and line.product_id.categ_id.show_section_order:
                     section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id)], limit=1)
                     if not section_id:
-                        section_id = self.env["sale.order.line"].create({"order_id": line.order_id.id, "name": line.product_id.categ_id.name, "category_id": line.product_id.categ_id.id, "is_multi": line.product_id.has_multi_price, "sequence": len(line.order_id.order_line)+1, "display_type": "line_section"})
+                        section_id = self.env["sale.order.line"].create({
+                            "order_id": line.order_id.id,
+                            "name": line.product_id.categ_id.name,
+                            "category_id": line.product_id.categ_id.id,
+                            "is_multi": line.product_id.has_multi_price,
+                            "sequence": len(line.order_id.order_line)+1,
+                            "display_type": "line_section",
+                            'product_id': False,
+                            'product_uom_id': False,
+                            'quantity': 0,
+                            'discount': 0,
+                            'price_unit': 0,
+                            'account_id': False})
                         section_id.section_id = self.id
                     line.sequence = section_id.sequence+1
                     
