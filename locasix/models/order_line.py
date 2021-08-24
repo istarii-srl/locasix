@@ -27,6 +27,7 @@ class OrderLine(models.Model):
 
     @api.constrains('sequence')
     def check_if_in_right_section(self):
+        _logger.info("check right section")
         for line in self:
             if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
                 top_section = line.retrieve_top_section()
