@@ -93,6 +93,7 @@ class OrderLine(models.Model):
                         section_id.section_id = self.id
                     line.sequence = section_id.sequence+1
                     
+                    
 
     def enforce_links(self):
         _logger.info("in create lines")
