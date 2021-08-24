@@ -9,6 +9,12 @@ class OrderLine(models.Model):
     _inherit = "sale.order.line"
 
     has_ref_to_condi = fields.Boolean(string="C.A.", default=False)
+
+    is_section = fields.Boolean(string="Est une section de l'offre", default=False)
+    category_id = fields.Many2one(comodel_name="product.category", string="Product category")
+    section_id = fields.Many2one(comodel_name="sale.order.line", string="Section")
+    is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
+
     day_price = fields.Float(string="Prix/jour")
     week_price = fields.Float(string="Prix/sem.")
     month_price = fields.Float(string="Prix/mois")
@@ -16,6 +22,7 @@ class OrderLine(models.Model):
     months_2_discount = fields.Float(string="Remise 2")
     months_3_discount = fields.Float(string="Remise 3")
     months_6_discount = fields.Float(string="Remise 6")
+
 
     def _prepare_add_missing_fields(self, values):
         _logger.info("YOYO")
@@ -30,6 +37,7 @@ class OrderLine(models.Model):
         _logger.info(line.id)
         if line.product_id and line.order_id:
             line.enforce_links()
+            line.enforce_section()
         return line
     
     def write(self, values):
@@ -38,6 +46,7 @@ class OrderLine(models.Model):
         _logger.info(values)
         if 'product_id' in values:
             self.enforce_links()
+            self.enforce_section()
         return res
 
     @api.onchange('product_id', 'order_id')
@@ -49,6 +58,17 @@ class OrderLine(models.Model):
         _logger.info(self.product_id.id)
         self.update_line_values
         return
+
+    def enforce_section(self):
+        for line in self:
+            if line.product_id and line.order_id:
+                if line.product_id.categ_id and line.product_id.categ_id.show_section_order:
+                    section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id)], limit=1)
+                    if not section_id:
+                        section_id = self.env["sale.order.line"].create({"order_id": line.order_id.id, "name": line.product_id.categ_id.name, "category_id": line.product_id.categ_id.id, "is_multi": line.product_id.has_multi_price, "sequence": len(line.order_id.order_line)+1})
+                        section_id.section_id = self.id
+                    line.sequence = section_id.sequence+1
+                    
 
     def enforce_links(self):
         _logger.info("in create lines")
@@ -62,7 +82,17 @@ class OrderLine(models.Model):
                             no_doublon = False
                     if no_doublon:
                         new_line = self.env["sale.order.line"].create({'order_id': line.order_id.id, 'product_id': link.product_linked_id.id})
-                        new_line.update_line_values()   
+                        new_line.update_line_values()
+
+
+    def is_insurance(self):
+        for line in self:
+            return line.product_id.code == "ASSM"
+
+    def enforce_computation(self, is_multi):
+        for line in self:
+            if line.is_insurance():
+                pass
 
     def update_line_values(self):
         if self.product_id:
