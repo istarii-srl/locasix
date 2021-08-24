@@ -89,8 +89,7 @@ class OrderLine(models.Model):
                             "is_multi": line.product_id.has_multi_price,
                             "sequence": len(line.order_id.order_line)+1,
                             "display_type": "line_section",
-                            'product_id': False,
-                            'account_id': False})
+                            'product_id': False,})
                         section_id.section_id = self.id
                     line.sequence = section_id.sequence+1
                     
