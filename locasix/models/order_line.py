@@ -90,9 +90,6 @@ class OrderLine(models.Model):
                             "sequence": len(line.order_id.order_line)+1,
                             "display_type": "line_section",
                             'product_id': False,
-                            'quantity': 0,
-                            'discount': 0,
-                            'price_unit': 0,
                             'account_id': False})
                         section_id.section_id = self.id
                     line.sequence = section_id.sequence+1
