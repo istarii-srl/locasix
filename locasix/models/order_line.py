@@ -65,7 +65,7 @@ class OrderLine(models.Model):
                 if line.product_id.categ_id and line.product_id.categ_id.show_section_order:
                     section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id)], limit=1)
                     if not section_id:
-                        section_id = self.env["sale.order.line"].create({"order_id": line.order_id.id, "name": line.product_id.categ_id.name, "category_id": line.product_id.categ_id.id, "is_multi": line.product_id.has_multi_price, "sequence": len(line.order_id.order_line)+1})
+                        section_id = self.env["sale.order.line"].create({"order_id": line.order_id.id, "name": line.product_id.categ_id.name, "category_id": line.product_id.categ_id.id, "is_multi": line.product_id.has_multi_price, "sequence": len(line.order_id.order_line)+1, "display_type": "line_section"})
                         section_id.section_id = self.id
                     line.sequence = section_id.sequence+1
                     
