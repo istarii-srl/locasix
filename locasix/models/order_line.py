@@ -80,7 +80,7 @@ class OrderLine(models.Model):
         for line in self:
             if line.product_id and line.order_id:
                 if line.product_id.categ_id and line.product_id.categ_id.show_section_order:
-                    section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id)], limit=1)
+                    section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id), ('order_id', "=", line.order_id.id)], limit=1)
                     if not section_id:
                         section_id = self.env["sale.order.line"].create({
                             "order_id": line.order_id.id,
@@ -93,7 +93,7 @@ class OrderLine(models.Model):
                         section_id.section_id = self.id
                     line.sequence = section_id.sequence+1
                     
-                    
+
 
     def enforce_links(self):
         _logger.info("in create lines")
