@@ -5,3 +5,4 @@ access_product_product_user,locasix.product.product,model_product_product,base.g
 access_product_template_user,locasix.product.template,model_product_template,base.group_user,1,1,1,1
 access_sale_order_line_user,locasix.sale.order.line,model_sale_order_line,base.group_user,1,1,1,1
 access_locasix_product_link_user,locasix.locasix.product.link,model_locasix_product_link,base.group_user,1,1,1,1
+access_product_category_user,locasix.product.category,model_product_category,base.group_user,1,1,1,1
