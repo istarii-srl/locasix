@@ -90,7 +90,6 @@ class OrderLine(models.Model):
                             "sequence": len(line.order_id.order_line)+1,
                             "display_type": "line_section",
                             'product_id': False,
-                            'product_uom_id': False,
                             'quantity': 0,
                             'discount': 0,
                             'price_unit': 0,
