@@ -51,6 +51,7 @@ class OrderLine(models.Model):
                     if top_section.category_id.id != line.product_id.categ_id.id:
                         raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
                 elif not top_section and line.section_id:
+                    _logger.info("youhou")
                     raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
         return
 
