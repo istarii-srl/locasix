@@ -53,7 +53,7 @@ class OrderLine(models.Model):
                         raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
                 elif not top_section and line.section_id:
                     _logger.info("youhou")
-                    _logger.info(line.sequnece)
+                    _logger.info(line.sequence)
                     _logger.info(line._origin.sequence)
                     line.sequence = line._origin.sequence
                     raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
