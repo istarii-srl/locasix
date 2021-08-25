@@ -44,7 +44,10 @@ class OrderLine(models.Model):
         for line in self:
             if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
                 top_section = line.retrieve_top_section()
+                _logger.info(line.section_id)
+                _logger.info(top_section)
                 if top_section and top_section.category_id:
+                    _logger.info("has top section")
                     if top_section.category_id.id != line.product_id.categ_id.id:
                         raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
                 elif not top_section and line.section_id:
