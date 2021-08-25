@@ -25,8 +25,21 @@ class OrderLine(models.Model):
     months_6_discount = fields.Float(string="Remise 6")
 
 
-    @api.constrains('sequence')
-    def check_if_in_right_section(self):
+    #@api.constrains('sequence')
+    #def check_if_in_right_section(self):
+    #    _logger.info("check right section")
+    #    for line in self:
+    #        if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
+    #            top_section = line.retrieve_top_section()
+    #            if top_section and top_section.category_id:
+    #                if top_section.category_id.id != line.product_id.categ_id.id:
+    #                    raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
+    #            elif not top_section and line.section_id:
+    #                raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
+
+
+    @api.onchange('sequence')
+    def check_if_in_right_section_2(self):
         _logger.info("check right section")
         for line in self:
             if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
@@ -34,12 +47,14 @@ class OrderLine(models.Model):
                 if top_section and top_section.category_id:
                     if top_section.category_id.id != line.product_id.categ_id.id:
                         raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
+                elif not top_section and line.section_id:
+                    raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
+        return
 
     def retrieve_top_section(self):
+        nearest_top_section_id = False
         for line in self:
             seq = line.sequence
-            nearest_top_section_id = False
-
             for order_line in line.order_id.order_line:
                 if order_line.is_section and order_line.sequence <= seq:
                     if nearest_top_section_id:
@@ -47,6 +62,8 @@ class OrderLine(models.Model):
                             nearest_top_section_id = order_line
                     else:
                         nearest_top_section_id = order_line
+        return nearest_top_section_id
+        
 
     @api.model
     def create(self, vals):
