@@ -113,6 +113,7 @@ class OrderLine(models.Model):
                             "display_type": "line_section",
                             'product_id': False,})
                         section_id.section_id = self.id
+                    line.section_id = section_id.section_id
                     line.sequence = section_id.sequence+1
                     
 
