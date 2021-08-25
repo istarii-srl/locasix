@@ -15,6 +15,7 @@ class OrderLine(models.Model):
     category_id = fields.Many2one(comodel_name="product.category", string="Product category")
     section_id = fields.Many2one(comodel_name="sale.order.line", string="Section")
     is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
+    from_compute = fields.Boolean(string="Est venu automatiqument", default=False)
 
     day_price = fields.Float(string="Prix/jour")
     week_price = fields.Float(string="Prix/sem.")
@@ -24,18 +25,6 @@ class OrderLine(models.Model):
     months_3_discount = fields.Float(string="Remise 3")
     months_6_discount = fields.Float(string="Remise 6")
 
-
-    @api.constrains('sequence')
-    def check_if_in_right_section(self):
-        _logger.info("check right section")
-        for line in self:
-            if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
-                top_section = line.retrieve_top_section()
-                if top_section and top_section.category_id:
-                    if top_section.category_id.id != line.product_id.categ_id.id:
-                        raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
-                elif not top_section and line.section_id:
-                    raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
 
 
     #@api.onchange('sequence')

@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_warning_computed" model="ir.ui.view">
+        <field name="name">locasix.compute.warning.form</field>
+        <field name="model">locasix.compute.warning</field>
+        <field name="arch" type="xml">
+            <form string="Attention ! Lignes déjà ajoutées">
+                <p>
+                    Des lignes ont déjà été automatiquement ajoutées sur cette offre. Si vous continuez, celles-ci seront écrasées par de nouvelles.
+                </p>
+                <footer>
+                    <button name="action_compute" string="Continuer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

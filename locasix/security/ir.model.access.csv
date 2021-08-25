@@ -6,3 +6,4 @@ access_product_template_user,locasix.product.template,model_product_template,bas
 access_sale_order_line_user,locasix.sale.order.line,model_sale_order_line,base.group_user,1,1,1,1
 access_locasix_product_link_user,locasix.locasix.product.link,model_locasix_product_link,base.group_user,1,1,1,1
 access_product_category_user,locasix.product.category,model_product_category,base.group_user,1,1,1,1
+access_locasix_compute_warning_user,models.locasix.compute.warning,model_locasix_compute_warning,base.group_user,1,1,1,1
