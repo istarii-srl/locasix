@@ -25,39 +25,39 @@ class OrderLine(models.Model):
     months_6_discount = fields.Float(string="Remise 6")
 
 
-    #@api.constrains('sequence')
-    #def check_if_in_right_section(self):
-    #    _logger.info("check right section")
-    #    for line in self:
-    #        if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
-    #            top_section = line.retrieve_top_section()
-    #            if top_section and top_section.category_id:
-    #                if top_section.category_id.id != line.product_id.categ_id.id:
-    #                    raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
-    #            elif not top_section and line.section_id:
-    #                raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
-
-
-    @api.onchange('sequence')
-    def check_if_in_right_section_2(self):
+    @api.constrains('sequence')
+    def check_if_in_right_section(self):
         _logger.info("check right section")
         for line in self:
             if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
                 top_section = line.retrieve_top_section()
-                _logger.info(line.section_id)
-                _logger.info(top_section)
                 if top_section and top_section.category_id:
-                    _logger.info("has top section")
                     if top_section.category_id.id != line.product_id.categ_id.id:
-                        line.sequence = line._origin.sequence
                         raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
                 elif not top_section and line.section_id:
-                    _logger.info("youhou")
-                    _logger.info(line.sequence)
-                    _logger.info(line._origin.sequence)
-                    line.sequence = line._origin.sequence
                     raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
-        return
+
+
+    #@api.onchange('sequence')
+    #def check_if_in_right_section_2(self):
+    #    _logger.info("check right section")
+    #    for line in self:
+    #        if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
+    #            top_section = line.retrieve_top_section()
+    #            _logger.info(line.section_id)
+    #            _logger.info(top_section)
+    #            if top_section and top_section.category_id:
+    #                _logger.info("has top section")
+    #                if top_section.category_id.id != line.product_id.categ_id.id:
+    #                    line.sequence = line._origin.sequence
+    #                    raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
+    #            elif not top_section and line.section_id:
+    #                _logger.info("youhou")
+    #                _logger.info(line.sequence)
+    #                _logger.info(line._origin.sequence)
+    #                line.sequence = line._origin.sequence
+    #                raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
+    #    return
 
     def retrieve_top_section(self):
         nearest_top_section_id = False
