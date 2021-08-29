@@ -1,5 +1,9 @@
 from odoo import fields, api, models
 
+
+import logging
+_logger = logging.getLogger(__name__)
+
 class Order(models.Model):
     _name = "sale.order"
     _inherit = "sale.order"
@@ -13,6 +17,7 @@ class Order(models.Model):
 
 
     def action_compute(self):
+        _logger.info("action compute")
         for order in self:
             if order.has_computed:
                 view = self.env.ref('locasix.view_warning_computed')
