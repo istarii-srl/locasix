@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <button name="action_draft" position="after">
-                <button name="action_compute" string="Ajout automatique" />
-                <button name="action_remove_computed_lines" string="Retirer ajout" attrs="{'invisible': [('has_computed', '=', False)]}"/>
+                <button name="action_compute" type="object" string="Ajout automatique" />
+                <button name="action_remove_computed_lines" type="object" string="Retirer ajout" attrs="{'invisible': [('has_computed', '=', False)]}"/>
             </button>
 
             <field name="partner_id" position="after">
