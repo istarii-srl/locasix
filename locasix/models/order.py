@@ -33,6 +33,7 @@ class Order(models.Model):
                 order.line_computations()
             
 
+
     def line_computations(self):
         for order in self:
             order.has_computed = True
