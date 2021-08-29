@@ -62,34 +62,34 @@ class OrderLine(models.Model):
         return nearest_top_section_id
         
 
-    @api.model
-    def create(self, vals):
-        _logger.info("IN CREATE")
-        line = super(OrderLine, self).create(vals)
-        _logger.info(line.id)
-        if line.product_id and line.order_id:
-            line.enforce_links()
-            line.enforce_section()
-        return line
+    #@api.model
+    #def create(self, vals):
+    #    _logger.info("IN CREATE")
+    #    line = super(OrderLine, self).create(vals)
+    #    _logger.info(line.id)
+    #    if line.product_id and line.order_id:
+    #        line.enforce_links()
+    #        line.enforce_section()
+    #    return line
     
-    def write(self, values):
-        res = super(OrderLine, self).write(values)
-        _logger.info("in write")
-        _logger.info(values)
-        if 'product_id' in values:
-            self.enforce_links()
-            self.enforce_section()
-        return res
+    #def write(self, values):
+    #    res = super(OrderLine, self).write(values)
+    #    _logger.info("in write")
+    #    _logger.info(values)
+    #    if 'product_id' in values:
+    #        self.enforce_links()
+    #        self.enforce_section()
+    #    return res
 
-    @api.onchange('product_id', 'order_id')
-    def product_changed(self):
-        _logger.info("product changed")
-        _logger.info(self._origin.order_id.id)
-        _logger.info(self.order_id.id)
-        _logger.info(self._origin.product_id.id)
-        _logger.info(self.product_id.id)
-        self.update_line_values
-        return
+    #@api.onchange('product_id', 'order_id')
+    #def product_changed(self):
+    #    _logger.info("product changed")
+    #    _logger.info(self._origin.order_id.id)
+    #    _logger.info(self.order_id.id)
+    #    _logger.info(self._origin.product_id.id)
+    #    _logger.info(self.product_id.id)
+    #    self.update_line_values
+    #    return
 
     def enforce_section(self):
         for line in self:
