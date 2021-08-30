@@ -162,6 +162,6 @@ class OrderLine(models.Model):
             vals['months_6_discount'] = product.months_6_discount
             vals['has_ref_to_condi'] = product.has_ref_to_condi
             vals['is_multi'] = product.has_multi_price
-            if product.weekend_price and product.weekend_price != 0.0:
+            if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
                 vals['price_unit'] = product.weekend_price 
             self.update(vals)
