@@ -32,7 +32,7 @@ class Order(models.Model):
                 if order.user_id.phone:
                     text = text.replace("<phone>", "T : "+order.user_id.phone)
                 else:
-                    text = text.replace
+                    text = text.replace("<phone>", "")
 
                 order.front_page_body = text
 
