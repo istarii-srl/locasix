@@ -8,6 +8,8 @@
             <field name="barcode" position="after">
                 <field name="more_details_link"/>
                 <field name="has_ref_to_condi"/>
+                <field name="is_insurance"/>
+                <field name="insurance_percentage" attrs="{'invisible': [('is_insurance', '=', False)]}" widget="percentage"/>
             </field>
 
             <page name="general_information" position="after">

@@ -24,3 +24,6 @@ class ProductTemplate(models.Model):
     months_6_discount = fields.Float(string="Remise 6 mois")
 
     technical_file = fields.Image(string="Fiche technique")
+
+    is_insurance = fields.Boolean(string="Est une assurance", default=False)
+    insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)

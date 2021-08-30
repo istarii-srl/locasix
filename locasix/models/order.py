@@ -40,8 +40,125 @@ class Order(models.Model):
 
 
     def line_computations(self):
+        sections = {}
         for order in self:
+            order.mark_manual_sections()
+            order.enforce_sections(sections)
+            order.place_sections(sections)
+            order.place_products(sections)
+            order.enforce_links(sections)
+            order.enforce_computations(sections)
             order.has_computed = True
+    
+
+    def mark_manual_section(self):
+        _logger.info("mark manual section")
+        for order in self:
+            for line in order.order_line:
+                if line.display_type == "line_section" and not line.is_section:
+                    line.is_section = True
+                    line.section_id = line.id
+
+    def enforce_sections(self, sections):
+        _logger.info("enforce sections")
+        for order in self:
+            lines = order.order_line
+            for line in lines:
+                if line.product_id and line.order_id:
+                    if line.product_id.categ_id and line.product_id.categ_id.show_section_order:
+                        section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id), ('order_id', "=", line.order_id.id)], limit=1)
+                        if not section_id:
+                            section_id = self.env["sale.order.line"].create({
+                                "order_id": line.order_id.id,
+                                "name": line.product_id.categ_id.name,
+                                "category_id": line.product_id.categ_id.id,
+                                "is_multi": line.product_id.has_multi_price,
+                                "sequence": len(line.order_id.order_line)+1,
+                                "display_type": "line_section",
+                                'product_id': False,})
+                            section_id.section_id = self.id
+                    else:
+                        top_section_id = line.retrieve_top_section(lines)
+                        if top_section_id:
+                            section_id = top_section_id
+                        else:
+                            section_id = self.env["sale.order.line"].search([("is_section", "=", True), ('order_id', "=", "line.order_id.id"), ("name", "=", "Autres articles")])
+                            if not section_id:
+                                section_id = self.env["sale.order.line"].create({
+                                    "order_id": line.order_id.id,
+                                    "name": "Autres articles",
+                                    "is_multi": False,
+                                    "sequence": len(line.order_id.order_line)+1000,
+                                    "display_type": "line_section",
+                                    'product_id': False,})
+                                section_id.section_id = self.id
+                    sections[section_id.id] = {"section": section_id, "first": section_id.sequence, "last": 1, "next_available": 1}
+                    line.section_id = section_id.id
+                elif line.display_type == "line_section":
+                    if not line.id in sections:
+                        sections[line.id] = {"section": line, "first": line.sequence, "last": 1, "next_available": 1}
+                        
+
+    def place_sections(self, sections):
+        _logger.info("place sections")
+        _logger.info(sections)
+        for order in self:
+            i = 1
+            for section_id in sorted(sections.keys()):
+                sections[section_id]["section"].sequence = i
+                sections[section_id]["first"] = i
+                sections[section_id]["last"] = i+39
+                sections[section_id]["next_available"] = i+1
+                i += 40
+        _logger.info(sections)
+
+
+    def place_products(self, sections):
+        _logger.info("place products")
+        for order in self:
+            for line in order.order_line:
+                if not line.is_section and line.section_id:
+                    line.sequence = sections[line.section_id.id]["next_available"]
+                    sections[line.section_id.id]["next_available"] += 1
+                    
+
+    def enforce_links(self, sections):
+        _logger.info("enforce links")
+        for order in self:
+            for line in order.order_line:
+                if line.product_id and line.order_id:
+                    links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
+                    for link in links:
+                        no_doublon = True
+                        lines = self.retrieve_lines_from_section(line.section_id)
+                        for section_line in line:
+                            if section_line.product_id.id == link.product_linked_id.id:
+                                no_doublon = False
+                        if no_doublon:
+                            new_line = self.env["sale.order.line"].create({
+                                'order_id': line.order_id.id,
+                                'product_id': link.product_linked_id.id,
+                                'section_id': line.section_id,
+                                'sequence': sections[line.section_id.id]["next_available"]})
+                            sections[line.section_id.id]["next_available"] += 1
+                            new_line.update_line_values()
+                            if new_line.is_insurance():
+                                new_line.is_multi = line.is_multi
+
+    def enforce_computations(self):
+        _logger.info("enforce computations")
+        for order in self:
+            for line in order.order_line:
+                if line.product_id and line.is_insurance and line.section_id:
+                    lines = self.retrieve_lines_from_section(line.section_id)
+                    line.enforce_computation(line.is_multi, lines)
+
+      
+    def retrieve_lines_from_section(self, section_id):
+        _logger.info("retrieve line from section")
+        for order in self:
+            return self.env["sale.order.line"].search([("order_id", "=", order.id), ("section_id", "=", section_id.id)])
+        
 
     def action_remove_computed_lines(self):
         for order in self:
