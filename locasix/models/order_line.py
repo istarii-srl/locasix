@@ -153,6 +153,9 @@ class OrderLine(models.Model):
     def update_line_values(self):
         if self.product_id:
             product = self.product_id
+            _logger.info("update line values")
+            _logger.info(product.weekend_price)
+            _logger.info(self.weekend_offer)
             vals = {}
             vals['day_price'] = product.day_price
             vals['week_price'] = product.week_price
