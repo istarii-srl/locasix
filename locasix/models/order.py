@@ -160,6 +160,7 @@ class Order(models.Model):
             for line in order.order_line:
                 if line.product_id and line.is_insurance and line.section_id:
                     lines = self.retrieve_lines_from_section(line.section_id)
+                    _logger.info(line.is_multi)
                     line.enforce_computation(line.is_multi, lines)
 
       
@@ -175,3 +176,8 @@ class Order(models.Model):
             for line in lines_to_be_removed:
                 order.order_line = [(2, line.id, 0)]
             order.has_computed = False
+
+    def action_compute_insurances(self):
+        _logger.info("action compute insurances")
+        for order in self:
+            order.enforce_computations()
