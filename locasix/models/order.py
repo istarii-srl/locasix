@@ -72,11 +72,12 @@ class Order(models.Model):
                                 "order_id": line.order_id.id,
                                 "name": line.product_id.categ_id.name,
                                 "category_id": line.product_id.categ_id.id,
+                                "is_section": True,
                                 "is_multi": line.product_id.has_multi_price,
                                 "sequence": len(line.order_id.order_line)+1,
                                 "display_type": "line_section",
                                 'product_id': False,})
-                            section_id.section_id = self.id
+                            section_id.section_id = section_id.id
                     else:
                         top_section_id = line.retrieve_top_section(lines)
                         if top_section_id:
@@ -87,11 +88,12 @@ class Order(models.Model):
                                 section_id = self.env["sale.order.line"].create({
                                     "order_id": line.order_id.id,
                                     "name": "Autres articles",
+                                    "is_section": True,
                                     "is_multi": False,
                                     "sequence": len(line.order_id.order_line)+1000,
                                     "display_type": "line_section",
                                     'product_id': False,})
-                                section_id.section_id = self.id
+                                section_id.section_id = section_id.id
                     sections[section_id.id] = {"section": section_id, "first": section_id.sequence, "last": 1, "next_available": 1}
                     line.section_id = section_id.id
                 elif line.display_type == "line_section":
