@@ -16,6 +16,7 @@ class OrderLine(models.Model):
     section_id = fields.Many2one(comodel_name="sale.order.line", string="Section")
     is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
     from_compute = fields.Boolean(string="Est venu automatiqument", default=False)
+    weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer")
 
     day_price = fields.Float(string="Prix/jour", default=0.0)
     week_price = fields.Float(string="Prix/sem.", default=0.0)
