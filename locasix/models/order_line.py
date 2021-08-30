@@ -28,27 +28,6 @@ class OrderLine(models.Model):
 
 
 
-    #@api.onchange('sequence')
-    #def check_if_in_right_section_2(self):
-    #    _logger.info("check right section")
-    #    for line in self:
-    #        if line.product_id and not line.is_section and line.product_id.categ_id.show_section_order:
-    #            top_section = line.retrieve_top_section()
-    #            _logger.info(line.section_id)
-    #            _logger.info(top_section)
-    #            if top_section and top_section.category_id:
-    #                _logger.info("has top section")
-    #                if top_section.category_id.id != line.product_id.categ_id.id:
-    #                    line.sequence = line._origin.sequence
-    #                    raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
-    #            elif not top_section and line.section_id:
-    #                _logger.info("youhou")
-    #                _logger.info(line.sequence)
-    #                _logger.info(line._origin.sequence)
-    #                line.sequence = line._origin.sequence
-    #                raise UserError("Ce produit ne peut pas être déplacer hors de sa section")
-    #    return
-
     def retrieve_top_section(self, lines):
         nearest_top_section_id = False
         for line in self:
@@ -62,64 +41,11 @@ class OrderLine(models.Model):
                         nearest_top_section_id = order_line
         return nearest_top_section_id
 
-    #@api.model
-    #def create(self, vals):
-    #    _logger.info("IN CREATE")
-    #    line = super(OrderLine, self).create(vals)
-    #    _logger.info(line.id)
-    #    if line.product_id and line.order_id:
-    #        line.enforce_links()
-    #        line.enforce_section()
-    #    return line
-    
-    #def write(self, values):
-    #    res = super(OrderLine, self).write(values)
-    #    _logger.info("in write")
-    #    _logger.info(values)
-    #    if 'product_id' in values:
-    #        self.enforce_links()
-    #        self.enforce_section()
-    #    return res
-
     @api.onchange('product_id', 'order_id')
     def product_changed(self):
         _logger.info("product changed")
         self.update_line_values()
         return
-
-    def enforce_section(self):
-        for line in self:
-            if line.product_id and line.order_id:
-                if line.product_id.categ_id and line.product_id.categ_id.show_section_order:
-                    section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id), ('order_id', "=", line.order_id.id)], limit=1)
-                    if not section_id:
-                        section_id = self.env["sale.order.line"].create({
-                            "order_id": line.order_id.id,
-                            "name": line.product_id.categ_id.name,
-                            "category_id": line.product_id.categ_id.id,
-                            "is_multi": line.product_id.has_multi_price,
-                            "sequence": len(line.order_id.order_line)+1,
-                            "display_type": "line_section",
-                            'product_id': False,})
-                        section_id.section_id = self.id
-                    line.section_id = section_id.section_id
-                    line.sequence = section_id.sequence+1
-                    
-
-
-    def enforce_links(self):
-        _logger.info("in create lines")
-        for line in self:
-            if line.product_id and line.order_id:
-                links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
-                for link in links:
-                    no_doublon = True
-                    for order_line in line.order_id.order_line:
-                        if order_line.product_id.id == link.product_linked_id.id:
-                            no_doublon = False
-                    if no_doublon:
-                        new_line = self.env["sale.order.line"].create({'order_id': line.order_id.id, 'product_id': link.product_linked_id.id})
-                        new_line.update_line_values()
 
 
     def is_insurance(self):
