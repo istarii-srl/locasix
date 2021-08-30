@@ -36,12 +36,12 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="after">
-                <field name="day_price" optional="hide"/>
-                <field name="week_price" optional="hide"/>
-                <field name="month_price" optional="hide"/>
-                <field name="months_2_discount" widget="percentage" optional="hide"/>
-                <field name="months_3_discount" widget="percentage" optional="hide"/>
-                <field name="months_6_discount" widget="percentage" optional="hide"/>
+                <field name="day_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="week_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="month_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="months_2_discount" widget="percentage" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="months_3_discount" widget="percentage" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="months_6_discount" widget="percentage" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
             </xpath>
         </field>
     </record>
