@@ -73,6 +73,7 @@ class Order(models.Model):
                                 "name": line.product_id.categ_id.name,
                                 "category_id": line.product_id.categ_id.id,
                                 "is_section": True,
+                                "from_compute": True,
                                 "is_multi": line.product_id.has_multi_price,
                                 "sequence": len(line.order_id.order_line)+1,
                                 "display_type": "line_section",
@@ -89,6 +90,7 @@ class Order(models.Model):
                                     "order_id": line.order_id.id,
                                     "name": "Autres articles",
                                     "is_section": True,
+                                    "from_compute": True,
                                     "is_multi": False,
                                     "sequence": len(line.order_id.order_line)+1000,
                                     "display_type": "line_section",
@@ -141,6 +143,7 @@ class Order(models.Model):
                                 'order_id': line.order_id.id,
                                 'product_id': link.product_linked_id.id,
                                 'section_id': line.section_id,
+                                'from_compute': True,
                                 'sequence': sections[line.section_id.id]["next_available"]})
                             sections[line.section_id.id]["next_available"] += 1
                             new_line.update_line_values()
@@ -164,4 +167,7 @@ class Order(models.Model):
 
     def action_remove_computed_lines(self):
         for order in self:
+            lines_to_be_removed = self.env["sale.order.line"].search([("order_id", "=", order.id), ("from_compute", "=", True)])
+            for line in lines_to_be_removed:
+                order.order_line = [(2, line.id, 0)]
             order.has_computed = False
