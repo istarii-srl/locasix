@@ -51,7 +51,7 @@ class Order(models.Model):
             order.has_computed = True
     
 
-    def mark_manual_section(self):
+    def mark_manual_sections(self):
         _logger.info("mark manual section")
         for order in self:
             for line in order.order_line:
