@@ -19,12 +19,12 @@ class Order(models.Model):
     @api.onchange('partner_id')
     def adapt_front_page(self):
         for order in self:
-            text = order.front_age_body
+            text = order.front_page_body
             if order.partner_id.title:
-                text.replace("<title>", order.partner_id.title)
+                text = text.replace("<title>", order.partner_id.title)
             else:
-                text.replace("<title>", "")
-            text.replace("<name>", order.partner_id.name)
+                text = text.replace("<title>", "")
+            text = text.replace("<name>", order.partner_id.name)
             order.front_page_body = text
 
     def action_compute(self):
