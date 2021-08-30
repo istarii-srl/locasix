@@ -22,7 +22,7 @@ class Order(models.Model):
             if order.partner_id and order.partner_id.name:
                 text = order.front_page_body
                 if order.partner_id.title:
-                    text = text.replace("<title>", order.partner_id.title)
+                    text = text.replace("<title>", order.partner_id.title.name)
                 else:
                     text = text.replace("<title>", "")
                 text = text.replace("<name>", order.partner_id.name)
