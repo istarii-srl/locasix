@@ -138,14 +138,14 @@ class Order(models.Model):
                         no_doublon = True
                         lines = self.retrieve_lines_from_section(line.section_id)
                         for section_line in lines:
-                            if section_line.product_id.id == link.product_linked_id.id:
+                            if section_line.product_id.product_tmpl_id.id == link.product_linked_id.id:
                                 no_doublon = False
                         _logger.info("doublon status")
                         _logger.info(no_doublon)
                         if no_doublon:
                             new_line = self.env["sale.order.line"].create({
                                 'order_id': line.order_id.id,
-                                'product_id': link.product_linked_id.id,
+                                'product_id': link.product_linked_id.product_variant_id.id,
                                 'section_id': line.section_id,
                                 'from_compute': True,
                                 'sequence': sections[line.section_id.id]["next_available"]})
