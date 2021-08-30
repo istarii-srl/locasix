@@ -23,6 +23,8 @@ class Order(models.Model):
         for order in self:
             if order.partner_id and order.partner_id.name:
                 _logger.info("in adaptation")
+                _logger.info(order.front_page_body)
+                _logger.info(order.front_page_body_template)
                 if not order.front_page_body_template:
                     copy_txt = str(order.front_page_body)
                     order.front_page_body_template = copy_txt
