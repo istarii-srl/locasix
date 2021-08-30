@@ -24,7 +24,7 @@ class Order(models.Model):
             if order.partner_id and order.partner_id.name:
                 _logger.info("in adaptation")
                 if not order.front_page_body_template:
-                    copy_txt = order.front_page_body
+                    copy_txt = str(order.front_page_body)
                     order.front_page_body_template = copy_txt
                 text = order.front_page_body_template
                 if order.partner_id.title:
