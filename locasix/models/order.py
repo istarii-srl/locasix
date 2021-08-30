@@ -134,6 +134,9 @@ class Order(models.Model):
                 _logger.info(line.product_id)
                 _logger.info(line.order_id)
                 if line.product_id and line.order_id:
+                    link2 = self.env["locasix.product.link"].search()
+                    _logger.info(link2)
+                    _logger.info(len(link2))
                     links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
                     _logger.info(links)
                     for link in links:
