@@ -146,7 +146,7 @@ class Order(models.Model):
                             new_line = self.env["sale.order.line"].create({
                                 'order_id': line.order_id.id,
                                 'product_id': link.product_linked_id.product_variant_id.id,
-                                'section_id': line.section_id,
+                                'section_id': line.section_id.id,
                                 'from_compute': True,
                                 'sequence': sections[line.section_id.id]["next_available"]})
                             sections[line.section_id.id]["next_available"] += 1
