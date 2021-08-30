@@ -18,8 +18,10 @@ class Order(models.Model):
 
     @api.onchange('partner_id', 'user_id')
     def adapt_front_page(self):
+        _logger.info("adapt front page")
         for order in self:
             if order.partner_id and order.partner_id.name:
+                _logger.info("in adaptation")
                 text = order.front_page_body
                 if order.partner_id.title:
                     text = text.replace("<title>", order.partner_id.title.name)
