@@ -81,15 +81,15 @@ class OrderLine(models.Model):
     #        self.enforce_section()
     #    return res
 
-    #@api.onchange('product_id', 'order_id')
-    #def product_changed(self):
-    #    _logger.info("product changed")
-    #    _logger.info(self._origin.order_id.id)
-    #    _logger.info(self.order_id.id)
-    #    _logger.info(self._origin.product_id.id)
-    #    _logger.info(self.product_id.id)
-    #    self.update_line_values
-    #    return
+    @api.onchange('product_id', 'order_id')
+    def product_changed(self):
+        _logger.info("product changed")
+        _logger.info(self._origin.order_id.id)
+        _logger.info(self.order_id.id)
+        _logger.info(self._origin.product_id.id)
+        _logger.info(self.product_id.id)
+        self.update_line_values()
+        return
 
     def enforce_section(self):
         for line in self:

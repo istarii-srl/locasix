@@ -135,7 +135,7 @@ class Order(models.Model):
                     for link in links:
                         no_doublon = True
                         lines = self.retrieve_lines_from_section(line.section_id)
-                        for section_line in line:
+                        for section_line in lines:
                             if section_line.product_id.id == link.product_linked_id.id:
                                 no_doublon = False
                         if no_doublon:
