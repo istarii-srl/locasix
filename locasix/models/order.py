@@ -130,8 +130,12 @@ class Order(models.Model):
         _logger.info("enforce links")
         for order in self:
             for line in order.order_line:
+                _logger.info(line)
+                _logger.info(line.product_id)
+                _logger.info(line.order_id)
                 if line.product_id and line.order_id:
                     links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
+                    _logger.info(links)
                     for link in links:
                         _logger.info("links")
                         no_doublon = True
