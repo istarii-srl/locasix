@@ -47,7 +47,7 @@ class Order(models.Model):
             order.place_sections(sections)
             order.place_products(sections)
             order.enforce_links(sections)
-            order.enforce_computations(sections)
+            order.enforce_computations()
             order.has_computed = True
     
 
