@@ -16,7 +16,7 @@ class Order(models.Model):
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
 
 
-    @api.onchange('partner_id')
+    @api.onchange('partner_id', 'user_id')
     def adapt_front_page(self):
         for order in self:
             if order.partner_id and order.partner_id.name:
