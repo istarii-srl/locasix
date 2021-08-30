@@ -133,11 +133,14 @@ class Order(models.Model):
                 if line.product_id and line.order_id:
                     links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.id)])
                     for link in links:
+                        _logger.info("links")
                         no_doublon = True
                         lines = self.retrieve_lines_from_section(line.section_id)
                         for section_line in lines:
                             if section_line.product_id.id == link.product_linked_id.id:
                                 no_doublon = False
+                        _logger.info("doublon status")
+                        _logger.info(no_doublon)
                         if no_doublon:
                             new_line = self.env["sale.order.line"].create({
                                 'order_id': line.order_id.id,

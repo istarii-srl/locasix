@@ -152,8 +152,6 @@ class OrderLine(models.Model):
             _logger.info("update line values")
             _logger.info(product.weekend_price)
             _logger.info(self.weekend_offer)
-            _logger.info(product.weekend_price)
-            _logger.info(self.weekend_offer and product.weekend_price and product.weekend_price != 0.0)
             vals = {}
             vals['day_price'] = product.day_price
             vals['week_price'] = product.week_price
