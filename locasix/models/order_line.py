@@ -84,10 +84,6 @@ class OrderLine(models.Model):
     @api.onchange('product_id', 'order_id')
     def product_changed(self):
         _logger.info("product changed")
-        _logger.info(self._origin.order_id.id)
-        _logger.info(self.order_id.id)
-        _logger.info(self._origin.product_id.id)
-        _logger.info(self.product_id.id)
         self.update_line_values()
         return
 
@@ -156,6 +152,8 @@ class OrderLine(models.Model):
             _logger.info("update line values")
             _logger.info(product.weekend_price)
             _logger.info(self.weekend_offer)
+            _logger.info(product.weekend_price)
+            _logger.info(self.weekend_offer and product.weekend_price and product.weekend_price != 0.0)
             vals = {}
             vals['day_price'] = product.day_price
             vals['week_price'] = product.week_price
@@ -166,5 +164,6 @@ class OrderLine(models.Model):
             vals['has_ref_to_condi'] = product.has_ref_to_condi
             vals['is_multi'] = product.has_multi_price
             if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
+                _logger.info("update price for weekend")
                 vals['price_unit'] = product.weekend_price 
             self.update(vals)
