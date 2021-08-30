@@ -26,6 +26,7 @@ class Order(models.Model):
                 _logger.info(order.front_page_body)
                 _logger.info(order.front_page_body_template)
                 if not order.front_page_body_template:
+                    _logger.info("toto")
                     copy_txt = str(order.front_page_body)
                     order.front_page_body_template = copy_txt
                 text = order.front_page_body_template
