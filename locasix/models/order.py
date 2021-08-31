@@ -25,7 +25,8 @@ class Order(models.Model):
                 _logger.info("in adaptation")
                 _logger.info(order.front_page_body)
                 _logger.info(order.front_page_body_template)
-                if not order.front_page_body_template:
+                condi = not order.front_page_body_template
+                if condi:
                     copy_txt = str(order.front_page_body)
                     order.front_page_body_template = copy_txt
                 text = order.front_page_body_template
@@ -43,6 +44,8 @@ class Order(models.Model):
                     text = text.replace("!phone!", "")
 
                 order.front_page_body = text
+                if condi:
+                    order._origin.front_page_body_template = order.front_page_body_template
                 _logger.info(order.front_page_body)
                 _logger.info(order.front_page_body_template)
 
