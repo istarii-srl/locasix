@@ -43,7 +43,7 @@ class Order(models.Model):
                     text = text.replace("!phone!", "")
 
                 order.front_page_body = text
-                _logger.ingo(order.front_page_body)
+                _logger.info(order.front_page_body)
                 _logger.info(order.front_page_body_template)
 
     def action_compute(self):
