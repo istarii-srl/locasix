@@ -46,7 +46,7 @@ class Order(models.Model):
                 if condi:
                     copy_txt = str(order.front_page_body)
                     #order.front_page_body_template = copy_txt
-                if condi:
+                if not condi:
                     text = order.front_page_body_template
                 else:
                     text = order.front_page_body
