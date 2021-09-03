@@ -25,8 +25,13 @@ class Order(models.Model):
     def write(self, vals):
         _logger.info("write template")
         _logger.info(vals)
-        res = super(Order, self).write(vals)
-        self.adapt_front_page()
+        if vals.get('from_compute_temp', False):
+            vals.pop('from_compute_temp', 1)
+            res = super(Order, self).write(vals)
+            self.adapt_front_page()
+        else:
+            res = super(Order, self).write(vals)
+        
         return res
 
     #@api.onchange('partner_id', 'user_id')
@@ -40,7 +45,7 @@ class Order(models.Model):
                 condi = not order.front_page_body_template
                 if condi:
                     copy_txt = str(order.front_page_body)
-                    order.front_page_body_template = copy_txt
+                    #order.front_page_body_template = copy_txt
                 text = order.front_page_body_template
                 if order.partner_id.title:
                     text = text.replace("!title!", order.partner_id.title.name)
@@ -55,7 +60,10 @@ class Order(models.Model):
                 else:
                     text = text.replace("!phone!", "")
 
-                order.front_page_body = text
+                if condi:
+                    order.write({"front_page_body": text, "from_compute_temp": True, "front_page_body_template": copy_txt})
+                else:
+                    order.write({"front_page_body": text, "from_compute_temp": True})
                 _logger.info(order.front_page_body)
                 _logger.info(order.front_page_body_template)
 
