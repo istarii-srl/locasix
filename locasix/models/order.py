@@ -16,8 +16,20 @@ class Order(models.Model):
 
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
 
+    @api.model
+    def create(self, vals):
+        obj = super(Order, self).create(vals)
+        obj.adapt_front_page()
+        return obj
 
-    @api.onchange('partner_id', 'user_id')
+    def write(self, vals):
+        _logger.info("write template")
+        _logger.info(vals)
+        res = super(Order, self).write(vals)
+        self.adapt_front_page()
+        return res
+
+    #@api.onchange('partner_id', 'user_id')
     def adapt_front_page(self):
         _logger.info("adapt front page")
         for order in self:
@@ -44,8 +56,6 @@ class Order(models.Model):
                     text = text.replace("!phone!", "")
 
                 order.front_page_body = text
-                if condi:
-                    order._origin.front_page_body_template = order.front_page_body_template
                 _logger.info(order.front_page_body)
                 _logger.info(order.front_page_body_template)
 
