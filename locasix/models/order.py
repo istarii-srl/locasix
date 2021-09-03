@@ -25,8 +25,8 @@ class Order(models.Model):
     def write(self, vals):
         _logger.info("write template")
         _logger.info(vals)
-        if vals.get('from_compute_temp', False):
-            vals.pop('from_compute_temp', 1)
+        if vals.get('adapt_front_page', False):
+            vals.pop('adapt_front_page', 1)
             res = super(Order, self).write(vals)
         else:
             res = super(Order, self).write(vals)
@@ -34,7 +34,6 @@ class Order(models.Model):
         
         return res
 
-    #@api.onchange('partner_id', 'user_id')
     def adapt_front_page(self):
         _logger.info("adapt front page")
         for order in self:
@@ -45,7 +44,6 @@ class Order(models.Model):
                 condi = not order.front_page_body_template
                 if condi:
                     copy_txt = str(order.front_page_body)
-                    #order.front_page_body_template = copy_txt
                 if not condi:
                     text = order.front_page_body_template
                 else:
@@ -64,9 +62,9 @@ class Order(models.Model):
                     text = text.replace("!phone!", "")
 
                 if condi:
-                    order.write({"front_page_body": text, "from_compute_temp": True, "front_page_body_template": copy_txt,})
+                    order.write({"front_page_body": text, "adapt_front_page": True, "front_page_body_template": copy_txt,})
                 else:
-                    order.write({"front_page_body": text, "from_compute_temp": True,})
+                    order.write({"front_page_body": text, "adapt_front_page": True,})
                 _logger.info(order.front_page_body)
                 _logger.info(order.front_page_body_template)
 
