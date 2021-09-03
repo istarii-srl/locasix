@@ -28,9 +28,9 @@ class Order(models.Model):
         if vals.get('from_compute_temp', False):
             vals.pop('from_compute_temp', 1)
             res = super(Order, self).write(vals)
-            self.adapt_front_page()
         else:
             res = super(Order, self).write(vals)
+            self.adapt_front_page()
         
         return res
 
