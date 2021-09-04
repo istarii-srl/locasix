@@ -43,10 +43,10 @@
                 <page string="Liens">
                     <group>
                         <group>
-                            <field name="product_master_ids" context="{'from_product_master': 1, 'default_product_master_id': active_id}"/>
+                            <field name="product_master_ids" context="{'from_product_master': 1, 'default_product_master_id': id}"/>
                         </group>
                         <group>
-                            <field name="product_linked_ids" context="{'from_product_linked': 1, 'default_product_linked_id': active_id}"/>
+                            <field name="product_linked_ids" context="{'from_product_linked': 1, 'default_product_linked_id': id}"/>
                         </group>
                     </group>
                 </page>
