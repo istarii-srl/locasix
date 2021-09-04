@@ -3,7 +3,7 @@
         <field name="name">locasix.template.form</field>
         <field name="model">product.template</field>
         <field eval="8" name="priority"/>
-        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
             <field name="barcode" position="after">
                 <field name="more_details_link"/>
