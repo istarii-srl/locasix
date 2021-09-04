@@ -11,8 +11,8 @@
         <field name="model">locasix.product.link</field>
         <field name="arch" type="xml">
             <tree string="Liens produits">
-                <field name="product_master_id" readonly="context.get('from_product_master', 0)"/>
-                <field name="product_linked_id" readonly="context.get('from_product_linked', 0)"/>
+                <field name="product_master_id" invisible="context.get('from_product_master', 0)"/>
+                <field name="product_linked_id" invisible="context.get('from_product_linked', 0)"/>
             </tree>
         </field>
     </record>
