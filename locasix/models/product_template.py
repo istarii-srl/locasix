@@ -12,8 +12,8 @@ class ProductTemplate(models.Model):
     has_ref_to_condi = fields.Boolean(string="Conditions additionnelles", default=False)
     more_details_link = fields.Char(string="Lien vers plus de détail")
 
-    product_linked_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_linked_id", string="Lié aux produits")
-    product_master_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_master_id", string="Produits liés")
+    product_linked_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_linked_id", string="Liens actifs")
+    product_master_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_master_id", string="Liens passifs")
 
     day_price = fields.Float(string="Prix par jour")
     week_price = fields.Float(string="Prix par semaine")
