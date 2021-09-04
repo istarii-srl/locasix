@@ -1,4 +1,11 @@
 <odoo>
+    <record model="ir.actions.act_window" id="action_link">
+        <field name="name">Links</field>
+        <field name="res_model">locasix.product.link</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
     <record model="ir.ui.view" id="locasix_product_link_tree">
         <field name="name">locasix.product.link.tree</field>
         <field name="model">locasix.product.link</field>
