@@ -23,10 +23,27 @@ class OrderLine(models.Model):
     week_price = fields.Float(string="Prix/sem.", default=0.0)
     month_price = fields.Float(string="Prix/mois", default=0.0)
 
-    months_2_discount = fields.Float(string="Remise 2")
-    months_3_discount = fields.Float(string="Remise 3")
-    months_6_discount = fields.Float(string="Remise 6")
+    months_2_discount_rate = fields.Float(string="Remise 2", related="order_id.months_2_discount_rate")
+    months_3_discount_rate = fields.Float(string="Remise 3", related="order_id.months_3_discount_rate")
+    months_6_discount_rate = fields.Float(string="Remise 6", related="order_id.months_6_discount_rate")
 
+    months_2_discount = fields.Float(string="Remise 2", compute="_compute_2_discount")
+    months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount")
+    months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount")
+
+
+
+    def _compute_2_discount(self):
+        for line in self:
+            line.months_2_discount = line.month_price * (1-line.months_2_discount_rate)
+
+    def _compute_3_discount(self):
+        for line in self:
+            line.months_3_discount = line.month_price * (1-line.months_3_discount_rate)
+
+    def _compute_4_discount(self):
+        for line in self:
+            line.months_3_discount = line.month_price * (1-line.months_3_discount_rate)
 
 
     def retrieve_top_section(self, lines):
