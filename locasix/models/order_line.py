@@ -89,7 +89,7 @@ class OrderLine(models.Model):
         if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
-            #self.update_line_values()
+            self.update_line_values(pricing=False)
             
         else:
             vals.pop("from_update", 1)
@@ -102,7 +102,7 @@ class OrderLine(models.Model):
         _logger.info("in create order lines")
         _logger.info(vals)
         obj = super(OrderLine, self).create(vals)
-        #obj.update_line_values()
+        obj.update_line_values(pricing=False)
         return obj
 
 
@@ -133,7 +133,7 @@ class OrderLine(models.Model):
                 line.week_price = week_price
                 line.month_price = month_price
 
-    def update_line_values(self):
+    def update_line_values(self, pricing=True):
         if self.product_id:
             product = self.product_id.product_tmpl_id
             _logger.info("update line values")
@@ -145,15 +145,17 @@ class OrderLine(models.Model):
             vals = {}
             if not self.category_id:
                 vals["category_id"] = product.categ_id
-            vals["day_price"] = product.day_price
-            vals["week_price"] = product.week_price
-            vals["month_price"] = product.month_price
+            if pricing:
+                vals["day_price"] = product.day_price
+                vals["week_price"] = product.week_price
+                vals["month_price"] = product.month_price
             vals["has_ref_to_condi"] = product.has_ref_to_condi
             vals["is_multi"] = product.has_multi_price
             vals["from_update"] = True
-            if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
-                _logger.info("update price for weekend")
-                vals["price_unit"] = product.weekend_price 
-            else:
-                vals["price_unit"] = product.list_price
+            if pricing:
+                if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
+                    _logger.info("update price for weekend")
+                    vals["price_unit"] = product.weekend_price 
+                else:
+                    vals["price_unit"] = product.list_price
             self.write(vals)
