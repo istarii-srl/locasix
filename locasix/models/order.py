@@ -184,7 +184,7 @@ class Order(models.Model):
         for order in self:
             for section in sections:
                 product_count = {}
-                section_lines = self.retrieve_lines_from_section(section)
+                section_lines = self.retrieve_lines_from_section(sections[section]["section"])
                 for line in section_lines:
                     if line.product_id and not line.is_section and line.from_compute:
                         if line.product_id.id in product_count:
