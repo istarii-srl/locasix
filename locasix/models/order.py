@@ -203,14 +203,17 @@ class Order(models.Model):
                                 'sequence': sections[line.section_id.id]["next_available"]})
                             sections[line.section_id.id]["next_available"] += 1
                             new_line.update_line_values()
+                            _logger.info(new_line.name)
                             if new_line.is_insurance():
+                                _logger.info("MULTO 2")
+                                _logger.info(line.is_multi)
                                 new_line.is_multi = line.is_multi
 
     def enforce_computations(self):
         _logger.info("enforce computations")
         for order in self:
             for line in order.order_line:
-                if line.product_id and line.is_insurance and line.section_id:
+                if line.product_id and line.is_insurance() and line.section_id:
                     lines = self.retrieve_lines_from_section(line.section_id)
                     _logger.info(line.is_multi)
                     line.enforce_computation(line.is_multi, lines)
