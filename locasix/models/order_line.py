@@ -44,26 +44,8 @@ class OrderLine(models.Model):
     @api.onchange('product_id', 'order_id')
     def product_changed(self):
         _logger.info("product changed")
-        if self.product_id:
-            product = self.product_id
-            _logger.info("update line values")
-            _logger.info(product.weekend_price)
-            _logger.info(product.name)
-            _logger.info(product.has_multi_price)
-            _logger.info(self.weekend_offer)
-            self._origin.category_id = product.categ_id.id
-            self._origin.day_price = product.day_price
-            self._origin.week_price = product.week_price
-            self._origin.month_price = product.month_price
-            self._origin.months_2_discount = product.months_2_discount
-            self._origin.months_3_discount = product.months_3_discount
-            self._origin.months_6_discount = product.months_6_discount
-            self._origin.has_ref_to_condi = product.has_ref_to_condi
-            self._origin.is_multi = product.has_multi_price
-            if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
-                _logger.info("update price for weekend")
-                self.price_unit = product.weekend_price
-                self._origin.price_unit = product.weekend_price 
+        self.update_line_values()
+        _logger.info(self.category_id)
         _logger.info(self.price_unit)
         _logger.info(self._origin.price_unit)
 
@@ -103,15 +85,16 @@ class OrderLine(models.Model):
             _logger.info(product.name)
             _logger.info(product.has_multi_price)
             _logger.info(self.weekend_offer)
-            self._origin.category_id = product.categ_id.id
-            self._origin.day_price = product.day_price
-            self._origin.week_price = product.week_price
-            self._origin.month_price = product.month_price
-            self._origin.months_2_discount = product.months_2_discount
-            self._origin.months_3_discount = product.months_3_discount
-            self._origin.months_6_discount = product.months_6_discount
-            self._origin.has_ref_to_condi = product.has_ref_to_condi
-            self._origin.is_multi = product.has_multi_price
+            _logger.info(product.categ_id)
+            self.category_id = product.categ_id.id
+            self.day_price = product.day_price
+            self.week_price = product.week_price
+            self.month_price = product.month_price
+            self.months_2_discount = product.months_2_discount
+            self.months_3_discount = product.months_3_discount
+            self.months_6_discount = product.months_6_discount
+            self.has_ref_to_condi = product.has_ref_to_condi
+            self.is_multi = product.has_multi_price
             if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
                 _logger.info("update price for weekend")
-                self._origin.price_unit = product.weekend_price 
+                self.price_unit = product.weekend_price 
