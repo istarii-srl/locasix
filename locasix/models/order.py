@@ -146,6 +146,7 @@ class Order(models.Model):
                         else:
                             section_id = self.env["sale.order.line"].search([("is_section", "=", True), ('order_id', "=", "line.order_id.id"), ("name", "=", "Autres articles")])
                             if not section_id:
+                                _logger.info("create autres articles")
                                 section_id = self.env["sale.order.line"].create({
                                     "order_id": line.order_id.id,
                                     "name": "Autres articles",
