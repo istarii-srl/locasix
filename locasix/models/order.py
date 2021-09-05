@@ -207,6 +207,7 @@ class Order(models.Model):
                             if new_line.is_insurance():
                                 _logger.info("MULTO 2")
                                 _logger.info(line.is_multi)
+                                _logger.info(line.name)
                                 new_line.is_multi = line.is_multi
 
     def enforce_computations(self):
