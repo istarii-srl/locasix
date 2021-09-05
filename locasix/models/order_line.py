@@ -49,6 +49,14 @@ class OrderLine(models.Model):
         _logger.info(self.price_unit)
         _logger.info(self._origin.price_unit)
 
+    def write(self, vals):
+        _logger.info("write order line")
+        _logger.info(vals)
+        res = super(OrderLine, self).write(vals)
+        if vals.get('product_id', False):
+            self.update_line_values()
+        
+        return res
 
     def is_insurance(self):
         for line in self:
