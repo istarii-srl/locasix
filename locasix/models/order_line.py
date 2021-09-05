@@ -91,6 +91,6 @@ class OrderLine(models.Model):
             self._origin.months_6_discount = product.months_6_discount
             self._origin.has_ref_to_condi = product.has_ref_to_condi
             self._origin.is_multi = product.has_multi_price
-            if self._origin.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
+            if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
                 _logger.info("update price for weekend")
                 self._origin.price_unit = product.weekend_price 
