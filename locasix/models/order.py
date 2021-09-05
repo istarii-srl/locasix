@@ -180,10 +180,11 @@ class Order(models.Model):
     
     def remove_doublons(self, sections):
         _logger.info("remove doublons")
+        _logger.info(sections)
         for order in self:
             for section in sections:
                 product_count = {}
-                section_lines = self.retrieve_lines_from_section(section["section"])
+                section_lines = self.retrieve_lines_from_section(section)
                 for line in section_lines:
                     if line.product_id and not line.is_section and line.from_compute:
                         if line.product_id.id in product_count:
