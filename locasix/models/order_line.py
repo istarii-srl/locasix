@@ -74,7 +74,7 @@ class OrderLine(models.Model):
         _logger.info("write order line")
         _logger.info(vals)
         
-        if vals.get('product_id', False) and not vals.get("from_update", False):
+        if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
             self.update_line_values()
@@ -142,4 +142,6 @@ class OrderLine(models.Model):
             if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
                 _logger.info("update price for weekend")
                 vals["price_unit"] = product.weekend_price 
+            else:
+                vals["price_unit"] = product.list_price
             self.write(vals)
