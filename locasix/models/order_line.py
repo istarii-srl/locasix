@@ -1,3 +1,4 @@
+from shopidoo.shopidoo.models.order import Order
 from odoo import fields, api, models
 from odoo.exceptions import UserError
 
@@ -57,6 +58,15 @@ class OrderLine(models.Model):
             self.update_line_values()
         
         return res
+
+    @api.model
+    def create(self, vals):
+        _logger.info("in create order lines")
+        _logger.info(vals)
+        obj = super(OrderLine, self).create(vals)
+        obj.update_line_values()
+        return obj
+
 
     def is_insurance(self):
         for line in self:
