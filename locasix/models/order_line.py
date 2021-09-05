@@ -44,7 +44,7 @@ class OrderLine(models.Model):
     @api.onchange('product_id', 'order_id')
     def product_changed(self):
         _logger.info("product changed")
-        #self.update_line_values()
+        self.update_line_values()
         _logger.info(self.category_id)
         _logger.info(self.price_unit)
         _logger.info(self._origin.price_unit)
