@@ -42,7 +42,7 @@ class OrderLine(models.Model):
                         nearest_top_section_id = order_line
         return nearest_top_section_id
 
-    @api.onchange('product_id', 'order_id')
+    @api.onchange('product_id', 'order_id', 'weekend_offer')
     def product_changed(self):
         _logger.info("product changed")
         self.update_line_values()
