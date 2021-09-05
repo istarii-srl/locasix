@@ -17,7 +17,7 @@ class OrderLine(models.Model):
     is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
     from_compute = fields.Boolean(string="Est venu automatiqument", default=False)
     weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer")
-    has_24_price = fields.Boolean(string="24h options", related="product_id.product_tmpl_id.has_24_price")
+    has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
 
     day_price = fields.Float(string="Prix/jour", default=0.0)
     week_price = fields.Float(string="Prix/sem.", default=0.0)
