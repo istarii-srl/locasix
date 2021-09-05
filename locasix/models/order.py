@@ -208,6 +208,7 @@ class Order(models.Model):
                                 _logger.info("MULTO 2")
                                 _logger.info(line.is_multi)
                                 _logger.info(line.name)
+                                _logger.info(line.product_id.has_multi_price)
                                 new_line.is_multi = line.is_multi
 
     def enforce_computations(self):
