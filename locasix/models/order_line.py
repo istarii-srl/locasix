@@ -132,9 +132,6 @@ class OrderLine(models.Model):
             vals["day_price"] = product.day_price
             vals["week_price"] = product.week_price
             vals["month_price"] = product.month_price
-            vals["months_2_discount"] = product.months_2_discount
-            vals["months_3_discount"] = product.months_3_discount
-            vals["months_6_discount"] = product.months_6_discount
             vals["has_ref_to_condi"] = product.has_ref_to_condi
             vals["is_multi"] = product.has_multi_price
             vals["from_update"] = True

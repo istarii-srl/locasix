@@ -47,6 +47,9 @@
             <xpath expr="//tree/field[@name='price_unit']" position="after">
                 <field name="weekend_offer" invisible = "1"/>
                 <field name="is_multi" invisible = "1"/>
+                <field name="months_2_discount_rate" invisible="1"/>
+                <field name="months_3_discount_rate" invisible="1" />
+                <field name="months_6_discount_rate" invisible="1" />
                 <field name="day_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
                 <field name="week_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
                 <field name="month_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
