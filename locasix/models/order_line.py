@@ -25,9 +25,9 @@ class OrderLine(models.Model):
     week_price = fields.Float(string="Prix/sem.", default=0.0)
     month_price = fields.Float(string="Prix/mois", default=0.0)
 
-    months_2_discount_rate = fields.Float(string="Remise 2", related="order_id.months_2_discount_rate")
-    months_3_discount_rate = fields.Float(string="Remise 3", related="order_id.months_3_discount_rate")
-    months_6_discount_rate = fields.Float(string="Remise 6", related="order_id.months_6_discount_rate")
+    months_2_discount_rate = fields.Float(string="Taux remise 2", related="order_id.months_2_discount_rate")
+    months_3_discount_rate = fields.Float(string="Taux remise 3", related="order_id.months_3_discount_rate")
+    months_6_discount_rate = fields.Float(string="Taux remise 6", related="order_id.months_6_discount_rate")
 
     months_2_discount = fields.Float(string="Remise 2", compute="_compute_2_discount")
     months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount")
