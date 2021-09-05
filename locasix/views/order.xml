@@ -21,9 +21,9 @@
             </group>
             <group name="sale_info" position="after">
                 <group string="Remises">
-                    <field name="months_2_discount_rate"/>
-                    <field name="months_3_discount_rate"/>
-                    <field name="months_6_discount_rate"/>
+                    <field name="months_2_discount_rate" widget="percentage"/>
+                    <field name="months_3_discount_rate" widget="percentage"/>
+                    <field name="months_6_discount_rate" widget="percentage"/>
                 </group>
             </group>
             <page name="other_information" position="before">
@@ -53,9 +53,9 @@
                 <field name="day_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
                 <field name="week_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
                 <field name="month_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
-                <field name="months_2_discount" widget="percentage" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
-                <field name="months_3_discount" widget="percentage" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
-                <field name="months_6_discount" widget="percentage" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="months_2_discount" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="months_3_discount" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="months_6_discount" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
             </xpath>
         </field>
     </record>

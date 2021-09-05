@@ -33,17 +33,20 @@ class OrderLine(models.Model):
 
 
 
+    @api.depends('months_2_discount_rate')
     def _compute_2_discount(self):
         for line in self:
             line.months_2_discount = line.month_price * (1-line.months_2_discount_rate)
 
+    @api.depends('months_3_discount_rate')
     def _compute_3_discount(self):
         for line in self:
             line.months_3_discount = line.month_price * (1-line.months_3_discount_rate)
 
+    @api.depends('months_6_discount_rate')
     def _compute_4_discount(self):
         for line in self:
-            line.months_3_discount = line.month_price * (1-line.months_3_discount_rate)
+            line.months_6_discount = line.month_price * (1-line.months_6_discount_rate)
 
 
     def retrieve_top_section(self, lines):
