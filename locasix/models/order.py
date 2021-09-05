@@ -100,6 +100,7 @@ class Order(models.Model):
         for line in self.order_line:
             if line.temporary_product and line.product_id:
                 line.product_id.active = False
+                line.product_id.product_tmpl_id.active = False
         return True
 
     def line_computations(self):
