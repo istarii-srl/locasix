@@ -1,4 +1,3 @@
-from shopidoo.shopidoo.models.order import Order
 from odoo import fields, api, models
 from odoo.exceptions import UserError
 
