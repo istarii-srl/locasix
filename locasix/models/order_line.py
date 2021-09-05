@@ -62,6 +62,12 @@ class OrderLine(models.Model):
                         nearest_top_section_id = order_line
         return nearest_top_section_id
 
+    @api.onchange('product_id')
+    def product_id_change(self):
+        res = super(OrderLine, self).product_id_change()
+        self.update_line_values()
+        return res
+
     @api.onchange('product_id', 'order_id', 'weekend_offer')
     def product_changed(self):
         _logger.info("product changed")
