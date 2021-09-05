@@ -125,12 +125,12 @@ class Order(models.Model):
                 _logger.info(line.category_id)
                 if line.product_id and line.order_id:
                     if line.category_id and line.category_id.show_section_order:
-                        section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id), ('order_id', "=", line.order_id.id)], limit=1)
+                        section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.category_id.id), ('order_id', "=", line.order_id.id)], limit=1)
                         if not section_id:
                             section_id = self.env["sale.order.line"].create({
                                 "order_id": line.order_id.id,
-                                "name": line.product_id.categ_id.name,
-                                "category_id": line.product_id.categ_id.id,
+                                "name": line.category_id.name,
+                                "category_id": line.category_id.id,
                                 "is_section": True,
                                 "from_compute": True,
                                 "is_multi": line.product_id.has_multi_price,
