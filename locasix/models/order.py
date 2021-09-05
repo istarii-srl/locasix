@@ -228,7 +228,10 @@ class Order(models.Model):
                         new_line.update_line_values()
                         if not new_line.product_id.categ_id or not new_line.product_id.categ_id.show_section_order:
                             _logger.info("change of category")
+                            _logger.info(new_line.category_id)
                             new_line.category_id = line.category_id
+                            _logger.info(new_line.category_id)
+                            _logger.info(line.category_id)
                         _logger.info(new_line.name)
                         if new_line.is_insurance():
                             _logger.info("MULTO 2")
