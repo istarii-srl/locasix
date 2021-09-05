@@ -45,7 +45,6 @@ class OrderLine(models.Model):
     def product_changed(self):
         _logger.info("product changed")
         self.update_line_values()
-        return
 
 
     def is_insurance(self):
