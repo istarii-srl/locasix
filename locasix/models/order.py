@@ -95,6 +95,12 @@ class Order(models.Model):
                 order.line_computations()
             
 
+    def _action_confirm(self):
+        super(Order, self)._action_confirm()
+        for line in self.order_line:
+            if line.temporary_product and line.product_id:
+                line.product_id.active = False
+        return True
 
     def line_computations(self):
         sections = {}
