@@ -29,6 +29,7 @@
             </page>
             <xpath expr="//tree/field[@name='name']" position="after">
                 <field name="has_ref_to_condi" optional="show"/>
+                <field name="has_24_price" optional="show"/>
             </xpath>
             <xpath expr="//tree/field[@name='price_subtotal']" position="attributes">
                 <attribute name="invisible">1</attribute>
