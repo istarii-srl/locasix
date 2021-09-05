@@ -96,4 +96,4 @@ class OrderLine(models.Model):
             if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
                 _logger.info("update price for weekend")
                 vals['price_unit'] = product.weekend_price 
-            self.update(vals)
+            self.write(vals)
