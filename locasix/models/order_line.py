@@ -16,6 +16,7 @@ class OrderLine(models.Model):
     section_id = fields.Many2one(comodel_name="sale.order.line", string="Section")
     is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
     from_compute = fields.Boolean(string="Est venu automatiqument", default=False)
+    is_24_deactivated = fields.Boolean(related="order_id.is_24_deactivated")
     weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer")
     has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
     temporary_product = fields.Boolean(string="Temporaire", default=False)
