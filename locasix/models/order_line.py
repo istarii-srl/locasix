@@ -84,6 +84,7 @@ class OrderLine(models.Model):
             _logger.info(product.has_multi_price)
             _logger.info(self.weekend_offer)
             vals = {}
+            vals["category_id"] = product.categ_id
             vals['day_price'] = product.day_price
             vals['week_price'] = product.week_price
             vals['month_price'] = product.month_price

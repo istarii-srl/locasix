@@ -95,10 +95,11 @@ class Order(models.Model):
         sections = {}
         for order in self:
             order.mark_manual_sections()
+            order.enforce_links()
             order.enforce_sections(sections)
             order.place_sections(sections)
             order.place_products(sections)
-            order.enforce_links(sections)
+            order.remove_doublons(sections)
             order.enforce_computations()
             order.has_computed = True
     
@@ -117,7 +118,7 @@ class Order(models.Model):
             lines = order.order_line
             for line in lines:
                 if line.product_id and line.order_id:
-                    if line.product_id.categ_id and line.product_id.categ_id.show_section_order:
+                    if line.category_id and line.category_id.show_section_order:
                         section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.product_id.categ_id.id), ('order_id', "=", line.order_id.id)], limit=1)
                         if not section_id:
                             section_id = self.env["sale.order.line"].create({
@@ -176,9 +177,23 @@ class Order(models.Model):
                 if not line.is_section and line.section_id:
                     line.sequence = sections[line.section_id.id]["next_available"]
                     sections[line.section_id.id]["next_available"] += 1
+    
+    def remove_doublons(self, sections):
+        _logger.info("remove doublons")
+        for order in self:
+            for section in sections:
+                product_count = {}
+                section_lines = self.retrieve_lines_from_section(section["section"])
+                for line in section_lines:
+                    if line.product_id and not line.is_section and line.from_compute:
+                        if line.product_id.id in product_count:
+                            order.order_line = [(2, line.id, 0)]
+                        else:
+                            product_count[line.product_id.id] = 1
+
                     
 
-    def enforce_links(self, sections):
+    def enforce_links(self):
         _logger.info("enforce links")
         for order in self:
             for line in order.order_line:
@@ -187,29 +202,32 @@ class Order(models.Model):
                     _logger.info(links)
                     for link in links:
                         _logger.info("links")
-                        no_doublon = True
-                        lines = self.retrieve_lines_from_section(line.section_id)
-                        for section_line in lines:
-                            if section_line.product_id.product_tmpl_id.id == link.product_linked_id.id:
-                                no_doublon = False
-                        _logger.info("doublon status")
-                        _logger.info(no_doublon)
-                        if no_doublon:
-                            new_line = self.env["sale.order.line"].create({
-                                'order_id': line.order_id.id,
-                                'product_id': link.product_linked_id.product_variant_id.id,
-                                'section_id': line.section_id.id,
-                                'from_compute': True,
-                                'sequence': sections[line.section_id.id]["next_available"]})
-                            sections[line.section_id.id]["next_available"] += 1
-                            new_line.update_line_values()
-                            _logger.info(new_line.name)
-                            if new_line.is_insurance():
-                                _logger.info("MULTO 2")
-                                _logger.info(line.is_multi)
-                                _logger.info(line.name)
-                                _logger.info(line.product_id.has_multi_price)
-                                new_line.is_multi = line.is_multi
+                        #no_doublon = True
+                        #lines = self.retrieve_lines_from_section(line.section_id)
+                        #for section_line in lines:
+                        #    if section_line.product_id.product_tmpl_id.id == link.product_linked_id.id:
+                        #        no_doublon = False
+                        #_logger.info("doublon status")
+                        #_logger.info(no_doublon)
+                        #if no_doublon:
+                        new_line = self.env["sale.order.line"].create({
+                            'order_id': line.order_id.id,
+                            'product_id': link.product_linked_id.product_variant_id.id,
+                        #    'section_id': line.section_id.id,
+                            'from_compute': True,
+                        })
+                            #'sequence': sections[line.section_id.id]["next_available"]})
+                        #sections[line.section_id.id]["next_available"] += 1
+                        new_line.update_line_values()
+                        if not new_line.product_id.categ_id and new_line.product_id.categ_id.show_section_order:
+                            new_line.category_id = line.category_id
+                        _logger.info(new_line.name)
+                        if new_line.is_insurance():
+                            _logger.info("MULTO 2")
+                            _logger.info(line.is_multi)
+                            _logger.info(line.name)
+                            _logger.info(line.product_id.has_multi_price)
+                            new_line.is_multi = line.is_multi
 
     def enforce_computations(self):
         _logger.info("enforce computations")
