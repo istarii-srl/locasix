@@ -44,7 +44,7 @@ class OrderLine(models.Model):
             line.months_3_discount = line.month_price * (1-line.months_3_discount_rate)
 
     @api.depends('month_price','months_6_discount_rate')
-    def _compute_4_discount(self):
+    def _compute_6_discount(self):
         for line in self:
             line.months_6_discount = line.month_price * (1-line.months_6_discount_rate)
 
