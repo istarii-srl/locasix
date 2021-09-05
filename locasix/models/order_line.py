@@ -67,6 +67,12 @@ class OrderLine(models.Model):
         res = super(OrderLine, self).product_id_change()
         self.update_line_values()
         return res
+    
+    @api.onchange('product_uom', 'product_uom_qty')
+    def product_uom_change(self):
+        res = super(OrderLine, self).product_uom_change()
+        self.update_line_values()
+        return res        
 
     @api.onchange('product_id', 'order_id', 'weekend_offer')
     def product_changed(self):
