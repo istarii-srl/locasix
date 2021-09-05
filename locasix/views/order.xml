@@ -14,6 +14,7 @@
 
             <field name="partner_id" position="after">
                 <field name="weekend_offer"/>
+                <field name="is_24_deactivated"/>
                 <field name="has_computed" invisible="1"/>
             </field>
             <group name="note_group" position="attributes">
