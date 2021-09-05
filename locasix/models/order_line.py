@@ -60,13 +60,16 @@ class OrderLine(models.Model):
                 day_price = 0.0
                 week_price = 0.0
                 month_price = 0.0
+                _logger.info("MULTO")
+                _logger.info(is_multi)
                 for section_line in section_lines:
-                    if is_multi:
-                        day_price += section_line.day_price * percentage
-                        week_price += section_line.week_price * percentage
-                        month_price += section_line.month_price * percentage
-                    else:
-                        price_unit += section_line.price_unit * percentage
+                    if not section_line.is_insurance():
+                        if is_multi:
+                            day_price += section_line.day_price * percentage
+                            week_price += section_line.week_price * percentage
+                            month_price += section_line.month_price * percentage
+                        else:
+                            price_unit += section_line.price_unit * percentage
                 line.price_unit = price_unit
                 line.day_price = day_price
                 line.week_price = week_price
