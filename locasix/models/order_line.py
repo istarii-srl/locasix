@@ -52,9 +52,15 @@ class OrderLine(models.Model):
     def write(self, vals):
         _logger.info("write order line")
         _logger.info(vals)
-        res = super(OrderLine, self).write(vals)
+        
         if vals.get('product_id', False) and not vals.get("from_update", False):
+            vals.pop("from_update", 1)
+            res = super(OrderLine, self).write(vals)
             self.update_line_values()
+            
+        else:
+            vals.pop("from_update", 1)
+            res = super(OrderLine, self).write(vals)
         
         return res
 
