@@ -86,7 +86,7 @@ class OrderLine(models.Model):
             _logger.info(product.has_multi_price)
             _logger.info(self.weekend_offer)
             _logger.info(product.categ_id)
-            self.category_id = product.categ_id.id
+            self.category_id = product.categ_id
             self.day_price = product.day_price
             self.week_price = product.week_price
             self.month_price = product.month_price
