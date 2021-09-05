@@ -131,7 +131,8 @@ class OrderLine(models.Model):
             _logger.info(self.weekend_offer)
             _logger.info(product.categ_id)
             vals = {}
-            self.category_id = product.categ_id
+            if not self.category_id:
+                vals["category_id"] = product.categ_id
             vals["day_price"] = product.day_price
             vals["week_price"] = product.week_price
             vals["month_price"] = product.month_price
