@@ -20,7 +20,10 @@ class Day(models.Model):
     @api.depends('day')
     def _compute_name(self):
         for day in self:
-            day.name = day.day.to_date().strftime('%m/%d/%Y')
+            if day.day:
+                day.name = day.day.to_date().strftime('%m/%d/%Y')
+            else:
+                day.name = "En cours de création..."
 
 class DayCron(models.Model):
     _name = "locasix.day.cron"
