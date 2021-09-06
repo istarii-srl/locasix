@@ -17,7 +17,7 @@ class OrderLine(models.Model):
     is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
     from_compute = fields.Boolean(string="Est venu automatiqument", default=False)
     is_24_deactivated = fields.Boolean(related="order_id.is_24_deactivated")
-    weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer")
+    weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer", store=True)
     has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
     temporary_product = fields.Boolean(string="Temporaire", default=False)
 
@@ -88,7 +88,7 @@ class OrderLine(models.Model):
         _logger.info("write order line")
         _logger.info(vals)
         
-        if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", True):
+        if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
             self.update_line_values(pricing=True)
