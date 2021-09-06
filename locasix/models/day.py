@@ -10,6 +10,7 @@ class Day(models.Model):
 
     name = fields.Char(string="Jour", compute="_compute_name")
     day = fields.Date(string="Date", required=True)
+    # UNIQUE CONSTRAINTS
 
 
     @api.depends('day')
