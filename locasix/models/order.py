@@ -122,7 +122,7 @@ class Order(models.Model):
     def weekend_offer_changed(self):
         _logger.info("weekend offer changed")
         for order in self:
-            for line in order.line:
+            for line in order.order_line:
                 line.update_line_values(pricing=True)
 
     def mark_manual_sections(self):
