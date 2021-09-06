@@ -118,6 +118,12 @@ class Order(models.Model):
             order.enforce_computations()
             order.has_computed = True
     
+    @api.onchange('weekend_offer')
+    def weekend_offer_changed(self):
+        _logger.info("weekend offer changed")
+        for order in self:
+            for line in order.line:
+                line.update_line_values(pricing=True)
 
     def mark_manual_sections(self):
         _logger.info("mark manual section")
