@@ -19,6 +19,8 @@ class Order(models.Model):
     months_3_discount_rate = fields.Float(string="Remise 3", default=0.15)
     months_6_discount_rate = fields.Float(string="Remise 6", default=0.2)
 
+    done_order = fields.Boolean(string="Offre terminée", default=False)
+
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
 
     @api.model
@@ -97,6 +99,7 @@ class Order(models.Model):
 
     def _action_confirm(self):
         super(Order, self)._action_confirm()
+        self.done_order = True
         for line in self.order_line:
             if line.temporary_product and line.product_id:
                 line.product_id.active = False
