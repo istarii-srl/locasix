@@ -1,4 +1,8 @@
 from odoo import fields, api, models
+import datetime
+
+import logging
+_logger = logging.getLogger(__name__)
 
 class Day(models.Model):
     _name = "locasix.day"
@@ -12,3 +16,30 @@ class Day(models.Model):
     def _compute_name(self):
         for day in self:
             day.name = day.to_date().strftime('%m/%d/%Y')
+
+class DayCron(models.Model):
+    _name = "locasix.day.cron"
+    _description = "Cron job to create days"
+
+    def run_cron(self):
+        _logger.info("CRON JOB Day")
+        # ARCHIVE OLD DATES OR SOMETHING LIKE THAT
+        today = datetime.date.now()
+        max_limit = today + datetime.timedelta(days=180)
+        days = self.env["locasix.day"].search([('date', '>=', today), ('date', '<', max_limit)])
+        sorted_days = sorted(days, key=lambda day: day.day)
+        new_day = today
+        i = 0
+        while new_day < max_limit:
+            if sorted_days[i].day == new_day:
+                i += 1
+                new_day = new_day + datetime.timedelta(days=1)
+            elif sorted_days[i.day].day < new_day:
+                i += 1
+            else:
+                self.env["locasix.day"].create({
+                    'day': new_day,
+                })
+                new_day = new_day + datetime.timedelta(days=1)
+
+        return
