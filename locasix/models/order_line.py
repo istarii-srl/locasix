@@ -159,5 +159,5 @@ class OrderLine(models.Model):
                     _logger.info("update price for weekend")
                     vals["price_unit"] = product.weekend_price 
                 else:
-                    vals["price_unit"] = product.list_price
+                    vals["price_unit"] = product.lst_price
             self.write(vals)
