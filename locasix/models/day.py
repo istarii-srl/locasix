@@ -8,7 +8,7 @@ class Day(models.Model):
     _name = "locasix.day"
     _description = "Gestion des allers et retours pour une journée"
 
-    name = fields.Char(string="Jour", computed="_compute_name")
+    name = fields.Char(string="Jour", compute="_compute_name")
     day = fields.Date(string="Date", required=True)
 
 
@@ -24,7 +24,7 @@ class DayCron(models.Model):
     def run_cron(self):
         _logger.info("CRON JOB Day")
         # ARCHIVE OLD DATES OR SOMETHING LIKE THAT
-        today = datetime.date.now()
+        today = datetime.date.today()
         max_limit = today + datetime.timedelta(days=180)
         days = self.env["locasix.day"].search([('date', '>=', today), ('date', '<', max_limit)])
         sorted_days = sorted(days, key=lambda day: day.day)
