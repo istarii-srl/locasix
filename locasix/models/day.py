@@ -12,7 +12,7 @@ class Day(models.Model):
     day = fields.Date(string="Date", required=True)
 
     _sql_constraints = [
-        ('name_uniq', 'unique (name)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
+        ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
     ]
     # UNIQUE CONSTRAINTS
 
