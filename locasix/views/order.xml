@@ -8,8 +8,9 @@
         <field name="arch" type="xml">
             <button name="action_draft" position="after">
                 <button name="action_compute" type="object" string="Ajout automatique" />
-                <button name="action_remove_computed_lines" type="object" string="Retirer ajout" attrs="{'invisible': [('has_computed', '=', False)]}"/>
-                <button name="action_compute_insurances" type="object" string="Calcul assurances" attrs="{'invisible': [('has_computed', '=', False)]}"/>
+                <button name="action_remove_computed_lines" type="object" string="Retirer ajout" attrs="{'invisible': ['|', ('has_computed', '=', False), ('state', '=', 'done')]}"/>
+                <button name="action_compute_insurances" type="object" string="Calcul assurances" attrs="{'invisible': ['|', ('has_computed', '=', False), ('state', '=', 'done')]}"/>
+                <button name="action_put_in_agenda" type="object" string="Ajouter à l'agenda" attrs="{'invisible': [('state', '!=', 'done')]}"/>
             </button>
 
             <field name="partner_id" position="after">

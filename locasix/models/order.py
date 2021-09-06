@@ -276,3 +276,8 @@ class Order(models.Model):
         _logger.info("action compute insurances")
         for order in self:
             order.enforce_computations()
+    
+    def action_put_in_agenda(self):
+        _logger.info("action put in agenda")
+        for order in self:
+            pass
