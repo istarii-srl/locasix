@@ -8,7 +8,7 @@ class Day(models.Model):
     _name = "locasix.day"
     _description = "Gestion des allers et retours pour une journée"
 
-    name = fields.Char(string="Jour", compute="_compute_name")
+    name = fields.Char(string="Jour", compute="_compute_name", store=True)
     day = fields.Date(string="Date", required=True)
 
     _sql_constraints = [
