@@ -6,3 +6,4 @@ class ProductLinks(models.Model):
 
     product_master_id = fields.Many2one(comodel_name="product.template", string="Produit actif", required=True)
     product_linked_id = fields.Many2one(comodel_name="product.template", string="Produit passif", required=True)
+    
