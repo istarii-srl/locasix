@@ -91,7 +91,7 @@ class OrderLine(models.Model):
         if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
-            self.update_line_values(pricing=False)
+            self.update_line_values(pricing=True)
             
         else:
             vals.pop("from_update", 1)
@@ -104,7 +104,7 @@ class OrderLine(models.Model):
         _logger.info("in create order lines")
         _logger.info(vals)
         obj = super(OrderLine, self).create(vals)
-        obj.update_line_values(pricing=False)
+        obj.update_line_values(pricing=True)
         return obj
 
 
