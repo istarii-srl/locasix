@@ -10,13 +10,17 @@ class Day(models.Model):
 
     name = fields.Char(string="Jour", compute="_compute_name")
     day = fields.Date(string="Date", required=True)
+
+    _sql_constraints = [
+        ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
+    ]
     # UNIQUE CONSTRAINTS
 
 
     @api.depends('day')
     def _compute_name(self):
         for day in self:
-            day.name = day.to_date().strftime('%m/%d/%Y')
+            day.name = day.day.to_date().strftime('%m/%d/%Y')
 
 class DayCron(models.Model):
     _name = "locasix.day.cron"
