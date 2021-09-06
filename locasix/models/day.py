@@ -21,7 +21,7 @@ class Day(models.Model):
     def _compute_name(self):
         for day in self:
             if day.day:
-                day.name = day.day.strftime('%m/%d/%Y')
+                day.name = day.day.strftime('%d/%m/%Y')
             else:
                 day.name = "En cours de création..."
 
