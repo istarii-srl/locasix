@@ -7,3 +7,4 @@ access_sale_order_line_user,locasix.sale.order.line,model_sale_order_line,base.g
 access_locasix_product_link_user,locasix.locasix.product.link,model_locasix_product_link,base.group_user,1,1,1,1
 access_product_category_user,locasix.product.category,model_product_category,base.group_user,1,1,1,1
 access_locasix_compute_warning_user,locasix.locasix.compute.warning,model_locasix_compute_warning,base.group_user,1,1,1,1
+access_locasix_day_cron_user,locasix.locasix.day.cron,model_locasix_day_cron,base.group_user,1,1,1,1
