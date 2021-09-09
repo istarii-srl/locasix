@@ -1,64 +1,74 @@
 <odoo>
-    <template id="locasix.locasix_quote_report_document">
-        <t t-call="web.basic_layout">
-            <div class="header not-first-page">
-                <img src="/locasix/static/img/locasix_header.png"/>
-            </div>
-            <div class="page row" style="padding: 100px 15px 0px 15px !important; margin: 0px !important">
-                <div class="col" style="width: 235px !important; height: 1095px !important; padding: 0px !important;">
-                    <img src="/locasix/static/img/locasix_lateral_bar.png" style="object-fit: scale-down"/>
-                </div>
-                <div class="col" style="width: 635px !important; height: 1095px !important; padding-left: 35px !important;">
-                    <div style="height: 65px;"/>
-                    <div style="height: 3px; width: 40px; background-color: rgb(210, 40, 50); border-radius: 30px;"/>
-                    <div style="height: 15px;"/>
-                    <h2>OFFRE DE 
-                        <br/>PRIX
-                    </h2>
-                    <div style="height: 95px;"/>
-                    <div class="row">
-                        <div style="width: 15px;"/>
-                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
-                            <span>
-                                Nicolas Six Units <br/>
-                                Rue de Tournai 192 <br/>
-                                7330 Stambruges <br/>
-                                0472 92 90 15 <br/>
-                                BE0719889755 <br/>
-                            </span>
+    <template id="locasix.locasix_quote_report_document_2">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+                    <div class="header not-first-page">
+                        <img src="/locasix/static/img/locasix_header.png" style="max-height: 100px;"/>
+                    </div>
+                    <div class="page row" style="padding: 100px 15px 0px 15px !important; margin: 0px !important">
+                        <div class="col" style="width: 235px !important; height: 1095px !important; padding: 0px !important;">
+                            <img src="/locasix/static/img/locasix_lateral_bar.png" style="max-height: 1135px;"/>
                         </div>
-                        <div style="width: 10px;"/>
-                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
-                            <div class="row" style="margin: 0px !important;"><span>Numéro d'offre : </span><span t-field="doc.name"/></div>
-                            <div class="row" style="margin: 0px !important;"><span>Votre référence : </span></div>
-                            <div class="row" style="margin: 0px !important;"><span>Date de l'offre : </span><span t-field="doc.date_order"  t-options='{"widget": "date"}'/></div>
-                            <div class="row" style="margin: 0px !important;"><span>Votre contact : </span></div>
+                        <div class="col" style="width: 635px !important; height: 1095px !important; padding-left: 35px !important;">
+                            <div style="height: 65px;"/>
+                            <div style="height: 3px; width: 40px; background-color: rgb(210, 40, 50); border-radius: 30px;"/>
+                            <div style="height: 15px;"/>
+                            <h2>OFFRE DE 
+                                <br/>PRIX 888
+                            </h2>
+                            <div style="height: 95px;"/>
+                            <div class="row">
+                                <div style="width: 15px;"/>
+                                <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                                    <span>
+                                        Nicolas Six Units <br/>
+                                        Rue de Tournai 192 <br/>
+                                        7330 Stambruges <br/>
+                                        0472 92 90 15 <br/>
+                                        BE0719889755 <br/>
+                                    </span>
+                                </div>
+                                <div style="width: 10px;"/>
+                                <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                                    <div class="row" style="margin: 0px !important;"><span>Numéro d'offre : </span><span t-field="doc.name"/></div>
+                                    <div class="row" style="margin: 0px !important;"><span>Votre référence : </span></div>
+                                    <div class="row" style="margin: 0px !important;"><span>Date de l'offre : </span><span t-field="doc.date_order"  t-options='{"widget": "date"}'/></div>
+                                    <div class="row" style="margin: 0px !important;"><span>Votre contact : </span></div>
+                                </div>
+                            </div>
+                            <div style="height: 75px;"/>
+                            <div style="height: 420px;">
+                                <span t-raw="doc.front_page_body"/>
+                            </div>
+                            <div style="height: 100px; margin-left: -25px;">
+                                <img src="/locasix/static/img/locasix_bottom_bar.png" style="max-height: 200px;"/>
+                            </div>
                         </div>
                     </div>
-                    <div style="height: 75px;"/>
-                    <div style="height: 420px;">
-                        <span t-raw="doc.front_page_body"/>
+                    <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; page-break-after: always;">
+                        <t t-set="order_lines" t-value="doc.order_line"/>
+                        <t t-foreach="order_lines" t-as="order_line">
+                            <span>YO</span>
+                        </t>
+                    </div>  
+                    <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important">
+                        <h3>Conditions additionnelles</h3>
+                        <p t-field="doc.added_terms"/>
                     </div>
-                    <div style="height: 100px; margin-left: -25px;">
-                        <img src="/locasix/static/img/locasix_bottom_bar.png" style="object-fit: contain"/>
+                    <div class="footer not-first-page">
+                        <img src="/locasix/static/img/locasix_footer.png" style="max-height: 110px;"/>
                     </div>
-                </div>
-            </div>
-            <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important">
-                <h3>Conditions additionnelles</h3>
-                <p t-field="doc.added_terms"/>
-            </div>
-            <div class="footer not-first-page">
-                <img src="/locasix/static/img/locasix_footer.png"/>
-            </div>
+                </t>
+            </t>
         </t>
     </template>
 
-    <template id="locasix_quote_report_2">
+    <!-- <template id="locasix_quote_report_3">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="locasix.locasix_quote_report_document" t-lang="doc.partner_id.lang"/>
             </t>
         </t>
-    </template>
+    </template> -->
 </odoo>
