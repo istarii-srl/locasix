@@ -16,7 +16,7 @@
 
             <field name="partner_id" position="after">
                 <field name="weekend_offer"/>
-                <field name="is_24_deactivated"/>
+                <field name="usage_rate_display"/>
                 <field name="has_computed" invisible="1"/>
             </field>
             <group name="note_group" position="attributes">
@@ -39,8 +39,8 @@
             </page>
             <xpath expr="//tree/field[@name='name']" position="after">
                 <field name="has_ref_to_condi" optional="show"/>
-                <field name="is_24_deactivated" invisible="1"/>
-                <field name="has_24_price" optional="show" attrs="{'invisible': [('is_24_deactivated', '=', True)]}"/>
+                <field name="usage_rate_display" invisible="1"/>
+                <field name="has_24_price" optional="show" attrs="{'invisible': [('usage_rate_display', '=', '8')]}"/>
                 <field name="temporary_product" optional="hide"/>
             </xpath>
             <xpath expr="//tree/field[@name='price_subtotal']" position="attributes">
