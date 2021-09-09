@@ -29,12 +29,28 @@ class OrderLine(models.Model):
     months_3_discount_rate = fields.Float(string="Taux remise 3", related="order_id.months_3_discount_rate")
     months_6_discount_rate = fields.Float(string="Taux remise 6", related="order_id.months_6_discount_rate")
 
-    months_2_discount = fields.Float(string="Remise 2", compute="_compute_2_discount")
-    months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount")
-    months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount")
+    months_2_discount = fields.Float(string="Remise 2", compute="_compute_2_discount", store=True)
+    months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount", store=True)
+    months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount", store=True)
+
+
+
 
 
     # CHANGE SEQUENCE
+
+    @api.onchange('day_price', 'week_price', 'month_price', 'months_2_discount', 'months_3_discount', 'months_6_discount', 'price_unit')
+    def recompute_insurance(self):
+        for line in self:
+            if not line.order_id.is_computing:
+                line.order_id.enforce_computations()
+    
+    @api.onchange('sequence')
+    def on_sequence_changed(self):
+        for line in self:
+            if not line.order_id.is_computing:
+                line.order_id.enforce_computations()
+
 
     @api.depends('month_price','months_2_discount_rate')
     def _compute_2_discount(self):

@@ -20,7 +20,7 @@ class Order(models.Model):
     months_6_discount_rate = fields.Float(string="Remise 6", default=0.2)
 
     done_order = fields.Boolean(string="Offre terminée", default=False)
-
+    is_computing = fields.Boolean(string="En cours de calculation", default=False)
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
 
     @api.model
@@ -109,6 +109,7 @@ class Order(models.Model):
     def line_computations(self):
         sections = {}
         for order in self:
+            order.is_computing = True
             order.mark_manual_sections()
             order.enforce_links()
             order.enforce_sections(sections)
@@ -117,6 +118,7 @@ class Order(models.Model):
             order.remove_doublons(sections)
             order.enforce_computations()
             order.has_computed = True
+            order.is_computing = False
     
     @api.onchange('weekend_offer')
     def weekend_offer_changed(self):
@@ -263,10 +265,32 @@ class Order(models.Model):
         for order in self:
             for line in order.order_line:
                 if line.product_id and line.is_insurance() and line.section_id:
-                    lines = self.retrieve_lines_from_section(line.section_id)
+                    lines = self.retrieve_lines_from_section_without_id(line)
                     _logger.info(line.is_multi)
                     line.enforce_computation(line.is_multi, lines)
 
+
+    def retrieve_lines_from_section_without_id(self, line):
+        _logger.info("retrieve lines without id")
+        for order in self:
+            lines = []
+            potential_lines = []
+            seq_of_section_above = -1
+            stop = False
+            sorted_lines = sorted(order.order_line, key=lambda line: line.sequence)
+            for order_line in sorted_lines:
+                if not stop and order_line.is_section and order_line.sequence < line.sequence:
+                    seq_of_section_above = order_line.sequence
+                    potential_lines = []
+                    potential_lines.append(order_line)
+                elif order_line.is_section and order_line.sequence > line.sequence:
+                    stop = True
+                elif not stop and not order_line.is_section and seq_of_section_above != -1:
+                    potential_lines.append(order_line)
+            lines = potential_lines
+            return lines
+
+        
       
     def retrieve_lines_from_section(self, section_id):
         _logger.info("retrieve line from section")
