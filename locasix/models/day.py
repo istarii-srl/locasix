@@ -38,7 +38,7 @@ class DayCron(models.Model):
         sorted_days = sorted(days, key=lambda day: day.day)
         new_day = today
         i = 0
-        while new_day < max_limit:
+        while new_day < max_limit and i < len(sorted_days):
             if sorted_days[i].day == new_day:
                 i += 1
                 new_day = new_day + datetime.timedelta(days=1)
@@ -49,5 +49,10 @@ class DayCron(models.Model):
                     'day': new_day,
                 })
                 new_day = new_day + datetime.timedelta(days=1)
+        while new_day < max_limit:
+            self.env["locasix.day"].create({
+                'day': new_day,
+            })
+            new_day = new_day + datetime.timedelta(days=1)
 
         return
