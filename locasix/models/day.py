@@ -17,15 +17,14 @@ class Day(models.Model):
     ]
     # UNIQUE CONSTRAINTS
 
-    def open_full(self, cr, uid, ids, context=None):
+    def open_full(self):
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': self._name,
-            'res_id': ids[0],
+            'res_id': self.ids[0],
             'target': 'current',
-            'context': context
         }
 
     @api.depends('day')
