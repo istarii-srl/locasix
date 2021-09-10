@@ -147,6 +147,9 @@ class OrderLine(models.Model):
                             month_price += section_line.month_price * percentage
                         else:
                             price_unit += section_line.price_unit * percentage
+
+                _logger.info(price_unit)
+                _logger.info(day_price)
                 line.price_unit = price_unit
                 line.day_price = day_price
                 line.week_price = week_price
