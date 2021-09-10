@@ -18,12 +18,13 @@ class Day(models.Model):
     # UNIQUE CONSTRAINTS
 
     def open_full(self):
+        partner_id = self.env["locasix.day"].search([("id", "=", self.ids[0])], limit=1).test_partner
         return {
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',
-            'res_model': self._name,
-            'res_id': self.ids[0],
+            'res_model': "res.partner",
+            'res_id': partner_id.id,
             'target': 'current',
         }
 
