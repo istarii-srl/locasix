@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; page-break-after: always;">
-                        <div class="row font-treble">
+                        <div class="row font-calibri">
                             <div class="col-6">
                                 <div style="height:40px;"/>
                                 <div style="height: 150px; border: 1px solid black; padding: 3px 5px 3px 5px;">
@@ -60,7 +60,7 @@
                                     BE0719889755 <br/>
                                 </div>
                             </div>
-                            <div class="col-6 font-treble">
+                            <div class="col-6 font-calibri">
                                 <div style="border: 1px solid black; padding: 3px 5px 3px 5px;text-align:center;">
                                     <span>Offre</span>
                                 </div>
