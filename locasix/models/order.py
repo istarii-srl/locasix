@@ -13,14 +13,14 @@ class Order(models.Model):
 
     added_terms = fields.Html(string="Conditions additionnelles", default="<span><b>Conditions de location</b></span><ul><li style='margin:0px;'><span>Prix hors TVA 21%.</span></li><li style='margin:0px;'><span>Facturation minimale de 28 jours.</span></li><li style='margin:0px;'><span>Si annulation de la commande dans les 48H avant la date de livraison, des frais de dossier de 50,00€ par pièce vous seront facturés.</span></li><li style='margin:0px;'><span>Si demande de retour impératif à une date précise, les frais de transport seront majorés de 30%.</span></li><li style='margin:0px;'><span>Une caution peut vous être demandée avant la livraison.</span></li><li style='margin:0px;'><span><u>Si location de groupes électrogènes et/ou mâts d'éclairage :</u></span><ul><li style='margin:0px;'><span>Entretien journalier : carburant, niveau d'huile, niveau d'eau ... à votre charge.</span></li><li style='margin:0px;'><span>Entretien périodique comprenant filtres, huile ... à notre charge.</span></li><li style='margin:0px;'><span>Service de dépannage assuré uniquement du lundi au vendredi de 7h à 16h.</span></li></ul></li><li style='margin:0px;'><span>Délai : à convenir et suivant disponibilité.</span></li><li style='margin:0px;'><span>Validité de l'offre : 30 jours.</span></li><li style='margin:0px;'><span>Tous raccordements électriques et raccordements à l'alimentation en eau sont à votre charge.</span></li><li style='margin:0px;'><span>Voir conditions détaillées en dernière page.<br></span></li></ul><span><br></span><span><b><br/>Transport<br/></b></span><span>Transport et déchargement de l'ensemble repris ci-dessus sur un terrain dur, horizontal et accessible par nos camions-grues.<br/></span><span>Attention, selon le type de matériel livré, nos camions peuvent avoir une longueur entre 11 et 21m, une largeur entre 2,6 et 3m, une hauteur entre 4 et 11m, un poids entre 17 et 26T.<br/></span><span>Si demande de retour impératif à une date précise, les frais de transport seront majorés de 30%.</span><span><br></span><span><b><br/>Assurance contre bris de machine<br/></b></span><span>Y compris vol, incendie, dégâts des eaux (8% du loyer) :<br/></span><span>Une franchise de 350,00€ par sinistre éventuel, sauf en cas de vol, la franchise sera de 20% de la valeur du bien. Sauf en cas de faute grave, dol ou malveillance. La Compagnie renonce au recours qu'elle serait en droit d'exercer contre le locataire.<br/></span><span>Pour le mobilier des modules habitables, une franchise de 500,00€ est d'application.<br/></span><span>Veuillez nous confirmer la souscription à l'option assurance lors de votre commande.</span><span><br></span><span><b><br/>Contribution environnementale<br/></b></span><span>Par respect pour l'environnement et dans le cadre de la législation en vigueur, Locasix ne cesse de faire des efforts. Traitement et enlèvement des déchets utilisés au cours du projet (filtres, pièces de rechange, lubrifiants, mazout pollué, réfrigérant, etc. Locasix demande au locataire une contribution environnementale forfaitaire de 2% du loyer total de la (des) machine(s).</span><span><br></span><span><b><br/>Nettoyage<br/></b></span><span>Texte à rédiger. Inclus dans les limites du raisonnable. On se réserve le droit de facturer. Un forfait de nettoyage à partir de 150€ HTVA/pièce vous sera facturé au retour si l'état de propreté et d'hygiène le requiert.</span>")
     weekend_offer = fields.Boolean(string="Offre week-end", default=False)
-    is_24_deactivated = fields.Boolean(string="Désactiver les options 24h", default=False)
+    usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")])
 
     months_2_discount_rate = fields.Float(string="Remise 2", default=0.10)
     months_3_discount_rate = fields.Float(string="Remise 3", default=0.15)
     months_6_discount_rate = fields.Float(string="Remise 6", default=0.2)
 
     done_order = fields.Boolean(string="Offre terminée", default=False)
-
+    is_computing = fields.Boolean(string="En cours de calculation", default=False)
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
 
     @api.model
@@ -109,6 +109,7 @@ class Order(models.Model):
     def line_computations(self):
         sections = {}
         for order in self:
+            order.is_computing = True
             order.mark_manual_sections()
             order.enforce_links()
             order.enforce_sections(sections)
@@ -117,6 +118,7 @@ class Order(models.Model):
             order.remove_doublons(sections)
             order.enforce_computations()
             order.has_computed = True
+            order.is_computing = False
     
     @api.onchange('weekend_offer')
     def weekend_offer_changed(self):
@@ -263,10 +265,34 @@ class Order(models.Model):
         for order in self:
             for line in order.order_line:
                 if line.product_id and line.is_insurance() and line.section_id:
-                    lines = self.retrieve_lines_from_section(line.section_id)
+                    lines = self.retrieve_lines_from_section_without_id(line)
                     _logger.info(line.is_multi)
+                    for logo in lines:
+                        _logger.info(logo.name)
                     line.enforce_computation(line.is_multi, lines)
 
+
+    def retrieve_lines_from_section_without_id(self, line):
+        _logger.info("retrieve lines without id")
+        for order in self:
+            lines = []
+            potential_lines = []
+            seq_of_section_above = -1
+            stop = False
+            sorted_lines = sorted(order.order_line, key=lambda line: line.sequence)
+            for order_line in sorted_lines:
+                if not stop and order_line.is_section and order_line.sequence < line.sequence:
+                    seq_of_section_above = order_line.sequence
+                    potential_lines = []
+                    potential_lines.append(order_line)
+                elif order_line.is_section and order_line.sequence > line.sequence:
+                    stop = True
+                elif not stop and not order_line.is_section and seq_of_section_above != -1:
+                    potential_lines.append(order_line)
+            lines = potential_lines
+            return lines
+
+        
       
     def retrieve_lines_from_section(self, section_id):
         _logger.info("retrieve line from section")

@@ -10,12 +10,23 @@ class Day(models.Model):
 
     name = fields.Char(string="Jour", compute="_compute_name", store=True)
     day = fields.Date(string="Date", required=True)
+    test_partner = fields.Many2one(comodel_name="res.partner", string="Papa")
 
     _sql_constraints = [
         ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
     ]
     # UNIQUE CONSTRAINTS
 
+    def open_full(self, cr, uid, ids, context=None):
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': self._name,
+            'res_id': ids[0],
+            'target': 'current',
+            'context': context
+        }
 
     @api.depends('day')
     def _compute_name(self):
@@ -34,11 +45,11 @@ class DayCron(models.Model):
         # ARCHIVE OLD DATES OR SOMETHING LIKE THAT
         today = datetime.date.today()
         max_limit = today + datetime.timedelta(days=180)
-        days = self.env["locasix.day"].search([('date', '>=', today), ('date', '<', max_limit)])
+        days = self.env["locasix.day"].search([('day', '>=', today), ('day', '<', max_limit)])
         sorted_days = sorted(days, key=lambda day: day.day)
         new_day = today
         i = 0
-        while new_day < max_limit:
+        while new_day < max_limit and i < len(sorted_days):
             if sorted_days[i].day == new_day:
                 i += 1
                 new_day = new_day + datetime.timedelta(days=1)
@@ -49,5 +60,10 @@ class DayCron(models.Model):
                     'day': new_day,
                 })
                 new_day = new_day + datetime.timedelta(days=1)
+        while new_day < max_limit:
+            self.env["locasix.day"].create({
+                'day': new_day,
+            })
+            new_day = new_day + datetime.timedelta(days=1)
 
         return

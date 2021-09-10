@@ -11,6 +11,8 @@
         <field name="arch" type="xml">
             <tree string="Allers et retours">
                 <field name="name"/>
+                <field name="test_partner" widget="Many2one">
+                </field>
             </tree>
         </field>
     </record>
@@ -27,6 +29,7 @@
                         </h1>
                     </div>
                     <field name="day"/>
+                    <field name="test_partner"/>
                 </sheet>
             </form>
         </field>

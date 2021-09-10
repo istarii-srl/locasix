@@ -16,7 +16,7 @@ class OrderLine(models.Model):
     section_id = fields.Many2one(comodel_name="sale.order.line", string="Section")
     is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
     from_compute = fields.Boolean(string="Est venu automatiqument", default=False)
-    is_24_deactivated = fields.Boolean(related="order_id.is_24_deactivated")
+    usage_rate_display = fields.Selection(related="order_id.usage_rate_display")
     weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer")
     has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
     temporary_product = fields.Boolean(string="Temporaire", default=False)
@@ -29,12 +29,28 @@ class OrderLine(models.Model):
     months_3_discount_rate = fields.Float(string="Taux remise 3", related="order_id.months_3_discount_rate")
     months_6_discount_rate = fields.Float(string="Taux remise 6", related="order_id.months_6_discount_rate")
 
-    months_2_discount = fields.Float(string="Remise 2", compute="_compute_2_discount")
-    months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount")
-    months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount")
+    months_2_discount = fields.Float(string="Remise 2", compute="_compute_2_discount", store=True)
+    months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount", store=True)
+    months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount", store=True)
+
+
+
 
 
     # CHANGE SEQUENCE
+
+    #@api.onchange('day_price', 'week_price', 'month_price', 'months_2_discount', 'months_3_discount', 'months_6_discount', 'price_unit')
+    def recompute_insurance(self):
+        for line in self:
+            if not line.order_id.is_computing:
+                line.order_id.enforce_computations()
+    
+    #@api.onchange('sequence')
+    def on_sequence_changed(self):
+        for line in self:
+            if not line.order_id.is_computing:
+                line.order_id.enforce_computations()
+
 
     @api.depends('month_price','months_2_discount_rate')
     def _compute_2_discount(self):
@@ -89,6 +105,15 @@ class OrderLine(models.Model):
         _logger.info("write order line")
         _logger.info(vals)
         
+        if vals.get('day_price', False) or vals.get('week_price', False) or vals.get('month_price', False) or vals.get('months_2_discount', False) or vals.get('months_3_discount', False) or vals.get('months_6_discount', False) or vals.get('price_unit', False) or vals.get('sequence', False):
+            if vals.get("from_compute", False):
+                vals.pop("from_compute")
+                res = super(OrderLine, self).write(vals)
+            else:
+                res = super(OrderLine, self).write(vals)
+                self.recompute_insurance()
+                
+
         if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
@@ -131,10 +156,11 @@ class OrderLine(models.Model):
                             month_price += section_line.month_price * percentage
                         else:
                             price_unit += section_line.price_unit * percentage
-                line.price_unit = price_unit
-                line.day_price = day_price
-                line.week_price = week_price
-                line.month_price = month_price
+
+                _logger.info(price_unit)
+                _logger.info(day_price)
+                vals = {"price_unit": price_unit, "day_price": day_price, "week_price": week_price, "month_price": month_price , 'from_compute': True}
+                line.write(vals)
 
     def update_line_values(self, pricing=True):
         if self.product_id:
