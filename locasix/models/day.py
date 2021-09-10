@@ -10,12 +10,23 @@ class Day(models.Model):
 
     name = fields.Char(string="Jour", compute="_compute_name", store=True)
     day = fields.Date(string="Date", required=True)
+    test_partner = fields.Many2one(comodel_name="res.partner", string="Papa")
 
     _sql_constraints = [
         ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
     ]
     # UNIQUE CONSTRAINTS
 
+    def open_full(self, cr, uid, ids, context=None):
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': self._name,
+            'res_id': ids[0],
+            'target': 'current',
+            'context': context
+        }
 
     @api.depends('day')
     def _compute_name(self):

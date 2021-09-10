@@ -11,6 +11,9 @@
         <field name="arch" type="xml">
             <tree string="Allers et retours">
                 <field name="name"/>
+                <field name="test_partner">
+                    <button type="object" string="Open" name="open_full" icon="gtk-next"/>
+                </field>
             </tree>
         </field>
     </record>
