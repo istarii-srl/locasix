@@ -3,6 +3,7 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
+                    <link href="/locasix/static/locasix.css" rel="stylesheet"/>
                     <div class="header not-first-page">
                         <img src="/locasix/static/img/locasix_header.png" style="max-height: 80px; padding-top: 10px;"/>
                     </div>
@@ -47,7 +48,7 @@
                         </div>
                     </div>
                     <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; page-break-after: always;">
-                        <div class="row">
+                        <div class="row font-treble">
                             <div class="col-6">
                                 <div style="height:40px;"/>
                                 <div style="height: 150px; border: 1px solid black; padding: 3px 5px 3px 5px;">
@@ -59,7 +60,7 @@
                                     BE0719889755 <br/>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 font-treble">
                                 <div style="border: 1px solid black; padding: 3px 5px 3px 5px;text-align:center;">
                                     <span>Offre</span>
                                 </div>
@@ -72,10 +73,12 @@
                                 </div>
                             </div>
                         </div>
-                        <t t-set="order_lines" t-value="doc.order_line"/>
-                        <t t-foreach="order_lines" t-as="order_line">
-                            <span>YO</span>
-                        </t>
+                        <!-- <t t-set="section_lines" t-value="doc.get_section_lines()"/>
+                        <t t-foreach="section_lines" t-as="section_line">
+                            <t t-if="order_line.is_section">
+
+                            </t>
+                        </t> -->
                     </div>  
                     <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important">
                         <h3>Conditions additionnelles</h3>

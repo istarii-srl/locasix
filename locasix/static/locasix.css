@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "treble";
+    src: url("/locasix/static/fonts/Heading-Pro-Treble-Light-trial.ttf");
+}
+@font-face {
+    font-family: "treble";
+    src: url("/locasix/static/fonts/Heading-Pro-Treble-Bold-trial.ttf");
+    font-weight: bold;
+}
+@font-face {
+    font-family: "treble";
+    src: url("/locasix/static/fonts/Heading-Pro-Treble-Light-Italic-trial.ttf");
+    font-style: italic, oblique;
+}
+@font-face {
+    font-family: "treble";
+    src: url("/locasix/static/fonts/Heading-Pro-Treble-Bold-Italic-trial.ttf");
+    font-weight: bold;
+    font-style: italic, oblique;
+}
+
+
+.font-treble {
+    font-family: 'treble';
+}
+
+.font-wide {
+    font-family: 'wide';
+}
