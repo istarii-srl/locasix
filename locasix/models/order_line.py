@@ -106,7 +106,13 @@ class OrderLine(models.Model):
         _logger.info(vals)
         
         if vals.get('day_price', False) or vals.get('week_price', False) or vals.get('month_price', False) or vals.get('months_2_discount', False) or vals.get('months_3_discount', False) or vals.get('months_6_discount', False) or vals.get('price_unit', False) or vals.get('sequence', False):
-            self.recompute_insurance()
+            if vals.get("from_compute", False):
+                vals.pop("from_compute")
+                res = super(OrderLine, self).write(vals)
+            else:
+                res = super(OrderLine, self).write(vals)
+                self.recompute_insurance()
+                
 
         if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
@@ -153,10 +159,8 @@ class OrderLine(models.Model):
 
                 _logger.info(price_unit)
                 _logger.info(day_price)
-                line.price_unit = price_unit
-                line.day_price = day_price
-                line.week_price = week_price
-                line.month_price = month_price
+                vals = {"price_unit": price_unit, "day_price": day_price, "week_price": week_price, "month_price": month_price , 'from_compute': True}
+                line.write(vals)
 
     def update_line_values(self, pricing=True):
         if self.product_id:
