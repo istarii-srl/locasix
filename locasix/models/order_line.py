@@ -39,13 +39,13 @@ class OrderLine(models.Model):
 
     # CHANGE SEQUENCE
 
-    @api.onchange('day_price', 'week_price', 'month_price', 'months_2_discount', 'months_3_discount', 'months_6_discount', 'price_unit')
+    #@api.onchange('day_price', 'week_price', 'month_price', 'months_2_discount', 'months_3_discount', 'months_6_discount', 'price_unit')
     def recompute_insurance(self):
         for line in self:
             if not line.order_id.is_computing:
                 line.order_id.enforce_computations()
     
-    @api.onchange('sequence')
+    #@api.onchange('sequence')
     def on_sequence_changed(self):
         for line in self:
             if not line.order_id.is_computing:
@@ -105,6 +105,9 @@ class OrderLine(models.Model):
         _logger.info("write order line")
         _logger.info(vals)
         
+        if vals.get('day_price', False) or vals.get('week_price', False) or vals.get('month_price', False) or vals.get('months_2_discount', False) or vals.get('months_3_discount', False) or vals.get('months_6_discount', False) or vals.get('price_unit', False) or vals.get('sequence', False):
+            self.recompute_insurance()
+
         if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
