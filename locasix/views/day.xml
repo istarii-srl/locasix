@@ -11,7 +11,7 @@
         <field name="arch" type="xml">
             <tree string="Allers et retours">
                 <field name="name"/>
-                <field name="test_partner" widget="Many2one">
+                <field name="test_partner" widget="Many2onebutton">
                 </field>
             </tree>
         </field>
