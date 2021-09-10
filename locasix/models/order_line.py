@@ -17,6 +17,7 @@ class OrderLine(models.Model):
     is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
     from_compute = fields.Boolean(string="Est venu automatiqument", default=False)
     usage_rate_display = fields.Selection(related="order_id.usage_rate_display")
+    show_discount_rates = fields.Boolean(related="order_id.show_discount_rates")
     weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer")
     has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
     temporary_product = fields.Boolean(string="Temporaire", default=False)
@@ -32,6 +33,50 @@ class OrderLine(models.Model):
     months_2_discount = fields.Float(string="Remise 2", compute="_compute_2_discount", store=True)
     months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount", store=True)
     months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount", store=True)
+
+
+
+
+    def get_section_type(self):
+        #section weekend - done
+        #section prix jour
+        # section prix fixe
+        # section 3 prix - done
+        # section 3 prix 8h - done
+        # section 3 prix 24h - done
+        # section 6 prix - done
+        # section 6 prix 8 - done
+        # section 6 prix 24 - done
+        # section prix jour 24
+        # section 3 prix double - done
+        # section 6 prix double - done
+        # secttion prix jour double
+        # section forfait mensuel
+        for line in self:
+            section_lines = line.order_id.retrieve_lines_from_section()
+            if line.weekend_offer:
+                return "weekend"
+            for line in section_lines:
+                if line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates and line.has_24_price:
+                    return "prix_6_double"
+                elif line.is_multi and line.usage_rate_display == "24" and line.show_discount_rates and line.has_24_price:
+                    return "prix_6_24"
+                elif line.is_multi and line.usage_rate_display == "8" and line.show_discount_rates and line.has_24_price:
+                    return "prix_6_8"
+                if line.is_multi and line.usage_rate_display == "duo" and not line.show_discount_rates and line.has_24_price:
+                    return "prix_3_double"
+                elif line.is_multi and line.usage_rate_display == "24" and not line.show_discount_rates and line.has_24_price:
+                    return "prix_3_24"
+                elif line.is_multi and line.usage_rate_display == "8" and not line.show_discount_rates and line.has_24_price:
+                    return "prix_3_8"
+            for line in section_lines:
+                if line.is_multi and line.show_discount_rates:
+                    return "prix_6"
+                elif line.is_multi and not line.show_discount_rates:
+                    return "prix_3"
+            return "prix_fixe"
+
+
 
 
 
@@ -105,6 +150,10 @@ class OrderLine(models.Model):
         _logger.info("write order line")
         _logger.info(vals)
         
+        if vals.get("sequence", False):
+            res = super(OrderLine, self).write(vals)
+            self.assign_section()
+
         if vals.get('day_price', False) or vals.get('week_price', False) or vals.get('month_price', False) or vals.get('months_2_discount', False) or vals.get('months_3_discount', False) or vals.get('months_6_discount', False) or vals.get('price_unit', False) or vals.get('sequence', False):
             if vals.get("from_compute", False):
                 vals.pop("from_compute")
@@ -131,6 +180,8 @@ class OrderLine(models.Model):
         _logger.info(vals)
         obj = super(OrderLine, self).create(vals)
         obj.update_line_values(pricing=False)
+        if obj.display_type == "line_section":
+            obj.is_section = True
         return obj
 
 
