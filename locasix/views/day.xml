@@ -13,7 +13,7 @@
                 <field name="name"/>
                 <field name="test_partner" widget="Many2one">
                 </field>
-                <button name="open_full" string="Open" icon="gtk-next" type="object"/>
+                <button name="open_full" string="Open" type="object"/>
             </tree>
         </field>
     </record>
