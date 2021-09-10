@@ -113,6 +113,7 @@ class Order(models.Model):
             order.is_computing = True
             order.mark_manual_sections()
             order.enforce_links()
+            order.enforce_transport()
             order.enforce_sections(sections)
             order.place_sections(sections)
             order.place_products(sections)
@@ -135,6 +136,52 @@ class Order(models.Model):
                 if line.display_type == "line_section" and not line.is_section:
                     line.is_section = True
                     line.section_id = line.id
+    
+    def enforce_transport(self):
+        _logger.info("enforce transport")
+        for order in self:
+            if order.weekend_offer:
+                tar = self.env["product.template"].search([("default_code", "=", "TAR")], limit=1)
+                if not tar:
+                    tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour"})
+                
+                tar_in_order = self.env["sale.order.line"].search([("product_id", "=", tar.product_variant_id.id)], limit=1)
+                if not tar_in_order:
+                    self.env["sale.order.line"].create({
+                        'order_id': self.id,
+                        'product_id': tar.product_variant_id.id,
+                        'from_compute': True,
+                    })
+            else:
+                ta = self.env["product.template"].search([("default_code", "=", "TA")], limit=1)
+                if not ta:
+                    ta = self.env["product.template"].create({"default_code": "TA", "name": "Transport aller"})
+                tr = self.env["product.template"].search([("default_code", "=", "TR")], limit=1)
+                if not tr:
+                    tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour"})
+                
+                ta_in_order = self.env["sale.order.line"].search([("product_id", "=", ta.product_variant_id.id)], limit=1)
+                if not ta_in_order:
+                    self.env["sale.order.line"].create({
+                    'order_id': self.id,
+                    'product_id': ta.product_variant_id.id,
+                #    'section_id': line.section_id.id,
+                    'from_compute': True,
+                })
+
+                tr_in_order = self.env["sale.orde.line"].search([("product_id", "=", tr.product_variant_id.id)], limit=1)
+                if not tr_in_order:
+                    self.env["sale.order.line"].create({
+                    'order_id': self.id,
+                    'product_id': tr.product_variant_id.id,
+                #    'section_id': line.section_id.id,
+                    'from_compute': True,
+                })
+    
+    def fetch_transport(self, ref):
+        _logger.info("fetch transport")
+        
+
 
     def enforce_sections(self, sections):
         _logger.info("enforce sections")
