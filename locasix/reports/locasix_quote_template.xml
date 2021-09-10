@@ -47,10 +47,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; page-break-after: always;">
+                    <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; page-break-after: always; font-size: 9px;">
                         <div class="row font-calibri">
-                            <div class="col-6">
-                                <div style="height:40px;"/>
+                            <div class="col-5">
+                                <div style="height:37px;"/>
                                 <div style="height: 150px; border: 1px solid black; padding: 3px 5px 3px 5px;">
                                     Nicolas Six Units <br/>
                                     Rue de Tournai 192 <br/>
@@ -60,7 +60,7 @@
                                     BE0719889755 <br/>
                                 </div>
                             </div>
-                            <div class="col-6 font-calibri">
+                            <div class="col-7 font-calibri">
                                 <div style="border: 1px solid black; padding: 3px 5px 3px 5px;text-align:center;">
                                     <span>Offre</span>
                                 </div>
