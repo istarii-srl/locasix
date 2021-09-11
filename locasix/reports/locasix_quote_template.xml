@@ -5,7 +5,7 @@
                 <t t-call="web.basic_layout">
                     <link href="/locasix/static/locasix.css" rel="stylesheet"/>
                     <div class="header not-first-page">
-                        <img src="/locasix/static/img/locasix_header.png" style="max-height: 80px; padding-top: 10px;"/>
+                        <img src="/locasix/static/img/locasix_header.png" style="max-height: 80px; padding-top: 15px;"/>
                     </div>
                     <t t-call="locasix.locasix_front_page"/>
                     <t t-call="locasix.locasix_body"/>
@@ -53,8 +53,8 @@
                         <div class="row" style="margin: 0px !important;"><span>Votre contact : </span></div>
                     </div>
                 </div>
-                <div style="height: 65px;"/>
-                <div style="height: 420px;">
+                <div style="height: 75px;"/>
+                <div style="height: 450px;">
                     <span t-raw="doc.front_page_body"/>
                 </div>
                 <div style="height: 100px; margin-left: -25px;">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="col-7 font-calibri">
-                    <div style="border: 1px solid black; padding: 3px 5px 3px 5px;text-align:center;">
+                    <div style="border: 1px solid black; padding: 3px 5px 3px 5px; text-align:center;">
                         <span style="font-size: 11px;">Offre</span>
                     </div>
                     <div style="height:10px;"/>
