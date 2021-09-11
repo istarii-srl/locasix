@@ -115,11 +115,13 @@
                 <th colspan="4"><span t-esc="price_column_name"/></th>
             </thead>
             <tbody>
+            <t t-foreach="doc.retrieve_lines_from_section(section_line)" t-as="line">
                 <td colspan="1" class="text-center">Test</td>
                 <td colspan="5" class="text-left">Test</td>
                 <td colspan="1" class="text-center">Test</td>
                 <td colspan="2" class="text-center">Test</td>
                 <td colspan="4" class="text-center">Test</td>
+            </t>
             </tbody>
         </table>
     </template>
