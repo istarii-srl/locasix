@@ -93,7 +93,7 @@
             </div>
             <t t-set="section_lines" t-value="doc.get_sections"/>
             <t t-foreach="section_lines" t-as="section_line">
-                <span t-field="section_line.name">
+                <span t-field="section_line.name"/>
             </t>
         </div>
     </template>
