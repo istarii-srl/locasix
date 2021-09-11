@@ -108,18 +108,18 @@
     <template id="locasix_fixed_price_section">
         <table style="width: 100%">
             <thead style="font-weight: bold; text-align: center;">
-                <th colspan="1"><span t-esc="first_column_name"/></th>
-                <th colspan="8">Description</th>
-                <th colspan="1">Qté</th>
-                <th colspan="7"><span t-esc="price_column_name"/></th>
+                <th width="8%"><span t-esc="first_column_name"/></th>
+                <th width="40%">Description</th>
+                <th width="7%">Qté</th>
+                <th width="45%"><span t-esc="price_column_name"/></th>
             </thead>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section(section_line)" t-as="line">
-                <tr>
-                    <td colspan="1" class="text-center">Test</td>
-                    <td colspan="8" class="text-left">Test</td>
-                    <td colspan="1" class="text-center">Test</td>
-                    <td colspan="7" class="text-center">Test</td>
+                <tr t-if="not line.is_section">
+                    <td width="8%" class="text-center"><span t-field="line.product_id.default_code"/></td>
+                    <td width="40%" class="text-left"><span t-field="line.product_id.description"/></td>
+                    <td width="7%" class="text-center"><span t-field="line.quantity"/></td>
+                    <td width="45%" class="text-center"><span t-field="line.product_id.list_price"/></td>
                 </tr>
             </t>
             </tbody>
