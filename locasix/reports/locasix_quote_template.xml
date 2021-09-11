@@ -119,7 +119,7 @@
                     <td width="8%" class="text-center"><span t-field="line.product_id.default_code"/></td>
                     <td width="40%" class="text-left"><span t-field="line.product_id.description"/></td>
                     <td width="7%" class="text-center"><span t-field="line.quantity"/></td>
-                    <td width="45%" class="text-center"><span t-field="line.product_id.list_price"/></td>
+                    <td width="45%" class="text-center"><span t-field="line.product_id.product_uom_qty"/></td>
                 </tr>
             </t>
             </tbody>
