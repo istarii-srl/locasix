@@ -65,11 +65,11 @@
     </template>
 
     <template id="locasix_body">
-        <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; page-break-after: always; font-size: 9px;">
+        <div class="page" style="padding: 120px 15px 20px 15px !important; margin: 0px !important; page-break-after: always; font-size: 11px;">
             <div class="row font-calibri">
                 <div class="col-5">
-                    <div style="height:37px;"/>
-                    <div style="height: 80px; border: 1px solid black; padding: 3px 5px 3px 5px;">
+                    <div style="height:40px;"/>
+                    <div style="height: 100px; border: 1px solid black; padding: 3px 5px 3px 5px;">
                         Nicolas Six Units <br/>
                         Rue de Tournai 192 <br/>
                         7330 Stambruges <br/>
@@ -79,11 +79,11 @@
                     </div>
                 </div>
                 <div class="col-7 font-calibri">
-                    <div style="border: 1px solid black; padding: 3px 5px 3px 5px; text-align:center;">
+                    <div style="border: 1px solid black; padding: 3px 5px 3px 5px; text-align:center; font-size: 12px;">
                         <span style="font-size: 11px;">Offre</span>
                     </div>
                     <div style="height:10px;"/>
-                    <div style="height: 80px; border: 1px solid black; padding: 3px 5px 3px 5px;">
+                    <div style="height: 100px; border: 1px solid black; padding: 3px 5px 3px 5px;">
                         <div class="row" style="margin: 0px !important;"><span>Numéro d'offre : </span><span t-field="doc.name"/></div>
                         <div class="row" style="margin: 0px !important;"><span>Votre référence : </span></div>
                         <div class="row" style="margin: 0px !important;"><span>Date de l'offre : </span><span t-field="doc.date_order"  t-options='{"widget": "date"}'/></div>
