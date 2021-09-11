@@ -109,19 +109,17 @@
         <table style="width: 100%">
             <thead style="font-weight: bold; text-align: center;">
                 <th colspan="1"><span t-esc="first_column_name"/></th>
-                <th colspan="5">Description</th>
+                <th colspan="8">Description</th>
                 <th colspan="1">Qté</th>
-                <th colspan="2"/>
-                <th colspan="4"><span t-esc="price_column_name"/></th>
+                <th colspan="7"><span t-esc="price_column_name"/></th>
             </thead>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section(section_line)" t-as="line">
                 <tr>
                     <td colspan="1" class="text-center">Test</td>
-                    <td colspan="5" class="text-left">Test</td>
+                    <td colspan="8" class="text-left">Test</td>
                     <td colspan="1" class="text-center">Test</td>
-                    <td colspan="2" class="text-center">Test</td>
-                    <td colspan="4" class="text-center">Test</td>
+                    <td colspan="7" class="text-center">Test</td>
                 </tr>
             </t>
             </tbody>
