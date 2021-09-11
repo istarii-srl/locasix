@@ -31,3 +31,6 @@
 .font-wide {
     font-family: 'wide';
 }
+
+table { border-collapse:collapse; }
+table thead th { border-bottom: 2px solid #000; }
