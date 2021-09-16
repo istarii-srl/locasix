@@ -35,6 +35,7 @@
         'views/product_template.xml',
         'views/category.xml',
         'views/order.xml',
+        'views/cleint.xml',
         'wizards/export_products.xml',
         'wizards/import_products.xml',
         'wizards/import_clients.xml',
