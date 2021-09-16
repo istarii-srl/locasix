@@ -1,0 +1,19 @@
+<odoo>
+    <record id="export_product_wizard_form" model="ir.ui.view">
+        <field name="name">locasix.product.export.form</field>
+        <field name="model">locasix.product.export</field>
+        <field name="arch" type="xml">
+            <form string="Export des produits">
+                <group>
+                    <field name="product_ids"/>
+                </group>
+                <footer>
+                    <button name="export_products" type="object" string="Exporter" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+
+        </field>
+    </record>
+
+</odoo>

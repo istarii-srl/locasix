@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="locasix.action_import_client_tree">
+        <button type="button" class="btn btn-secondary o_button_import_client">
+            Importer
+        </button>
+    </t>
+
+    <t t-extend="ListView.buttons" t-name="ClientTreeButtonsListView.buttons">
+        <t t-jquery="button.o_list_button_add" t-operation="after">
+            <t t-call="locasix.action_import_client_tree"/>
+        </t>
+    </t>
+
+
+</templates>

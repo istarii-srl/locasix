@@ -1,0 +1,19 @@
+<odoo>
+
+    <record id="import_client_wizard_form" model="ir.ui.view">
+        <field name="name">locasix.client.import.form</field>
+        <field name="model">locasix.client.import</field>
+        <field name="arch" type="xml">
+            <form string="Import des clients">
+                <group>
+                    <field name="file"/>
+                </group>
+                <footer>
+                    <button name="import_clients" type="object" string="Importer" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+
+        </field>
+    </record>
+</odoo>
