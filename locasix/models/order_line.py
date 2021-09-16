@@ -53,7 +53,7 @@ class OrderLine(models.Model):
         # secttion prix jour double
         # section forfait mensuel
         for line in self:
-            section_lines = line.order_id.retrieve_lines_from_section()
+            section_lines = line.order_id.retrieve_lines_from_section(line)
             if line.weekend_offer:
                 return "weekend"
             for line in section_lines:
