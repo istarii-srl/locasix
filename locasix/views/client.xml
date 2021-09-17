@@ -1,14 +1,3 @@
 <odoo>
 
-    <record id="locasix_contract_extension_tree" model="ir.ui.view">
-        <field name="name">locasix.contract.inherited.tree</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_tree" />
-        <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
-                <attribute name="js_class">locasix_client_tree_buttons</attribute>
-            </xpath>
-        </field>
-    </record>
-
 </odoo>
