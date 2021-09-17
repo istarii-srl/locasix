@@ -106,6 +106,24 @@ class Order(models.Model):
                 line.product_id.active = False
                 line.product_id.product_tmpl_id.active = False
         return True
+    
+    def action_quotation_send(self):
+        for order in self:
+            if order.has_transport_prices():
+                super(Order, self).action_quotation_send()
+            else:
+                return
+    
+
+    def has_transport_prices(self):
+        for order in self:
+            return True
+
+
+    def action_cancel(self):
+        super(Order, self).action_cancel()
+        self.done_order = False
+        return True        
 
     def line_computations(self):
         sections = {}

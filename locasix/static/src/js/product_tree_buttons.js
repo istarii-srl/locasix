@@ -23,7 +23,7 @@ odoo.define("locasix.product_tree_view_button", function (require) {
             }); //custom code
           });
           $(this.$buttons)
-          .find(".o_button_export_product")
+          .find(".o_button_import_product")
           .on("click", function () {
             self.do_action({
               name: "Importer les produits",
