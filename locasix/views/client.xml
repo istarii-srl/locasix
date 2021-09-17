@@ -1,3 +1,8 @@
 <odoo>
-
+    <!-- overrided action from contact module-->
+    <record model="ir.actions.act_window" id="action_contacts">
+        <field name="name">Contacts</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
 </odoo>

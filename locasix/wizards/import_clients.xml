@@ -1,12 +1,5 @@
 <odoo>
 
-    <record model="ir.actions.act_window" id="action_day">
-        <field name="name">Allers et retours</field>
-        <field name="res_model">locasix.day</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-
-
     <record id="import_client_wizard_form" model="ir.ui.view">
         <field name="name">locasix.client.import.form</field>
         <field name="model">locasix.client.import</field>

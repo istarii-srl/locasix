@@ -22,19 +22,17 @@ odoo.define("locasix.product_tree_view_button", function (require) {
               context: { is_modal: true },
             }); //custom code
           });
-        $(this.$buttons)
-          .find(".o_button_import_product")
+          $(this.$buttons)
+          .find(".o_button_export_product")
           .on("click", function () {
-            rpc
-              .query({
-                model: "product.template",
-                method: "launch_import",
-                args: [],
-              })
-              .then(function (res) {
-                // console.log(res)
-                // self.reload();
-              }); //custom code
+            self.do_action({
+              name: "Importer les produits",
+              type: "ir.actions.act_window",
+              res_model: "locasix.product.import",
+              target: "new",
+              views: [[false, "form"]],
+              context: { is_modal: true },
+            }); //custom code
           });
       }
     },
