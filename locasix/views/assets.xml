@@ -3,7 +3,8 @@
     <data>
         <template id="assets_backend" name="locasix_assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/locasix/static/src/js/product_tree_button.js"></script>
+                <script type="text/javascript" src="/locasix/static/src/js/product_tree_buttons.js"></script>
+                <script type="text/javascript" src="/locasix/static/src/js/client_tree_buttons.js"></script>
             </xpath>
         </template>
     </data>
