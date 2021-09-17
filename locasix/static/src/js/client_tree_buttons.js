@@ -1,45 +1,27 @@
-odoo.define("locasix.client.buttons", function (require) {
+odoo.define("locasix.client_tree_view_button", function (require) {
   "use strict";
+
+  var ajax = require("web.ajax");
   var ListController = require("web.ListController");
-  var ListView = require("web.ListView");
 
-  var viewRegistry = require("web.view_registry");
-
-  function renderClientTreeButtons() {
-    if (this.$buttons) {
-      var self = this;
-      this.$buttons.on("click", ".o_button_import_client", function () {
-        self.do_action({
-          name: "Importer les clients",
-          type: "ir.actions.act_window",
-          res_model: "locasix.client.import",
-          target: "new",
-          views: [[false, "form"]],
-          context: { is_modal: true },
-        });
-      });
-    }
-  }
-
-  var ClientTreeButtonsListController = ListController.extend({
-    willStart: function () {
-      var self = this;
-      var ready = this.getSession().user_has_group('base.group_no_one').then(function (_) {
-        self.buttons_template = "ClientTreeButtonsListView.buttons";
-      });
-      return Promise.all([this._super.apply(this, arguments), ready]);
-    },
-    renderButtons: function () {
+  ListController.include({
+    renderButtons: function ($node) {
       this._super.apply(this, arguments);
-      renderClientTreeButtons.apply(this, arguments);
+      var self = this;
+      if (this.$buttons) {
+        $(this.$buttons)
+          .find(".o_button_import_client")
+          .on("click", function () {
+            self.do_action({
+              name: "Exporter les produits",
+              type: "ir.actions.act_window",
+              res_model: "locasix.client.import",
+              target: "new",
+              views: [[false, "form"]],
+              context: { is_modal: true },
+            }); //custom code
+          });
+      }
     },
   });
-
-  var ClientTreeButtonsListView = ListView.extend({
-    config: _.extend({}, ListView.prototype.config, {
-      Controller: ClientTreeButtonsListController,
-    }),
-  });
-
-  viewRegistry.add("locasix_client_tree_buttons", ClientTreeButtonsListView);
 });
