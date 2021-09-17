@@ -1,5 +1,8 @@
 from odoo import fields, api, models
 
+import logging
+_logger = logging.getLogger(__name__)
+
 class ProductTemplate(models.Model):
     _name = "product.template"
     _inherit = "product.template"
@@ -30,6 +33,7 @@ class ProductTemplate(models.Model):
 
 
     def launch_import(self):
+        _logger.info("in launch import")
         view = self.env.ref('locasix.import_product_wizard_form')
         return {
             'name': 'Importation des produits',
