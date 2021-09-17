@@ -1,6 +1,7 @@
 <odoo>
     <record id="sale.product_template_action" model="ir.actions.act_window">
         <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="product.product_template_tree_view"/>
     </record>
 
     <record id="locasix_template_form" model="ir.ui.view">
