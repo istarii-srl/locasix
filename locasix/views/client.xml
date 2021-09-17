@@ -4,12 +4,12 @@
         <field name="sequence" eval="1"/>
         <field name="view_mode">kanban</field>
         <field name="view_id" ref="base.res_partner_kanban_view"/>
-        <field name="act_window_id" ref="action_contacts"/>
+        <field name="act_window_id" ref="base.action_contacts"/>
     </record>
     <record id="action_contacts_view_tree" model="ir.actions.act_window.view">
         <field name="sequence" eval="0"/>
         <field name="view_mode">tree</field>
         <field name="view_id" ref="base.view_partner_tree"/>
-        <field name="act_window_id" ref="action_contacts"/>
+        <field name="act_window_id" ref="base.action_contacts"/>
     </record>
 </odoo>
