@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+
 <templates>
     <t t-name="locasix.action_export_product_tree">
         <button type="button" class="btn btn-secondary o_button_export_product">
@@ -22,6 +25,15 @@
         </t>
 
     </t>
-
-
+</templates>c
+-->
+<templates>
+    <t t-extend="ListView.buttons">
+        <t t-jquery="div.o_list_buttons" t-operation="append">
+            <button type="button" t-if='widget.modelName == "product.template"' class="o_button_export_product btn btn-secondary">Exporter
+            </button>
+        </t>
+    </t>
 </templates>
+
+

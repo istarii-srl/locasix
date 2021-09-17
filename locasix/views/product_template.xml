@@ -57,7 +57,7 @@
 
         </field>
     </record>
-
+    <!--
     <record id="locasix_product_extension_tree" model="ir.ui.view">
         <field name="name">locasix.product.inherited.tree</field>
         <field name="model">product.template</field>
@@ -68,6 +68,6 @@
             </xpath>
         </field>
     </record>
-
+    -->
 
 </odoo>
