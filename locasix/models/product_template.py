@@ -27,3 +27,19 @@ class ProductTemplate(models.Model):
 
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
     insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)
+
+
+    def launch_import(self):
+        view = self.env.ref('locasix.import_product_wizard_form')
+        return {
+            'name': 'Importation des produits',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.product.import',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+            },
+        }        

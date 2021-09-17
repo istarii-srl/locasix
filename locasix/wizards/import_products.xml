@@ -1,9 +1,4 @@
 <odoo>
-    <record model="ir.actions.act_window" id="action_day">
-        <field name="name">Importation de produits</field>
-        <field name="res_model">locasix.product.import</field>
-        <field name="view_mode">form</field>
-    </record>
 
     <record id="import_product_wizard_form" model="ir.ui.view">
         <field name="name">locasix.product.import.form</field>
