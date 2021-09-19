@@ -31,6 +31,10 @@ class ProductTemplate(models.Model):
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
     insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)
 
+    _sql_constraints = [
+        ('ref_unique', 'unique (default_code)', "Cette référence est déjà utilisée. Veuillez en choisir une autre !"),
+    ]
+
 
     def launch_import(self):
         _logger.info("in launch import")
