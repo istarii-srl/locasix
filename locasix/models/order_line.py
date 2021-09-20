@@ -36,6 +36,38 @@ class OrderLine(models.Model):
 
 
 
+    def get_line_type(self):
+        for line in self:
+            if line.weekend_offer:
+                return "weekend"
+            elif line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates and line.has_24_price:
+                return "prix_6_double"
+            elif line.is_multi and line.usage_rate_display == "24" and line.show_discount_rates and line.has_24_price:
+                return "prix_6_24"
+            elif line.is_multi and line.usage_rate_display == "8" and line.show_discount_rates and line.has_24_price:
+                return "prix_6_8"
+            elif line.is_multi and line.usage_rate_display == "duo" and not line.show_discount_rates and line.has_24_price:
+                return "prix_3_double"
+            elif line.is_multi and line.usage_rate_display == "24" and not line.show_discount_rates and line.has_24_price:
+                return "prix_3_24"
+            elif line.is_multi and line.usage_rate_display == "8" and not line.show_discount_rates and line.has_24_price:
+                return "prix_3_8"
+            elif line.is_multi and line.show_discount_rates:
+                return "prix_6"
+            elif line.is_multi and not line.show_discount_rates:
+                return "prix_3"
+            elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Jours" and line.has_24_price and line.usage_rate_display == "duo":
+                return "prix_jour_duo"
+            elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Jours" and line.has_24_price and line.usage_rate_display == "24":
+                return "prix_jour_24"
+            elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Jours" and line.has_24_price and line.usage_rate_display == "8":
+                return "prix_jour_8"
+            elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Jours":
+                return "prix_jour"
+            elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Mois":
+                return "prix_mois"
+            else:
+                return "prix_fixe"
 
     def get_section_type(self):
         #section weekend - done
@@ -53,28 +85,46 @@ class OrderLine(models.Model):
         # secttion prix jour double
         # section forfait mensuel
         for line in self:
-            section_lines = line.order_id.retrieve_lines_from_section(line)
-            if line.weekend_offer:
-                return "weekend"
+            precedence = {
+               "weekend":0,
+               "prix_6_double": 1,
+               "prix_6_24": 2,
+               "prix_6_8": 2,
+               "prix_3_double": 3,
+               "prix_3_24": 4,
+               "prix_3_8": 4,
+               "prix_6": 5,
+               "prix_3": 6,
+               "prix_jour_double": 7,
+               "prix_jour_8": 8,
+               "prix_jour_24": 8,
+               "prix_jour": 9,
+               "prix_mois": 10,
+               "prix_fixe": 11
+            }
+            section_lines = line.order_id.retrieve_lines_from_section_without_id(line)
+            best_type = "prix_fixe"
+            prec = 11
+            best_has_24 = False
+            hour_suffix = ""
             for line in section_lines:
-                if line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates and line.has_24_price:
-                    return "prix_6_double"
-                elif line.is_multi and line.usage_rate_display == "24" and line.show_discount_rates and line.has_24_price:
-                    return "prix_6_24"
-                elif line.is_multi and line.usage_rate_display == "8" and line.show_discount_rates and line.has_24_price:
-                    return "prix_6_8"
-                if line.is_multi and line.usage_rate_display == "duo" and not line.show_discount_rates and line.has_24_price:
-                    return "prix_3_double"
-                elif line.is_multi and line.usage_rate_display == "24" and not line.show_discount_rates and line.has_24_price:
-                    return "prix_3_24"
-                elif line.is_multi and line.usage_rate_display == "8" and not line.show_discount_rates and line.has_24_price:
-                    return "prix_3_8"
-            for line in section_lines:
-                if line.is_multi and line.show_discount_rates:
-                    return "prix_6"
-                elif line.is_multi and not line.show_discount_rates:
-                    return "prix_3"
-            return "prix_fixe"
+                line_type = line.get_line_type()
+                line_prec = precedence[line_type]
+                if line_prec < prec:
+                    best_has_24 = line.has_24_price
+                    best_type = line_type
+                    prec = line_prec
+                if line.has_24_price and line.usage_rate_display == "duo":
+                    hour_suffix = "_double"
+                elif line.has_24_price and line.usage_rate_display == "24":
+                    hour_suffix = "_24"
+                elif line.has_24_price and line.usage_rate_display == "8":
+                    hour_suffix = "_8"
+                
+            if not best_has_24:
+                best_type+hour_suffix
+                
+            return best_type
 
 
 
