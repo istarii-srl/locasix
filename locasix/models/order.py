@@ -120,7 +120,7 @@ class Order(models.Model):
         for order in self:
             if order.has_transport_prices():
                 _logger.info("has transport price")
-                super(Order, self).action_quotation_send()
+                return super(Order, self).action_quotation_send()
             else:
                 _logger.info("warning")
                 view = self.env.ref('locasix.view_warning_transport')
