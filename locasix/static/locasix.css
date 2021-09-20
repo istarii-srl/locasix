@@ -33,7 +33,7 @@
 }
 
 table { border-collapse:collapse; }
-table thead th { border-bottom: 1px solid #000; padding-bottom: 15px;}
+table tr th { border-bottom: 1px solid #000; padding-bottom: 15px;}
 
 tr.space_above>td {
     padding-top: 1em;
