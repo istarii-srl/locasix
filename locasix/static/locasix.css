@@ -42,3 +42,8 @@ tr.space_above>td {
 span.block {
     display:block;
 }
+
+span.table-column-subtitle {
+    font-size: 9px;
+    font-style: italic;
+}
