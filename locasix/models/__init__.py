@@ -7,3 +7,5 @@ from . import product_link
 from . import category
 from . import product_plan
 from . import plan_counter
+from . import product_technical_file
+from . import technical_counter
