@@ -102,7 +102,7 @@
             </div>
             <t t-set="section_lines" t-value="doc.get_sections()"/>
             <t t-foreach="section_lines" t-as="section_line">
-                <div class="row" style="width: 100%; font-size: 15px; padding-top: 60px; padding-bottom: 20px;">
+                <div style="font-size: 15px; padding-top: 60px; padding-bottom: 20px;">
                     <span t-field="section_line.name"/>
                 </div>
                 <t t-if="section_line.get_section_type() == 'prix_fixe'">
@@ -165,6 +165,7 @@
                         <span t-field="line.product_id.name"/>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.description"/>
+                        <a t-if="line.product_id.has_ref_to_condi" t-attf-href="line.product_id.more_details_link">Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
