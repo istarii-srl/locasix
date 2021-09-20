@@ -9,7 +9,7 @@
                     </div>
                     <t t-call="locasix.locasix_front_page"/>
                     <t t-call="locasix.locasix_body"/>
-                    <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important">
+                    <div class="page font-calibri" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
                         <h3>Conditions additionnelles</h3>
                         <p t-field="doc.added_terms"/>
                     </div>
