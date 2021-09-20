@@ -37,6 +37,7 @@
         'views/order.xml',
         'views/assets.xml',
         'views/client.xml',
+        'views/product_plan.xml',
         'wizards/export_products.xml',
         'wizards/no_transport_price_warning.xml',
         'wizards/import_products.xml',

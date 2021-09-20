@@ -58,6 +58,9 @@
                 <page string='Fiche technique'>
                     <field name="technical_file"/>
                 </page>
+                <page string="Plans">
+                    <field name="plan_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1"/>
+                </page>
             </page>
 
         </field>
