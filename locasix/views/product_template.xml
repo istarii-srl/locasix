@@ -56,10 +56,10 @@
                     </group>
                 </page>
                 <page string='Fiches techniques'>
-                    <field name="technical_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1"/>
+                    <field name="technical_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Ajouter un fichier'}" nolabel="1"/>
                 </page>
                 <page string="Plans">
-                    <field name="plan_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1"/>
+                    <field name="plan_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Ajouter un plan'}" nolabel="1"/>
                 </page>
             </page>
 

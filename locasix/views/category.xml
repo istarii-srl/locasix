@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <field name="parent_id" position="after">
                 <field name="show_section_order"/>
+                <field name="show_electro_annexe"/>
             </field>
         </field>
     </record>
