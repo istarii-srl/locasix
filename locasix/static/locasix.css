@@ -47,3 +47,7 @@ span.small-italic {
     font-size: 10px;
     font-style: italic;
 }
+
+.underlined {
+    text-decoration: underline;
+}
