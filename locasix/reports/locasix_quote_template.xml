@@ -12,6 +12,12 @@
                     <div class="page font-calibri" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
                         <h3>Conditions additionnelles</h3>
                         <p t-field="doc.added_terms"/>
+                        <div style="height: 100px;"/>
+                        <div style="height: 200px; width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                            <span style="font-weight: bold;">Confirmation de la commande : <br/><br/></span>
+                            <span>Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention<br/></span>
+                            <span>"Bon pour accourd" + le cachet de l'entreprise.</span>
+                        </div>
                     </div>
                     <div class="footer not-first-page">
                         <img src="/locasix/static/img/locasix_footer.png" style="max-width: 850px; padding-bottom: 20px;"/>
@@ -118,19 +124,19 @@
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6'">
                     <t t-set="column_names_n_lines" t-value="1"/>
-                    <t t-set="column_names_before_first_line" t-value="['\n', '\n', '\n'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6_8'">
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_before_first_line" t-value="['\n', '\n', '\n'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois', '', '', '']"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6_24'">
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_before_first_line" t-value="['\n', '\n', '\n'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h', '24/24h', '24/24h', '24/24h']"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
@@ -230,26 +236,26 @@
     <template id="locasix_six_price_section">
         <table style="width: 100%">
             <thead style="font-weight: bold; text-align: center;">
-                <th width="8%">Article</th>
-                <th width="25%">Description</th>
-                <th width="7%">Qté</th>
+                <th width="8%"><br/>Article</th>
+                <th width="25%"><br/>Description</th>
+                <th width="7%"><br/>Qté</th>
                 <th width="10%">
                     <div class="col">
-                        <span class="block reduction" t-esc="column_names_before_first_line[0]"/>
+                        <span class="block reduction"><br/></span>
                         <span class="block">Prix/jour</span>
                         <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
-                        <span class="block reduction" t-esc="column_names_before_first_line[1]"/>
+                        <span class="block reduction"><br/></span>
                         <span class="block">Prix/semaine</span>
                         <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[1]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
-                        <span class="block reduction" t-esc="column_names_before_first_line[2]"/>
+                        <span class="block reduction"><br/></span>
                         <span class="block">Prix/mois</span>
                         <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[2]"/>
                     </div>
