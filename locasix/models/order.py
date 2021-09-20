@@ -195,7 +195,7 @@ class Order(models.Model):
                 if not tar:
                     tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour", "categ_id": categ_id.id})
                 
-                tar_in_order = self.env["sale.order.line"].search([("product_id", "=", tar.product_variant_id.id)], limit=1)
+                tar_in_order = self.env["sale.order.line"].search([("product_id", "=", tar.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
                 if not tar_in_order:
 
                     self.env["sale.order.line"].create({
@@ -211,7 +211,7 @@ class Order(models.Model):
                 if not tr:
                     tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour", "categ_id": categ_id.id})
                 
-                ta_in_order = self.env["sale.order.line"].search([("product_id", "=", ta.product_variant_id.id)], limit=1)
+                ta_in_order = self.env["sale.order.line"].search([("product_id", "=", ta.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
                 if not ta_in_order:
                     self.env["sale.order.line"].create({
                     'order_id': self.id,
@@ -220,7 +220,7 @@ class Order(models.Model):
                     'from_compute': True,
                 })
 
-                tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id)], limit=1)
+                tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
                 if not tr_in_order:
                     self.env["sale.order.line"].create({
                     'order_id': self.id,
