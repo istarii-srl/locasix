@@ -13,3 +13,4 @@ access_locasix_product_import_user,locasix.locasix.product.import,model_locasix_
 access_locasix_client_import_user,locasix.locasix.client.import,model_locasix_client_import,base.group_user,1,1,1,1
 access_locasix_transport_warning_user,locasix.locasix.transport.warning,model_locasix_transport_warning,base.group_user,1,1,1,1
 access_locasix_product_plan_user,locasix.locasix.product.plan,model_locasix_product_plan,base.group_user,1,1,1,1
+access_locasix_plan_counter_user,locasix.locasix.plan.counter,model_locasix_plan_counter,base.group_user,1,1,1,1
