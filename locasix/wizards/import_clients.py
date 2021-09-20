@@ -20,7 +20,7 @@ class ImportClients(models.TransientModel):
         _logger.info("Import clients")
         try:
             for wizard in self:
-                fp = tempfile.NamedTemporaryFile(suffix=".xls")
+                fp = tempfile.NamedTemporaryFile(suffix=".xlsx")
                 fp.write(binascii.a2b_base64(wizard.file))
                 fp.seek(0)
                 book = xlrd.open_workbook(fp.name)
