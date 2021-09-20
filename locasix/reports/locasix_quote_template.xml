@@ -129,7 +129,7 @@
                 <th width="45%"><span t-esc="price_column_name"/></th>
             </thead>
             <tbody>
-            <t t-foreach="doc.retrieve_lines_from_section(section_line)" t-as="line">
+            <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
                 <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
@@ -178,7 +178,7 @@
                 </th>
             </thead>
             <tbody>
-            <t t-foreach="doc.retrieve_lines_from_section(section_line)" t-as="line">
+            <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
                 <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
