@@ -42,6 +42,14 @@ class Order(models.Model):
         
         return res
 
+    def has_electro_annexe(self):
+        for order in self:
+            for line in order.order_line:
+                if line.product_id and line.product_id.categ_id:
+                    if line.product_id.categ_id.show_electro_annexe:
+                        return True
+            return False
+
     def adapt_front_page(self):
         _logger.info("adapt front page")
         for order in self:
@@ -176,7 +184,7 @@ class Order(models.Model):
     def enforce_transport(self):
         _logger.info("enforce transport")
         for order in self:
-            categ_id = self.env["product.category"].search(["name", "=", "Transport"], limit="1")
+            categ_id = self.env["product.category"].search(["name", "=", "Transport"], limit=1)
             if not categ_id:
                 categ_id = self.env["product.category"].create({
                     "name": "Transport",
