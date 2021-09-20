@@ -116,7 +116,7 @@ class ExportProducts(models.TransientModel):
 
             row = 1
             for product in wizard.product_ids:
-                if not product.has_multi_price:
+                if product.has_multi_price:
                     worksheet.write(row, 0, product.name)
                     worksheet.write(row, 1, product.default_code)
                     worksheet.write(row, 2, product.product_description)
@@ -124,8 +124,8 @@ class ExportProducts(models.TransientModel):
                     worksheet.write(row, 4, product.has_24_price)
                     worksheet.write(row, 5, product.categ_id.name)
                     worksheet.write(row, 6, product.day_price)
-                    worksheet.write(row, 6, product.week_price)
-                    worksheet.write(row, 6, product.month_price)
+                    worksheet.write(row, 7, product.week_price)
+                    worksheet.write(row, 8, product.month_price)
                     worksheet.write(row, 9, product.weekend_price)
                     worksheet.write(row, 10, product.has_ref_to_condi)
 
