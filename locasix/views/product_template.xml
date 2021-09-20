@@ -56,7 +56,7 @@
                     </group>
                 </page>
                 <page string='Fiche technique'>
-                    <field name="technical_file"/>
+                    <field name="technical_file" widget="image" class="oe_avatar" options="{'preview_image': 'technical_file_256'}"/>
                 </page>
                 <page string="Plans">
                     <field name="plan_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1"/>
