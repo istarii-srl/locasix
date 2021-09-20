@@ -13,7 +13,7 @@ class Order(models.Model):
 
     added_terms = fields.Html(string="Conditions additionnelles", default="<span><b>Conditions de location</b></span><ul><li style='margin:0px;'><span>Prix hors TVA 21%.</span></li><li style='margin:0px;'><span>Facturation minimale de 28 jours.</span></li><li style='margin:0px;'><span>Si annulation de la commande dans les 48H avant la date de livraison, des frais de dossier de 50,00€ par pièce vous seront facturés.</span></li><li style='margin:0px;'><span>Si demande de retour impératif à une date précise, les frais de transport seront majorés de 30%.</span></li><li style='margin:0px;'><span>Une caution peut vous être demandée avant la livraison.</span></li><li style='margin:0px;'><span><u>Si location de groupes électrogènes et/ou mâts d'éclairage :</u></span><ul><li style='margin:0px;'><span>Entretien journalier : carburant, niveau d'huile, niveau d'eau ... à votre charge.</span></li><li style='margin:0px;'><span>Entretien périodique comprenant filtres, huile ... à notre charge.</span></li><li style='margin:0px;'><span>Service de dépannage assuré uniquement du lundi au vendredi de 7h à 16h.</span></li></ul></li><li style='margin:0px;'><span>Délai : à convenir et suivant disponibilité.</span></li><li style='margin:0px;'><span>Validité de l'offre : 30 jours.</span></li><li style='margin:0px;'><span>Tous raccordements électriques et raccordements à l'alimentation en eau sont à votre charge.</span></li><li style='margin:0px;'><span>Voir conditions détaillées en dernière page.<br></span></li></ul><span><br></span><span><b><br/>Transport<br/></b></span><span>Transport et déchargement de l'ensemble repris ci-dessus sur un terrain dur, horizontal et accessible par nos camions-grues.<br/></span><span>Attention, selon le type de matériel livré, nos camions peuvent avoir une longueur entre 11 et 21m, une largeur entre 2,6 et 3m, une hauteur entre 4 et 11m, un poids entre 17 et 26T.<br/></span><span>Si demande de retour impératif à une date précise, les frais de transport seront majorés de 30%.</span><span><br></span><span><b><br/>Assurance contre bris de machine<br/></b></span><span>Y compris vol, incendie, dégâts des eaux (8% du loyer) :<br/></span><span>Une franchise de 350,00€ par sinistre éventuel, sauf en cas de vol, la franchise sera de 20% de la valeur du bien. Sauf en cas de faute grave, dol ou malveillance. La Compagnie renonce au recours qu'elle serait en droit d'exercer contre le locataire.<br/></span><span>Pour le mobilier des modules habitables, une franchise de 500,00€ est d'application.<br/></span><span>Veuillez nous confirmer la souscription à l'option assurance lors de votre commande.</span><span><br></span><span><b><br/>Contribution environnementale<br/></b></span><span>Par respect pour l'environnement et dans le cadre de la législation en vigueur, Locasix ne cesse de faire des efforts. Traitement et enlèvement des déchets utilisés au cours du projet (filtres, pièces de rechange, lubrifiants, mazout pollué, réfrigérant, etc. Locasix demande au locataire une contribution environnementale forfaitaire de 2% du loyer total de la (des) machine(s).</span><span><br></span><span><b><br/>Nettoyage<br/></b></span><span>Texte à rédiger. Inclus dans les limites du raisonnable. On se réserve le droit de facturer. Un forfait de nettoyage à partir de 150€ HTVA/pièce vous sera facturé au retour si l'état de propreté et d'hygiène le requiert.</span>")
     weekend_offer = fields.Boolean(string="Offre week-end", default=False)
-    usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")])
+    usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")], default="8", required=True)
     show_discount_rates = fields.Boolean(string="Afficher les remises", default=False)
 
     months_2_discount_rate = fields.Float(string="Remise 2", default=0.10)
@@ -173,13 +173,20 @@ class Order(models.Model):
     def enforce_transport(self):
         _logger.info("enforce transport")
         for order in self:
+            categ_id = self.env["product.category"].search(["name", "=", "Transport"], limit="1")
+            if not categ_id:
+                categ_id = self.env["product.category"].create({
+                    "name": "Transport",
+                    "show_section_order": True,
+                })
             if order.weekend_offer:
                 tar = self.env["product.template"].search([("default_code", "=", "TAR")], limit=1)
                 if not tar:
-                    tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour"})
+                    tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour", "categ_id": categ_id.id})
                 
                 tar_in_order = self.env["sale.order.line"].search([("product_id", "=", tar.product_variant_id.id)], limit=1)
                 if not tar_in_order:
+
                     self.env["sale.order.line"].create({
                         'order_id': self.id,
                         'product_id': tar.product_variant_id.id,
@@ -188,10 +195,10 @@ class Order(models.Model):
             else:
                 ta = self.env["product.template"].search([("default_code", "=", "TA")], limit=1)
                 if not ta:
-                    ta = self.env["product.template"].create({"default_code": "TA", "name": "Transport aller"})
+                    ta = self.env["product.template"].create({"default_code": "TA", "name": "Transport aller", "categ_id": categ_id.id})
                 tr = self.env["product.template"].search([("default_code", "=", "TR")], limit=1)
                 if not tr:
-                    tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour"})
+                    tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour", "categ_id": categ_id.id})
                 
                 ta_in_order = self.env["sale.order.line"].search([("product_id", "=", ta.product_variant_id.id)], limit=1)
                 if not ta_in_order:
