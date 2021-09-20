@@ -36,6 +36,9 @@ class Order(models.Model):
         if vals.get('adapt_front_page', False):
             vals.pop('adapt_front_page', 1)
             res = super(Order, self).write(vals)
+        elif "weekend_offer" in vals:
+            res = super(Order, self).write(vals)
+            self.enforce_computations()
         else:
             res = super(Order, self).write(vals)
             self.adapt_front_page()
