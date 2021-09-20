@@ -20,7 +20,7 @@ class ExportProducts(models.TransientModel):
     def export_products(self):
         _logger.info("Export products")
         for wizard in self:
-            filename = "products.xls"
+            filename = "products.xlsx"
             self.env['ir.attachment'].search([('name' , '=', filename)]).unlink()
             fp = BytesIO()
             workbook = Workbook(fp, {'in_memory': True})
