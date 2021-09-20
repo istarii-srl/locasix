@@ -75,9 +75,9 @@ class ExportProducts(models.TransientModel):
             for product in wizard.product_ids:
                 if not product.has_multi_price:
                     worksheet.write(row, 0, product.name)
-                    worksheet.write(row, 1, product.default_code)
-                    worksheet.write(row, 2, product.product_description)
-                    worksheet.write(row, 3, product.more_details_link)
+                    worksheet.write(row, 1, product.default_code if product.default_code else "")
+                    worksheet.write(row, 2, product.product_description if product.product_description else "")
+                    worksheet.write(row, 3, product.more_details_link if product.more_details_link else "")
                     worksheet.write(row, 4, product.has_24_price)
                     worksheet.write(row, 5, product.categ_id.name)
                     worksheet.write(row, 6, product.list_price)
@@ -118,9 +118,9 @@ class ExportProducts(models.TransientModel):
             for product in wizard.product_ids:
                 if product.has_multi_price:
                     worksheet.write(row, 0, product.name)
-                    worksheet.write(row, 1, product.default_code)
-                    worksheet.write(row, 2, product.product_description)
-                    worksheet.write(row, 3, product.more_details_link)
+                    worksheet.write(row, 1, product.default_code if product.default_code else "")
+                    worksheet.write(row, 2, product.product_description if product.product_description else "")
+                    worksheet.write(row, 3, product.more_details_link if product.more_details_link else "")
                     worksheet.write(row, 4, product.has_24_price)
                     worksheet.write(row, 5, product.categ_id.name)
                     worksheet.write(row, 6, product.day_price)
@@ -136,7 +136,7 @@ class ExportProducts(models.TransientModel):
         worksheet.set_column(0, 0, 20)
         worksheet.set_column(1, 1, 20)
         worksheet.write(0, 0, "Ref produit actifs")
-        worksheet.write(0, 1, "Ref product passif")
+        worksheet.write(0, 1, "Ref produits passifs")
         for wizard in self:
             row = 1
             links = {}
