@@ -116,7 +116,7 @@ class ExportProducts(models.TransientModel):
 
             row = 1
             for product in wizard.product_ids:
-                if not product.has_multi_price:
+                if product.has_multi_price:
                     worksheet.write(row, 0, product.name)
                     worksheet.write(row, 1, product.default_code)
                     worksheet.write(row, 2, product.product_description)
