@@ -191,6 +191,7 @@ class Order(models.Model):
         for order in self:
             for line in order.order_line:
                 line.update_line_values(pricing=True)
+            order.enforce_computations()
 
     def mark_manual_sections(self):
         _logger.info("mark manual section")
