@@ -141,7 +141,11 @@ class Order(models.Model):
     def has_transport_prices(self):
         for order in self:
             for line in order.order_line:
+                _logger.info("has tototo")
+                _logger.info(line.product_id.default_code in ["TA", "TR", "TAR"] )
+                _logger.info(line.price_unit == 0.0)
                 if line.product_id and line.product_id.default_code in ["TA", "TR", "TAR"] and line.price_unit == 0.0:
+                    _logger.info("tooyo")
                     return False
             return True
 
