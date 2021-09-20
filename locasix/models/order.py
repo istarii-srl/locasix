@@ -106,6 +106,39 @@ class Order(models.Model):
                 line.product_id.active = False
                 line.product_id.product_tmpl_id.active = False
         return True
+    
+    def action_quotation_send(self):
+        for order in self:
+            if order.has_transport_prices():
+                super(Order, self).action_quotation_send()
+            else:
+                view = self.env.ref('locasix.view_warning_transport')
+                return {
+                'name': 'Attention ! Il manque des prix pour le transport',
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'locasix.transport.warning',
+                'views': [(view.id, 'form')],
+                'view_id': view.id,
+                'target': 'new',
+                'context': {
+                    },
+                }
+    
+
+    def has_transport_prices(self):
+        for order in self:
+            for line in order.order_line:
+                if line.product_id and line.product_id.default_code in ["TA", "TR", "TAR"] and line.price_unit == 0.0:
+                    return False
+            return True
+
+
+    def action_cancel(self):
+        super(Order, self).action_cancel()
+        self.done_order = False
+        return True        
 
     def line_computations(self):
         sections = {}

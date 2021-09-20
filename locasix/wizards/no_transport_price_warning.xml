@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_warning_transport" model="ir.ui.view">
+        <field name="name">locasix.transport.warning.form</field>
+        <field name="model">locasix.transport.warning</field>
+        <field name="arch" type="xml">
+            <form string="Attention ! Il manque des prix pour le transport">
+                <p>
+                    Il reste des lignes de transport où le prix n'a pas été défini.
+                </p>
+                <footer>
+                    <button string="Annuler" class="btn-primary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

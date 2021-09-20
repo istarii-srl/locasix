@@ -16,7 +16,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'ERP',
-    'version': '0.16.16',
+    'version': '0.16.34',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale_management', 'product'],
@@ -35,8 +35,18 @@
         'views/product_template.xml',
         'views/category.xml',
         'views/order.xml',
+        'views/assets.xml',
+        'views/client.xml',
+        'wizards/export_products.xml',
+        'wizards/no_transport_price_warning.xml',
+        'wizards/import_products.xml',
+        'wizards/import_clients.xml',
         'wizards/already_computed_warning.xml',
         'views/menus.xml',
+    ],
+    'qweb': [
+        'static/src/xml/client_tree_buttons.xml',
+        'static/src/xml/product_tree_buttons.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

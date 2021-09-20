@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="ListView.buttons">
+        <t t-jquery="div.o_list_buttons" t-operation="append">
+            <button type="button" t-if='widget.modelName == "res.partner"' class="o_button_import_client btn btn-secondary">Importer
+            </button>
+        </t>
+    </t>
+</templates>
