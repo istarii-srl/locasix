@@ -184,7 +184,7 @@ class Order(models.Model):
     def enforce_transport(self):
         _logger.info("enforce transport")
         for order in self:
-            categ_id = self.env["product.category"].search(["name", "=", "Transport"], limit=1)
+            categ_id = self.env["product.category"].search([("name", "=", "Transport")], limit=1)
             if not categ_id:
                 categ_id = self.env["product.category"].create({
                     "name": "Transport",
