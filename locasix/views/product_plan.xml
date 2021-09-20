@@ -1,4 +1,29 @@
 <odoo>
+    <record id="view_product_image_form" model="ir.ui.view">
+        <field name="name">product.image.view.form</field>
+        <field name="model">locasix.product.image</field>
+        <field name="arch" type="xml">
+            <form string="Product Plans">
+                <field name="sequence" invisible="1"/>
+                <div class="row o_website_sale_image_modal">
+                    <div class="col-md-6 col-xl-5">
+                        <label for="name" string="Image Name"/>
+                        <h2>
+                            <field name="name" placeholder="Image Name"/>
+                        </h2>
+                    </div>
+                    <div class="col-md-6 col-xl-7 text-center o_website_sale_image_modal_container">
+                        <div class="row">
+                            <div class="col">
+                                <field name="image_1920" widget="image"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+
     <record id="product_image_view_kanban" model="ir.ui.view">
         <field name="name">product.image.view.kanban</field>
         <field name="model">locasix.product.plan</field>
