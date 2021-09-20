@@ -5,11 +5,10 @@
         <field name="arch" type="xml">
             <form string="Fiche technique">
                 <field name="sequence" invisible="1"/>
-                    <div class="text-center o_website_sale_image_modal_container">
-                        <div class="row">
-                            <div class="col">
-                                <field name="image_1920" widget="image"/>
-                            </div>
+                <div class="text-center o_website_sale_image_modal_container">
+                    <div class="row">
+                        <div class="col">
+                            <field name="image_1920" widget="image"/>
                         </div>
                     </div>
                 </div>
