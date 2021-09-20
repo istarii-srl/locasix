@@ -9,14 +9,16 @@
                     </div>
                     <t t-call="locasix.locasix_front_page"/>
                     <t t-call="locasix.locasix_body"/>
-                    <div class="page font-calibri" style="padding: 100px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
-                        <span style="font-size: 16px; font-weight:500;">Conditions additionnelles</span>
-                        <div style="height: 5Opx;"/>
-                        <div style="height: 800px;"><p style="font-size:10px;" t-field="doc.added_terms"/></div>
-                        <div style="height: 200px; width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
-                            <span style="font-weight: bold;">Confirmation de la commande : <br/><br/></span>
-                            <span style="font-size: 10px;">Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention<br/></span>
-                            <span style="font-size: 10px;">"Bon pour accourd" + le cachet de l'entreprise.</span>
+                    <div class="page font-calibri" style="padding: 0px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
+                        <div class="col">
+                            <span style="font-size: 16px; font-weight:500;">Conditions additionnelles</span>
+                            <div style="height: 5Opx;"/>
+                            <div style="height: 800px;"><p style="font-size:10px;" t-field="doc.added_terms"/></div>
+                            <div style="height: 200px; width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                                <span style="font-weight: bold;">Confirmation de la commande : <br/><br/></span>
+                                <span style="font-size: 10px;">Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention<br/></span>
+                                <span style="font-size: 10px;">"Bon pour accourd" + le cachet de l'entreprise.</span>
+                            </div>
                         </div>
                     </div>
                     <div class="footer not-first-page">
@@ -29,10 +31,10 @@
 
     <template id="locasix_front_page">
         <div class="page row font-treble" style="padding: 0px 15px 0px 15px !important; margin: 0px !important; font-size: 11px;">
-            <div class="col" style="width: 235px !important; height: 1095px !important; padding: 0px !important;">
-                <img src="/locasix/static/img/locasix_lateral_bar.png" style="max-height: 1095px;"/>
+            <div class="col" style="width: 235px !important; height: 1085px !important; padding: 0px !important;">
+                <img src="/locasix/static/img/locasix_lateral_bar.png" style="max-height: 1085px;"/>
             </div>
-            <div class="col" style="width: 635px !important; height: 1095px !important; padding-left: 35px !important;">
+            <div class="col" style="width: 635px !important; height: 1085px !important; padding-left: 35px !important;">
                 <div style="height: 60px;"/>
                 <div style="height: 3px; width: 40px; background-color: rgb(210, 40, 50); border-radius: 30px;"/>
                 <div style="height: 15px;"/>
@@ -60,7 +62,7 @@
                     </div>
                 </div>
                 <div style="height: 75px;"/>
-                <div style="height: 450px;">
+                <div style="height: 455px;">
                     <span t-raw="doc.front_page_body"/>
                 </div>
                 <div style="height: 100px; margin-left: -25px;">
