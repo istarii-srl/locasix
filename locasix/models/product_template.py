@@ -28,6 +28,8 @@ class ProductTemplate(models.Model):
 
     technical_file = fields.Image(string="Fiche technique")
 
+    plan_ids = fields.One2many(comodel_name="locasix.product.plan", inverse_name="product_tmpl_id")
+
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
     insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)
 
