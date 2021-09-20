@@ -159,7 +159,7 @@
                 <th width="40%">Description</th>
                 <th width="7%">Qté</th>
                 <th width="15%">
-                    <div class="col">
+                    <div class="col" style="display: block;">
                         <span>Prix/jour</span>
                         <span t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
                     </div>
