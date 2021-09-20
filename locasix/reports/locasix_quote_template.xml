@@ -101,6 +101,21 @@
                     <t t-set="price_column_name" t-value="'Prix / jour calendrier'"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
+                <t t-if="section_line.get_section_type() == 'prix_3'">
+                    <t t-set="column_names_n_lines" t-value="1"/>
+                    <t t-set="column_names_second_line" t-value="[]"/>
+                    <t t-call="locasix.locasix_three_price_section"/>
+                </t>
+                <t t-if="section_line.get_section_type() == 'prix_3_8'">
+                    <t t-set="column_names_n_lines" t-value="2"/>
+                    <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois']"/>
+                    <t t-call="locasix.locasix_three_price_section"/>
+                </t>
+                <t t-if="section_line.get_section_type() == 'prix_3_24'">
+                    <t t-set="column_names_n_lines" t-value="2"/>
+                    <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h']"/>
+                    <t t-call="locasix.locasix_three_price_section"/>
+                </t>
             </t>
         </div>
     </template>
@@ -129,6 +144,63 @@
                     </td>
                     <td width="45%" class="text-center">
                         <span t-field="line.product_id.list_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                        <span> HT</span>
+                    </td>
+                </tr>
+            </t>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="locasix_three_price_section">
+        <table style="width: 100%">
+            <thead style="font-weight: bold; text-align: center;">
+                <th width="8%">Article</th>
+                <th width="40%">Description</th>
+                <th width="7%">Qté</th>
+                <th width="15%">
+                    <div class="col">
+                        <span>Prix/jour</span>
+                        <span t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                    </div>
+                </th>
+                <th width="15%">
+                    <div class="col">
+                        <span>Prix/semaine</span>
+                        <span t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                    </div>
+                </th>
+                <th width="15%">
+                    <div class="col">
+                        <span>Prix/mois</span>
+                        <span t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                    </div>
+                </th>
+            </thead>
+            <tbody>
+            <t t-foreach="doc.retrieve_lines_from_section(section_line)" t-as="line">
+                <tr t-if="not line.is_section" class="space_above">
+                    <td width="8%" class="text-center">
+                        <span t-field="line.product_id.default_code"/>
+                    </td>
+                    <td width="40%" class="text-left">
+                        <span t-field="line.product_id.name"/>
+                        <br/>
+                        <span style="font-style: italic; font-size:9px;" t-field="line.product_id.description"/>
+                    </td>
+                    <td width="7%" class="text-center">
+                        <span t-esc="str(int(line.product_uom_qty))"/>
+                    </td>
+                    <td width="15%" class="text-center">
+                        <span t-field="line.product_id.day_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                        <span> HT</span>
+                    </td>
+                    <td width="15%" class="text-center">
+                        <span t-field="line.product_id.week_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                        <span> HT</span>
+                    </td>
+                    <td width="15%" class="text-center">
+                        <span t-field="line.product_id.month_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                         <span> HT</span>
                     </td>
                 </tr>
