@@ -71,7 +71,7 @@
     </template>
 
     <template id="locasix_body">
-        <div class="page" style="padding: 120px 15px 20px 15px !important; margin: 0px !important; page-break-after: always; font-size: 11px;">
+        <div class="page" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; page-break-after: always; font-size: 11px;">
             <div class="row font-calibri">
                 <div class="col-5">
                     <div style="height:40px;"/>
