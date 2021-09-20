@@ -107,13 +107,31 @@ class Order(models.Model):
             
 
     def _action_confirm(self):
-        super(Order, self)._action_confirm()
-        self.done_order = True
-        for line in self.order_line:
-            if line.temporary_product and line.product_id:
-                line.product_id.active = False
-                line.product_id.product_tmpl_id.active = False
-        return True
+        for order in self:
+            if order.has_transport_prices():
+                super(Order, self)._action_confirm()
+                self.done_order = True
+                for line in self.order_line:
+                    if line.temporary_product and line.product_id:
+                        line.product_id.active = False
+                        line.product_id.product_tmpl_id.active = False
+                return True
+            else:
+                _logger.info("warning")
+                view = self.env.ref('locasix.view_warning_transport')
+                return {
+                'name': 'Attention ! Il manque des prix pour le transport',
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'locasix.transport.warning',
+                'views': [(view.id, 'form')],
+                'view_id': view.id,
+                'target': 'new',
+                'context': {
+                    },
+                }                
+        
     
     def action_quotation_send(self):
         _logger.info("action quotation")
@@ -142,6 +160,7 @@ class Order(models.Model):
         for order in self:
             for line in order.order_line:
                 if line.product_id and line.product_id.default_code in ["TA", "TR", "TAR"] and line.price_unit == 0.0:
+                    _logger.info("tooyo")
                     return False
             return True
 
@@ -193,7 +212,7 @@ class Order(models.Model):
             if order.weekend_offer:
                 tar = self.env["product.template"].search([("default_code", "=", "TAR")], limit=1)
                 if not tar:
-                    tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour", "categ_id": categ_id.id})
+                    tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour", "categ_id": categ_id.id, "list_price": 0.0})
                 
                 tar_in_order = self.env["sale.order.line"].search([("product_id", "=", tar.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
                 if not tar_in_order:
@@ -206,10 +225,10 @@ class Order(models.Model):
             else:
                 ta = self.env["product.template"].search([("default_code", "=", "TA")], limit=1)
                 if not ta:
-                    ta = self.env["product.template"].create({"default_code": "TA", "name": "Transport aller", "categ_id": categ_id.id})
+                    ta = self.env["product.template"].create({"default_code": "TA", "name": "Transport aller", "categ_id": categ_id.id, "list_price": 0.0})
                 tr = self.env["product.template"].search([("default_code", "=", "TR")], limit=1)
                 if not tr:
-                    tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour", "categ_id": categ_id.id})
+                    tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour", "categ_id": categ_id.id, "list_price": 0.0})
                 
                 ta_in_order = self.env["sale.order.line"].search([("product_id", "=", ta.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
                 if not ta_in_order:
@@ -229,8 +248,6 @@ class Order(models.Model):
                     'from_compute': True,
                 })
     
-    def fetch_transport(self, ref):
-        _logger.info("fetch transport")
         
 
 
@@ -357,7 +374,7 @@ class Order(models.Model):
                             _logger.info(line.is_multi)
                             _logger.info(line.name)
                             _logger.info(line.product_id.has_multi_price)
-                            new_line.is_multi = line.is_multi
+                            new_line.is_multi = line.product_id.has_multi_price
 
     def enforce_computations(self):
         _logger.info("enforce computations")

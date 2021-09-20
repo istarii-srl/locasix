@@ -18,22 +18,22 @@ class ImportProducts(models.TransientModel):
     def import_products(self):
         _logger.info("Import products")
 
-        #try:
-        for wizard in self:
-            fp = tempfile.NamedTemporaryFile(suffix=".xlsx")
-            fp.write(binascii.a2b_base64(wizard.file))
-            fp.seek(0)
-            book = xlrd.open_workbook(fp.name)
-            mono_product_sheet = book.sheet_by_index(0)
-            multi_product_sheet = book.sheet_by_index(1)
-            link_sheet = book.sheet_by_index(2)
-            wizard.create_mono_tarif_products(mono_product_sheet)
-            wizard.create_multi_tarif_products(multi_product_sheet)
-            wizard.create_links(link_sheet)
+        try:
+            for wizard in self:
+                fp = tempfile.NamedTemporaryFile(suffix=".xlsx")
+                fp.write(binascii.a2b_base64(wizard.file))
+                fp.seek(0)
+                book = xlrd.open_workbook(fp.name)
+                mono_product_sheet = book.sheet_by_index(0)
+                multi_product_sheet = book.sheet_by_index(1)
+                link_sheet = book.sheet_by_index(2)
+                wizard.create_mono_tarif_products(mono_product_sheet)
+                wizard.create_multi_tarif_products(multi_product_sheet)
+                wizard.create_links(link_sheet)
                                    
-        #except Exception as e:
-        #    _logger.error(e)
-        #    raise ValidationError('Le fichier xls est incorrect')
+        except Exception as e:
+            _logger.error(e)
+            raise ValidationError('Le fichier xls est incorrect')
 
     def create_mono_tarif_products(self, sheet):
         lines = []
@@ -53,7 +53,7 @@ class ImportProducts(models.TransientModel):
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
             if not product:
-                product = self.env["product.template"].search(["name", "=", line["name"]], limit=1)
+                product = self.env["product.template"].search([("name", "=", line["name"])], limit=1)
             uom_id = self.env["uom.uom"].search([("name", "=", line["uom"])], limit=1)
 
             categ_id = self.env["product.category"].search([("name", "=", line["cat"])], limit=1)
@@ -100,7 +100,7 @@ class ImportProducts(models.TransientModel):
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
             if not product:
-                product = self.env["product.template"].search(["name", "=", line["name"]], limit=1)
+                product = self.env["product.template"].search([("name", "=", line["name"])], limit=1)
 
             if not product:
                 product = self.env["product.template"].create({
