@@ -102,7 +102,7 @@
             </div>
             <t t-set="section_lines" t-value="doc.get_sections()"/>
             <t t-foreach="section_lines" t-as="section_line">
-                <div class="row" style="font-size: 14px; padding-top: 60px; padding-bottom: 20px;">
+                <div class="row" style="font-size: 15px; padding-top: 60px; padding-bottom: 20px;">
                     <span t-field="section_line.name"/>
                 </div>
                 <t t-if="section_line.get_section_type() == 'prix_fixe'">
