@@ -108,10 +108,13 @@ class Order(models.Model):
         return True
     
     def action_quotation_send(self):
+        _logger.info("action quotation")
         for order in self:
             if order.has_transport_prices():
+                _logger.info("has transport price")
                 super(Order, self).action_quotation_send()
             else:
+                _logger.info("warning")
                 view = self.env.ref('locasix.view_warning_transport')
                 return {
                 'name': 'Attention ! Il manque des prix pour le transport',
