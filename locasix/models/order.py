@@ -374,7 +374,7 @@ class Order(models.Model):
                             _logger.info(line.is_multi)
                             _logger.info(line.name)
                             _logger.info(line.product_id.has_multi_price)
-                            new_line.is_multi = line.is_multi
+                            new_line.is_multi = line.product_id.has_multi_price
 
     def enforce_computations(self):
         _logger.info("enforce computations")
