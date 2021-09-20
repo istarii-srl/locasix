@@ -118,19 +118,19 @@
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6'">
                     <t t-set="column_names_n_lines" t-value="1"/>
-                    <t t-set="column_names_before_first_line" t-value="['\n', '\n', '\n'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['<br/>', '<br/>', '<br/>'] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6_8'">
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_before_first_line" t-value="['\n', '\n', '\n'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['<br/>', '<br/>', '<br/>'] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois', '', '', '']"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6_24'">
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_before_first_line" t-value="['\n', '\n', '\n'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['<br/>', '<br/>', '<br/>'] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h', '24/24h', '24/24h', '24/24h']"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
