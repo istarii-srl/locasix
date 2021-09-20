@@ -12,6 +12,12 @@
                     <div class="page font-calibri" style="padding: 140px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
                         <h3>Conditions additionnelles</h3>
                         <p t-field="doc.added_terms"/>
+                        <div style="height: 100px;"/>
+                        <div style="height: 200px; width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                            <span style="font-weight: bold;">Confirmation de la commande : <br/><br/></span>
+                            <span>Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention<br/></span>
+                            <span>"Bon pour accourd" + le cachet de l'entreprise.</span>
+                        </div>
                     </div>
                     <div class="footer not-first-page">
                         <img src="/locasix/static/img/locasix_footer.png" style="max-width: 850px; padding-bottom: 20px;"/>
