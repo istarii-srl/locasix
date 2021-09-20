@@ -203,7 +203,7 @@ class OrderLine(models.Model):
                 self.recompute_insurance()
                 
 
-        if (vals.get('product_id', False) or vals.get('weekend_offer', False)) and not vals.get("from_update", False):
+        if (vals.get('product_id', False) or 'weekend_offer' in vals) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
             self.update_line_values(pricing=False)
