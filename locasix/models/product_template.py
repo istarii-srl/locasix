@@ -27,10 +27,7 @@ class ProductTemplate(models.Model):
     months_6_discount = fields.Float(string="Remise 6 mois")
 
 
-    technical_file = fields.Image(string="Fiche technique", max_width=1920, max_height=1920)
-    # resized fields stored (as attachment) for performance
-    technical_file_256 = fields.Image("Fiche technique 256", related="technical_file", max_width=256, max_height=256, store=True)
-
+    technical_ids = fields.One2many(comodel_name="locasix.product.technical", inverse_name="product_tmpl_id")
     plan_ids = fields.One2many(comodel_name="locasix.product.plan", inverse_name="product_tmpl_id")
 
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
