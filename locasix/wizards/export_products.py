@@ -157,7 +157,7 @@ class ExportProducts(models.TransientModel):
                         links[link.product_linked_id.id]["actives"].add(link.product_master_id.default_code)
             
             # stringify actives & passive
-            for link in links:
+            for link in links.values():
                 actives = ";".join(link["actives"])
                 worksheet.write(link["row"], 0, actives)
                 worksheet.write(link["row"], 1, link["passive"])
