@@ -120,7 +120,7 @@ class Order(models.Model):
         for order in self:
             if order.has_transport_prices():
                 _logger.info("has transport price")
-                super(Order, self).action_quotation_send()
+                return super(Order, self).action_quotation_send()
             else:
                 _logger.info("warning")
                 view = self.env.ref('locasix.view_warning_transport')
@@ -184,7 +184,7 @@ class Order(models.Model):
     def enforce_transport(self):
         _logger.info("enforce transport")
         for order in self:
-            categ_id = self.env["product.category"].search(["name", "=", "Transport"], limit=1)
+            categ_id = self.env["product.category"].search([("name", "=", "Transport")], limit=1)
             if not categ_id:
                 categ_id = self.env["product.category"].create({
                     "name": "Transport",
