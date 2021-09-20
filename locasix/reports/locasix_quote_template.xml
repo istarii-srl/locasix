@@ -12,7 +12,7 @@
                     <div class="page font-calibri" style="padding: 0px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
                         <div class="col">
                             <span style="font-size: 16px; font-weight:500;">Conditions additionnelles</span>
-                            <div style="height: 5Opx;"/>
+                            <div style="height: 5Opx; width: 100%"/>
                             <div style="height: 800px;"><p style="font-size:10px;" t-field="doc.added_terms"/></div>
                             <div style="height: 200px; width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
                                 <span style="font-weight: bold;">Confirmation de la commande : <br/><br/></span>
