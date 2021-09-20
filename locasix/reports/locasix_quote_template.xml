@@ -160,20 +160,20 @@
                 <th width="7%">Qté</th>
                 <th width="15%">
                     <div class="col">
-                        <span>Prix/jour</span>
-                        <span t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                        <span class="block">Prix/jour</span>
+                        <span class="block" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
                     </div>
                 </th>
                 <th width="15%">
                     <div class="col">
-                        <span>Prix/semaine</span>
-                        <span t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                        <span class="block">Prix/semaine</span>
+                        <span class="block" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
                     </div>
                 </th>
                 <th width="15%">
                     <div class="col">
-                        <span>Prix/mois</span>
-                        <span t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                        <span class="block">Prix/mois</span>
+                        <span class="block" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
                     </div>
                 </th>
             </thead>

@@ -38,3 +38,7 @@ table thead th { border-bottom: 1px solid #000; padding-bottom: 15px;}
 tr.space_above>td {
     padding-top: 1em;
 }
+
+span.block {
+    display:block;
+}
