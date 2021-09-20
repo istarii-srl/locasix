@@ -122,7 +122,7 @@ class OrderLine(models.Model):
                     hour_suffix = "_8"
                 
             if not best_has_24:
-                best_type+best_has_24
+                best_type+hour_suffix
                 
             return best_type
 
