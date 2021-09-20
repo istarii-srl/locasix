@@ -70,12 +70,13 @@ class ImportProducts(models.TransientModel):
 
             product.uom_id = uom_id
             product.uom_po_id = uom_id
-            product.product_description = line["description"],
-            product.has_24_price = line["24h"],
-            product.has_multi_price = False,
-            product.has_ref_to_condi = line["condi"],
-            product.list_price = float(line["price"]),
-            product.weekend_price = line["weekend_price"],
+            product.product_description = line["description"]
+            product.has_24_price = line["24h"]
+            product.has_multi_price = False
+            product.has_ref_to_condi = line["condi"]
+            _logger.info(line["price"])
+            product.list_price = line["price"]
+            product.weekend_price = line["weekend_price"]
             product.more_details_link = line["details"]
             
 
@@ -159,18 +160,18 @@ class ImportProducts(models.TransientModel):
             else:
                 product.name = line["name"]
                 
-            product.product_description = line["description"],
-            product.has_24_price = line["24h"],
-            product.has_multi_price = False,
-            product.has_ref_to_condi = line["condi"],
-            product.weekend_price = line["weekend_price"],
+            product.product_description = line["description"]
+            product.has_24_price = line["24h"]
+            product.has_multi_price = False
+            product.has_ref_to_condi = line["condi"]
+            product.weekend_price = line["weekend_price"]
             product.more_details_link = line["details"]
-            product.day_price = line["day_price"],
-            product.week_price = line["week_price"],
-            product.month_price = line["month_price"],
-            product.months_2_discount = line["month2_discount"],
-            product.months_3_discount = line["month3_discount"],
-            product.months_6_discount = line["month6_discount"],
+            product.day_price = line["day_price"]
+            product.week_price = line["week_price"]
+            product.month_price = line["month_price"]
+            product.months_2_discount = line["month2_discount"]
+            product.months_3_discount = line["month3_discount"]
+            product.months_6_discount = line["month6_discount"]
 
     def create_links(self, sheet):
         lines = []
