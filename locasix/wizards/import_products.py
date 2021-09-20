@@ -79,33 +79,6 @@ class ImportProducts(models.TransientModel):
             product.weekend_price = line["weekend_price"]
             product.more_details_link = line["details"]
             
-
-            real_company_name = line["company_name"] + line["company_title"] if line["company_title"] else ""
-            company = self.env["res.partner"].search([("name", "=", real_company_name)], limit=1)
-            if not company:
-                company = self.env["res.partner"].create({
-                    "name": real_company_name,
-                    "street": line["street"],
-                    "zip": line["country/code"].split("-")[1],
-                    "city": line["municipality"],
-                    "vat": line["TVA"],
-                    "phone": line["phone"],
-                    "mobile": line["mobile"],
-                    "email": line["email"],
-                    "comment": line["notes"]
-                })
-            if line["contact_name"]:
-                company_contact = self.env["res.partner"].search([("parent_id", "=", company.id), ("name", "=", line["contact_name"])], limit=1)
-                if not company_contact:
-                    company_contact = self.env["res.partner"].create({"name": line["contact_name"], "parent_id": company.id})
-            if line["email_compta"]:
-                compta_contact = self.env["res.partner"].search([("parent_id", "=", company.id), ("email", "=", line["email_compta"])], limit=1)
-                if not compta_contact:
-                    compta_contact = self.env["res.partner"].create({
-                        "parent_id": company.id,
-                        "email": line["email_compta"]
-                    })
-
     def create_multi_tarif_products(self, sheet):
         lines = []
         for i in range(1, sheet.nrows):
