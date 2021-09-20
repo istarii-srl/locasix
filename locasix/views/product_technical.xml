@@ -1,6 +1,6 @@
 <odoo>
-    <record id="view_product_image_form" model="ir.ui.view">
-        <field name="name">product.image.view.form</field>
+    <record id="view_product_image_technical_form" model="ir.ui.view">
+        <field name="name">product.image.view.technical.form</field>
         <field name="model">locasix.product.technical</field>
         <field name="arch" type="xml">
             <form string="Fiche technique">
