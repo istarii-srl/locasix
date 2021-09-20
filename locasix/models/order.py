@@ -412,3 +412,11 @@ class Order(models.Model):
         _logger.info("action put in agenda")
         for order in self:
             pass
+    
+    def get_discount_rates(self):
+        for order in self:
+            return [
+                f'-{int(order.months_2_discount_rate)}%', 
+                f'-{int(order.months_3_discount_rate)}%', 
+                f'-{int(order.months_6_discount_rate)}%'
+                    ]
