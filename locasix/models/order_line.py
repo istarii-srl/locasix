@@ -83,18 +83,11 @@ class OrderLine(models.Model):
 
 
     # CHANGE SEQUENCE
-
-    #@api.onchange('day_price', 'week_price', 'month_price', 'months_2_discount', 'months_3_discount', 'months_6_discount', 'price_unit')
     def recompute_insurance(self):
         for line in self:
             if not line.order_id.is_computing:
                 line.order_id.enforce_computations()
     
-    #@api.onchange('sequence')
-    def on_sequence_changed(self):
-        for line in self:
-            if not line.order_id.is_computing:
-                line.order_id.enforce_computations()
 
 
     @api.depends('month_price','months_2_discount_rate')
@@ -149,12 +142,9 @@ class OrderLine(models.Model):
     def write(self, vals):
         _logger.info("write order line")
         _logger.info(vals)
-        
-        if vals.get("sequence", False):
-            res = super(OrderLine, self).write(vals)
-            self.assign_section()
 
         if vals.get('day_price', False) or vals.get('week_price', False) or vals.get('month_price', False) or vals.get('months_2_discount', False) or vals.get('months_3_discount', False) or vals.get('months_6_discount', False) or vals.get('price_unit', False) or vals.get('sequence', False):
+            vals.pop("from_update", 1)
             if vals.get("from_compute", False):
                 vals.pop("from_compute")
                 res = super(OrderLine, self).write(vals)
