@@ -51,3 +51,7 @@ span.small-italic {
 .underlined {
     text-decoration: underline;
 }
+
+.reduction {
+    color: red;
+}

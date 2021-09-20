@@ -107,7 +107,37 @@
                 </div>
                 <t t-if="section_line.get_section_type() == 'prix_fixe'">
                     <t t-set="first_column_name" t-value="'Article'"/>
+                    <t t-set="price_column_name" t-value="'Prix'"/>
+                    <t t-set="column_names_n_lines" t-value="1"/>
+                    <t t-set="column_names_second_line" t-value="[]"/>
+                    <t t-call="locasix.locasix_fixed_price_section"/>
+                </t>
+                <t t-if="section_line.get_section_type() == 'prix_mois'">
+                    <t t-set="first_column_name" t-value="'Article'"/>
+                    <t t-set="price_column_name" t-value="'Prix / mois'"/>
+                    <t t-set="column_names_n_lines" t-value="1"/>
+                    <t t-set="column_names_second_line" t-value="[]"/>
+                    <t t-call="locasix.locasix_fixed_price_section"/>
+                </t>
+                <t t-if="section_line.get_section_type() == 'prix_jour'">
+                    <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix / jour calendrier'"/>
+                    <t t-set="column_names_n_lines" t-value="1"/>
+                    <t t-set="column_names_second_line" t-value="[]"/>
+                    <t t-call="locasix.locasix_fixed_price_section"/>
+                </t>
+                <t t-if="section_line.get_section_type() == 'prix_jour_8'">
+                    <t t-set="first_column_name" t-value="'Article'"/>
+                    <t t-set="price_column_name" t-value="'Prix / jour calendrier'"/>
+                    <t t-set="column_names_n_lines" t-value="2"/>
+                    <t t-set="column_names_second_line" t-value="['8h/jour']"/>
+                    <t t-call="locasix.locasix_fixed_price_section"/>
+                </t>
+                <t t-if="section_line.get_section_type() == 'prix_jour_24'">
+                    <t t-set="first_column_name" t-value="'Article'"/>
+                    <t t-set="price_column_name" t-value="'Prix / jour calendrier'"/>
+                    <t t-set="column_names_n_lines" t-value="2"/>
+                    <t t-set="column_names_second_line" t-value="['24/24h']"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_3'">
@@ -153,7 +183,12 @@
                 <th width="8%"><span t-esc="first_column_name"/></th>
                 <th width="40%">Description</th>
                 <th width="7%">Qté</th>
-                <th width="45%"><span t-esc="price_column_name"/></th>
+                <th width="45%">
+                    <div class="col">
+                        <span class="block" t-esc="price_column_name"/>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                    </div>
+                </th>
             </tr>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
@@ -165,14 +200,19 @@
                         <span t-field="line.product_id.name"/>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.description"/>
-                        <a class="underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
+                        <a target="_blank" class="underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
                     </td>
                     <td width="45%" class="text-center">
-                        <span t-field="line.product_id.list_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
-                        <span> HT</span>
+                        <div t-if="line.product_id.list_price != 0">
+                            <span t-field="line.product_id.list_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span> HT</span>
+                        </div>
+                        <div t-if="line.product_id.list_price == 0">
+                            <span class="reduction text-center">Offert!</span>
+                        </div>
                     </td>
                 </tr>
             </t>
@@ -215,7 +255,7 @@
                         <span t-field="line.product_id.name"/>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.description"/>
-                        <a class="underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
+                        <a target="_blank" class="underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
@@ -300,7 +340,7 @@
                         <span t-field="line.product_id.name"/>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.description"/>
-                        <a class="underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
+                        <a target="_blank" class="underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
