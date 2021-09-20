@@ -202,7 +202,7 @@ class Order(models.Model):
                     'from_compute': True,
                 })
 
-                tr_in_order = self.env["sale.orde.line"].search([("product_id", "=", tr.product_variant_id.id)], limit=1)
+                tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id)], limit=1)
                 if not tr_in_order:
                     self.env["sale.order.line"].create({
                     'order_id': self.id,
