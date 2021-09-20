@@ -10,7 +10,7 @@
                     <t t-call="locasix.locasix_front_page"/>
                     <t t-call="locasix.locasix_body"/>
                     <div class="page font-calibri" style="padding: 100px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
-                        <h5>Conditions additionnelles</h5>
+                        <span style="font-size: 16px; font-weight:500;">Conditions additionnelles</span>
                         <div style="height: 5Opx;"/>
                         <div style="height: 800px;"><p style="font-size:10px;" t-field="doc.added_terms"/></div>
                         <div style="height: 200px; width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
@@ -99,7 +99,7 @@
             </div>
             <t t-set="section_lines" t-value="doc.get_sections()"/>
             <t t-foreach="section_lines" t-as="section_line">
-                <div class="row" style="font-size: 14px; padding-top: 30px; padding-bottom: 20px;">
+                <div class="row" style="font-size: 15px; padding-top: 60px; padding-bottom: 20px;">
                     <span t-field="section_line.name"/>
                 </div>
                 <t t-if="section_line.get_section_type() == 'prix_fixe'">
@@ -161,7 +161,7 @@
                     <td width="40%" class="text-left">
                         <span t-field="line.product_id.name"/>
                         <br/>
-                        <span style="font-style: italic; font-size:9px;" t-field="line.product_id.description"/>
+                        <span class="small-italic" t-field="line.product_id.description"/>
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
@@ -185,19 +185,19 @@
                 <th width="15%">
                     <div class="col">
                         <span class="block">Prix/jour</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
                     </div>
                 </th>
                 <th width="15%">
                     <div class="col">
                         <span class="block">Prix/semaine</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[1]"/>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[1]"/>
                     </div>
                 </th>
                 <th width="15%">
                     <div class="col">
                         <span class="block">Prix/mois</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[2]"/>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[2]"/>
                     </div>
                 </th>
             </thead>
@@ -210,7 +210,7 @@
                     <td width="40%" class="text-left">
                         <span t-field="line.product_id.name"/>
                         <br/>
-                        <span style="font-style: italic; font-size:9px;" t-field="line.product_id.description"/>
+                        <span class="small-italic" t-field="line.product_id.description"/>
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
@@ -243,45 +243,45 @@
                     <div class="col">
                         <span class="block reduction"><br/></span>
                         <span class="block">Prix/jour</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
                         <span class="block reduction"><br/></span>
                         <span class="block">Prix/semaine</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[1]"/>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[1]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
                         <span class="block reduction"><br/></span>
                         <span class="block">Prix/mois</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[2]"/>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[2]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
                         <span class="block reduction" t-esc="column_names_before_first_line[3]"/>
                         <span class="block">Prix/mois</span>
-                        <span class="block table-column-subtitle">Min. 2 mois</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[3]"/>
+                        <span class="block small-italic">Min. 2 mois</span>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[3]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
                         <span class="block reduction" t-esc="column_names_before_first_line[4]"/>
                         <span class="block">Prix/mois</span>
-                        <span class="block table-column-subtitle">Min. 3 mois</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[4]"/>
+                        <span class="block small-italic">Min. 3 mois</span>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[4]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
                         <span class="block reduction" t-esc="column_names_before_first_line[5]"/>
                         <span class="block">Prix/mois</span>
-                        <span class="block table-column-subtitle">Min. 6 mois</span>
-                        <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[5]"/>
+                        <span class="block small-italic">Min. 6 mois</span>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[5]"/>
                     </div>
                 </th>
             </thead>
@@ -294,7 +294,7 @@
                     <td width="25%" class="text-left">
                         <span t-field="line.product_id.name"/>
                         <br/>
-                        <span style="font-style: italic; font-size:9px;" t-field="line.product_id.description"/>
+                        <span class="small-italic" t-field="line.product_id.description"/>
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
