@@ -306,15 +306,15 @@
                         <span> HT</span>
                     </td>
                     <td width="10%" class="text-center">
-                        <span t-field="line.product_id.month_2_discount" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                        <span t-field="line.product_id.months_2_discount" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                         <span> HT</span>
                     </td>
                     <td width="10%" class="text-center">
-                        <span t-field="line.product_id.month_3_discount" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                        <span t-field="line.product_id.months_3_discount" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                         <span> HT</span>
                     </td>
                     <td width="10%" class="text-center">
-                        <span t-field="line.product_id.month_6_discount" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                        <span t-field="line.product_id.months_6_discount" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                         <span> HT</span>
                     </td>
                 </tr>
