@@ -118,19 +118,19 @@
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6'">
                     <t t-set="column_names_n_lines" t-value="1"/>
-                    <t t-set="column_names_before_first_line" t-value="['<br/>', '<br/>', '<br/>'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6_8'">
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_before_first_line" t-value="['<br/>', '<br/>', '<br/>'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois', '', '', '']"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6_24'">
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_before_first_line" t-value="['<br/>', '<br/>', '<br/>'] + doc.get_discount_rates()"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates()"/>
                     <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h', '24/24h', '24/24h', '24/24h']"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
@@ -235,21 +235,21 @@
                 <th width="7%">Qté</th>
                 <th width="10%">
                     <div class="col">
-                        <span class="block reduction" t-esc="column_names_before_first_line[0]"/>
+                        <span class="block reduction"><br/></span>
                         <span class="block">Prix/jour</span>
                         <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
-                        <span class="block reduction" t-esc="column_names_before_first_line[1]"/>
+                        <span class="block reduction"><br/></span>
                         <span class="block">Prix/semaine</span>
                         <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[1]"/>
                     </div>
                 </th>
                 <th width="10%">
                     <div class="col">
-                        <span class="block reduction" t-esc="column_names_before_first_line[2]"/>
+                        <span class="block reduction"><br/></span>
                         <span class="block">Prix/mois</span>
                         <span class="block table-column-subtitle" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[2]"/>
                     </div>
