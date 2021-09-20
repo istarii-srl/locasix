@@ -92,11 +92,8 @@ class ImportProducts(models.TransientModel):
                 "day_price": sheet.cell_value(i, 6),
                 "week_price": sheet.cell_value(i, 7),
                 "month_price": sheet.cell_value(i, 8),
-                "month2_discount": sheet.cell_value(i, 9),
-                "month3_discount": sheet.cell_value(i, 10),
-                "month6_discount": sheet.cell_value(i, 11),
-                "weekend_price": sheet.cell_value(i, 12),
-                "condi": sheet.cell_value(i, 13),
+                "weekend_price": sheet.cell_value(i, 9),
+                "condi": sheet.cell_value(i, 10),
             })
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
@@ -113,9 +110,6 @@ class ImportProducts(models.TransientModel):
                     "day_price": line["day_price"],
                     "week_price": line["week_price"],
                     "month_price": line["month_price"],
-                    "months_2_discount": line["month2_discount"],
-                    "months_3_discount": line["month3_discount"],
-                    "months_6_discount": line["month6_discount"],
                 })
 
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
@@ -142,9 +136,6 @@ class ImportProducts(models.TransientModel):
             product.day_price = line["day_price"]
             product.week_price = line["week_price"]
             product.month_price = line["month_price"]
-            product.months_2_discount = line["month2_discount"]
-            product.months_3_discount = line["month3_discount"]
-            product.months_6_discount = line["month6_discount"]
 
     def create_links(self, sheet):
         lines = []
