@@ -129,7 +129,7 @@ class ImportProducts(models.TransientModel):
                 
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
-            product.has_multi_price = False
+            product.has_multi_price = True
             product.has_ref_to_condi = line["condi"]
             product.weekend_price = line["weekend_price"]
             product.more_details_link = line["details"]
