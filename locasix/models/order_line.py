@@ -207,6 +207,7 @@ class OrderLine(models.Model):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
             self.update_line_values(pricing=False)
+            self.recompute_insurance()
             
         else:
             vals.pop("from_update", 1)
