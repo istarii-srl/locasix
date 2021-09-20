@@ -146,15 +146,16 @@ class ExportProducts(models.TransientModel):
             # - 1 passive
             for product in wizard.product_ids:
                 for link in product.product_master_ids:
-                    if not link.product_linked_id.id in links:
-                        links[link.product_linked_id.id] = {
-                            "actives": {link.product_master_id.default_code},
-                            "passive": link.product_linked_id.default_code,
-                            "row": row
-                        }
-                        row +=1
-                    else:
-                        links[link.product_linked_id.id]["actives"].add(link.product_master_id.default_code)
+                    if link.product_master_id.default_code and link.product_linked_id.default_code:
+                        if not link.product_linked_id.id in links:
+                            links[link.product_linked_id.id] = {
+                                "actives": {link.product_master_id.default_code},
+                                "passive": link.product_linked_id.default_code,
+                                "row": row
+                            }
+                            row +=1
+                        else:
+                            links[link.product_linked_id.id]["actives"].add(link.product_master_id.default_code)
             
             # stringify actives & passive
             for link in links.values():
