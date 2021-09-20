@@ -55,8 +55,8 @@
                         </group>
                     </group>
                 </page>
-                <page string='Fiche technique'>
-                    <field name="plan_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1"/>
+                <page string='Fiches techniques'>
+                    <field name="technical_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1"/>
                 </page>
                 <page string="Plans">
                     <field name="plan_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1"/>

@@ -5,13 +5,7 @@
         <field name="arch" type="xml">
             <form string="Fiche technique">
                 <field name="sequence" invisible="1"/>
-                <div class="row o_website_sale_image_modal">
-                    <div class="col-md-6 col-xl-5">
-                        <h2>
-                            <field name="name" placeholder="Fiche"/>
-                        </h2>
-                    </div>
-                    <div class="col-md-6 col-xl-7 text-center o_website_sale_image_modal_container">
+                    <div class="text-center o_website_sale_image_modal_container">
                         <div class="row">
                             <div class="col">
                                 <field name="image_1920" widget="image"/>
