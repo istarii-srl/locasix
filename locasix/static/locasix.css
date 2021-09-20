@@ -1,20 +1,20 @@
 @font-face {
     font-family: "treble";
-    src: url("/locasix/static/fonts/Heading-Pro-Treble-Light-trial.ttf");
+    src: url("/locasix/static/fonts/Heading-Pro-Treble-Light.ttf");
 }
 @font-face {
     font-family: "treble";
-    src: url("/locasix/static/fonts/Heading-Pro-Treble-Bold-trial.ttf");
+    src: url("/locasix/static/fonts/Heading-Pro-Treble-Bold.ttf");
     font-weight: bold;
 }
 @font-face {
     font-family: "treble";
-    src: url("/locasix/static/fonts/Heading-Pro-Treble-Light-Italic-trial.ttf");
+    src: url("/locasix/static/fonts/Heading-Pro-Treble-Light-Italic.ttf");
     font-style: italic, oblique;
 }
 @font-face {
     font-family: "treble";
-    src: url("/locasix/static/fonts/Heading-Pro-Treble-Bold-Italic-trial.ttf");
+    src: url("/locasix/static/fonts/Heading-Pro-Treble-Bold-Italic.ttf");
     font-weight: bold;
     font-style: italic, oblique;
 }
@@ -34,3 +34,7 @@
 
 table { border-collapse:collapse; }
 table thead th { border-bottom: 1px solid #000; padding-bottom: 15px;}
+
+tr.space_above {
+    padding-top: 1em;
+}

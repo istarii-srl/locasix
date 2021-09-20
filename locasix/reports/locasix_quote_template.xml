@@ -115,7 +115,7 @@
             </thead>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section(section_line)" t-as="line">
-                <tr t-if="not line.is_section">
+                <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
                     </td>
