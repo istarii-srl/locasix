@@ -69,6 +69,14 @@ class OrderLine(models.Model):
             else:
                 return "prix_fixe"
 
+    def is_section_multi(self):
+        for line in self:
+            section_type = line.get_section_type()
+            if "6" in section_type or "3" in section_type:
+                return True
+            else:
+                return False
+
     def get_section_type(self):
         #section weekend - done
         #section prix jour
