@@ -39,7 +39,7 @@ class Day(models.Model):
                         'res_model': 'locasix.day',
                         'views': [(view.id, 'form')],
                         'view_id': view.id,
-                        'target': "new",
+                        'target': "main",
                         'res_id': new_day.id,
                         'context': {'active_id': new_day.id},
                     }
@@ -53,7 +53,7 @@ class Day(models.Model):
                 'res_model': 'locasix.day',
                 'views': [(view.id, 'form')],
                 'view_id': view.id,
-                'target': "new",
+                'target': "main",
                 'res_id': next_days_sorted[0].id,
                 'context': {'active_id': next_days_sorted[0].id},
             }
