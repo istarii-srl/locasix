@@ -76,6 +76,8 @@ div.appendix img {
     left: 0;
     right: 0;
     bottom: 0;
+    max-height: 1085px;
+    max-width: 870px;
 }
 
 .cgv-title {
@@ -88,4 +90,5 @@ div.appendix img {
     page-break-before: always;
     margin: 0px !important;
     font-size: 9px;
+    line-height: 98%;
 }
