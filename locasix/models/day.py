@@ -44,6 +44,7 @@ class Day(models.Model):
                         'context': {'active_id': new_day.id},
                     }
             view = self.env.ref("locasix.locasix_day_form")
+            
             return {
                 'name': 'Journée',
                 'type': 'ir.actions.act_window',
