@@ -75,17 +75,10 @@ div.appendix {
 } */
 
 div.appendix {
-    text-align: center;
     height: 1085px;
     width: 870px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #ccc;
-}
-
-div.appendix img {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
