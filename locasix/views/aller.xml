@@ -18,8 +18,8 @@
         <field name="model">locasix.aller</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <calendar string="Calendar View" date_start="date" color="address" event_limit="5">
-                <field name="address" filters="1"/>
+            <calendar string="Calendar View" date_start="date" color="address_id" event_limit="5">
+                <field name="address_id" filters="1"/>
                 <field name="contract" string="Référence"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
