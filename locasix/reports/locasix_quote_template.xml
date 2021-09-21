@@ -133,7 +133,7 @@
                     <t t-set="column_names_second_line" t-value="['8h/jour']"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_jour_24', 'prix_jour_duo'">
+                <t t-if="section_line.get_section_type() in ['prix_jour_24', 'prix_jour_duo']">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix / jour calendrier'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -275,7 +275,7 @@
                         </td>
                     </t>
                     <t t-if="line.product_id.day_price == 0">
-                        <td width="45%" class="text-center">
+                        <td colspan="3" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
                     </t>
