@@ -126,14 +126,14 @@
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_jour_8', 'prix_jour_duo']">
+                <t t-if="section_line.get_section_type() in ['prix_jour_8', 'prix_jour_double']">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix / jour calendrier'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour']"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_jour_24', 'prix_jour_duo']">
+                <t t-if="section_line.get_section_type() in ['prix_jour_24', 'prix_jour_double']">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix / jour calendrier'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -206,11 +206,11 @@
                         <span t-esc="str(int(line.product_uom_qty))"/>
                     </td>
                     <td width="45%" class="text-center">
-                        <div t-if="line.product_id.list_price != 0">
-                            <span t-field="line.product_id.list_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                        <div t-if="line.price_unit != 0">
+                            <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </div>
-                        <div t-if="line.product_id.list_price == 0">
+                        <div t-if="line.price_unit == 0">
                             <span class="reduction text-center">Offert !</span>
                         </div>
                     </td>
@@ -260,21 +260,21 @@
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
                     </td>
-                    <t t-if="line.product_id.day_price != 0">
+                    <t t-if="line.day_price != 0">
                         <td width="15%" class="text-center">
-                            <span t-field="line.product_id.day_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-field="line.day_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="15%" class="text-center">
-                            <span t-field="line.product_id.week_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-field="line.week_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="15%" class="text-center">
-                            <span t-field="line.product_id.month_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-field="line.month_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                     </t>
-                    <t t-if="line.product_id.day_price == 0">
+                    <t t-if="line.day_price == 0">
                         <td colspan="3" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
@@ -352,17 +352,17 @@
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
                     </td>
-                    <t t-if="line.product_id.day_price != 0">
+                    <t t-if="line.day_price != 0">
                         <td width="10%" class="text-center">
-                            <span t-field="line.product_id.day_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-field="line.day_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-field="line.product_id.week_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-field="line.week_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-field="line.product_id.month_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-field="line.month_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="10%" class="text-center">
@@ -378,7 +378,7 @@
                             <span> HT</span>
                         </td>
                     </t>
-                    <t t-if="line.product_id.day_price == 0">
+                    <t t-if="line.day_price == 0">
                         <td colspan="6" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
