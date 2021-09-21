@@ -194,7 +194,7 @@ class Order(models.Model):
         for order in self:
             for line in order.order_line:
                 line.update_line_values(pricing=True)
-            order.enforce_computations()
+            #order.enforce_computations()
 
     def mark_manual_sections(self):
         _logger.info("mark manual section")
@@ -384,12 +384,11 @@ class Order(models.Model):
         _logger.info("enforce computations")
         for order in self:
             for line in order.order_line:
-                if line.product_id and line.is_insurance() and line.section_id:
+                if line.product_id and line.is_insurance():
                     lines = self.retrieve_lines_from_section_without_id(line)
-                    _logger.info(line.is_multi)
-                    for logo in lines:
-                        _logger.info(logo.name)
-                    line.enforce_computation(line.is_multi, lines)
+                    _logger.info(line.is_section_multi())
+                    line.enforce_computation(line.is_section_multi(), lines)
+    
 
 
     def retrieve_lines_from_section_without_id(self, line):
