@@ -276,7 +276,7 @@
                     </t>
                     <t t-if="line.product_id.day_price == 0">
                         <td width="45%" class="text-center">
-                            <span class="reduction text-center">Offert!</span>
+                            <span class="reduction text-center">Offert !</span>
                         </td>
                     </t>
                 </tr>
