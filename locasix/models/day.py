@@ -29,7 +29,7 @@ class Day(models.Model):
             next_days = self.env["locasix.day"].search([("day", "<", max_date),("day", ">", day.day)])
             next_days_sorted = sorted(next_days, key= lambda x: x.day)
             for new_day in next_days_sorted:
-                if (new_day.aller_ids and len(new_day.new_day.aller_ids)>0) or (new_day.retour_ids and len(new_day.retour_ids) > 0):
+                if (new_day.aller_ids and len(new_day.aller_ids) > 0) or (new_day.retour_ids and len(new_day.retour_ids) > 0):
                     view = self.env.ref("locasix.locasix_day_form")
                     return {
                         'name': 'Journée',

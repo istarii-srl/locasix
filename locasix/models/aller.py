@@ -14,7 +14,7 @@ class Aller(models.Model):
                 'type': 'ir.actions.act_window',
                 'view_type': 'form',
                 'view_mode': 'form',
-                'res_model': "locasix.agger.aller",
+                'res_model': "locasix.agg.aller",
                 'res_id': aller.agg_id.id,
                 'target': 'current',
             }          
