@@ -67,5 +67,5 @@ img.appendix {
 div.appendix {
     height: 1085px;
     width: 870px;
-    justify-content: center;
+    background-color: #000;
 }
