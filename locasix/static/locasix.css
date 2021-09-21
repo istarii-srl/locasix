@@ -77,3 +77,15 @@ div.appendix img {
     right: 0;
     bottom: 0;
 }
+
+.cgv-title {
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.cgv {
+    page-break-before: always;
+    margin: 0px !important;
+    font-size: 10px;
+}
