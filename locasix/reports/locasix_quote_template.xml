@@ -411,7 +411,7 @@
             <t t-if="line.product_id">
                 <t t-foreach="line.product_id.technical_ids" t-as="technical_id">
                     <div class="page appendix">
-                        <span class="appendix" t-field="technical_id.image_1920" t-options='{"widget": "image"}'/>
+                        <img class="appendix" t-att-src="image_data_uri(technical_id.image_1920)"/>
                     </div>
                 </t>
             </t>
