@@ -10,7 +10,7 @@ class Aller(models.Model):
 
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact")
-    city = fields.Char(string="Ville", related="address.city")
+    city = fields.Char(string="Ville", related="address_id.city")
     contract = fields.Char(string="Contrat")
 
     def open_agg(self):
