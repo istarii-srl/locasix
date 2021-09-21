@@ -32,16 +32,16 @@ class Day(models.Model):
                 if (new_day.aller_ids and len(new_day.aller_ids) > 0) or (new_day.retour_ids and len(new_day.retour_ids) > 0):
                     view = self.env.ref("locasix.locasix_day_form")
                     return {
-                        'name': 'Journée',
+                        #'name': 'Journée',
                         'type': 'ir.actions.act_window',
                         'view_type': 'form',
                         'view_mode': 'form',
                         'res_model': 'locasix.day',
-                        'views': [(view.id, 'form')],
-                        'view_id': view.id,
-                        'target': "main",
+                        #'views': [(view.id, 'form')],
+                        #'view_id': view.id,
+                        'target': "current",
                         'res_id': new_day.id,
-                        'context': {},
+                        #'context': {'active_id': new_day.id},
                     }
             view = self.env.ref("locasix.locasix_day_form")
 
