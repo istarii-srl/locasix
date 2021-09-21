@@ -56,3 +56,15 @@ span.block {
     color: rgb(199, 55, 58);
     font-weight: bold;
 }
+
+span.appendix {
+    max-height: 1085px;
+    max-width: 870px;
+}
+
+div.appendix {
+    height: 1085px;
+    width: 870px;
+    display: flex;
+    justify-content: center;
+}
