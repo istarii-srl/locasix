@@ -39,11 +39,12 @@ class Day(models.Model):
                         'res_model': 'locasix.day',
                         'views': [(view.id, 'form')],
                         'view_id': view.id,
-                        'target': "self",
+                        'target': "new",
                         'res_id': new_day.id,
                         'context': {'active_id': new_day.id},
                     }
             view = self.env.ref("locasix.locasix_day_form")
+
             return {
                 'name': 'Journée',
                 'type': 'ir.actions.act_window',
@@ -52,7 +53,7 @@ class Day(models.Model):
                 'res_model': 'locasix.day',
                 'views': [(view.id, 'form')],
                 'view_id': view.id,
-                'target': "self",
+                'target': "new",
                 'res_id': next_days_sorted[0].id,
                 'context': {'active_id': next_days_sorted[0].id},
             }
