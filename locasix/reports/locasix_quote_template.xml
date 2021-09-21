@@ -433,12 +433,14 @@
 
     <template id="cgv">
         <div class="page cgv font-calibri">
-            <div class="col-12">
+            <div class="col-12" style="text-align:center; background-color: yellow">
                 <span class="text-center cgv-title">CONDITIONS GENERALES DE LOCATION - LOCASIX SA</span>
             </div>
             <div class="col-6" style="background-color: red;">
+                <span>1</span>
             </div>
             <div class="col-6" style="background-color: blue;">
+                <span>2</span>
             </div>
         </div>
     </template>
