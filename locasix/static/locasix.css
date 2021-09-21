@@ -43,7 +43,7 @@ span.block {
     display:block;
 }
 
-span.small-italic {
+.small-italic {
     font-size: 10px;
     font-style: italic;
 }
@@ -53,6 +53,6 @@ span.small-italic {
 }
 
 .reduction {
-    color: red;
+    color: rgb(199, 55, 58);
     font-weight: bold;
 }
