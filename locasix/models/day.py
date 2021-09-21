@@ -18,7 +18,11 @@ class Day(models.Model):
         ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
     ]
     # UNIQUE CONSTRAINTS
-    
+
+    def action_prev(self):
+        for day in self:
+            return
+
     def action_next(self):
         for day in self:
             max_date = day.day + datetime.timedelta(days=40)
