@@ -19,7 +19,7 @@ class Day(models.Model):
     ]
     # UNIQUE CONSTRAINTS
 
-    def action_prev(self):
+    def action_previous(self):
         for day in self:
             return
 
