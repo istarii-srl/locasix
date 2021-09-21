@@ -42,6 +42,7 @@ class Order(models.Model):
         else:
             res = super(Order, self).write(vals)
             self.adapt_front_page()
+            self.enforce_computations()
         
         return res
 
