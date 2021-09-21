@@ -15,6 +15,7 @@
         </field>
     </record>
 
+
     <record model="ir.ui.view" id="locasix_day_form">
         <field name="name">locasix.day.form</field>
         <field name="model">locasix.day</field>
