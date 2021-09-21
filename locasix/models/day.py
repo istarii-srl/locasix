@@ -14,23 +14,10 @@ class Day(models.Model):
     aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers")
     retour_ids = fields.One2many(comodel_name="locasix.retour", inverse_name="day_id", string="Retours")
 
-    test_partner = fields.Many2one(comodel_name="res.partner", string="Papa")
-
     _sql_constraints = [
         ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
     ]
     # UNIQUE CONSTRAINTS
-
-    def open_full(self):
-        partner_id = self.env["locasix.day"].search([("id", "=", self.ids[0])], limit=1).test_partner
-        return {
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': "res.partner",
-            'res_id': partner_id.id,
-            'target': 'current',
-        }
     
     def action_next(self):
         for day in self:
