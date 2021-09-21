@@ -29,7 +29,7 @@ class Day(models.Model):
 
     def action_previous(self):
         for day in self:
-            min_date = day.day + datetime.timedelta(days=40)
+            min_date = day.day - datetime.timedelta(days=40)
             previous_days = self.env["locasix.day"].search([("day", ">", min_date),("day", "<", day.day)])
             previous_days_sorted = sorted(previous_days, key= lambda x: x.day, reverse=True)
             for new_day in previous_days_sorted:
@@ -48,19 +48,19 @@ class Day(models.Model):
                         'context': {'active_id': new_day.id},
                     }
             view = self.env.ref("locasix.locasix_day_form")
-
-            return {
-                'name': 'Journée',
-                'type': 'ir.actions.act_window',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'locasix.day',
-                'views': [(view.id, 'form')],
-                'view_id': view.id,
-                'target': "main",
-                'res_id': previous_days_sorted[0].id,
-                'context': {'active_id': previous_days_sorted[0].id},
-            }
+            if len(previous_days) > 0:
+                return {
+                    'name': 'Journée',
+                    'type': 'ir.actions.act_window',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'res_model': 'locasix.day',
+                    'views': [(view.id, 'form')],
+                    'view_id': view.id,
+                    'target': "main",
+                    'res_id': previous_days_sorted[0].id,
+                    'context': {'active_id': previous_days_sorted[0].id},
+                }
 
     def action_next(self):
         for day in self:
