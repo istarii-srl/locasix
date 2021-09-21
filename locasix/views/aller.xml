@@ -1,8 +1,36 @@
 <odoo>
+
+    <record id="locasix_aller_map_view" model="ir.ui.view">
+        <field name="name">locasix.aller.view.map</field>
+        <field name="model">locasix.aller</field>
+        <field name="priority" eval="3"/>
+        <field name="arch" type="xml">
+            <map res_partner="address_id" hide_address="False">
+                <field name="contract" string="Référence"/>
+                <field name="city" string="Ville"/>
+                <field name="date" string="Date prévue"/>
+            </map>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="locasix_aller_calendar">
+        <field name="name">locasix.aller.calendar</field>
+        <field name="model">locasix.aller</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <calendar string="Calendar View" date_start="date" color="address_id" event_limit="5">
+                <field name="address_id" filters="1"/>
+                <field name="contract" string="Référence"/>
+                <field name="city" string="Ville"/>
+                <field name="date" string="Date prévue"/>
+            </calendar>
+        </field>
+    </record>
+
     <record model="ir.actions.act_window" id="action_aller">
         <field name="name">Allers</field>
         <field name="res_model">locasix.aller</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,calendar,map</field>
     </record>
 
 
@@ -12,7 +40,7 @@
         <field name="arch" type="xml">
             <tree string="Allers">
                 <field name="day_id"/>
-                <button name="open_agg" type="object" icon="fa-arrow-circle-o-right"/>
+                <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
         </field>
     </record>
