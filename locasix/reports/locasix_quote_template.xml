@@ -102,7 +102,7 @@
             </div>
             <t t-set="section_lines" t-value="doc.get_sections()"/>
             <t t-foreach="section_lines" t-as="section_line">
-                <div style="font-size: 15px; padding-top: 60px; padding-bottom: 20px;">
+                <div style="font-size: 15px; padding-top: 50px; padding-bottom: 20px;">
                     <span t-field="section_line.name"/>
                 </div>
                 <t t-if="section_line.get_section_type() == 'prix_fixe'">
@@ -297,7 +297,7 @@
     </template>
 
     <template id="locasix_six_price_section">
-        <table style="width: 100%">
+        <table style="width: 100%; padding-bottom: 20px;">
             <tr style="font-weight: bold; text-align: center;">
                 <th width="8%"><br/>Article</th>
                 <th width="25%"><br/>Description</th>
