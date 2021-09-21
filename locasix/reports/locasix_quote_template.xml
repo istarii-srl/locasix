@@ -260,18 +260,25 @@
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
                     </td>
-                    <td width="15%" class="text-center">
-                        <span t-field="line.product_id.day_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
-                        <span> HT</span>
-                    </td>
-                    <td width="15%" class="text-center">
-                        <span t-field="line.product_id.week_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
-                        <span> HT</span>
-                    </td>
-                    <td width="15%" class="text-center">
-                        <span t-field="line.product_id.month_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
-                        <span> HT</span>
-                    </td>
+                    <t t-if="line.product_id.day_price != 0">
+                        <td width="15%" class="text-center">
+                            <span t-field="line.product_id.day_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span> HT</span>
+                        </td>
+                        <td width="15%" class="text-center">
+                            <span t-field="line.product_id.week_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span> HT</span>
+                        </td>
+                        <td width="15%" class="text-center">
+                            <span t-field="line.product_id.month_price" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span> HT</span>
+                        </td>
+                    </t>
+                    <t t-if="line.product_id.day_price == 0">
+                        <td width="45%" class="text-center">
+                            <span class="reduction text-center">Offert!</span>
+                        </td>
+                    </t>
                 </tr>
             </t>
             </tbody>
