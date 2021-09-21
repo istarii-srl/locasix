@@ -41,7 +41,7 @@ class Day(models.Model):
                         'view_id': view.id,
                         'target': "main",
                         'res_id': new_day.id,
-                        'context': {'active_id': new_day.id},
+                        'context': {},
                     }
             view = self.env.ref("locasix.locasix_day_form")
 
