@@ -19,28 +19,32 @@
     font-style: italic, oblique;
 }
 
-
 .font-treble {
-    font-family: 'treble';
+    font-family: "treble";
 }
 
 .font-calibri {
-    font-family: 'Calibri';
+    font-family: "Calibri";
 }
 
 .font-wide {
-    font-family: 'wide';
+    font-family: "wide";
 }
 
-table { border-collapse:collapse; }
-table tr th { border-bottom: 1px solid #000; padding-bottom: 15px;}
+table {
+    border-collapse: collapse;
+}
+table tr th {
+    border-bottom: 1px solid #000;
+    padding-bottom: 15px;
+}
 
-tr.space_above>td {
+tr.space_above > td {
     padding-top: 1em;
 }
 
 span.block {
-    display:block;
+    display: block;
 }
 
 .small-italic {
@@ -57,15 +61,31 @@ span.block {
     font-weight: bold;
 }
 
-img.appendix {
-    max-height: 1085px;
-    max-width: 870px;
-    display: block;
-    margin: auto auto;
-}
-
 div.appendix {
     height: 1085px;
     width: 870px;
-    background-color: #000;
+    position: relative;
+    page-break-before: always;
+    margin-left: 10px;
+}
+
+div.appendix img {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.cgv-title {
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.cgv {
+    page-break-before: always;
+    margin: 0px !important;
+    font-size: 10px;
 }
