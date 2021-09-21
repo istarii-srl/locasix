@@ -16,7 +16,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'ERP',
-    'version': '0.17.73',
+    'version': '0.17.75',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale_management', 'product'],
@@ -37,6 +37,8 @@
         'views/order.xml',
         'views/assets.xml',
         'views/client.xml',
+        'views/aller.xml',
+        'views/retour.xml',
         'views/product_plan.xml',
         'views/product_technical.xml',
         'wizards/export_products.xml',

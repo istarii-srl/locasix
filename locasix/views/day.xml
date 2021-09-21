@@ -11,9 +11,6 @@
         <field name="arch" type="xml">
             <tree string="Allers et retours">
                 <field name="name"/>
-                <field name="test_partner" widget="Many2one">
-                </field>
-                <button name="open_full" string="Open" type="object"/>
             </tree>
         </field>
     </record>
@@ -30,7 +27,14 @@
                         </h1>
                     </div>
                     <field name="day"/>
-                    <field name="test_partner"/>
+                    <group>
+                        <group>
+                            <field name="aller_ids"/>
+                        </group>
+                        <group>
+                            <field name="retour_ids"/>
+                        </group>
+                    </group>
                 </sheet>
             </form>
         </field>
