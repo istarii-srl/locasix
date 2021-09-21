@@ -24,6 +24,10 @@
                     <button name="action_previous" type="object" string="Avant" class="oe_highlight"/>
                     <button name="action_next" type="object" string="Après" class="oe_highlight"/>
                 </header>
+                <header>
+                    <button name="action_add_aller" type="object" string="Ajouter un aller" class="oe_highlight"/>
+                    <button name="action_add_retour" type="object" string="Ajouter un retour" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>

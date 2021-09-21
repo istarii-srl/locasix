@@ -1,4 +1,6 @@
 <odoo>
     <menuitem name="Agenda" id="locasix_root_menu" web_icon="locasix,static/logo_locasix.png"/>
-    <menuitem name="Allers et retours" id="locasix_day_menu" parent="locasix_root_menu" sequence="1" action="locasix.action_day"/>
+    <menuitem name="Journées" id="locasix_day_menu" parent="locasix_root_menu" sequence="1" action="locasix.action_day"/>
+    <menuitem name="Allers" id="locasix_day_menu" parent="locasix_root_menu" sequence="2" action="locasix.action_aller"/>
+    <menuitem name="Retours" id="locasix_day_menu" parent="locasix_root_menu" sequence="3" action="locasix.action_retour"/>
 </odoo>
