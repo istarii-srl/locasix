@@ -10,6 +10,10 @@ class Day(models.Model):
 
     name = fields.Char(string="Jour", compute="_compute_name", store=True)
     day = fields.Date(string="Date", required=True)
+
+    aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers")
+    retour_ids = fields.One2many(comodel_name="locasix.retour", inverse_name="day_id", string="Retours")
+
     test_partner = fields.Many2one(comodel_name="res.partner", string="Papa")
 
     _sql_constraints = [
@@ -27,6 +31,41 @@ class Day(models.Model):
             'res_id': partner_id.id,
             'target': 'current',
         }
+    
+    def action_next(self):
+        for day in self:
+            max_date = day.day + datetime.timedelta(days=40)
+            next_days = self.env["locasix.day"].search([("day", "<", max_date),("day", ">", day.day)])
+            next_days_sorted = sorted(next_days, key= lambda x: x.day)
+            for new_day in next_days_sorted:
+                if (new_day.aller_ids and len(new_day.new_day.aller_ids)>0) or (new_day.retour_ids and len(new_day.retour_ids) > 0):
+                    view = self.env.ref("locasix.locasix_day_form")
+                    return {
+                        'name': 'Journée',
+                        'type': 'ir.actions.act_window',
+                        'view_type': 'form',
+                        'view_mode': 'form',
+                        'res_model': 'locasix.day',
+                        'views': [(view.id, 'form')],
+                        'view_id': view.id,
+                        'target': "self",
+                        'res_id': new_day.id,
+                        'context': {'active_id': new_day.id},
+                    }
+            view = self.env.ref("locasix.locasix_day_form")
+            return {
+                'name': 'Journée',
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'locasix.day',
+                'views': [(view.id, 'form')],
+                'view_id': view.id,
+                'target': "self",
+                'res_id': next_days_sorted[0].id,
+                'context': {'active_id': next_days_sorted[0].id},
+            }
+            
 
     @api.depends('day')
     def _compute_name(self):

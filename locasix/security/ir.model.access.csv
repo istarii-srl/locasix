@@ -16,3 +16,5 @@ access_locasix_product_plan_user,locasix.locasix.product.plan,model_locasix_prod
 access_locasix_plan_counter_user,locasix.locasix.plan.counter,model_locasix_plan_counter,base.group_user,1,1,1,1
 access_locasix_product_technical_user,locasix.locasix.product.technical,model_locasix_product_technical,base.group_user,1,1,1,1
 access_locasix_technical_counter_user,locasix.locasix.technical.counter,model_locasix_technical_counter,base.group_user,1,1,1,1
+access_locasix_aller_user,locasix.locasix.aller,model_locasix_aller,base.group_user,1,1,1,1
+access_locasix_retour_user,locasix.locasix.retour,model_locasix_retour,base.group_user,1,1,1,1
