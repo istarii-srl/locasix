@@ -61,24 +61,12 @@ span.block {
     font-weight: bold;
 }
 
-/* img.appendix {
-    max-height: 1085px;
-    max-width: 870px;
-    display: block;
-    margin: auto auto;
-}
-
-div.appendix {
-    height: 1085px;
-    width: 870px;
-    background-color: #000;
-} */
-
 div.appendix {
     height: 1085px;
     width: 870px;
     position: relative;
-    background: #ccc;
+    page-break-before: always;
+    margin-left: 10px;
 }
 
 div.appendix img {
