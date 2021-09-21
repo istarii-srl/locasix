@@ -1,2 +1,8 @@
 <odoo>
+    <record model="ir.actions.act_window" id="action_retour">
+        <field name="name">Retours</field>
+        <field name="res_model">locasix.retour</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
 </odoo>
