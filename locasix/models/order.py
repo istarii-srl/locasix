@@ -163,7 +163,6 @@ class Order(models.Model):
         for order in self:
             for line in order.order_line:
                 if line.product_id and line.product_id.default_code in ["TA", "TR", "TAR"] and line.price_unit == 0.0:
-                    _logger.info("tooyo")
                     return False
             return True
 

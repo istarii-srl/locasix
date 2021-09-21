@@ -57,7 +57,7 @@ class OrderLine(models.Model):
             elif line.is_multi and not line.show_discount_rates:
                 return "prix_3"
             elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Jours" and line.has_24_price and line.usage_rate_display == "duo":
-                return "prix_jour_duo"
+                return "prix_jour_double"
             elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Jours" and line.has_24_price and line.usage_rate_display == "24":
                 return "prix_jour_24"
             elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Jours" and line.has_24_price and line.usage_rate_display == "8":
