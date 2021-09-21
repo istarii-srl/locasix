@@ -60,9 +60,12 @@ span.block {
 img.appendix {
     max-height: 1085px;
     max-width: 870px;
+    display: block;
+    margin: auto auto;
 }
 
 div.appendix {
-    display: flex;
+    height: 1085px;
+    width: 870px;
     justify-content: center;
 }
