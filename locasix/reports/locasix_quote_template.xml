@@ -9,6 +9,8 @@
                     </div>
                     <t t-call="locasix.locasix_front_page"/>
                     <t t-call="locasix.locasix_body"/>
+                    <t t-if="doc.weekend_offer" t-call="locasix.weekend_appendix"/>
+                    <t t-if="doc.has_electro_annexe()" t-call="locasix.electro_appendix"/>
                     <t t-call="locasix.additional_conditions"/>
                     <t t-call="locasix.technical_files"/>
                     <t t-call="locasix.plan_files"/>
@@ -442,7 +444,7 @@
     <template id="cgv">
         <div class="page cgv font-calibri">
             <div class="col-12" style="text-align:center;">
-                <span class="text-center cgv-title">CONDITIONS GENERALES DE LOCATION - LOCASIX SA</span>
+                <span class="text-center appendix-title">CONDITIONS GENERALES DE LOCATION - LOCASIX SA</span>
             </div>
             <div class="row" style="padding-top: 30px;">
                 <div class="col-6">
@@ -493,6 +495,52 @@
                     <span>La société Locasix respecte votre vie privée et vos droits en matière de contrôle des données personnelles. Nous serons transparents quant aux raisons et à la nature des données collectées. Nous protégerons vos données scrupuleusement.<br/>La société Locasix assure que les données personnelles ne seront jamais vendues à des tiers. Vos données peuvent éventuellement être transmises à des tiers lorsque cela s'avère nécessaire pour le traitement d'une commande ou l'organisation d'un transport.<br/>En acceptant nos conditions générales de vente, le client accepte que la société Locasix utilise ses données pour la diffusion d'informations relatives aux activités commerciales de la société Locasix envers ses clients. La société Locasix se réserve le droit de conserver les données personnelles du client, dans le respect des législations relatives au traitement des données à caractère personnel. Les données personnelles peuvent être consultées, supprimées ou modifiées sur simple demande écrite du client.</span>
                 </div>
             </div>
+        </div>
+    </template>
+
+    <template id="electro_appendix">
+        <div class="page" style="page-break-before: always;">
+            <span class="appendix_title">Annexe groupes électrogènes et/ou mâts d'éclairage de réserves :</span>
+            <br/><br/>
+            <span>Nous portons à votre connaissance que nous n’avons pas de service de dépannage organisé durant les weekends (Du vendredi 16h00 jusqu’au lundi 07h00).</span>
+            <br/><br/>
+            <span>Notre expérience nous démontre que les problèmes qui surviennent sont généralement : <ul><li>Soit une panne par manque de gasoil</li><li>Soit un acte de malveillance.</li></ul></span>
+            <br/><br/>
+            <span>Nous constatons également qu’entre le moment où le technicien est informé du problème et le dépannage sur site (Ou encore remplacement de la machine), plusieurs heures sont parfois nécessaires.</span>
+            <br/><br/>
+            <span>Aussi, pour palier à ces inconvénients et vous protéger contre tout problème qui pourrait surgir, nous vous proposons la location d’un second groupe électrogène ou mât d'éclairage en réserve (Sous réserve des stocks disponibles).</span>
+            <br/><br/>
+            <span>Cette deuxième machine (Sous réserve qu’elle n’ait pas été utilisée) serait facturée à 50 % du prix de la première. Si cette proposition vous intéresse, merci de nous en informer.</span>
+            <br/><br/>
+            <span>Cette démarche ne nous empêche nullement de toujours faire le maximum pour vous servir un matériel en parfait état de fonctionnement.</span>
+            <br/><br/><br/>
+            <div class="col-8"/>
+            <div class="col-4">
+                <span>Fait à SAINT-GHISLAIN le 04/08/21</span>
+            </div>
+        </div>
+    </template>
+
+    <template id="weekend_appendix">
+        <div class="page">
+            <span class="appendix_title">Conditions de location week-end :</span>
+            <br/>
+            <ul>
+                <li>Prix hors TVA 21 %.</li>
+                <li>Paiement dans son intégralité avant départ.</li>
+                <li>Si annulation de la commande dans les 48H avant la date de livraison, des frais de dossier de minimum 150,00 € vous seront facturés.</li>
+                <li>Délai : à convenir et suivant disponibilité.</li>
+                <li>
+                    <span class="underlined">Si location de groupes électrogènes et/ou mâts d'éclairage :</span>
+                    <li>Entretien journalier : carburant, niveau d’huile, niveau d’eau...à votre charge</li>
+                    <li>Entretien périodique comprenant filtres, huile ... à notre charge.</li>
+                    <li>Service de dépannage assuré <b>uniquement</b> du lundi au vendredi de 7h à 16h.</li>
+                    <li style="font-weight: bold;">Voir annexe 1 ci-jointe concernant location WE. VOIR ANNEXE 1 EN PAGE 2.</li>
+                </li>
+                <li>Validité de l’offre : 30 jours.</li>
+                <li>Tous branchements extérieurs sont à votre charge.</li>
+                <li>Voir conditions détaillées en dernière page.</li>
+            </ul>
         </div>
     </template>
 </odoo>
