@@ -9,7 +9,6 @@
                     </div>
                     <t t-call="locasix.locasix_front_page"/>
                     <t t-call="locasix.locasix_body"/>
-                    <t t-if="doc.weekend_offer" t-call="locasix.weekend_appendix"/>
                     <t t-if="doc.has_electro_annexe()" t-call="locasix.electro_appendix"/>
                     <t t-call="locasix.additional_conditions"/>
                     <t t-call="locasix.technical_files"/>
@@ -499,8 +498,8 @@
     </template>
 
     <template id="electro_appendix">
-        <div class="page" style="page-break-before: always;">
-            <span class="appendix_title">Annexe groupes électrogènes et/ou mâts d'éclairage de réserves :</span>
+        <div class="page" style="page-break-before: always; font-size: 11px;">
+            <span class="appendix-title">Annexe groupes électrogènes et/ou mâts d'éclairage de réserves :</span>
             <br/><br/>
             <span>Nous portons à votre connaissance que nous n’avons pas de service de dépannage organisé durant les weekends (Du vendredi 16h00 jusqu’au lundi 07h00).</span>
             <br/><br/>
@@ -514,16 +513,18 @@
             <br/><br/>
             <span>Cette démarche ne nous empêche nullement de toujours faire le maximum pour vous servir un matériel en parfait état de fonctionnement.</span>
             <br/><br/><br/>
-            <div class="col-8"/>
-            <div class="col-4">
-                <span>Fait à SAINT-GHISLAIN le 04/08/21</span>
+            <div class="row">
+                <div class="col-8"/>
+                <div class="col-4">
+                    <span>Fait à SAINT-GHISLAIN le 04/08/21</span>
+                </div>
             </div>
         </div>
     </template>
 
     <template id="weekend_appendix">
-        <div class="page">
-            <span class="appendix_title">Conditions de location week-end :</span>
+        <div class="page" style="font-size: 11px;">
+            <span class="appendix-title">Conditions de location week-end :</span>
             <br/>
             <ul>
                 <li>Prix hors TVA 21 %.</li>
