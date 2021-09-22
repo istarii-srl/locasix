@@ -184,6 +184,7 @@
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
+                <span t-if="section_line.is_section_condi">(*) Consultez la page "Conditions additionnelles" ci-dessous.</span>
             </t>
         </div>
     </template>
@@ -203,13 +204,14 @@
             </tr>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
+                <t t-set="line_coefficient" t-value="coefficient if doc.product_id.has_24_price else 1"/>
                 <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
                     </td>
                     <td width="40%" class="text-left">
                         <span t-field="line.product_id.name"/>
-                        <span t-if="line.product_id.has_ref_to_condi"> *</span>
+                        <span t-if="line.product_id.has_ref_to_condi"> (*)</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
                         <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
@@ -220,7 +222,7 @@
                     </td>
                     <td width="45%" class="text-center">
                         <div t-if="line.price_unit != 0">
-                            <span t-esc="line.price_unit * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.price_unit * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </div>
                         <div t-if="line.price_unit == 0">
@@ -260,13 +262,14 @@
             </tr>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
+            <t t-set="line_coefficient" t-value="coefficient if doc.product_id.has_24_price else 1"/>
                 <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
                     </td>
                     <td width="40%" class="text-left">
                         <span t-field="line.product_id.name"/>
-                        <span t-if="line.product_id.has_ref_to_condi"> *</span>
+                        <span t-if="line.product_id.has_ref_to_condi"> (*)</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
                         <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
@@ -277,15 +280,15 @@
                     </td>
                     <t t-if="line.day_price != 0">
                         <td width="15%" class="text-center">
-                            <span t-esc="line.day_price * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.day_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="15%" class="text-center">
-                            <span t-esc="line.week_price * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.week_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="15%" class="text-center">
-                            <span t-esc="line.month_price * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.month_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                     </t>
@@ -354,13 +357,14 @@
             </tr>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
+                <t t-set="line_coefficient" t-value="coefficient if doc.product_id.has_24_price else 1"/>
                 <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
                     </td>
                     <td width="25%" class="text-left">
                         <span t-field="line.product_id.name"/>
-                        <span t-if="line.product_id.has_ref_to_condi"> *</span>
+                        <span t-if="line.product_id.has_ref_to_condi"> (*)</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
                         <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
@@ -371,27 +375,27 @@
                     </td>
                     <t t-if="line.day_price != 0">
                         <td width="10%" class="text-center">
-                            <span t-esc="line.day_price * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.day_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-esc="line.week_price * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.week_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-esc="line.month_price * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.month_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-esc="line.months_2_discount * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.months_2_discount * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-esc="line.months_3_discount * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.months_3_discount * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-esc="line.months_6_discount * coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.months_6_discount * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
                     </t>
