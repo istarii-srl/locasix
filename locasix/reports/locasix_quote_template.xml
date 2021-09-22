@@ -514,12 +514,12 @@
             <br/><br/>
             <span>Cette démarche ne nous empêche nullement de toujours faire le maximum pour vous servir un matériel en parfait état de fonctionnement.</span>
             <br/><br/><br/>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-8"/>
                 <div class="col-4">
                     <span>Fait à SAINT-GHISLAIN le 04/08/21</span>
                 </div>
-            </div>
+            </div> -->
         </div>
     </template>
 
