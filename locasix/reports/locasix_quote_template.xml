@@ -211,7 +211,7 @@
                         <span t-field="line.product_id.name"/>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <a target="_blank" class="small-italic underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
+                        <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
@@ -266,7 +266,7 @@
                         <span t-field="line.product_id.name"/>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <a target="_blank" class="small-italic underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
+                        <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
@@ -358,7 +358,7 @@
                         <span t-field="line.product_id.name"/>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <a target="_blank" class="small-italic underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
+                        <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
