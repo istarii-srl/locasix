@@ -9,6 +9,7 @@
                     </div>
                     <t t-call="locasix.locasix_front_page"/>
                     <t t-call="locasix.locasix_body"/>
+                    <t t-if="doc.has_electro_annexe()" t-call="locasix.electro_appendix"/>
                     <t t-call="locasix.additional_conditions"/>
                     <t t-call="locasix.technical_files"/>
                     <t t-call="locasix.plan_files"/>
@@ -65,7 +66,7 @@
     </template>
 
     <template id="locasix_body">
-        <div class="page font-calibri" style="padding: 20px 15px 20px 15px !important; margin: 0px !important; page-break-after: always; font-size: 11px;">
+        <div class="page font-calibri" style="padding: 20px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
             <div class="row">
                 <div class="col-5" style="font-size: 11px;">
                     <div style="height:42px;"/>
@@ -99,6 +100,14 @@
                 <t t-if="section_line.get_section_type() == 'prix_fixe'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix'"/>
+                    <t t-set="column_names_n_lines" t-value="1"/>
+                    <t t-set="column_names_second_line" t-value="[]"/>
+                    <t t-set="coefficient" t-value="1"/>
+                    <t t-call="locasix.locasix_fixed_price_section"/>
+                </t>
+                <t t-if="section_line.get_section_type() == 'weekend'">
+                    <t t-set="first_column_name" t-value="'Article'"/>
+                    <t t-set="price_column_name" t-value="'Prix weekend'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
@@ -201,7 +210,7 @@
                     <td width="40%" class="text-left">
                         <span t-field="line.product_id.name"/>
                         <br/>
-                        <span class="small-italic" t-field="line.product_id.description"/>
+                        <span class="small-italic" t-field="line.product_id.product_description"/>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
@@ -256,7 +265,7 @@
                     <td width="40%" class="text-left">
                         <span t-field="line.product_id.name"/>
                         <br/>
-                        <span class="small-italic" t-field="line.product_id.description"/>
+                        <span class="small-italic" t-field="line.product_id.product_description"/>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
@@ -348,7 +357,7 @@
                     <td width="25%" class="text-left">
                         <span t-field="line.product_id.name"/>
                         <br/>
-                        <span class="small-italic" t-field="line.product_id.description"/>
+                        <span class="small-italic" t-field="line.product_id.product_description"/>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.has_ref_to_condi" t-attf-href="{{line.product_id.more_details_link}}"><br/>Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
@@ -392,7 +401,7 @@
     </template>
 
     <template id="additional_conditions">
-        <div class="page font-calibri" style="padding: 0px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
+        <div class="page font-calibri" style="padding: 0px 15px 20px 15px !important; margin: 0px !important; font-size: 11px; page-break-before: always;">
             <div class="col">
                 <div style="padding-bottom: 50px;">
                     <span style="font-size: 16px; font-weight:500;">Conditions additionnelles</span>
@@ -433,11 +442,11 @@
 
     <template id="cgv">
         <div class="page cgv font-calibri">
-            <div class="col-12" style="text-align:center; background-color: yellow">
-                <span class="text-center cgv-title">CONDITIONS GENERALES DE LOCATION - LOCASIX SA</span>
+            <div class="col-12" style="text-align:center;">
+                <span class="text-center appendix-title">CONDITIONS GENERALES DE LOCATION - LOCASIX SA</span>
             </div>
-            <div class="row">
-                <div class="col-6" style="background-color: red;">
+            <div class="row" style="padding-top: 30px;">
+                <div class="col-6">
                     <span class="underlined">Article I : Paiement et facturation de la location<br/></span>
                     <span>- Délai et modalités de paiement : Excepté pour les locations de très courte durée (week-ends ou festivités), tout paiement se fait dans les 30 jours calendrier qui suivent la date de facturation, sauf accord préalable entre les deux parties. Un quelconque retard de paiement entraîne le retrait systématique du matériel mis en location, et ce, sans avertissement de notre part et aux frais exclusifs du contractant.<br/>Pour les locations de week-end et ou festivités, le paiement se fait à 100 % avant le début de la location.<br/>Hormis pour les groupes électrogènes la facturation s’établira toujours pour au moins 28 jours calendrier, même si la durée de la location est inférieure à 28 jours calendrier.<br/>La durée de la période de location est stipulée clairement par le contractant avant la prise en location du matériel. Le contractant s'engage par la même occasion à payer en date convenue à l'article 1, toutes les sommes dues à LOCASIX, et cela pour l'entièreté de la location entre LOCASIX et le contractant avant la prise en location du matériel, et ce, sans exception aucune.<br/>- Retard de paiement : En cas de retard de paiement à l’échéance contractuelle, il sera dû par le client un intérêt moratoire conventionnel fixé au taux journalier de 0,033 %. Toutefois, ce taux sera revu à la hausse comme à la baisse et ce, sur base de l’échelle de l’indice des prix à la consommation, l’indice de référence étant celui de la prise de cours de la location.<br/>- Absence de paiement : En cas de non paiement d’une facture à son échéance, celle-ci produira de plein droit et sans mise en demeure un intérêt aux taux de 12 % calculé sur le prix total net, tout mois commencé étant censé être écoulé.<br/>En outre, en cas de non paiement d’une facture à son échéance, celle-ci sera majorée de plein droit et sans mise en demeure d’une somme forfaitaire égale à 20 % du montant de la facture, avec un minimum de 50 €, à titre de pénalité. En cas d’inexécution de notre part, le cocontractant est autorisé à réclamer une indemnité équivalente.<br/>- Vente : en cas de vente, le paiement se fait au comptant sauf accord préalable entre les deux parties. Le vendeur se réserve toujours la propriété des biens commandés jusqu’à l’acquittement de ses obligations par le client.<br/>- Conditions particulières pour les offres de prix : Tous les prix compris dans l’offre sont hors TVA.<br/>La validité de l’offre est d’une durée de 30 jours calendrier.<br/>- Exception de force majeure : Dans chaque hypothèse envisagée ci-dessus, la pénalité applicable ne le sera pas en cas de force majeure.</span>
                     <br/><br/>
@@ -459,10 +468,80 @@
                     <span class="underlined">Article VII : Conditions de location<br/></span>
                     <span>- État du matériel : Un bordereau de livraison en double exemplaire, ou un contrat de location stipulant l’état du matériel avant sa mise en location est remis au contractant ou à un mandataire, et signé par lui-même. Ce document élaboré par LOCASIX et son client, reprend en termes clairs toutes les déficiences éventuelles du matériel avant sa mise en location. A défaut de ce document, l’état du matériel avant sa mise en location est considéré par le contractant comme parfait.<br/>- Lieu d’emploi de l’objet loué : Le locataire qui transporte lui-même la pièce louée donnera à LOCASIX l’adresse où cette pièce se trouvera. Le locataire est toujours tenu d’avertir LOCASIX de tout déménagement d’une pièce louée, en précisant la nouvelle adresse.<br/>- Photos : Toutes les photos sur tous supports sont données à titre d'exemple et sont non contractuelles.<br/>- Utilisation des objets loués :<br/>- Arrimages : Tout container et toute roulotte doivent obligatoirement être arrimés au sol par le client afin de résister aux forces du vent sous peine de voir sa responsabilité engagée concernant la dégradation du matériel.</span>
                 </div>
-                <div class="col-6" style="background-color: blue;">
-                    <span>2</span>
+                <div class="col-6">
+                    <span class="underlined">Article VIII : Conditions spéciales de location pour les groupes électrogènes<br/></span>
+                    <span>- Entretien journalier : Tout ce qui concerne le carburant, le niveau d’huile, niveau d’eau, etc... sera à charge du locataire.<br/>- Entretien périodique : Tout ce qui concerne les filtres, les huiles, etc sera à charge de LOCASIX.<br/>- Assurance (bris de machine, vol, incendie, dégâts des eaux, etc) :<br/>o  soit contractée par le locataire chez la compagnie d’assurance de son choix.<br/>o  soit contractée par LOCASIX aux conditions suivantes :<ol style="margin-left: 50px;"><li>Une prime égale à 8 % du loyer</li><li>Une franchise de 500,00 € par sinistre éventuel, sauf en cas de vol, la franchise sera de 20 % de la valeur de la machine. Sauf en cas de faute grave, dol ou malveillance, la compagnie renonce au recours qu’elle serait en droit d’exercer contre le locataire.</li></ol><br/>Veuillez dans votre commande, nous confirmer la formule d’assurance choisie.</span>
+                    <br/><br/>
+                    <span class="underlined">Article IX : Restitution du matériel<br/></span>
+                    <span>À l'expiration du contrat de location éventuellement prorogé, le client locataire est tenu de rendre le matériel en bon état, compte tenu de l'usure normale inhérente à la durée de l'emploi, et, le cas échéant, le plein de carburant fait. À défaut, les prestations de remise en état et de fourniture de carburant seront facturées au client locataire. Le matériel sera restitué, sauf accord contraire des parties au dépôt de LOCASIX.<br/>Un état contradictoire constatant l'état du matériel peut être établi lors de la mise à disposition dudit matériel.<br/>Lors de la livraison du matériel et en l'absence du locataire, ce dernier doit faire état à LOCASIX de ses réserves écrites concernant des éventuels vices apparents et/ou non-conformités à la commande avant 8 jours calendrier. A défaut, le matériel est réputé en parfait état de fonctionnement et comme étant conforme aux attentes du locataire.<br/>A l'expiration du contrat de location, le locataire est tenu de rendre le matériel dans un état identique à celui décrit dans l'état contradictoire dressé au début de la location.<br/>Lorsque LOCASIX récupère lui-même le matériel loué, celui-ci doit se trouver en parfaite conformité avec l'état contradictoire dressé lors de la mise à disposition du matériel. Cependant, si aucun état contradictoire n'a été dressé au début du contrat de location, le matériel loué est réputé en parfait état. La liste complète du matériel loué se trouve dans le contrat. A défaut, tous les frais et réparations qui devront être faites sur ledit matériel seront entièrement à charge du locataire et lui seront facturés. Dans le cas où le matériel nécessite des remises en état consécutives à des dommages imputables au locataire, LOCASIX les facturera également au locataire.<br/>Aucune exception ne sera faite quant au bon état du matériel loué qui doit être entretenu par le locataire en bon père de famille durant tout le contrat de location.<br/>De plus, le matériel non restitué et non déclaré volé ou perdu sera facturé au locataire sur la base de la valeur à neuf du bien, après expiration de délai de restitution.</span>
+                    <br/><br/>
+                    <span class="underlined">Article X : Fin et résiliation du contrat de location<br/></span>
+                    <span>Locasix conserve le droit de résilier en tout temps, sans préavis, le présent contrat, si des renseignements défavorables lui parviennent sur la solvabilité du contractant ou de l’acheteur, ou en cas d’infraction à l’un des présents articles. LOCASIX n’aura pas à justifier sa décision. En cas de résiliation du contrat par LOCASIX, le locataire s’engage à restituer immédiatement le matériel, en autorisant LOCASIX à l’enlever là où il se trouve.<br/>Pour rappel, le non-respect des clauses contractuelles ci-dessus entraînera de plein droit et sans mise en demeure la résolution du contrat de location.<br/><br/>Les fins de location doivent impérativement nous être confirmées avec un préavis de 8 jours et par message écrit : mail, fax ou lettre.</span>
+                    <br/><br/>
+                    <span class="underlined">Article XI : Contestation et réclamation<br/></span>
+                    <span>Toute contestation et/ou toute réclamation concernant une facture et/ou la livraison, pour être recevable, doit être formulée par la voie postale recommandée, par fax au numéro 0032 (0)65 400590 ou par mail à l’adresse info@locasix.be endéans les huit jours de la réception de la facture ou de la livraison. Passé ce délai, il n’est plus accepté aucune réclamation.</span>
+                    <br/><br/>
+                    <span class="underlined">Article XII : Interdictions du loueur<br/></span>
+                    <span>Il est strictement interdit au locataire de sous-louer, céder, prêter ou mettre en gage le matériel donné en location.</span>
+                    <br/><br/>
+                    <span class="underlined">Article XIII</span>
+                    <span>Lorsque les deux parties au contrat de location ont leurs propres conditions générales, elles s'accordent, au préalable et par écrit, sur les conditions générales de location qui seront appliquées à la relation contractuelle.</span>
+                    <br/><br/>
+                    <span class="underlined">Article XIV : Clause attributive de juridiction<br/></span>
+                    <span>En cas de litige à propos des présentes conditions générales et/ou du contrat conclu entre LOCASIX et le cocontractant, seuls les Tribunaux de l’arrondissement judiciaire de MONS- CHARLEROI Division TOURNAI seront compétents.</span>
+                    <br/><br/>
+                    <span class="underlined">Article XV : RGPD<br/></span>
+                    <span>La société Locasix respecte votre vie privée et vos droits en matière de contrôle des données personnelles. Nous serons transparents quant aux raisons et à la nature des données collectées. Nous protégerons vos données scrupuleusement.<br/>La société Locasix assure que les données personnelles ne seront jamais vendues à des tiers. Vos données peuvent éventuellement être transmises à des tiers lorsque cela s'avère nécessaire pour le traitement d'une commande ou l'organisation d'un transport.<br/>En acceptant nos conditions générales de vente, le client accepte que la société Locasix utilise ses données pour la diffusion d'informations relatives aux activités commerciales de la société Locasix envers ses clients. La société Locasix se réserve le droit de conserver les données personnelles du client, dans le respect des législations relatives au traitement des données à caractère personnel. Les données personnelles peuvent être consultées, supprimées ou modifiées sur simple demande écrite du client.</span>
                 </div>
             </div>
+        </div>
+    </template>
+
+    <template id="electro_appendix">
+        <div class="page" style="page-break-before: always; font-size: 11px;">
+            <span class="appendix-title">Annexe groupes électrogènes et/ou mâts d'éclairage de réserves :</span>
+            <br/><br/>
+            <span>Nous portons à votre connaissance que nous n’avons pas de service de dépannage organisé durant les weekends (Du vendredi 16h00 jusqu’au lundi 07h00).</span>
+            <br/><br/>
+            <span>Notre expérience nous démontre que les problèmes qui surviennent sont généralement : <ul><li>Soit une panne par manque de gasoil</li><li>Soit un acte de malveillance.</li></ul></span>
+            <br/><br/>
+            <span>Nous constatons également qu’entre le moment où le technicien est informé du problème et le dépannage sur site (Ou encore remplacement de la machine), plusieurs heures sont parfois nécessaires.</span>
+            <br/><br/>
+            <span>Aussi, pour palier à ces inconvénients et vous protéger contre tout problème qui pourrait surgir, nous vous proposons la location d’un second groupe électrogène ou mât d'éclairage en réserve (Sous réserve des stocks disponibles).</span>
+            <br/><br/>
+            <span>Cette deuxième machine (Sous réserve qu’elle n’ait pas été utilisée) serait facturée à 50 % du prix de la première. Si cette proposition vous intéresse, merci de nous en informer.</span>
+            <br/><br/>
+            <span>Cette démarche ne nous empêche nullement de toujours faire le maximum pour vous servir un matériel en parfait état de fonctionnement.</span>
+            <br/><br/><br/>
+            <div class="row">
+                <div class="col-8"/>
+                <div class="col-4">
+                    <span>Fait à SAINT-GHISLAIN le 04/08/21</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="weekend_appendix">
+        <div class="page" style="font-size: 11px;">
+            <span class="appendix-title">Conditions de location week-end :</span>
+            <br/>
+            <ul>
+                <li>Prix hors TVA 21 %.</li>
+                <li>Paiement dans son intégralité avant départ.</li>
+                <li>Si annulation de la commande dans les 48H avant la date de livraison, des frais de dossier de minimum 150,00 € vous seront facturés.</li>
+                <li>Délai : à convenir et suivant disponibilité.</li>
+                <li>
+                    <span class="underlined">Si location de groupes électrogènes et/ou mâts d'éclairage :</span>
+                    <li>Entretien journalier : carburant, niveau d’huile, niveau d’eau...à votre charge</li>
+                    <li>Entretien périodique comprenant filtres, huile ... à notre charge.</li>
+                    <li>Service de dépannage assuré <b>uniquement</b> du lundi au vendredi de 7h à 16h.</li>
+                    <li style="font-weight: bold;">Voir annexe 1 ci-jointe concernant location WE. VOIR ANNEXE 1 EN PAGE 2.</li>
+                </li>
+                <li>Validité de l’offre : 30 jours.</li>
+                <li>Tous branchements extérieurs sont à votre charge.</li>
+                <li>Voir conditions détaillées en dernière page.</li>
+            </ul>
         </div>
     </template>
 </odoo>
