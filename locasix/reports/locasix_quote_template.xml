@@ -212,7 +212,7 @@
                         <span t-if="line.product_id.has_ref_to_condi"> *</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and line.product_id.product_description.length > 1"><br/></span>
+                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}">Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
@@ -269,7 +269,7 @@
                         <span t-if="line.product_id.has_ref_to_condi"> *</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and line.product_id.product_description.length > 1"><br/></span>
+                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}">Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
@@ -363,7 +363,7 @@
                         <span t-if="line.product_id.has_ref_to_condi"> *</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and line.product_id.product_description.length > 1"><br/></span>
+                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}">Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
