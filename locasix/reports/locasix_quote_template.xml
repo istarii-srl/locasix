@@ -184,7 +184,7 @@
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
-                <span t-if="section_line.is_section_condi">(*) Consultez la page "Conditions additionnelles" ci-dessous.</span>
+                <span t-if="section_line.is_section_condi"><br/>(*) Consultez la page "Conditions additionnelles" ci-dessous.</span>
             </t>
         </div>
     </template>
@@ -205,7 +205,7 @@
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
                 <t t-set="line_coefficient" t-value="coefficient if line.product_id.has_24_price else 1"/>
-                <tr t-if="not line.is_section" class="space_above">
+                <tr t-if="not line.is_section and line.display_type != 'line_note'" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
                     </td>
@@ -228,6 +228,11 @@
                         <div t-if="line.price_unit == 0">
                             <span class="reduction text-center">Offert !</span>
                         </div>
+                    </td>
+                </tr>
+                <tr t-if="line.display_type == 'line_note'">
+                    <td colspan="4">
+                        <span t-field="line.name" style="font-style: italic"/>
                     </td>
                 </tr>
             </t>
@@ -263,7 +268,7 @@
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
             <t t-set="line_coefficient" t-value="coefficient if line.product_id.has_24_price else 1"/>
-                <tr t-if="not line.is_section" class="space_above">
+                <tr t-if="not line.is_section and line.display_type != 'line_note'" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
                     </td>
@@ -297,6 +302,11 @@
                             <span class="reduction text-center">Offert !</span>
                         </td>
                     </t>
+                </tr>
+                <tr t-if="line.display_type == 'line_note'">
+                    <td colspan="4">
+                        <span t-field="line.name" style="font-style: italic"/>
+                    </td>
                 </tr>
             </t>
             </tbody>
@@ -358,7 +368,7 @@
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
                 <t t-set="line_coefficient" t-value="coefficient if line.product_id.has_24_price else 1"/>
-                <tr t-if="not line.is_section" class="space_above">
+                <tr t-if="not line.is_section and line.display_type != 'line_note'" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
                     </td>
@@ -404,6 +414,11 @@
                             <span class="reduction text-center">Offert !</span>
                         </td>
                     </t>
+                </tr>
+                <tr t-if="line.display_type == 'line_note'">
+                    <td colspan="4">
+                        <span t-field="line.name" style="font-style: italic"/>
+                    </td>
                 </tr>
             </t>
             </tbody>
