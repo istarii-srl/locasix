@@ -34,7 +34,8 @@
                     <field name="front_page_body"/>
                 </page>
                 <page name="terms" string="Conditions additionnelles">
-                    <field name="added_terms"/>
+                    <field name="added_terms" attrs="{'invisible': [('weekend_offer', '=', True)]}"/>
+                    <field name="added_terms_week_end" attrs="{'invisible': [('weekend_offer', '=', False)]}"/>
                 </page>
             </page>
             <xpath expr="//tree/field[@name='name']" position="after">
