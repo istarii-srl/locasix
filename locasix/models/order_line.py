@@ -76,6 +76,15 @@ class OrderLine(models.Model):
                 return True
             else:
                 return False
+    
+    def is_section_condi(self):
+        for line in self:
+            section_lines = line.order_id.retrieve_lines_from_section_without_id(line)
+            res = False
+            for section_line in section_lines:
+                if section_line.has_ref_to_condi:
+                    res = True
+            return res
 
     def get_section_type(self):
         #section weekend - done
