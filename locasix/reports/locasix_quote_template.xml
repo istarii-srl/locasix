@@ -204,7 +204,7 @@
             </tr>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
-                <t t-set="line_coefficient" t-value="coefficient if doc.product_id.has_24_price else 1"/>
+                <t t-set="line_coefficient" t-value="coefficient if line.product_id.has_24_price else 1"/>
                 <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
@@ -262,7 +262,7 @@
             </tr>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
-            <t t-set="line_coefficient" t-value="coefficient if doc.product_id.has_24_price else 1"/>
+            <t t-set="line_coefficient" t-value="coefficient if line.product_id.has_24_price else 1"/>
                 <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
@@ -357,7 +357,7 @@
             </tr>
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
-                <t t-set="line_coefficient" t-value="coefficient if doc.product_id.has_24_price else 1"/>
+                <t t-set="line_coefficient" t-value="coefficient if line.product_id.has_24_price else 1"/>
                 <tr t-if="not line.is_section" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
