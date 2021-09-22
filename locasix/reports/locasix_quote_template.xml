@@ -67,7 +67,7 @@
     </template>
 
     <template id="locasix_body">
-        <div class="page font-calibri" style="padding: 20px 15px 20px 15px !important; margin: 0px !important; page-break-after: always; font-size: 11px;">
+        <div class="page font-calibri" style="padding: 20px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
             <div class="row">
                 <div class="col-5" style="font-size: 11px;">
                     <div style="height:42px;"/>
@@ -402,7 +402,7 @@
     </template>
 
     <template id="additional_conditions">
-        <div class="page font-calibri" style="padding: 0px 15px 20px 15px !important; margin: 0px !important; font-size: 11px;">
+        <div class="page font-calibri" style="padding: 0px 15px 20px 15px !important; margin: 0px !important; font-size: 11px; page-break-before: always;">
             <div class="col">
                 <div style="padding-bottom: 50px;">
                     <span style="font-size: 16px; font-weight:500;">Conditions additionnelles</span>
