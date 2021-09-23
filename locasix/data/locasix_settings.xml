@@ -13,14 +13,15 @@
             <field name="name" eval="'Locasix'"/>
         </record>
 
-        <record model="res.groups" id="locasix_group_admin">
-            <field name="name" eval="'Administrateur'"/>
-            <field name="category_id" ref="locasix_group_category"/>
+        <record model="res.groups" id="group_locasix_user">
+            <field name="name" eval="'Utilisateur'"/>
+            <field name="category_id" ref="locasix_group_category"/>        
         </record>
 
-        <record model="res.groups" id="locasix_group_user">
-            <field name="name" eval="'Utilisateur'"/>
+        <record model="res.groups" id="group_locasix_admin">
+            <field name="name" eval="'Administrateur'"/>
             <field name="category_id" ref="locasix_group_category"/>
+            <field name="implied_ids" eval="[(4, ref('locasix.group_locasix_user'))]"/>
         </record>
 
     </data>
