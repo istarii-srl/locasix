@@ -1,0 +1,38 @@
+<odoo>
+    <record model="ir.actions.act_window" id="action_assemblage_link">
+        <field name="name">Links</field>
+        <field name="res_model">locasix.assemblage.link</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="locasix_assemblage_link_tree">
+        <field name="name">locasix.assemblage.link.tree</field>
+        <field name="model">locasix.assemblage.link</field>
+        <field name="arch" type="xml">
+            <tree string="Liens produits">
+                <field name="assemblage_product_id"/>
+                <field name="linked_product_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="locasix_assemblage_link_form">
+        <field name="name">locasix.assemblage.link.form</field>
+        <field name="model">locasix.assemblage.link</field>
+        <field name="arch" type="xml">
+            <form string="Liens produits">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="assemblage_product_id" invisible="context.get('from_product_master', 0)"/>
+                        </group>
+                        <group>
+                            <field name="linked_product_id" invisible="context.get('from_product_linked', 0)"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
