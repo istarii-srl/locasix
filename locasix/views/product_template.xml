@@ -67,9 +67,9 @@
             <field name="categ_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
-            <!-- <field name="taxes_id" position="attributes">
+            <field name="taxes_id" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </field> -->
+            </field>
             <field name="standard_price" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
@@ -99,7 +99,6 @@
     <record id="locasix_template_normal_form" model="ir.ui.view">
         <field name="name">locasix.template.normal.form</field>
         <field name="model">product.template</field>
-        <field eval="17" name="priority"/>
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
             <field name="barcode" position="attributes">
