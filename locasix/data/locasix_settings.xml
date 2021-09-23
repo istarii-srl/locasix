@@ -9,11 +9,11 @@
             <value eval="[ref('locasix_default_settings')]"/>
         </function>
 
-        <record name="ir.module.category" id="locasix_group_category">
+        <!-- <record name="ir.module.category" id="locasix_group_category">
             <field name="name" eval="Locasix"/>
         </record>
 
-        <!-- <record model="res.groups" id="locasix_group_admin">
+        <record model="res.groups" id="locasix_group_admin">
             <field name="name" eval="Administrateur"/>
             <field name="category_id" ref="locasix_group_category"/>
         </record>
