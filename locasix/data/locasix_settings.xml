@@ -21,7 +21,7 @@
         <record model="res.groups" id="group_locasix_admin">
             <field name="name" eval="'Administrateur'"/>
             <field name="category_id" ref="locasix_group_category"/>
-            <field name="implied_ids" eval="[(4, ref('locasix.group_locasix_user'))]"/>
+            <field name="implied_ids" eval="[(4, ref('group_locasix_user'))]"/>
         </record>
 
     </data>
