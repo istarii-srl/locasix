@@ -9,7 +9,7 @@
             <value eval="[ref('locasix_default_settings')]"/>
         </function>
 
-        <!-- <record name="ir.module.category" id="locasix_group_category">
+        <record model="ir.module.category" id="locasix_group_category">
             <field name="name" eval="Locasix"/>
         </record>
 
@@ -21,7 +21,7 @@
         <record model="res.groups" id="locasix_group_user">
             <field name="name" eval="Utilisateur"/>
             <field name="category_id" ref="locasix_group_category"/>
-        </record> -->
+        </record>
 
     </data>
 </odoo>
