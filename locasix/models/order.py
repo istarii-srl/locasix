@@ -26,6 +26,8 @@ class Order(models.Model):
     is_computing = fields.Boolean(string="En cours de calculation", default=False)
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
 
+    client_ref = fields.Char(string="Votre référence")
+
     @api.model
     def create(self, vals):
         obj = super(Order, self).create(vals)
