@@ -10,16 +10,16 @@
         </function>
 
         <record model="ir.module.category" id="locasix_group_category">
-            <field name="name" eval="Locasix"/>
+            <field name="name" eval="'Locasix'"/>
         </record>
 
         <record model="res.groups" id="locasix_group_admin">
-            <field name="name" eval="Administrateur"/>
+            <field name="name" eval="'Administrateur'"/>
             <field name="category_id" ref="locasix_group_category"/>
         </record>
 
         <record model="res.groups" id="locasix_group_user">
-            <field name="name" eval="Utilisateur"/>
+            <field name="name" eval="'Utilisateur'"/>
             <field name="category_id" ref="locasix_group_category"/>
         </record>
 
