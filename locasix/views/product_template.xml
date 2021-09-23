@@ -64,15 +64,15 @@
             </page>
 
             <!-- Hiding fields -->
-            <field name="barcode" position="attributes">
+            <!-- <field name="barcode" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </field>
+            </field> -->
             <field name="categ_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
-            <field name="taxes_id" position="attributes">
+            <!-- <field name="taxes_id" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </field>
+            </field> -->
             <field name="standard_price" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
