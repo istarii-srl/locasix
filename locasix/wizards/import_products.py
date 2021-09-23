@@ -74,6 +74,8 @@ class ImportProducts(models.TransientModel):
             product.uom_po_id = uom_id
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
+            product.is_temporary_product = False
+            product.is_assemblage_product = False
             product.has_multi_price = False
             product.has_ref_to_condi = line["condi"]
             _logger.info(line["price"])
@@ -100,30 +102,15 @@ class ImportProducts(models.TransientModel):
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
             if not product:
-                product = self.env["product.template"].search([("name", "=", line["name"])], limit=1)
-
-            if not product:
-                product = self.env["product.template"].create({
-                    "name": line["name"],
-                    "default_code": line["ref"],
-                    "product_description": line["description"],
-                    "has_24_price": line["24h"],
-                    "has_multi_price": False,
-                    "has_ref_to_condi": line["condi"],
-                    "weekend_price": line["weekend_price"],
-                    "more_details_link": line["details"],
-                    "day_price": line["day_price"],
-                    "week_price": line["week_price"],
-                    "month_price": line["month_price"],
-                })
-
-            product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
+                product = self.env["product.template"].search([("name", "=", line["name"])], limit=1)            
+            
             categ_id = self.env["product.category"].search([("name", "=", line["cat"])], limit=1)
             if not categ_id:
                 categ_id = self.env["product.category"].create({
                     "name": line["cat"],
                     "show_section_order": True,
                 })
+
             if not product:
                 product = self.env["product.template"].create({
                     "name": line["name"],
@@ -135,6 +122,8 @@ class ImportProducts(models.TransientModel):
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
             product.has_multi_price = True
+            product.is_temporary_product = False
+            product.is_assemblage_product = False
             product.has_ref_to_condi = line["condi"]
             product.weekend_price = line["weekend_price"]
             product.more_details_link = line["details"]
