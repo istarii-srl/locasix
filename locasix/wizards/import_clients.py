@@ -28,6 +28,7 @@ class ImportClients(models.TransientModel):
                 lines = []
                 for i in range(10, sheet.nrows):
                     lines.append({
+                        "compte": sheet.cell_value(i, 0),
                         "company_name": sheet.cell_value(i, 1), 
                         "street": sheet.cell_value(i, 3), 
                         "country/code": sheet.cell_value(i, 4),
