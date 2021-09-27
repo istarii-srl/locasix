@@ -5,6 +5,7 @@
         <field name="arch" type="xml">
             <form string="Export des produits">
                 <group>
+                    <field name="from_button"/>
                     <field name="product_ids"/>
                 </group>
                 <footer>
