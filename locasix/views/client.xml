@@ -28,7 +28,6 @@
                 <field name="compte"/>
             </field>
         </field>
-
     </record>
 
 </odoo>

@@ -114,4 +114,14 @@
         </field>
     </record>
 
+    <record id="action_export_products" model="ir.actions.act_window">
+        <field name="name">Exporter des produits</field>
+        <field name="res_model">locasix.product.export</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="export_product_wizard_form"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_product_template"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
 </odoo>

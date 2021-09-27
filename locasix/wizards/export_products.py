@@ -12,10 +12,11 @@ class ExportProducts(models.TransientModel):
     _name = "locasix.product.export"
     _description = "Assistance pour l'exportation de produits"
 
+    from_button = fields.Boolean(default=False)
     product_ids = fields.Many2many(comodel_name="product.template", default=lambda self : self._get_default_products())
 
     def _get_default_products(self):
-        return self.env["product.template"].search([("active", "=", True)])
+        return self.env["product.template"].search([("active", "=", True)]) if self.from_button else self.env['product.template'].browse(self._context.get('active_ids'))
 
     def export_products(self):
         _logger.info("Export products")
