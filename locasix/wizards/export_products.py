@@ -13,13 +13,14 @@ class ExportProducts(models.TransientModel):
     _description = "Assistance pour l'exportation de produits"
 
     from_button = fields.Boolean(default=True)
-    product_ids = fields.Many2many(comodel_name="product.template", default=lambda self : self._get_default_products())
+    product_ids = fields.Many2many(comodel_name="product.template", compute="_get_default_products")
 
+    @api.depends("from_button")
     def _get_default_products(self):
         if self.from_button:
-            return self.env["product.template"].search([("active", "=", True)])
+            self.product_ids = self.env["product.template"].search([("active", "=", True)])
         else:
-            return self.env['product.template'].browse(self._context.get('active_ids'))
+            self.product_ids = self.env['product.template'].browse(self._context.get('active_ids'))
 
     def export_products(self):
         _logger.info("Export products")
