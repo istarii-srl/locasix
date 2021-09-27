@@ -119,8 +119,9 @@ class ImportProducts(models.TransientModel):
             else:
                 product.name = line["name"]
                 
-            product.uom_id = self.env.ref('uom.product_uom_unit')
-            product.uom_po_id = self.env.ref('uom.product_uom_unit')    
+            uom_id = self.env["uom.uom"].search([("name", "=", "Unité(s)")], limit=1)
+            product.uom_id = uom_id
+            product.uom_po_id = uom_id  
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
             product.has_multi_price = True
