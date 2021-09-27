@@ -49,6 +49,7 @@ class ImportClients(models.TransientModel):
                     if not company:
                         company = self.env["res.partner"].create({
                             "name": real_company_name,
+                            "compte": line["compte"],
                             "street": line["street"],
                             "zip": line["country/code"].split("-")[1],
                             "city": line["municipality"],

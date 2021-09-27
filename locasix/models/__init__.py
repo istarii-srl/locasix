@@ -13,8 +13,5 @@ from . import aller
 from . import retour
 from . import agg_aller
 from . import agg_retour
-<<<<<<< HEAD
 from . import partner
-=======
 from . import assemblage_link
->>>>>>> 544d8beb263daadc117a38ae0f9c48699dac4bd9
