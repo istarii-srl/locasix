@@ -16,7 +16,10 @@ class ExportProducts(models.TransientModel):
     product_ids = fields.Many2many(comodel_name="product.template", default=lambda self : self._get_default_products())
 
     def _get_default_products(self):
-        return self.env["product.template"].search([("active", "=", True)]) if self.from_button else self.env['product.template'].browse(self._context.get('active_ids'))
+        if self.from_button:
+            return self.env["product.template"].search([("active", "=", True)])
+        else:
+            return self.env['product.template'].browse(self._context.get('active_ids'))
 
     def export_products(self):
         _logger.info("Export products")
