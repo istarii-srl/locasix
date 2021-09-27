@@ -19,7 +19,7 @@ odoo.define("locasix.product_tree_view_button", function (require) {
               res_model: "locasix.product.export",
               target: "new",
               views: [[false, "form"]],
-              context: { is_modal: true , from_button: true},
+              context: { is_modal: true},
             }); //custom code
           });
           $(this.$buttons)

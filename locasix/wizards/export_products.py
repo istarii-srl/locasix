@@ -12,7 +12,7 @@ class ExportProducts(models.TransientModel):
     _name = "locasix.product.export"
     _description = "Assistance pour l'exportation de produits"
 
-    from_button = fields.Boolean(default=False)
+    from_button = fields.Boolean(default=True)
     product_ids = fields.Many2many(comodel_name="product.template", default=lambda self : self._get_default_products())
 
     def _get_default_products(self):
