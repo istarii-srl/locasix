@@ -15,6 +15,8 @@
                 <field name="has_ref_to_condi"/>
                 <field name="is_insurance"/>
                 <field name="insurance_percentage" attrs="{'invisible': [('is_insurance', '=', False)]}" widget="percentage"/>
+                <field name="is_temporary_product" groups="locasix.group_locasix_admin"/>
+                <field name="is_assemblage_product"/>
             </field>
 
             <page name="general_information" position="after">
@@ -45,7 +47,7 @@
                         </group>
                     </group>
                 </page>
-                <page string="Liens">
+                <page string="Liens" attrs="{'invisible': [('is_temporary_product', '=', True)]}" groups="locasix.group_locasix_admin">
                     <group>
                         <group>
                             <field name="product_master_ids" context="{'from_product_master': 1}"/>
@@ -53,6 +55,11 @@
                         <group>
                             <field name="product_linked_ids" context="{'from_product_linked': 1}"/>
                         </group>
+                    </group>
+                </page>
+                <page string="Liens d'assemblage" attrs="{'invisible': [('is_assemblage_product', '=', False)]}">
+                    <group>
+                        <field name="assemblage_ids" context="{'from_product_master': 1}"/>
                     </group>
                 </page>
                 <page string='Fiches techniques'>
