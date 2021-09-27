@@ -15,6 +15,7 @@ class ExportProducts(models.TransientModel):
     from_button = fields.Boolean(default=True)
     product_ids = fields.Many2many(comodel_name="product.template", compute="_get_default_products")
 
+    @api.depends('from_button')
     def _get_default_products(self):
         if self.from_button:
             self.product_ids = self.env["product.template"].search([("active", "=", True)])
