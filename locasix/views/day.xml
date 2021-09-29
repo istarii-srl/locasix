@@ -15,6 +15,18 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="locasix_day_calendar">
+        <field name="name">locasix.day.calendar</field>
+        <field name="model">locasix.day</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <calendar string="Calendar View" date_start="day" event_limit="5">
+                <field name="name" filters="1"/>
+                <field name="notes" string="Notes"/>
+            </calendar>
+        </field>
+    </record>
+
 
     <record model="ir.ui.view" id="locasix_day_form">
         <field name="name">locasix.day.form</field>
