@@ -1,0 +1,18 @@
+<odoo>
+    <record model="ir.actions.act_window" id="action_remarques">
+        <field name="name">Remarques</field>
+        <field name="res_model">locasix.remarque</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="locasix_remarque_tree" model="ir.ui.view">
+        <field name="name">locasix.remarque.tree</field>
+        <field name="model">locasix.remarque</field>
+        <field name="arch" type="xml">
+            <tree string="Remarques" editable="bottom">
+                <field name="name"/>
+                <field name="color" widget="color_picker" />
+            </tree>
+        </field>
+    </record>
+</odoo>
