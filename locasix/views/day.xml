@@ -2,7 +2,7 @@
     <record model="ir.actions.act_window" id="action_day">
         <field name="name">Allers et retours</field>
         <field name="res_model">locasix.day</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,calendar,form</field>
     </record>
 
     <record model="ir.ui.view" id="locasix_day_tree">
