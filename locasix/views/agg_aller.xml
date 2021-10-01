@@ -11,6 +11,7 @@
                             <field name="date" readonly="1"/>
                             <field name="address_id"/>
                             <field name="city"/>
+                            <field name="state"/>
                         </group>
                         <group>
                             <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
