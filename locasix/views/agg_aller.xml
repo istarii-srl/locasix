@@ -12,8 +12,8 @@
                             <field name="city"/>
                         </group>
                         <group>
-                            <field name="Remarque"/>
-                            <field name="Remarque libre"/>
+                            <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="note"/>
                         </group>
                     </group>
                     <notebook>
