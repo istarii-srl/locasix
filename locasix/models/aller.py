@@ -14,7 +14,7 @@ class Aller(models.Model):
     contract = fields.Char(string="Contrat")
 
     product_id = fields.Many2one(string="Produit", comodel_name="product.product")
-    product_unique_ref = fields.Char(string="N°")
+    product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
 
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")

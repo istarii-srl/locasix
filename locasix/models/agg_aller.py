@@ -4,7 +4,8 @@ class AggAller(models.Model):
     _name = "locasix.agg.aller"
     _description = "Un agglomérat d'allers"
 
-    date = fields.Date(string="Date")
+    day_id = fields.Many2one(string="Journée", comodel_name="locasix.day")
+    date = fields.Date(string="Date", related="day_id.day")
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact")
     city = fields.Char(string="Ville", related="address_id.city")
