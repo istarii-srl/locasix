@@ -49,10 +49,10 @@
                     </div>
                     <field name="day"/>
                     <group>
-                        <group>
+                        <group style="width: 45% !important;">
                             <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}"/>
                         </group>
-                        <group>
+                        <group style="width: 45% !important;">
                             <field name="retour_ids"/>
                         </group>
                     </group>
