@@ -1,2 +1,32 @@
 <odoo>
+    <record model="ir.ui.view" id="locasix_agg_aller_form">
+        <field name="name">locasix.agg.aller.form</field>
+        <field name="model">locasix.agg.aller</field>
+        <field name="arch" type="xml">
+            <form string="Allers">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" readonly="1"/>
+                            <field name="address_id"/>
+                            <field name="city"/>
+                        </group>
+                        <group>
+                            <field name="Remarque"/>
+                            <field name="Remarque libre"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Allers">
+                            <field name="aller_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_validate" string="Valider" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
 </odoo>
