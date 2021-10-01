@@ -17,3 +17,4 @@ class AggAller(models.Model):
 
     def action_validate(self):
         return
+

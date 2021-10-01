@@ -19,6 +19,12 @@ class Aller(models.Model):
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
 
+
+    @api.onchange('product_id')
+    def _on_product_changed(self):
+        for aller in self:
+            return {'domain': {'product_unique_ref': [('product_id', '=', aller.product_id.id)]}}
+
     def open_agg(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')
         return {
