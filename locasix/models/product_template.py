@@ -36,6 +36,7 @@ class ProductTemplate(models.Model):
 
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
     insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)
+    reference_ids = fields.One2many(string="N°", comodel_name="locasix.product.ref", inverse_name="product_id")
 
 
 

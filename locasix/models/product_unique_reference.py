@@ -5,4 +5,4 @@ class ProductUniqueReference(models.Model):
     _description = "Référence unique d'un produit"
 
     name = fields.Char(string="N°")
-    product_id = fields.Many2one(string="Produit", comodel_name="product.product")
+    product_id = fields.Many2one(string="Produit", comodel_name="product.template")

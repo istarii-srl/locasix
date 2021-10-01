@@ -47,6 +47,9 @@
                         </group>
                     </group>
                 </page>
+                <page string="Références">
+                    <field name="reference_ids"/>
+                </page>
                 <page string="Liens" attrs="{'invisible': [('is_temporary_product', '=', True)]}" groups="locasix.group_locasix_admin">
                     <group>
                         <group>
