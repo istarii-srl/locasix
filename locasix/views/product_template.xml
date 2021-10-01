@@ -52,8 +52,8 @@
                         <tree editable="bottom">
                             <control>
                                 <create name="add_product_control" string="Ajouter une référence"/>
-                                <field name="name"/>
                             </control>
+                            <field name="name"/>
                         </tree>
                     </field>
                 </page>
