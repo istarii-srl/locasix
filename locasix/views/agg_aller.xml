@@ -18,7 +18,14 @@
                     </group>
                     <notebook>
                         <page string="Allers">
-                            <field name="aller_ids"/>
+                            <field name="aller_ids" mode="tree">
+                                <tree editable="bottom" string="Allers">
+                                    <control>
+                                        <create name="add_product_control" string="Ajouter un aller"/>
+                                    </control>
+                                    <field name="product_id"/>
+                                </tree>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
