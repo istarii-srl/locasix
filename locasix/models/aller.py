@@ -20,12 +20,15 @@ class Aller(models.Model):
     note = fields.Text(string="Remarque libre")
 
     def open_agg(self):
-        for aller in self:
-            return {
-                'type': 'ir.actions.act_window',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': "locasix.agg.aller",
-                'res_id': aller.agg_id.id,
-                'target': 'current',
-            }          
+        view = self.env.ref('locasix.locasix_agg_aller_form')
+        return {
+        'name': 'Allers',
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'locasix.agg.aller',
+        'views': [(view.id, 'form')],
+        'view_id': view.id,
+        'res_id': self.agg_id.id,
+        'target': 'new',
+        }      
