@@ -52,6 +52,7 @@
             <tree string="Allers">
                 <field name="product_id"/>
                 <field name="product_unique_ref"/>
+                <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
         </field>
