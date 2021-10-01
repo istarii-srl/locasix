@@ -22,3 +22,4 @@ access_locasix_agg_aller_user,locasix.locasix.agg.aller,model_locasix_agg_aller,
 access_locasix_agg_retour_user,locasix.locasix.agg.retour,model_locasix_agg_retour,base.group_user,1,1,1,1
 access_locasix_assemblage_link_user,locasix.locasix.assemblage.link,model_locasix_assemblage_link,base.group_user,1,1,1,1
 access_locasix_remarque_user,locasix.locasix.remarque,model_locasix_remarque,base.group_user,1,1,1,1
+access_locasix_product_ref_user,locasix.locasix.product.ref,model_locasix_product_ref,base.group_user,1,1,1,1
