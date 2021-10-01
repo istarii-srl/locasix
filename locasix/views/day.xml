@@ -50,7 +50,7 @@
                     <field name="day"/>
                     <group>
                         <group>
-                            <field name="aller_ids"/>
+                            <field name="aller_ids" context="{tree_view_ref' : 'locasix.locasix_aller_day_tree'}"/>
                         </group>
                         <group>
                             <field name="retour_ids"/>
