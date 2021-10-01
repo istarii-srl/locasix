@@ -20,6 +20,18 @@ class Aller(models.Model):
     note = fields.Text(string="Remarque libre")
 
 
+    def create_copy_to_new_agg(self, new_agg):
+        for aller in self:
+            self.env["locasix.aller"].create({
+                "day_id": new_agg.day_id.id,
+                "agg_id": new_agg.id,
+                "address_id": aller.address_id.id,
+                "contract": aller.contract,
+                "product_id": aller.product_id,
+                "remarque_ids": aller.remarque_ids,
+                "note": aller.note,
+            })
+
     @api.onchange('product_id')
     def _on_product_changed(self):
         for aller in self:

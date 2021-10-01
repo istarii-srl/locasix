@@ -17,7 +17,24 @@ class AggAller(models.Model):
 
 
     def duplicate_to(self, new_date):
-        return
+        for aggAller in self:
+            newday_id = self.env["locasix.day"].search([("day", "=", new_date)], limit=1)
+            if not newday_id:
+                newday_id = self.env["locasix.day"].create({"day": new_date})
+            
+            new_agg = self.env["locasix.agg.aller"].create({
+                "day_id": newday_id.id,
+                "address_id": aggAller.address_id,
+                "contract": aggAller.contract,
+                "remarque_ids": aggAller.remarque_ids,
+                "note": aggAller.note,
+            })
+            #for remarque in aggAller.remarque_ids:
+            #    new_agg.remarque_ids = [(4, remarque.id, 0)]
+            
+            for aller in aggAller.aller_ids:
+                aller.create_copy_to_new_agg(new_agg)
+
 
 
     def action_validate(self):
