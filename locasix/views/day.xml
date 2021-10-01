@@ -50,13 +50,19 @@
                 <group>
                     <group style="width: 50% !important;" string="Allers">
                         <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}" nolabel="1"/>
-                        <field name="aller_note" nolabel="1"/>
+
                     </group>
                     <group style="width: 50% !important;" string="Retours">
                         <field name="retour_ids" nolabel="1"/>
-                        <field name="retour_note" nolabel="1"/>
+                        
                     </group>
                 </group>
+                <notebook>
+                    <page string="notes">
+                        <field name="aller_note"/>
+                        <field name="retour_note"/>
+                    </page>
+                </notebook>
             </form>
         </field>
     </record>
