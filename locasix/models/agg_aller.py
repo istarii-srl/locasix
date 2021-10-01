@@ -15,6 +15,11 @@ class AggAller(models.Model):
     state = fields.Selection(string='Statut', selection=[("progress", "En cours")], default="progress")
     aller_ids = fields.One2many(comodel_name="locasix.aller", string="Allers", inverse_name="agg_id")
 
+
+    def duplicate_to(self, new_date):
+        return
+
+
     def action_validate(self):
         return
 
