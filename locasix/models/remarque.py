@@ -8,5 +8,5 @@ class Remarque(models.Model):
     def _get_default_color(self):
         return randint(1, 11)
 
-    name = fields.Char(string='Remarque', required=True, translate=True)
+    name = fields.Char(string='Remarque', required=True)
     color = fields.Integer('Couleur', default=_get_default_color)
