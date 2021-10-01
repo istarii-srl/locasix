@@ -13,3 +13,6 @@ class AggAller(models.Model):
     note = fields.Text(string="Remarque libre")
 
     aller_ids = fields.One2many(comodel_name="locasix.aller", string="Allers", inverse_name="agg_id")
+
+    def action_validate(self):
+        return
