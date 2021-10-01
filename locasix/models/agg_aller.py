@@ -12,7 +12,7 @@ class AggAller(models.Model):
     contract = fields.Char(string="Contrat")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
-
+    state = fields.Selection(string='Statut', selection=[("progress", "En cours")], default="progress")
     aller_ids = fields.One2many(comodel_name="locasix.aller", string="Allers", inverse_name="agg_id")
 
     def action_validate(self):
