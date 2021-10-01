@@ -41,7 +41,7 @@
                     <button name="action_add_aller" type="object" string="Ajouter un aller" class="oe_highlight"/>
                     <button name="action_add_retour" type="object" string="Ajouter un retour" class="oe_highlight"/>
                 </header>
-                <sheet style="margin-left: 0px !important; padding-left: 0px !important">
+                <sheet style="margin-left: 0px !important; padding-left: 0px !important; width: 100% !important;">
                     <div class="oe_title">
                         <h1>
                             <field name="name" placeholder="ex: Vente Hergé 3"/>
@@ -49,10 +49,10 @@
                     </div>
                     <field name="day"/>
                     <group>
-                        <group style="width: 45% !important;">
+                        <group style="width: 40% !important;">
                             <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}"/>
                         </group>
-                        <group style="width: 45% !important;">
+                        <group style="width: 40% !important;">
                             <field name="retour_ids"/>
                         </group>
                     </group>
