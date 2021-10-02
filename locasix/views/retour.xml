@@ -31,7 +31,7 @@
         <field name="name">Retours</field>
         <field name="res_model">locasix.retour</field>
         <field name="view_mode">calendar,tree,form,map</field>
-        <field name="view_id" ref="locasix.locasix_retour_tree"/>
+        <field name="view_id" ref="locasix.locasix_retour_calendar"/>
     </record>
 
 
