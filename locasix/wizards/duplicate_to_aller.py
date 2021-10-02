@@ -13,4 +13,4 @@ class DuplicateToAller(models.TransientModel):
 
     def validate(self):
         for wizard in self:
-            wizard.agg_id.duplicate_to(wizard.new_date)
+            return wizard.agg_id.duplicate_to(wizard.new_date)
