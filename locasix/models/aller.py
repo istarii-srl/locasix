@@ -1,11 +1,14 @@
 from odoo import fields, api, models
 
+import logging
+_logger = logging.getLogger(__name__)
+
 class Aller(models.Model):
     _name = "locasix.aller"
     _description = "Un aller"
 
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
-    date = fields.Date(string="Date", related="day_id.day")
+    date = fields.Date(string="Date")
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     state = fields.Selection(string="Statut", selection=[("progress", "En cours")], default="progress")
 
@@ -18,6 +21,29 @@ class Aller(models.Model):
 
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
+
+
+    def write(self, vals):
+        _logger.info("write Aller")
+        _logger.info(vals)
+        res = super(Aller, self).write(vals)
+        if "date" in vals:
+            if self.date != self.day_id.day:
+                newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)
+                if not newday_id:
+                    newday_id = self.env["locasix.day"].create({"day": self.date})
+                
+                new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("day_id", "=", newday_id.id)], limit=1)
+                if not new_agg_id:
+                    new_agg_id = self.env["locasix.agg.aller"].create({
+                        "day_id": newday_id.id,
+                        "date": self.date,
+                        "address_id": self.address_id.id,
+                    })
+                
+                self.day_id = newday_id
+
+        return res
 
 
     def create_copy_to_new_agg(self, new_agg):

@@ -35,7 +35,8 @@ class Day(models.Model):
         'view_id': view.id,
         'target': 'new',
         'context': {
-            'default_day_id': self.id
+            'default_day_id': self.id,
+            'default_date': self.day,
             },
         }        
 
