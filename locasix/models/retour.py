@@ -1,9 +1,110 @@
 from odoo import fields, api, models
 
+import logging
+_logger = logging.getLogger(__name__)
 
 class Retour(models.Model):
     _name = "locasix.retour"
     _description = "Un retour"
 
-    day_id = fields.Many2one(comodel_name="locasix.day", string="Journée")
-    agg_id = fields.Many2one(comodel_name="locasix.agg.retour")
+    name = fields.Char(string="Nom", compute="_compute_name")
+    day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
+    date = fields.Date(string="Date")
+    agg_id = fields.Many2one(comodel_name="locasix.agg.retour", required=True)
+    state = fields.Selection(string="Statut", selection=[("progress", "En cours")], default="progress")
+
+    address_id = fields.Many2one(comodel_name="res.partner", string="Contact")
+    city = fields.Char(string="Ville", related="address_id.city")
+    contract = fields.Char(string="Contrat")
+
+    product_id = fields.Many2one(string="Produit", comodel_name="product.product")
+    product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
+
+    remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
+    note = fields.Text(string="Remarque libre")
+
+    @api.depends('date', 'address_id')
+    def _compute_name(self):
+        for aggRetour in self:
+            if aggRetour.address_id:
+                aggRetour.name = aggRetour.address_id.name + " - "+aggRetour.city if aggRetour.city else ""
+            else:
+                aggRetour.name = "/"
+
+    @api.model
+    def create(self, vals):
+        obj = super(Retour, self).create(vals)
+        if not obj.address_id:
+            obj.address_id = obj.agg_id.address_id
+        if not obj.day_id or not obj.date:
+            obj.day_id = obj.agg_id.day_id
+            obj.date = obj.agg_id.date
+        return obj
+
+    def write(self, vals):
+        _logger.info("write Retour")
+        _logger.info(vals)
+        res = super(Retour, self).write(vals)
+        if "address_id" in vals:
+            if self.date == self.agg_id.date:
+                new_agg_id = self.env["locasix.agg.retour"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id)], limit=1)
+                if not new_agg_id:
+                    new_agg_id = self.env["locasix.agg.retour"].create({
+                        "day_id": self.day_id.id,
+                        "date": self.date,
+                        "address_id": self.address_id.id,
+                    })
+                self.agg_id = new_agg_id
+
+        if "date" in vals:
+            if self.date != self.agg_id.date:
+                newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)
+                if not newday_id:
+                    newday_id = self.env["locasix.day"].create({"day": self.date})
+                
+                new_agg_id = self.env["locasix.agg.retour"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("day_id", "=", newday_id.id)], limit=1)
+                if not new_agg_id:
+                    new_agg_id = self.env["locasix.agg.retour"].create({
+                        "day_id": newday_id.id,
+                        "date": self.date,
+                        "address_id": self.address_id.id,
+                    })
+                
+                self.agg_id = new_agg_id
+                self.day_id = newday_id
+
+        return res
+
+
+    def create_copy_to_new_agg(self, new_agg):
+        for retour in self:
+            new_retour = self.env["locasix.retour"].create({
+                "day_id": new_agg.day_id.id,
+                "date": new_agg.date,
+                "agg_id": new_agg.id,
+                "address_id": retour.address_id.id,
+                "contract": retour.contract,
+                "product_id": retour.product_id.id,
+                "note": retour.note,
+            })
+            for remarque in retour.remarque_ids:
+                new_retour.remarque_ids = [(4, remarque.id, 0)]
+
+    @api.onchange('product_id')
+    def _on_product_changed(self):
+        for retour in self:
+            return {'domain': {'product_unique_ref': [('product_id', '=', retour.product_id.product_tmpl_id.id)]}}
+
+    def open_agg(self):
+        view = self.env.ref('locasix.locasix_agg_retour_form')
+        return {
+        'name': 'Retours',
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'locasix.agg.retour',
+        'views': [(view.id, 'form')],
+        'view_id': view.id,
+        'res_id': self.agg_id.id,
+        'target': 'new',
+        }      

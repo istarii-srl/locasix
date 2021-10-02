@@ -43,7 +43,21 @@ class Day(models.Model):
         }        
 
     def action_add_retour(self):
-        return
+        view = self.env.ref('locasix.locasix_agg_retour_form')
+        return {
+        'name': 'Retours',
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'locasix.agg.retour',
+        'views': [(view.id, 'form')],
+        'view_id': view.id,
+        'target': 'new',
+        'context': {
+            'default_day_id': self.id,
+            'default_date': self.day,
+            },
+        }  
 
     def action_previous(self):
         for day in self:
