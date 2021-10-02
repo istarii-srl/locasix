@@ -70,15 +70,16 @@ class Aller(models.Model):
 
     def create_copy_to_new_agg(self, new_agg):
         for aller in self:
-            self.env["locasix.aller"].create({
+            new_aller = self.env["locasix.aller"].create({
                 "day_id": new_agg.day_id.id,
                 "agg_id": new_agg.id,
                 "address_id": aller.address_id.id,
                 "contract": aller.contract,
-                "product_id": aller.product_id,
-                "remarque_ids": aller.remarque_ids,
+                "product_id": aller.product_id.id,
                 "note": aller.note,
             })
+            for remarque in aller.remarque_ids:
+                new_aller.remarque_ids = [(4, remarque.id, 0)]
 
     @api.onchange('product_id')
     def _on_product_changed(self):
