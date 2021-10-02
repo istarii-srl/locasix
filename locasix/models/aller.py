@@ -62,6 +62,7 @@ class Aller(models.Model):
                         "address_id": self.address_id.id,
                     })
                 
+                self.agg_id = new_agg_id
                 self.day_id = newday_id
 
         return res
