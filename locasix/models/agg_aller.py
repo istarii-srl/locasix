@@ -66,8 +66,24 @@ class AggAller(models.Model):
                 aggAller.name = aggAller.date.strftime('%d/%m/%Y') + " - " + aggAller.address_id.name
             else:
                 aggAller.name = "/"
-
+    
     def action_open_duplicate_wizard(self):
+        view = self.env.ref('locasix.locasix_agg_aller_form')
+        return {
+        'name': 'Allers',
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'locasix.agg.aller',
+        'views': [(view.id, 'form')],
+        'view_id': view.id,
+        'target': 'current',
+        'context': {
+            "default_address_id": self.address_id,
+            }
+        }      
+
+    def action_open_duplicate_wizard_2(self):
         view = self.env.ref('locasix.locasix_duplicate_aller_form')
         return {
         'name': 'Allers',
