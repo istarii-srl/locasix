@@ -72,6 +72,7 @@ class Aller(models.Model):
         for aller in self:
             new_aller = self.env["locasix.aller"].create({
                 "day_id": new_agg.day_id.id,
+                "date": new_agg.date,
                 "agg_id": new_agg.id,
                 "address_id": aller.address_id.id,
                 "contract": aller.contract,

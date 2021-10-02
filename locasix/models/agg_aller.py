@@ -107,6 +107,7 @@ class AggAller(models.Model):
             
             new_agg = self.env["locasix.agg.aller"].create({
                 "day_id": newday_id.id,
+                "date": newday_id.day,
                 "address_id": aggAller.address_id.id,
                 "contract": aggAller.contract,
                 #"remarque_ids": aggAller.remarque_ids,
