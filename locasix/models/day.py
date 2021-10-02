@@ -13,6 +13,8 @@ class Day(models.Model):
     aller_note = fields.Html(string="Notes allers")
     retour_note = fields.Html(string="Notes retours")
 
+    active = fields.Boolean(string="Actif", default=True)
+
     aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers")
     retour_ids = fields.One2many(comodel_name="locasix.retour", inverse_name="day_id", string="Retours")
 

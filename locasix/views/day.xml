@@ -21,7 +21,7 @@
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
             <calendar string="Calendar View" date_start="day" mode="month" event_limit="5">
-                <field name="name" filters="1"/>
+                <field name="name"/>
                 <field name="notes" string="Notes"/>
             </calendar>
         </field>
