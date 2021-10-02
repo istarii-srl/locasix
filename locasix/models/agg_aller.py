@@ -58,6 +58,8 @@ class AggAller(models.Model):
         for aggAller in self:
             if aggAller.date and aggAller.address_id:
                 aggAller.name = aggAller.date.strftime('%d/%m/%Y') + " - " + aggAller.address_id.name
+            else:
+                aggAller.name = "/"
 
     def action_open_duplicate_wizard(self):
         view = self.env.ref('locasix.locasix_duplicate_aller_form')
