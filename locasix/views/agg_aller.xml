@@ -29,7 +29,7 @@
                                         <create name="add_product_control" string="Ajouter un aller" context="{
                                         'default_remarque_ids': parent.remarque_ids,
                                         'default_day_id': parent.day_id,
-                                        'default_date': parant.date,
+                                        'default_date': parent.date,
                                         'default_address_id': parent.address_id,
                                         'default_state': parent.state,
                                         'default_note': parent.note
