@@ -107,13 +107,13 @@ class AggAller(models.Model):
             
             new_agg = self.env["locasix.agg.aller"].create({
                 "day_id": newday_id.id,
-                "address_id": aggAller.address_id,
+                "address_id": aggAller.address_id.id,
                 "contract": aggAller.contract,
-                "remarque_ids": aggAller.remarque_ids,
+                #"remarque_ids": aggAller.remarque_ids,
                 "note": aggAller.note,
             })
-            #for remarque in aggAller.remarque_ids:
-            #    new_agg.remarque_ids = [(4, remarque.id, 0)]
+            for remarque in aggAller.remarque_ids:
+                new_agg.remarque_ids = [(4, remarque.id, 0)]
             
             for aller in aggAller.aller_ids:
                 aller.create_copy_to_new_agg(new_agg)
