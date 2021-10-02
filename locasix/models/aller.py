@@ -7,6 +7,7 @@ class Aller(models.Model):
     _name = "locasix.aller"
     _description = "Un aller"
 
+    name = fields.Char(string="Nom", compute="_compute_name")
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date")
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
@@ -22,6 +23,13 @@ class Aller(models.Model):
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
 
+    @api.depends('date', 'address_id')
+    def _compute_name(self):
+        for aggAller in self:
+            if aggAller.address_id:
+                aggAller.name = aggAller.address_id.name + " - "+aggAller.city if aggAller.city else ""
+            else:
+                aggAller.name = "/"
 
     @api.model
     def create(self, vals):

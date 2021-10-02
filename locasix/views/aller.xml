@@ -31,6 +31,7 @@
         <field name="name">Allers</field>
         <field name="res_model">locasix.aller</field>
         <field name="view_mode">tree,form,calendar,map</field>
+        <field name="view_id" ref="locasix.locasix_aller_tree"/>
     </record>
 
 
@@ -39,7 +40,9 @@
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
             <tree string="Allers">
-                <field name="day_id"/>
+                <field name="date"/>
+                <field name="address_id"/>
+                <field name="city"/>
                 <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
         </field>
