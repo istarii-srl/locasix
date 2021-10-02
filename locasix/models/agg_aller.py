@@ -77,7 +77,7 @@ class AggAller(models.Model):
         'res_model': 'locasix.agg.aller',
         'views': [(view.id, 'form')],
         'view_id': view.id,
-        'target': 'current',
+        'target': 'new',
         'context': {
             "default_address_id": self.address_id.id,
             }
