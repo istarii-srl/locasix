@@ -23,6 +23,16 @@ class Aller(models.Model):
     note = fields.Text(string="Remarque libre")
 
 
+    @api.model
+    def create(self, vals):
+        obj = super(Aller, self).create(vals)
+        if not obj.address_id:
+            obj.address_id = obj.agg_id.address_id
+        if not obj.day_id or not obj.date:
+            obj.day_id = obj.agg_id.day_id
+            obj.date = obj.agg_id.date
+        return obj
+
     def write(self, vals):
         _logger.info("write Aller")
         _logger.info(vals)
