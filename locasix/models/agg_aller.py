@@ -79,7 +79,7 @@ class AggAller(models.Model):
         'view_id': view.id,
         'target': 'current',
         'context': {
-            "default_address_id": self.address_id,
+            "default_address_id": self.address_id.id,
             }
         }      
 
