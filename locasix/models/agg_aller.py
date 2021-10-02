@@ -39,6 +39,12 @@ class AggAller(models.Model):
         _logger.info("write aggAller")
         _logger.info(vals)
         res = super(AggAller, self).write(vals)
+        if "address_id" in vals:
+            if self.date == self.day_id.day:
+                for aller in self.aller_ids:
+                    aller.address_id = self.address_id
+                self.check_and_merge()                
+
         if "date" in vals:
             if self.date != self.day_id.day:
                 newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)

@@ -27,8 +27,19 @@ class Aller(models.Model):
         _logger.info("write Aller")
         _logger.info(vals)
         res = super(Aller, self).write(vals)
+        if "address_id" in vals:
+            if self.date == self.agg_id.date:
+                new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id)], limit=1)
+                if not new_agg_id:
+                    new_agg_id = self.env["locasix.agg.aller"].create({
+                        "day_id": self.day_id.id,
+                        "date": self.date,
+                        "address_id": self.address_id.id,
+                    })
+                self.agg_id = new_agg_id
+
         if "date" in vals:
-            if self.date != self.day_id.day:
+            if self.date != self.agg_id.date:
                 newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)
                 if not newday_id:
                     newday_id = self.env["locasix.day"].create({"day": self.date})
