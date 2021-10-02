@@ -18,7 +18,7 @@
         <field name="model">locasix.aller</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <calendar string="Calendar View" date_start="date" color="address_id" event_limit="5">
+            <calendar string="Calendar View" date_start="date" color="address_id" mode="month" event_limit="5">
                 <field name="address_id" filters="1"/>
                 <field name="contract" string="Référence"/>
                 <field name="city" string="Ville"/>
@@ -30,7 +30,7 @@
     <record model="ir.actions.act_window" id="action_aller">
         <field name="name">Allers</field>
         <field name="res_model">locasix.aller</field>
-        <field name="view_mode">tree,form,calendar,map</field>
+        <field name="view_mode">calendar,tree,form,map</field>
         <field name="view_id" ref="locasix.locasix_aller_tree"/>
     </record>
 
