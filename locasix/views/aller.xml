@@ -58,4 +58,28 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="locasix_aller_form">
+        <field name="name">locasix.aller.form</field>
+        <field name="model">locasix.aller</field>
+        <field name="arch" type="xml">
+            <form string="Aller">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="day_id" invisible="1"/>
+                            <field name="date"/>
+                            <field name="address_id"/>
+                            <field name="city"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
 </odoo>
