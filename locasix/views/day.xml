@@ -81,7 +81,7 @@
 
     <record id="locasix_day_search" model="ir.ui.view">
         <field name="name">locasix.day.search</field>
-        <field name="model">loacasix.day</field>
+        <field name="model">locasix.day</field>
         <field name="arch" type="xml">
             <search string="Allers et retours">
                 <separator/>
