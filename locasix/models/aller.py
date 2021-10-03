@@ -23,16 +23,16 @@ class Aller(models.Model):
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
 
-    active = fields.Boolean(string="Actif", compute="_compute_active", store=True)
+    active = fields.Boolean(string="Actif", default=True)
 
-    @api.depends("state")
-    def _compute_active(self):
-        _logger.info("Compute active")
-        for aller in self:
-            if aller.state:
-                if aller.state == "done":
-                    aller.active = False
-            aller.active = True
+    # @api.depends("state")
+    # def _compute_active(self):
+    #     _logger.info("Compute active")
+    #     for aller in self:
+    #         if aller.state:
+    #             if aller.state == "done":
+    #                 aller.active = False
+    #         aller.active = True
 
     @api.depends('date', 'address_id')
     def _compute_name(self):
@@ -83,6 +83,10 @@ class Aller(models.Model):
                 
                 self.agg_id = new_agg_id
                 self.day_id = newday_id
+        if "state" in vals:
+            if self.state == "done":
+                _logger.info("yyoyoyoy")
+                self.active = False
 
         return res
 
