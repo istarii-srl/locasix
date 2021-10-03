@@ -27,6 +27,7 @@ class Aller(models.Model):
 
     @api.depends("state")
     def _compute_active(self):
+        _logger.info("Compute active")
         for aller in self:
             if aller.state:
                 if aller.state == "done":
