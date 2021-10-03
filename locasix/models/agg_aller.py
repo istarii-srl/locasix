@@ -38,10 +38,39 @@ class AggAller(models.Model):
                 other_agg.unlink()
         return
  
+    def weekend_check(self):
+        for agg_aller in self:
+            if agg_aller.date_retour and not agg_aller.is_retours_created and agg_aller.address_id:
+                agg_retour_id = self.env["locasix.agg.retour"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id)], limit=1)
+                if not agg_retour_id:
+                    newday_id = self.env["locasix.day"].search([("day", "=", agg_aller.date_retour)], limit=1)
+                    if not newday_id:
+                        newday_id = self.env["locasix.day"].create({"day": agg_aller.date_retour})
+                    agg_retour_id = self.env["locasix.agg.retour"].create({
+                        "day_id": newday_id.id,
+                        "date": agg_aller.date_retour,
+                        "address_id": agg_aller.address_id.id,
+                    })
+                for aller in agg_aller.aller_ids:
+                    retour = self.env["locasix.aller"].create({
+                    "day_id": agg_retour_id.day_id.id,
+                    "date": agg_retour_id.date,
+                    "agg_id": agg_retour_id.id,
+                    "address_id": aller.address_id.id,
+                    "contract": aller.contract,
+                    "product_id": aller.product_id.id,
+                    "product_unique_ref": aller.product_unique_ref,
+                    "note": aller.note,
+                })
+                    for remarque in aller.remarque_ids:
+                        retour.remarque_ids = [(4, remarque.id, 0)]     
+                agg_aller.is_retours_created = True                                   
+
     @api.model
     def create(self, vals):
         obj = super(AggAller, self).create(vals)
         obj.check_and_merge()
+        obj.weekend_check()
         return obj
 
     def write(self, vals):
@@ -65,6 +94,7 @@ class AggAller(models.Model):
                     aller.day_id = newday_id
                     aller.date = self.date
                 self.check_and_merge()
+        self.weekend_check()
 
         return res
 
