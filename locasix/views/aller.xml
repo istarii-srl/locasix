@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <search string="Allers">
                 <field name="name" string="Aller" filter_domain="[('name', 'ilike', self)]"/>
-                <filter string="Aujourd'hui" name="today" domain="[('date', '=', context_today())]"/>
+                <filter string="Aujourd'hui" name="today" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
                 
                 <separator/>
                 <filter string="Date" name="today" date="date"/>
