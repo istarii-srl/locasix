@@ -11,7 +11,7 @@ class Aller(models.Model):
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date")
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
-    state = fields.Selection(string="Statut", selection=[("progress", "En cours")], default="progress")
+    state = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("done", "Fini"), ("cancel", "Annulé"), ("move", "Déplacé")], default="progress")
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact")
     city = fields.Char(string="Ville", related="address_id.city")
@@ -23,7 +23,15 @@ class Aller(models.Model):
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
 
-    active = fields.Boolean(string="Actif", default=True)
+    active = fields.Boolean(string="Actif", compute="_compute_active")
+
+    @api.depends("state")
+    def _compute_active(self):
+        for aller in self:
+            if aller.state:
+                if aller.state == "done":
+                    aller.active = False
+            aller.active = True
 
     @api.depends('date', 'address_id')
     def _compute_name(self):

@@ -7,7 +7,7 @@
             <search string="Allers">
                 <field name="name" string="Aller" filter_domain="[('name', 'ilike', self)]"/>
                 <filter string="Aujourd'hui" name="today" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                
+
                 <separator/>
                 <filter string="Date" name="today" date="date"/>
                 <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
@@ -53,6 +53,7 @@
 
     <record model="ir.ui.view" id="locasix_aller_tree">
         <field name="name">locasix.aller.tree</field>
+        <field name="priority">100</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
             <tree string="Allers">
@@ -83,6 +84,7 @@
         <field name="arch" type="xml">
             <form string="Aller">
                 <sheet>
+                    <field name="active" invisible="1"/>
                     <group>
                         <group>
                             <field name="day_id" invisible="1"/>
