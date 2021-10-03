@@ -42,7 +42,7 @@
                     <button name="action_add_retour" type="object" string="Ajouter un retour" class="oe_highlight"/>
                 </header>
                 <sheet >
-                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <widget name="web_ribbon" title="Archivé" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <field name="active" invisible="1"/>
                     <div class="oe_title">
                         <h1>
@@ -84,6 +84,7 @@
         <field name="model">locasix.day</field>
         <field name="arch" type="xml">
             <search string="Allers et retours">
+                <field name="name" string="Product" filter_domain="[('name', 'ilike', self)]"/>
                 <separator/>
                 <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
             </search>

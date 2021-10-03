@@ -1,4 +1,5 @@
 from odoo import fields, api, models
+import datetime
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -18,6 +19,14 @@ class AggAller(models.Model):
     note = fields.Text(string="Remarque libre")
     state = fields.Selection(string='Statut', selection=[("progress", "En cours")], default="progress")
     aller_ids = fields.One2many(comodel_name="locasix.aller", string="Allers", inverse_name="agg_id")
+
+    is_weekend = fields.Boolean("Weekend", default=False)
+    date_retour = fields.Datetime(string="Date de retour", default=lambda self: self._get_default_date())
+    is_retours_created = fields.Boolean(default=False)
+
+    def _get_default_date(self):
+        return datetime.date.today()
+
 
     # TODO USE THAT IN WRITE AND CREATE
     def check_and_merge(self):

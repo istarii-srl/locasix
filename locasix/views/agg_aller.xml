@@ -21,6 +21,11 @@
                             <field name="note"/>
                         </group>
                     </group>
+                    <group>
+                        <field name="is_retours_created" invisible="1"/>
+                        <field name="is_weekend" attrs="{'readonly': [('is_retours_created', '=', True)]}"/>
+                        <field name="date_retour" attrs="{'invisible': [('is_weekend', '=', False)], 'readonly': [('is_retours_created', '=', True)]}"/>
+                    </group>
                     <notebook>
                         <page string="Allers">
                             <field name="aller_ids" mode="tree">
