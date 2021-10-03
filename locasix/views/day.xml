@@ -84,7 +84,7 @@
         <field name="model">locasix.day</field>
         <field name="arch" type="xml">
             <search string="Allers et retours">
-                <field name="name" string="Product" filter_domain="[('name', 'ilike', self)]"/>
+                <field name="name" string="Journée" filter_domain="[('name', 'ilike', self)]"/>
                 <separator/>
                 <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
             </search>

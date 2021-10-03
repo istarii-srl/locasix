@@ -85,4 +85,17 @@
         </field>
     </record>
 
+    <record id="locasix_aller_search" model="ir.ui.view">
+        <field name="name">locasix.aller.search</field>
+        <field name="model">locasix.aller</field>
+        <field name="arch" type="xml">
+            <search string="Allers et retours">
+                <field name="name" string="Aller" filter_domain="[('name', 'ilike', self)]"/>
+                <filter string="Aujourd'hui" name="today" date="date"/>
+                <separator/>
+                <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
 </odoo>
