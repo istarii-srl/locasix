@@ -33,6 +33,10 @@ class AggAller(models.Model):
         for agg_aller in self:
             aggs = self.env["locasix.agg.aller"].search([("date", '=', agg_aller.date), ("address_id", "=", agg_aller.address_id.id), ("id", '!=', agg_aller.id)])
             for other_agg in aggs:
+                if other_agg.is_retours_created:
+                    agg_aller.is_retours_created = True
+                    agg_aller.is_weekend = True
+                    agg_aller.date_retour = other_agg.date_retour
                 for other_aller in other_agg.aller_ids:
                     other_aller.agg_id = agg_aller
                 other_agg.unlink()
@@ -41,7 +45,7 @@ class AggAller(models.Model):
     def weekend_check(self):
         for agg_aller in self:
             if agg_aller.date_retour and not agg_aller.is_retours_created and agg_aller.address_id:
-                agg_retour_id = self.env["locasix.agg.retour"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id)], limit=1)
+                agg_retour_id = self.env["locasix.agg.retour"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id.id)], limit=1)
                 if not agg_retour_id:
                     newday_id = self.env["locasix.day"].search([("day", "=", agg_aller.date_retour)], limit=1)
                     if not newday_id:
