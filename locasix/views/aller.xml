@@ -32,6 +32,7 @@
         <field name="res_model">locasix.aller</field>
         <field name="view_mode">calendar,tree,form,map</field>
         <field name="view_id" ref="locasix.locasix_aller_calendar"/>
+        <field name="search_view_id" ref="locasix.locasix_aller_search"/>
     </record>
 
 
@@ -89,7 +90,7 @@
         <field name="name">locasix.aller.search</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
-            <search string="Allers et retours">
+            <search string="Allers">
                 <field name="name" string="Aller" filter_domain="[('name', 'ilike', self)]"/>
                 <filter string="Aujourd'hui" name="today" date="date"/>
                 <separator/>
