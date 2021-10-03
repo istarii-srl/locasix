@@ -56,7 +56,7 @@ class AggAller(models.Model):
                         "address_id": agg_aller.address_id.id,
                     })
                 for aller in agg_aller.aller_ids:
-                    retour = self.env["locasix.aller"].create({
+                    retour = self.env["locasix.retour"].create({
                     "day_id": agg_retour_id.day_id.id,
                     "date": agg_retour_id.date,
                     "agg_id": agg_retour_id.id,
