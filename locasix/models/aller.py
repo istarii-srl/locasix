@@ -23,6 +23,8 @@ class Aller(models.Model):
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
 
+    active = fields.Boolean(string="Actif", default=True)
+
     @api.depends('date', 'address_id')
     def _compute_name(self):
         for aggAller in self:
