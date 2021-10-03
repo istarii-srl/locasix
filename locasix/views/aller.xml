@@ -53,7 +53,7 @@
 
     <record model="ir.ui.view" id="locasix_aller_tree">
         <field name="name">locasix.aller.tree</field>
-        <field name="priority">100</field>
+        <field name="priority">50</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
             <tree string="Allers">
@@ -67,6 +67,7 @@
 
     <record model="ir.ui.view" id="locasix_aller_day_tree">
         <field name="name">locasix.aller.day.tree</field>
+        <field name="priority">100</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
             <tree string="Allers">
