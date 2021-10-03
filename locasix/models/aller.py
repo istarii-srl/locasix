@@ -23,7 +23,7 @@ class Aller(models.Model):
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
 
-    active = fields.Boolean(string="Actif", compute="_compute_active")
+    active = fields.Boolean(string="Actif", compute="_compute_active", store=True)
 
     @api.depends("state")
     def _compute_active(self):
