@@ -147,6 +147,12 @@ class DayCron(models.Model):
         # ARCHIVE OLD DATES OR SOMETHING LIKE THAT
         today = datetime.date.today()
         max_limit = today + datetime.timedelta(days=180)
+        
+        min_limit = today - datetime.timedelta(days=15)
+        days_to_archived = self.env["locasix.day"].search([("day", '<', min_limit)])
+        for day in days_to_archived:
+            day.active = False
+
         days = self.env["locasix.day"].search([('day', '>=', today), ('day', '<', max_limit)])
         sorted_days = sorted(days, key=lambda day: day.day)
         new_day = today

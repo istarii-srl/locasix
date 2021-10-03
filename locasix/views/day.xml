@@ -42,6 +42,8 @@
                     <button name="action_add_retour" type="object" string="Ajouter un retour" class="oe_highlight"/>
                 </header>
                 <sheet >
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <field name="active" invisible="1"/>
                     <div class="oe_title">
                         <h1>
                             <field name="name" placeholder="ex: Vente Hergé 3"/>
@@ -74,6 +76,17 @@
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="locasix_day_search" model="ir.ui.view">
+        <field name="name">locasix.day.search</field>
+        <field name="model">loacasix.day</field>
+        <field name="arch" type="xml">
+            <search string="Allers et retours">
+                <separator/>
+                <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
+            </search>
         </field>
     </record>
 
