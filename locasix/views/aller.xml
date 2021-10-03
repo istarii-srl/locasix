@@ -38,6 +38,7 @@
                 <field name="contract" string="Référence"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
+                <field name="state"/>
             </calendar>
         </field>
     </record>
