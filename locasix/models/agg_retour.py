@@ -10,14 +10,14 @@ class AggRetour(models.Model):
     retour_ids = fields.One2many(comodel_name="locasix.retour", string="Retours", inverse_name="agg_id")
     name = fields.Char(string="Nom", compute="_compute_name")
     day_id = fields.Many2one(string="Journée", comodel_name="locasix.day")
-    date = fields.Date(string="Date")
+    date = fields.Date(string="Date", required=True)
 
-    address_id = fields.Many2one(comodel_name="res.partner", string="Contact")
+    address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
     city = fields.Char(string="Ville", related="address_id.city")
     contract = fields.Char(string="Contrat")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
-    state = fields.Selection(string='Statut', selection=[("progress", "En cours")], default="progress")
+    state = fields.Selection(string='Statut', selection=[("progress", "En cours")], default="progress", required=True)
 
     def check_and_merge(self):
         for agg_retour in self:

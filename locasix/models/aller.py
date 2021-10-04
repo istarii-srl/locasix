@@ -9,11 +9,11 @@ class Aller(models.Model):
 
     name = fields.Char(string="Nom", compute="_compute_name")
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
-    date = fields.Date(string="Date")
+    date = fields.Date(string="Date", required=True)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
-    state = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("done", "Fini"), ("cancel", "Annulé"), ("move", "Déplacé")], default="progress")
+    state = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("done", "Fini"), ("cancel", "Annulé"), ("move", "Déplacé")], default="progress", required=True)
 
-    address_id = fields.Many2one(comodel_name="res.partner", string="Contact")
+    address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
     city = fields.Char(string="Ville", related="address_id.city")
     contract = fields.Char(string="Contrat")
 
