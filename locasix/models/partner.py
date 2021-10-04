@@ -5,4 +5,5 @@ class Partner(models.Model):
     _inherit = "res.partner"
 
     compte = fields.Char(string="Compte")
+    alpha_key = fields.Char(string="Clé alpha")
     

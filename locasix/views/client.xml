@@ -15,6 +15,7 @@
         <field name="arch" type="xml">
             <field name="vat" position="before">
                 <field name="compte"/>
+                <field name="alpha_key"/>
             </field>
         </field>
     </record>

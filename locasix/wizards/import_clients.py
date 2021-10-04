@@ -30,6 +30,7 @@ class ImportClients(models.TransientModel):
                 data_line = {
                     "compte": sheet.cell_value(i, 0),
                     "company_name": sheet.cell_value(i, 1), 
+                    "alpha": sheet.cell_value(i,2),
                     "street": sheet.cell_value(i, 3), 
                     "country/code": sheet.cell_value(i, 4),
                     "municipality": sheet.cell_value(i, 5),
@@ -48,7 +49,7 @@ class ImportClients(models.TransientModel):
             for line in lines:
                 _logger.info(line)
                 real_company_name = line["company_name"] + line["company_title"] if line["company_title"] else ""
-                company = self.env["res.partner"].search([("name", "=", real_company_name)], limit=1)
+                company = self.env["res.partner"].search([("alpha_key", "=", line["alpha"])], limit=1)
                 if not company:
                     country_municipality = line["country/code"].split("-")
                     country = False
@@ -69,6 +70,7 @@ class ImportClients(models.TransientModel):
                     company = self.env["res.partner"].create({
                         "name": real_company_name,
                         "compte": line["compte"],
+                        "alpha_key": line["alpha"],
                         "street": line["street"],
                         "zip": municipality,
                         "city": line["municipality"],
