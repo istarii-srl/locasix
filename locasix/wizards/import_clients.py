@@ -51,16 +51,28 @@ class ImportClients(models.TransientModel):
                 company = self.env["res.partner"].search([("name", "=", real_company_name)], limit=1)
                 if not company:
                     country_municipality = line["country/code"].split("-")
+                    country = False
                     if len(country_municipality) > 1:
                         municipality = country_municipality[1]
+                        country = country_municipality[0]
                     else:
                         municipality = country_municipality[0]
+                    country_id = False
+                    if country == "B":
+                        country_id = self.env['res.country'].search([("code", "=", "be")],limit=1)
+                    elif country == "D":
+                        country_id = self.env['res.country'].search([("code", "=", "de")],limit=1)
+                    elif country == "F":
+                        country_id = self.env['res.country'].search([("code", "=", "fr")],limit=1)
+                    elif country == "L":
+                        country_id = self.env['res.country'].search([("code", "=", "lu")],limit=1)
                     company = self.env["res.partner"].create({
                         "name": real_company_name,
                         "compte": line["compte"],
                         "street": line["street"],
                         "zip": municipality,
                         "city": line["municipality"],
+                        "country_id": country_id.id if country_id else False,
                         "vat": line["TVA"],
                         "phone": line["phone"],
                         "mobile": line["mobile"],
