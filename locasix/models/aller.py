@@ -45,9 +45,11 @@ class Aller(models.Model):
     @api.model
     def create(self, vals):
         if not "address_id" in vals:
-            vals["address_id"] = vals["agg_id"].address_id.id
+            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
+            vals["address_id"] = agg_id.address_id.id
         if not "date" in vals:
-            vals["date"] = vals["agg_id"].date
+            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
+            vals["date"] = agg_id.date
         obj = super(Aller, self).create(vals)
         # if not obj.address_id:
         #     obj.address_id = obj.agg_id.address_id
