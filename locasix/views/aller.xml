@@ -73,6 +73,9 @@
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
             <tree string="Allers">
+                <control>
+                    <create name="add_product_control" string="Ajouter un aller" invisible="1"/>
+                </control>
                 <field name="product_id"/>
                 <field name="product_unique_ref"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
