@@ -27,7 +27,7 @@ class ImportClients(models.TransientModel):
             sheet = book.sheet_by_index(0)
             lines = []
             for i in range(10, sheet.nrows):
-                lines.append({
+                data_line = {
                     "compte": sheet.cell_value(i, 0),
                     "company_name": sheet.cell_value(i, 1), 
                     "street": sheet.cell_value(i, 3), 
@@ -42,7 +42,10 @@ class ImportClients(models.TransientModel):
                     "notes": sheet.cell_value(i, 18),
                     "email_compta": sheet.cell_value(i, 25),
                     "condi_payment": sheet.cell_value(i, 56),
-                })
+                }
+                lines.append(data_line)
+                _logger.info(data_line)
+
             for line in lines:
                 real_company_name = line["company_name"] + line["company_title"] if line["company_title"] else ""
                 company = self.env["res.partner"].search([("name", "=", real_company_name)], limit=1)
