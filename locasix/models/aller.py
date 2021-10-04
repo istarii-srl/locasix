@@ -44,12 +44,16 @@ class Aller(models.Model):
 
     @api.model
     def create(self, vals):
+        if not "address_id" in vals:
+            vals["address_id"] = vals["agg_id"].address_id.id
+        if not "date" in vals:
+            vals["date"] = vals["agg_id"].date
         obj = super(Aller, self).create(vals)
-        if not obj.address_id:
-            obj.address_id = obj.agg_id.address_id
-        if not obj.day_id or not obj.date:
-            obj.day_id = obj.agg_id.day_id
-            obj.date = obj.agg_id.date
+        # if not obj.address_id:
+        #     obj.address_id = obj.agg_id.address_id
+        # if not obj.day_id or not obj.date:
+        #     obj.day_id = obj.agg_id.day_id
+        #     obj.date = obj.agg_id.date
         return obj
 
     def write(self, vals):
