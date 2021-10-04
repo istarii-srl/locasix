@@ -74,6 +74,8 @@ class ImportClients(models.TransientModel):
                         "street": line["street"],
                         "zip": municipality,
                         "city": line["municipality"],
+                        'is_company': True,
+                        'company_type': "company",
                         "country_id": country_id.id if country_id else False,
                         "phone": line["phone"],
                         "mobile": line["mobile"],
@@ -86,13 +88,14 @@ class ImportClients(models.TransientModel):
                 if line["contact_name"]:
                     company_contact = self.env["res.partner"].search([("parent_id", "=", company.id), ("name", "=", line["contact_name"])], limit=1)
                     if not company_contact:
-                        company_contact = self.env["res.partner"].create({"name": line["contact_name"], "parent_id": company.id})
+                        company_contact = self.env["res.partner"].create({"name": line["contact_name"], "parent_id": company.id, 'type': "contact"})
                 if line["email_compta"]:
                     compta_contact = self.env["res.partner"].search([("parent_id", "=", company.id), ("email", "=", line["email_compta"])], limit=1)
                     if not compta_contact:
                         compta_contact = self.env["res.partner"].create({
                             "name": "Compta",
                             "parent_id": company.id,
+                            "type": "invoice",
                             "email": line["email_compta"]
                         })
                                 
