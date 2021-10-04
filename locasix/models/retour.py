@@ -19,6 +19,7 @@ class Retour(models.Model):
 
     product_id = fields.Many2one(string="Produit", comodel_name="product.product")
     product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
+    active = fields.Boolean(string="Actif", default=True)
 
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
@@ -55,6 +56,7 @@ class Retour(models.Model):
                         "address_id": self.address_id.id,
                     })
                 self.agg_id = new_agg_id
+        
 
         if "date" in vals:
             if self.date != self.agg_id.date:
@@ -73,6 +75,10 @@ class Retour(models.Model):
                 self.agg_id = new_agg_id
                 self.day_id = newday_id
 
+        if "state" in vals:
+            if self.state == "done":
+                _logger.info("yyoyoyoy")
+                self.active = False
         return res
 
 

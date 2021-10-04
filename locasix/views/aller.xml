@@ -33,7 +33,7 @@
         <field name="model">locasix.aller</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <calendar string="Calendar View" date_start="date" color="address_id" mode="month" event_limit="5">
+            <calendar string="Calendar View" date_start="date" color="address_id" mode="month" event_limit="5" quick_add="0">
                 <field name="address_id" filters="1"/>
                 <field name="contract" string="Référence"/>
                 <field name="city" string="Ville"/>
@@ -57,7 +57,7 @@
         <field name="priority">50</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
-            <tree string="Allers">
+            <tree string="Allers" create="0">
                 <field name="date"/>
                 <field name="address_id"/>
                 <field name="city"/>
@@ -86,7 +86,7 @@
         <field name="name">locasix.aller.form</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
-            <form string="Aller">
+            <form string="Aller" create="false">
                 <sheet>
                     <widget name="web_ribbon" title="Archivé" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <field name="active" invisible="1"/>

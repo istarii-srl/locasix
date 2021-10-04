@@ -88,6 +88,7 @@ class Aller(models.Model):
                 
                 self.agg_id = new_agg_id
                 self.day_id = newday_id
+                
         if "state" in vals:
             if self.state == "done":
                 _logger.info("yyoyoyoy")
