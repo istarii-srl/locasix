@@ -52,7 +52,11 @@
                     <field name="day"/>
                     <group>
                         <group style="width: 50% !important;" string="Allers">
-                            <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}" nolabel="1"/>
+                            <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}" nolabel="1">
+                                <control>
+                                    <create name="add_aller_control" string="Ajouter un aller" invisible="1"/>
+                                </control>
+                            </field>
 
                         </group>
                         <group style="width: 50% !important;" string="Retours">
