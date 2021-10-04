@@ -44,9 +44,9 @@ class ImportClients(models.TransientModel):
                     "condi_payment": sheet.cell_value(i, 56),
                 }
                 lines.append(data_line)
-                _logger.info(data_line)
-
+            
             for line in lines:
+                _logger.info(line)
                 real_company_name = line["company_name"] + line["company_title"] if line["company_title"] else ""
                 company = self.env["res.partner"].search([("name", "=", real_company_name)], limit=1)
                 if not company:
