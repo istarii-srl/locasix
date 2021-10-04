@@ -27,6 +27,7 @@
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="compte"/>
+                <field name="alpha_key"/>
             </field>
         </field>
     </record>
