@@ -44,6 +44,7 @@ class Aller(models.Model):
 
     @api.model
     def create(self, vals):
+        # CHECK IF MERGE NEEDED
         _logger.info("in create aller")
         if not "address_id" in vals or not vals.get("address_id", False):
             _logger.info("address")
@@ -54,11 +55,6 @@ class Aller(models.Model):
             agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
             vals["date"] = agg_id.date
         obj = super(Aller, self).create(vals)
-        # if not obj.address_id:
-        #     obj.address_id = obj.agg_id.address_id
-        # if not obj.day_id or not obj.date:
-        #     obj.day_id = obj.agg_id.day_id
-        #     obj.date = obj.agg_id.date
         return obj
 
     def write(self, vals):

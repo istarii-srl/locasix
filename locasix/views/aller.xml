@@ -72,7 +72,7 @@
         <field name="priority">100</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
-            <tree string="Allers">
+            <tree string="Allers" create="0">
                 <field name="product_id"/>
                 <field name="product_unique_ref"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
