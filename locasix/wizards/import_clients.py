@@ -48,7 +48,10 @@ class ImportClients(models.TransientModel):
             
             for line in lines:
                 _logger.info(line)
-                real_company_name = line["company_name"] + line["company_title"] if line["company_title"] else ""
+                if line["TVA"]:
+                    real_company_name = line["company_name"] +" "+ line["company_title"] if line["company_title"] else ""
+                else:
+                    real_company_name = line["company_name"]
                 company = self.env["res.partner"].search([("alpha_key", "=", line["alpha"])], limit=1)
                 if not company:
                     country_municipality = line["country/code"].split("-")
