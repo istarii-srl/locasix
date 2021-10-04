@@ -73,12 +73,14 @@ class ImportClients(models.TransientModel):
                         "zip": municipality,
                         "city": line["municipality"],
                         "country_id": country_id.id if country_id else False,
-                        "vat": line["TVA"],
                         "phone": line["phone"],
                         "mobile": line["mobile"],
                         "email": line["email"],
                         "comment": line["notes"]
                     })
+                    if company.country_id:
+                        if company.simple_vat_check(company.country_id.code, line["TVA"]):
+                            company.vat = line["TVA"]
                 if line["contact_name"]:
                     company_contact = self.env["res.partner"].search([("parent_id", "=", company.id), ("name", "=", line["contact_name"])], limit=1)
                     if not company_contact:
