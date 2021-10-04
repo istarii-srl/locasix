@@ -70,6 +70,7 @@ class ImportClients(models.TransientModel):
                     compta_contact = self.env["res.partner"].search([("parent_id", "=", company.id), ("email", "=", line["email_compta"])], limit=1)
                     if not compta_contact:
                         compta_contact = self.env["res.partner"].create({
+                            "name": "Compta",
                             "parent_id": company.id,
                             "email": line["email_compta"]
                         })
