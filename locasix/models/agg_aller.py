@@ -63,7 +63,7 @@ class AggAller(models.Model):
                     "address_id": aller.address_id.id,
                     "contract": aller.contract,
                     "product_id": aller.product_id.id,
-                    "product_unique_ref": aller.product_unique_ref,
+                    "product_unique_ref": aller.product_unique_ref.id,
                     "note": aller.note,
                 })
                     for remarque in aller.remarque_ids:

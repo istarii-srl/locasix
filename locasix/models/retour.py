@@ -91,6 +91,7 @@ class Retour(models.Model):
                 "address_id": retour.address_id.id,
                 "contract": retour.contract,
                 "product_id": retour.product_id.id,
+                "product_unique_ref": retour.product_unique_ref.id,
                 "note": retour.note,
             })
             for remarque in retour.remarque_ids:
