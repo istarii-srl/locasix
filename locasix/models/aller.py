@@ -44,8 +44,11 @@ class Aller(models.Model):
 
     @api.model
     def create(self, vals):
+        _logger.info("in create aller")
         if not "address_id" in vals:
+            _logger.info("address")
             agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
+            _logger.info(agg_id.address_id)
             vals["address_id"] = agg_id.address_id.id
         if not "date" in vals:
             agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
