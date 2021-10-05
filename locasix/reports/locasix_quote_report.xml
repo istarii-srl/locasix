@@ -10,4 +10,9 @@
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="locasix.paperformat_quote"/>
     </record>
+
+    <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="model">sale.order</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+    </record>
 </odoo>
