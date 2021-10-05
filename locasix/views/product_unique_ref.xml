@@ -1,0 +1,17 @@
+<odoo>
+    <record model="ir.actions.act_window" id="action_unique_ref">
+        <field name="name">Références des pièces</field>
+        <field name="res_model">locasix.product.ref</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="locasix_unique_ref_tree" model="ir.ui.view">
+        <field name="name">locasix.product.ref.tree</field>
+        <field name="model">locasix.product.ref</field>
+        <field name="arch" type="xml">
+            <tree string="Références des pièces" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

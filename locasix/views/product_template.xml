@@ -47,16 +47,6 @@
                         </group>
                     </group>
                 </page>
-                <page string="Références">
-                    <field name="reference_ids" mode="tree">
-                        <tree editable="bottom">
-                            <control>
-                                <create name="add_product_control" string="Ajouter une référence"/>
-                            </control>
-                            <field name="name"/>
-                        </tree>
-                    </field>
-                </page>
                 <page string="Liens" attrs="{'invisible': [('is_temporary_product', '=', True)]}" groups="locasix.group_locasix_admin">
                     <group>
                         <group>
