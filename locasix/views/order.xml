@@ -72,4 +72,15 @@
         </field>
     </record>
 
+    <record id="locasix_hide_optional" model="ir.ui.view">
+        <field name="name">locasix.hide.optional</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_form_quote"/>
+        <field name="arch" type="xml">
+            <page name="optional_products" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </page>
+        </field>
+    </record>
+
 </odoo>
