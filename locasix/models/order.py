@@ -18,9 +18,9 @@ class Order(models.Model):
     usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")], default="8", required=True)
     show_discount_rates = fields.Boolean(string="Afficher les remises", default=False)
 
-    months_2_discount_rate = fields.Float(string="Remise 2", default=0.10)
-    months_3_discount_rate = fields.Float(string="Remise 3", default=0.15)
-    months_6_discount_rate = fields.Float(string="Remise 6", default=0.2)
+    months_2_discount_rate = fields.Float(string="G.E. 2 mois", default=0.10)
+    months_3_discount_rate = fields.Float(string="G.E. 3 mois", default=0.15)
+    months_6_discount_rate = fields.Float(string="G.E. 6 mois", default=0.2)
 
     done_order = fields.Boolean(string="Offre terminée", default=False)
     is_computing = fields.Boolean(string="En cours de calculation", default=False)
