@@ -52,8 +52,8 @@ class ImportProducts(models.TransientModel):
             })
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
-            if not product:
-                product = self.env["product.template"].search([("name", "=", line["name"])], limit=1)
+            #if not product:
+            #    product = self.env["product.template"].search([("name", "=", line["name"])], limit=1)
             uom_id = self.env["uom.uom"].search([("name", "=", line["uom"])], limit=1)
 
             categ_id = self.env["product.category"].search([("name", "=", line["cat"])], limit=1)
@@ -101,8 +101,8 @@ class ImportProducts(models.TransientModel):
             })
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
-            if not product:
-                product = self.env["product.template"].search([("name", "=", line["name"])], limit=1)            
+            #if not product:
+            #    product = self.env["product.template"].search([("name", "=", line["name"])], limit=1)            
             
             categ_id = self.env["product.category"].search([("name", "=", line["cat"])], limit=1)
             if not categ_id:
@@ -119,6 +119,9 @@ class ImportProducts(models.TransientModel):
             else:
                 product.name = line["name"]
                 
+            uom_id = self.env["uom.uom"].search([("name", "=", "Unité(s)")], limit=1)
+            product.uom_id = uom_id
+            product.uom_po_id = uom_id  
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
             product.has_multi_price = True
