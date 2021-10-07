@@ -58,7 +58,8 @@ class Order(models.Model):
                     if line.product_id:
                         _logger.info("reset pre")
                         _logger.info(line.product_id.lst_price)
-                        products_lst_price[line.product_id.id] = line.product_id.lst_price
+                        if not line.product_id.id in products_lst_price:
+                            products_lst_price[line.product_id.id] = line.product_id.lst_price
                         line.product_id.lst_price = line.product_id.weekend_price
                 res = super(Order, self).update_prices()
                 for line in order.order_line:
