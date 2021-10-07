@@ -70,7 +70,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="day_id" invisible="1"/>
+                            <field name="day_id" readonly="1"/>
                             <field name="date"/>
                             <field name="address_id"/>
                             <field name="city"/>
