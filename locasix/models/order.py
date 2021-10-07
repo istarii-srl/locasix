@@ -533,7 +533,7 @@ class Order(models.Model):
             'target': 'new',
             'context': {
                 "default_order_id": order.id,
-                "default_line_ids": line_ids,
+                "default_line_ids": line_ids.ids,
                 },
             }    
     
