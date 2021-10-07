@@ -42,11 +42,14 @@ class Order(models.Model):
             res = super(Order, self).write(vals)
         elif "weekend_offer" in vals:
             res = super(Order, self).write(vals)
+            self.enforce_cuve()
             self.enforce_computations()
         else:
             res = super(Order, self).write(vals)
             self.adapt_front_page()
+            self.enforce_cuve()
             self.enforce_computations()
+            
         return res
 
 

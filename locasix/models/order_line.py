@@ -234,9 +234,9 @@ class OrderLine(models.Model):
         for line in self:
             transport_product = False
             if line.product_id.default_code == "TA":
-                transport_product = self.env["product.product"].search(["default_code", "=", "TR"], limit=1)
+                transport_product = self.env["product.product"].search([("default_code", "=", "TR")], limit=1)
             elif line.product_id.default_code == "TR":
-                transport_product = self.env["product.product"].search(["default_code", "=", "TA"], limit=1)
+                transport_product = self.env["product.product"].search([("default_code", "=", "TA")], limit=1)
 
             if transport_product:
                 other_transport_line = self.env["sale.order.line"].search([("product_id", "=", transport_product.id)], limit=1)
