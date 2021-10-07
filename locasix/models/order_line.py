@@ -225,7 +225,6 @@ class OrderLine(models.Model):
         else:
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
-        
         return res
 
     def enforce_cuve(self):
