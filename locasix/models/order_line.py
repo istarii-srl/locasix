@@ -206,8 +206,9 @@ class OrderLine(models.Model):
 
         if vals.get('day_price', False) or vals.get('week_price', False) or vals.get('month_price', False) or vals.get('months_2_discount', False) or vals.get('months_3_discount', False) or vals.get('months_6_discount', False) or vals.get('price_unit', False) or vals.get('sequence', False):
             vals.pop("from_update", 1)
-            if vals.get("from_compute_ins", False):
-                vals.pop("from_compute_ins")
+            if vals.get("from_compute_ins", False) or vals.get('from_transport', False):
+                vals.pop("from_transport", None)
+                vals.pop("from_compute_ins", None)
                 res = super(OrderLine, self).write(vals)
             else:
                 res = super(OrderLine, self).write(vals)
@@ -241,7 +242,10 @@ class OrderLine(models.Model):
             if transport_product:
                 other_transport_line = self.env["sale.order.line"].search([("product_id", "=", transport_product.id)], limit=1)
                 if other_transport_line:
-                    other_transport_line.price_unit = new_price
+                    other_transport_line.write({
+                        "price_unit": new_price,
+                        "from_transport": True
+                    })
 
     def enforce_cuve(self):
         _logger.info("line enforce cuve")
