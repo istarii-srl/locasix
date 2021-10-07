@@ -65,12 +65,16 @@ class Order(models.Model):
         for order in self:
             if order.aller_ids:
                 order.aller_count = len(order.aller_ids)
+            else:
+                order.aller_count = 0
 
     @api.depends("retour_ids")
     def _compute_retour_count(self):
         for order in self:
             if order.retour_ids:
                 order.retour_count = len(order.retour_ids)
+            else:
+                order.retour_count = 0
 
     def update_prices(self):
         for order in self:
