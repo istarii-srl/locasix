@@ -28,9 +28,9 @@ class Order(models.Model):
     exported_to_agenda = fields.Boolean(default=False)
 
     aller_ids = fields.One2many(string="Allers", comodel_name="locasix.aller", inverse_name="order_id")
-    aller_count = fields.Integer(string="Nombre d'allers", compute="_compute_aller_count")
+    aller_count = fields.Integer(compute="_compute_aller_count")
     retour_ids = fields.One2many(string="Retours", comodel_name="locasix.retour", inverse_name="order_id")
-    retour_count = fields.Integer(string="Nombre de retours", compute="_compute_retour_count")
+    retour_count = fields.Integer(compute="_compute_retour_count")
 
     client_ref = fields.Char(string="Votre référence")
 
