@@ -239,7 +239,7 @@ class OrderLine(models.Model):
         _logger.info(vals)
         obj = super(OrderLine, self).create(vals)
         obj.update_line_values(pricing=False)
-        self.enforce_cuve()
+        obj.enforce_cuve()
         if obj.display_type == "line_section":
             obj.is_section = True
         return obj
