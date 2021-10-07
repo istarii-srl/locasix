@@ -520,7 +520,22 @@ class Order(models.Model):
     def action_put_in_agenda(self):
         _logger.info("action put in agenda")
         for order in self:
-            pass
+            line_ids = order.order_line.filtered(lambda x: x.product_id and x.product_id.type != "service")
+            view = self.env.ref('locasix.locasix_order_to_agenda_form')
+            return {
+            'name': 'Créer les allers et retours',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.order.agenda',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                "default_order_id": order.id,
+                "default_line_ids": line_ids,
+                },
+            }    
     
     def get_discount_rates(self):
         for order in self:
