@@ -49,6 +49,19 @@ class Order(models.Model):
             self.enforce_computations()
         return res
 
+
+    def update_prices(self):
+        for order in self:
+            products_lst_price = {}
+            for line in order.order_line:
+                if line.product_id:
+                    products_lst_price[line.product_id.id] = line.product_id.lst_price
+                    line.product_id.lst_price = line.product_id.weekend_price
+            res = super(Order, self).update_prices()
+            for line in order.order_line:
+                if line.product_id:
+                    line.product_id.lst_price = products_lst_price[line.product_id.id]
+
     def has_electro_annexe(self):
         for order in self:
             for line in order.order_line:
