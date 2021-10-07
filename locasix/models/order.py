@@ -183,6 +183,18 @@ class Order(models.Model):
                     },
                 }
     
+    def enforce_cuve(self):
+        for order in self:
+            cuve_line = False
+            has_electro = False
+            for line in order.order_line:
+                if line.product_id:
+                    if line.product_id.default_code == "CUK2":
+                        cuve_line = line
+                    if line.product_id.categ_id and line.product_id.categ_id.show_electro_annexe:
+                        has_electro = True
+            if cuve_line and has_electro:
+                cuve_line.price_unit = 50.0
 
     def has_transport_prices(self):
         for order in self:
