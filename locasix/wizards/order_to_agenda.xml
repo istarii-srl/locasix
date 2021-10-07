@@ -16,7 +16,12 @@
                         </group>
                     </group>
                     <group>
-                        <field name="line_ids"/>
+                        <field name="line_ids" mode="tree">
+                            <tree create="0">
+                                <field name="name"/>
+                                <field name="product_uom_quantity"/>
+                            </tree>
+                        </field>
                     </group>
                 </sheet>
                 <footer>

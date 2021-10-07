@@ -38,7 +38,7 @@ class OrderToAgenda(models.TransientModel):
                         "day_id": newday_id.id,
                         "date": new_agg_id.date,
                         "agg_id": new_agg_id.id,
-                        "order_id": wizard.order_id,
+                        "order_id": wizard.order_id.id,
                         "address_id": new_agg_id.address_id.id,
                         "product_id": line.product_id.id,
                     })
@@ -59,7 +59,7 @@ class OrderToAgenda(models.TransientModel):
                             "day_id": newday_id.id,
                             "date": new_agg_id.date,
                             "agg_id": new_agg_id.id,
-                            "order_id": wizard.order_id,
+                            "order_id": wizard.order_id.id,
                             "address_id": new_agg_id.address_id.id,
                             "product_id": line.product_id.id,
                         })
