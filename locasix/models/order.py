@@ -61,6 +61,8 @@ class Order(models.Model):
                 res = super(Order, self).update_prices()
                 for line in order.order_line:
                     if line.product_id:
+                        _logger.info("reset")
+                        _logger.info(products_lst_price[line.product_id.id])
                         line.product_id.lst_price = products_lst_price[line.product_id.id]
             else:
                 res = super(Order, self).update_prices()
