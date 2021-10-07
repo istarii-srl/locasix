@@ -196,6 +196,8 @@ class Order(models.Model):
                         has_electro = True
             if cuve_line and has_electro:
                 cuve_line.price_unit = 50.0
+            elif cuve_line and not has_electro:
+                cuve_line.price_unit = cuve_line.product_id.lst_price
 
     def has_transport_prices(self):
         for order in self:

@@ -211,8 +211,10 @@ class OrderLine(models.Model):
                 res = super(OrderLine, self).write(vals)
             else:
                 res = super(OrderLine, self).write(vals)
+                if self.product_id and self.product_id.default_code in ["TA", "TR"] and vals.get('price_unit', False):
+                    self.update_transport_costs(vals.get('price_unit'))
                 self.recompute_insurance()
-                
+
 
         if (vals.get('product_id', False) or 'weekend_offer' in vals) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
@@ -226,6 +228,20 @@ class OrderLine(models.Model):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
         return res
+
+    def update_transport_costs(self, new_price):
+        _logger.info("update transport costs")
+        for line in self:
+            transport_product = False
+            if line.product_id.default_code == "TA":
+                transport_product = self.env["product.product"].search(["default_code", "=", "TR"], limit=1)
+            elif line.product_id.default_code == "TR":
+                transport_product = self.env["product.product"].search(["default_code", "=", "TA"], limit=1)
+
+            if transport_product:
+                other_transport_line = self.env["sale.order.line"].search([("product_id", "=", transport_product.id)], limit=1)
+                if other_transport_line:
+                    other_transport_line.price_unit = new_price
 
     def enforce_cuve(self):
         _logger.info("line enforce cuve")
