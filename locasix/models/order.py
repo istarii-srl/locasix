@@ -184,6 +184,7 @@ class Order(models.Model):
                 }
     
     def enforce_cuve(self):
+        _logger.info("enforce cuve")
         for order in self:
             cuve_line = False
             has_electro = False

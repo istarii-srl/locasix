@@ -218,8 +218,9 @@ class OrderLine(models.Model):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
             self.update_line_values(pricing=False)
-            self.recompute_insurance()
             self.enforce_cuve()
+            self.recompute_insurance()
+            
             
         else:
             vals.pop("from_update", 1)
@@ -228,6 +229,7 @@ class OrderLine(models.Model):
         return res
 
     def enforce_cuve(self):
+        _logger.info("line enforce cuve")
         for line in self:
             if not line.order_id.is_computing:
                 line.order_id.enforce_cuve()
