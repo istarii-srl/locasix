@@ -6,11 +6,22 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_open_aller" type="object" class="oe_stat_button" icon="fa-cube" attrs="{'invisible': [('aller_count', '=', 0)]}">
+                    <field string="Allers" name="aller_count" widget="statinfo"/>
+                    <span class="o_stat_text">Allers</span>
+                </button>
+                <button name="action_open_retour" type="object" class="oe_stat_button" icon="fa-cube" attrs="{'invisible': [('retour_count', '=', 0)]}">
+                    <field string="Retours" name="retour_count" widget="statinfo"/>
+                    <span class="o_stat_text">Retours</span>
+                </button>
+            </div>
             <button name="action_draft" position="after">
                 <field name="done_order" invisible="1"/>
+                <field name="exported_to_agenda" invisible="1"/>
                 <button name="action_compute" type="object" string="Ajouter auto." attrs="{'invisible': [('done_order', '=', True)]}"/>
                 <button name="action_remove_computed_lines" type="object" string="Retirer ajouts" attrs="{'invisible': ['|', ('has_computed', '=', False), ('done_order', '=', True)]}"/>
-                <button name="action_put_in_agenda" type="object" string="Ajouter à l'agenda" attrs="{'invisible': [('done_order', '=', False)]}"/>
+                <button name="action_put_in_agenda" type="object" string="Ajouter à l'agenda" attrs="{'invisible': ['|', ('done_order', '=', False), ('exported_to_agenda', '=', True)]}"/>
             </button>
 
             <field name="partner_id" position="after">

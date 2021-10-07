@@ -25,6 +25,12 @@ class Order(models.Model):
     done_order = fields.Boolean(string="Offre terminée", default=False)
     is_computing = fields.Boolean(string="En cours de calculation", default=False)
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
+    exported_to_agenda = fields.Boolean(default=False)
+
+    aller_ids = fields.One2many(string="Allers", comodel_name="locasix.aller", inverse_name="order_id")
+    aller_count = fields.Integer(string="Nombre d'allers", compute="_compute_aller_count")
+    retour_ids = fields.One2many(string="Retours", comodel_name="locasix.retour", inverse_name="order_id")
+    retour_count = fields.Integer(string="Nombre de retours", compute="_compute_retour_count")
 
     client_ref = fields.Char(string="Votre référence")
 
@@ -54,6 +60,17 @@ class Order(models.Model):
             
         return res
 
+    @api.depends("aller_ids")
+    def _compute_aller_count(self):
+        for order in self:
+            if order.aller_ids:
+                order.aller_count = len(order.aller_ids)
+
+    @api.depends("retour_ids")
+    def _compute_retour_count(self):
+        for order in self:
+            if order.retour_ids:
+                order.retour_count = len(order.retour_ids)
 
     def update_prices(self):
         for order in self:
@@ -474,6 +491,26 @@ class Order(models.Model):
             for line in lines_to_be_removed:
                 order.order_line = [(2, line.id, 0)]
             order.has_computed = False
+
+    def action_open_retour(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Retours',
+            'view_mode': 'tree,form',
+            'res_model': 'locasix.retour',
+            'domain': [('order_id', '=', self.id)],
+            'context': "{'create': False}"
+        }
+
+    def action_open_aller(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Allers',
+            'view_mode': 'tree,form',
+            'res_model': 'locasix.aller',
+            'domain': [('order_id', '=', self.id)],
+            'context': "{'create': False}"
+        }
 
     
     def action_put_in_agenda(self):

@@ -1,0 +1,29 @@
+<odoo>
+    <record id="locasix_order_to_agenda_form" model="ir.ui.view">
+        <field name="name">locasix.order.agenda.form</field>
+        <field name="model">locasix.order.agenda</field>
+        <field name="arch" type="xml">
+            <form string="Créer les allers et retours">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="order_id" readonly="1"/>
+                            <field name="aller_date"/>
+                        </group>
+                        <group>
+                            <field name="should_create_retour"/>
+                            <field name="retour_date" attrs="{'invisible': [('should_create_retour', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="line_ids"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_create" string="Créer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

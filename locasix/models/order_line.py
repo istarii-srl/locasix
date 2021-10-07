@@ -227,6 +227,8 @@ class OrderLine(models.Model):
             
         else:
             vals.pop("from_update", 1)
+            vals.pop("from_transport", None)
+            vals.pop("from_compute_ins", None)
             res = super(OrderLine, self).write(vals)
         return res
 

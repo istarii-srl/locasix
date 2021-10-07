@@ -25,3 +25,4 @@ access_locasix_remarque_user,locasix.locasix.remarque,model_locasix_remarque,bas
 access_locasix_product_ref_user,locasix.locasix.product.ref,model_locasix_product_ref,base.group_user,1,1,1,1
 access_locasix_duplicate_aller_user,locasix.locasix.duplicate.aller,model_locasix_duplicate_aller,base.group_user,1,1,1,1
 access_locasix_duplicate_retour_user,locasix.locasix.duplicate.retour,model_locasix_duplicate_retour,base.group_user,1,1,1,1
+access_locasix_order_agenda_user,locasix.locasix.order.agenda,model_locasix_order_agenda,base.group_user,1,1,1,1

@@ -13,6 +13,7 @@ class Aller(models.Model):
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     state = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("done", "Fini"), ("cancel", "Annulé"), ("move", "Déplacé")], default="progress", required=True)
 
+    order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
     city = fields.Char(string="Ville", related="address_id.city")
     contract = fields.Char(string="Contrat")
