@@ -244,7 +244,6 @@ class OrderLine(models.Model):
             obj.is_section = True
         return obj
 
-
     def is_insurance(self):
         for line in self:
             return line.product_id.is_insurance
