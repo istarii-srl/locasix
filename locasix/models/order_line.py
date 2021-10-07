@@ -289,5 +289,5 @@ class OrderLine(models.Model):
                     _logger.info("update price for weekend")
                     vals["price_unit"] = product.weekend_price 
                 else:
-                    vals["price_unit"] = self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(self.product_id), self.product_id.taxes_id, self.order_id.tax_id, self.order_id.company_id)
+                    vals["price_unit"] = self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(self.product_id), self.product_id.taxes_id, self.tax_id, self.company_id)
             self.write(vals)
