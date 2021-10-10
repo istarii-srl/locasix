@@ -73,7 +73,7 @@
                 <div class="col-5" style="font-size: 11px;">
                     <div style="height:42px;"/>
                     <div style="height: 105px; border: 1px solid black; padding: 3px 5px 3px 5px;">
-                        Nicolas Six Units <br/>
+                        Coordonnées de Locasix <br/>
                         Rue de Tournai 192 <br/>
                         7330 Stambruges <br/>
                         Nicolas Six <br/>
@@ -215,7 +215,7 @@
                     </td>
                     <td width="40%" class="text-left">
                         <span t-field="line.product_id.name"/>
-                        <span t-if="line.product_id.has_ref_to_condi"> (*)</span>
+                        <span t-if="line.has_ref_to_condi"> (*)</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
                         <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
