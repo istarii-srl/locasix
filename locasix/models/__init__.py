@@ -17,3 +17,4 @@ from . import partner
 from . import assemblage_link
 from . import remarque
 from . import product_unique_reference
+from . import html_templates

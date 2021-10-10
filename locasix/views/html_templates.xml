@@ -1,0 +1,24 @@
+<odoo>
+    <record model="ir.actions.act_window" id="action_condi">
+        <field name="name">Template conditions additionnelles</field>
+        <field name="res_model">locasix.template.condi</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record model="ir.ui.view" id="locasix_condi_form">
+        <field name="name">locasix.condi.form</field>
+        <field name="model">locasix.template.condi</field>
+        <field name="arch" type="xml">
+            <form string="Template conditions additionnelles">
+                <sheet >
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <field name="template"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
