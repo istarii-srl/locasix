@@ -46,6 +46,27 @@
             <field name="domain_force">[('is_temporary_product','=', True)]</field>
         </record>
 
+        <record id="modify_product_rule_admin" model="ir.rule">
+            <field name="name">Rule for modifying non temporary product</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="groups" eval="[(4, ref('group_locasix_admin'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="domain_force">[('is_temporary_product','=', False)]</field>
+        </record>
+
+        <record id="modify_product_rule_admin_2" model="ir.rule">
+            <field name="name">Rule for modifying non temporary product</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="groups" eval="[(4, ref('group_locasix_admin'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="domain_force">[('is_temporary_product','=', True)]</field>
+        </record>
     </data>
 
     <data noupdate="1">
