@@ -5,7 +5,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record model="ir.ui.view" id="locasix_template_form">
+    <record model="ir.ui.view" id="locasix_template_form_2">
         <field name="name">locasix.template.form</field>
         <field name="model">locasix.template.html</field>
         <field name="arch" type="xml">
@@ -22,7 +22,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="locasix_template_tree">
+    <record model="ir.ui.view" id="locasix_template_tree_2">
         <field name="name">locasix.template.tree</field>
         <field name="model">locasix.template.html</field>
         <field name="arch" type="xml">
