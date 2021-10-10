@@ -32,7 +32,7 @@
 }
 
 table {
-    border-collapse: separate;
+    border-collapse: collapse;
 }
 table tr th {
     border-bottom: 1px solid #000;
