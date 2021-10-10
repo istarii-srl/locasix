@@ -13,16 +13,6 @@
             <field name="name" eval="'Locasix'"/>
         </record>
 
-        <record model="locasix.template.html" id="locasix_template_condi">
-            <field name="name" eval="'Template conditions additionnelles'"/>
-            <field name="template" eval=""/>
-        </record>
-
-        <record model="locasix.template.html" id="locasix_template_front">
-            <field name="name" eval="'Template page de garde'"/>
-            <field name="template" eval=""/>
-        </record>
-
         <record model="res.groups" id="group_locasix_user">
             <field name="name" eval="'Utilisateur'"/>
             <field name="category_id" ref="locasix_group_category"/>
@@ -35,4 +25,17 @@
         </record>
 
     </data>
+
+    <data noupdate="1">
+        <record model="locasix.template.html" id="locasix_template_condi">
+            <field name="name" eval="'Template conditions additionnelles'"/>
+            <field name="template" eval=""/>
+        </record>
+
+        <record model="locasix.template.html" id="locasix_template_front">
+            <field name="name" eval="'Template page de garde'"/>
+            <field name="template" eval=""/>
+        </record>
+    </data>
+    
 </odoo>
