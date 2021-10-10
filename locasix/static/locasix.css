@@ -92,3 +92,9 @@ div.appendix img {
     font-size: 9px;
     line-height: 1.43;
 }
+
+.fake-link {
+    display: inline-block;
+    width: 800px;                
+    height: 100px;                   
+}
