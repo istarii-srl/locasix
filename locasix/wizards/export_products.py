@@ -18,7 +18,7 @@ class ExportProducts(models.TransientModel):
     @api.depends('from_button')
     def _get_default_products(self):
         if self.from_button:
-            self.product_ids = self.env["product.template"].search([("active", "=", True)])
+            self.product_ids = self.env["product.template"].search([("active", "=", True), ("is_temporary_product", "=", False)])
         else:
             self.product_ids = self.env['product.template'].browse(self._context.get('active_ids'))
 
