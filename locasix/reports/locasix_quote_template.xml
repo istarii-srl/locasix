@@ -5,7 +5,7 @@
                 <t t-call="web.basic_layout">
                     <link href="/locasix/static/locasix.css" rel="stylesheet"/>
                     <div class="header not-first-page">
-                        <a t-attf-href="https://locasix.be" target="_blank">
+                        <a t-attf-href="{{'https://locasix.be'}}" target="_blank">
                             TEST
                             <img src="/locasix/static/img/locasix_header.png" style="max-height: 90px; padding-top: 15px;"/>
                         </a>
