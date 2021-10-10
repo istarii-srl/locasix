@@ -1,5 +1,5 @@
 <odoo>
-    <record model="ir.actions.act_window" id="action_template">
+    <record model="ir.actions.act_window" id="action_template_html">
         <field name="name">Template</field>
         <field name="res_model">locasix.template.html</field>
         <field name="view_mode">tree,form</field>
