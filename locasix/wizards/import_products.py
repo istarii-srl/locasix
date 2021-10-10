@@ -74,6 +74,7 @@ class ImportProducts(models.TransientModel):
             product.uom_po_id = uom_id
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
+            product.categ_id = categ_id
             product.is_temporary_product = False
             product.is_assemblage_product = False
             product.has_multi_price = False
@@ -125,6 +126,7 @@ class ImportProducts(models.TransientModel):
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
             product.has_multi_price = True
+            product.categ_id = categ_id
             product.is_temporary_product = False
             product.is_assemblage_product = False
             product.has_ref_to_condi = line["condi"]
