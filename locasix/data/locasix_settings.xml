@@ -32,7 +32,7 @@
             <field name="perm_write" eval="0"/>
             <field name="perm_create" eval="0"/>
             <field name="perm_unlink" eval="0"/>
-            <field name="domain_force">[('is_temporary_product','=', False)]</field>
+            <field name="domain_force">[('is_temporary_product','=', True)]</field>
         </record>
 
     </data>
