@@ -36,7 +36,7 @@ class Order(models.Model):
 
 
     def _get_added_terms(self):
-        template = self.env["locasix.template.condi"].search([], limit=1)
+        template = self.env["locasix.template.condi"].search([('name', '=', 'Template conditions additionnelles')], limit=1)
         if template:
             return template.template
         else:
