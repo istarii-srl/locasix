@@ -37,5 +37,12 @@
             <field name="template" eval=""/>
         </record>
     </data>
-    
+
+    <data noupdate="1">
+        <record model="locasix.template.html" id="locasix_template_condi_weekend">
+            <field name="name" eval="'Template conditions additionnelles week-end'"/>
+            <field name="template" eval=""/>
+        </record>
+    </data>
+
 </odoo>
