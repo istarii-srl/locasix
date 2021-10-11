@@ -11,6 +11,7 @@ class AggAller(models.Model):
     name = fields.Char(string="Nom", compute="_compute_name")
     day_id = fields.Many2one(string="Journée", comodel_name="locasix.day")
     date = fields.Date(string="Date", required=True)
+    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
     city = fields.Char(string="Ville", related="address_id.city")
@@ -31,7 +32,7 @@ class AggAller(models.Model):
     # TODO USE THAT IN WRITE AND CREATE
     def check_and_merge(self):
         for agg_aller in self:
-            aggs = self.env["locasix.agg.aller"].search([("date", '=', agg_aller.date), ("address_id", "=", agg_aller.address_id.id), ("id", '!=', agg_aller.id)])
+            aggs = self.env["locasix.agg.aller"].search([("date", '=', agg_aller.date), ("address_id", "=", agg_aller.address_id.id), ("id", '!=', agg_aller.id), ("aller_type", "=", agg_aller.aller_type)])
             for other_agg in aggs:
                 if other_agg.is_retours_created:
                     agg_aller.is_retours_created = True
@@ -45,19 +46,21 @@ class AggAller(models.Model):
     def weekend_check(self):
         for agg_aller in self:
             if agg_aller.date_retour and not agg_aller.is_retours_created and agg_aller.address_id and agg_aller.is_weekend:
-                agg_retour_id = self.env["locasix.agg.retour"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id.id)], limit=1)
+                agg_retour_id = self.env["locasix.agg.aller"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id.id), ("aller_type", "=", "in")], limit=1)
                 if not agg_retour_id:
                     newday_id = self.env["locasix.day"].search([("day", "=", agg_aller.date_retour)], limit=1)
                     if not newday_id:
                         newday_id = self.env["locasix.day"].create({"day": agg_aller.date_retour})
-                    agg_retour_id = self.env["locasix.agg.retour"].create({
+                    agg_retour_id = self.env["locasix.agg.aller"].create({
                         "day_id": newday_id.id,
+                        "aller_type": "in",
                         "date": agg_aller.date_retour,
                         "address_id": agg_aller.address_id.id,
                     })
                 for aller in agg_aller.aller_ids:
-                    retour = self.env["locasix.retour"].create({
+                    retour = self.env["locasix.aller"].create({
                     "day_id": agg_retour_id.day_id.id,
+                    "aller_type": "in",
                     "date": agg_retour_id.date,
                     "agg_id": agg_retour_id.id,
                     "address_id": aller.address_id.id,
@@ -142,6 +145,39 @@ class AggAller(models.Model):
             },
         }              
 
+    def duplicate_to_retour(self, new_date):
+        for aggAller in self:
+            newday_id = self.env["locasix.day"].search([("day", "=", new_date)], limit=1)
+            if not newday_id:
+                newday_id = self.env["locasix.day"].create({"day": new_date})
+            
+            new_agg = self.env["locasix.agg.aller"].create({
+                "day_id": newday_id.id,
+                "date": newday_id.day,
+                "aller_type": "in",
+                "address_id": aggAller.address_id.id,
+                "contract": aggAller.contract,
+                #"remarque_ids": aggAller.remarque_ids,
+                "note": aggAller.note,
+            })
+            for remarque in aggAller.remarque_ids:
+                new_agg.remarque_ids = [(4, remarque.id, 0)]
+            
+            for aller in aggAller.aller_ids:
+                aller.create_copy_to_new_agg(new_agg)
+            view = self.env.ref('locasix.locasix_day_form')
+            return {
+            'name': 'Allers et retours',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.day',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'res_id': newday_id.id,
+            'target': 'current',
+            }              
+
     def duplicate_to(self, new_date):
         for aggAller in self:
             newday_id = self.env["locasix.day"].search([("day", "=", new_date)], limit=1)
@@ -151,6 +187,7 @@ class AggAller(models.Model):
             new_agg = self.env["locasix.agg.aller"].create({
                 "day_id": newday_id.id,
                 "date": newday_id.day,
+                "aller_type": "out",
                 "address_id": aggAller.address_id.id,
                 "contract": aggAller.contract,
                 #"remarque_ids": aggAller.remarque_ids,

@@ -12,6 +12,7 @@ class Aller(models.Model):
     date = fields.Date(string="Date", required=True)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     state = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("done", "Fini"), ("cancel", "Annulé"), ("move", "Déplacé")], default="progress", required=True)
+    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
@@ -64,11 +65,12 @@ class Aller(models.Model):
         res = super(Aller, self).write(vals)
         if "address_id" in vals:
             if self.date == self.agg_id.date:
-                new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id)], limit=1)
+                new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("aller_type", "=", self.aller_type)], limit=1)
                 if not new_agg_id:
                     new_agg_id = self.env["locasix.agg.aller"].create({
                         "day_id": self.day_id.id,
                         "date": self.date,
+                        "aller_type": self.aller_type,
                         "address_id": self.address_id.id,
                     })
                 self.agg_id = new_agg_id
@@ -79,11 +81,12 @@ class Aller(models.Model):
                 if not newday_id:
                     newday_id = self.env["locasix.day"].create({"day": self.date})
                 
-                new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("day_id", "=", newday_id.id)], limit=1)
+                new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("aller_type", "=", self.aller_type), ("day_id", "=", newday_id.id)], limit=1)
                 if not new_agg_id:
                     new_agg_id = self.env["locasix.agg.aller"].create({
                         "day_id": newday_id.id,
                         "date": self.date,
+                        "aller_type": self.aller_type,
                         "address_id": self.address_id.id,
                     })
                 
@@ -105,6 +108,7 @@ class Aller(models.Model):
                 "date": new_agg.date,
                 "agg_id": new_agg.id,
                 "address_id": aller.address_id.id,
+                "aller_type": new_agg.aller_type,
                 "contract": aller.contract,
                 "product_id": aller.product_id.id,
                 "product_unique_ref": aller.product_unique_ref.id,
@@ -112,6 +116,7 @@ class Aller(models.Model):
             })
             for remarque in aller.remarque_ids:
                 new_aller.remarque_ids = [(4, remarque.id, 0)]
+    
 
     @api.onchange('product_id')
     def _on_product_changed(self):

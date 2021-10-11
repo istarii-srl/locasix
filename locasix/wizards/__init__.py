@@ -4,5 +4,4 @@ from . import import_products
 from . import import_clients
 from . import no_transport_price_warning
 from . import duplicate_to_aller
-from . import duplicate_to_retour
 from . import order_to_agenda

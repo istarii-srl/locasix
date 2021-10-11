@@ -56,7 +56,7 @@
 
                         </group>
                         <group style="width: 50% !important;" string="Retours">
-                            <field name="retour_ids" context="{'tree_view_ref' : 'locasix.locasix_retour_day_tree'}" nolabel="1"/>
+                            <field name="retour_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}" nolabel="1"/>
 
                         </group>
                     </group>

@@ -16,7 +16,7 @@ class Day(models.Model):
     active = fields.Boolean(string="Actif", default=True)
 
     aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers")
-    retour_ids = fields.One2many(comodel_name="locasix.retour", inverse_name="day_id", string="Retours")
+    retour_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Retours")
 
     notes = fields.Text(string="Notes")
 
@@ -37,23 +37,25 @@ class Day(models.Model):
         'view_id': view.id,
         'target': 'new',
         'context': {
+            'default_aller_type': 'out',
             'default_day_id': self.id,
             'default_date': self.day,
             },
         }        
 
     def action_add_retour(self):
-        view = self.env.ref('locasix.locasix_agg_retour_form')
+        view = self.env.ref('locasix.locasix_agg_aller_form')
         return {
-        'name': 'Retours',
+        'name': 'Allers',
         'type': 'ir.actions.act_window',
         'view_type': 'form',
         'view_mode': 'form',
-        'res_model': 'locasix.agg.retour',
+        'res_model': 'locasix.agg.aller',
         'views': [(view.id, 'form')],
         'view_id': view.id,
         'target': 'new',
         'context': {
+            'default_aller_type': "in",
             'default_day_id': self.id,
             'default_date': self.day,
             },
