@@ -525,8 +525,8 @@ class Order(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Retours',
             'view_mode': 'tree,form',
-            'res_model': 'locasix.retour',
-            'domain': [('order_id', '=', self.id)],
+            'res_model': 'locasix.aller',
+            'domain': [('order_id', '=', self.id), ("aller_type", "=", "in")],
             'context': "{'create': False}"
         }
 
@@ -536,7 +536,7 @@ class Order(models.Model):
             'name': 'Allers',
             'view_mode': 'tree,form',
             'res_model': 'locasix.aller',
-            'domain': [('order_id', '=', self.id)],
+            'domain': [('order_id', '=', self.id), ("aller_type", "=", "out")],
             'context': "{'create': False}"
         }
 
