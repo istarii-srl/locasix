@@ -452,7 +452,7 @@
 
     <template id="technical_files">
         <t t-foreach="doc.order_line" t-as="line">
-            <t t-if="line.product_id">
+            <t t-if="line.product_id and line.show_images">
                 <t t-foreach="line.product_id.technical_ids" t-as="technical_id">
                     <div class="page appendix">
                         <img class="appendix" t-att-src="image_data_uri(technical_id.image_1920)"/>
@@ -464,7 +464,7 @@
 
     <template id="plan_files">
         <t t-foreach="doc.order_line" t-as="line">
-            <t t-if="line.product_id">
+            <t t-if="line.product_id and line.show_images">
                 <t t-foreach="line.product_id.plan_ids" t-as="plan_id">
                     <div class="page appendix">
                         <img class="appendix" t-att-src="image_data_uri(plan_id.image_1920)"/>

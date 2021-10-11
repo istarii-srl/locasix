@@ -10,6 +10,7 @@ class OrderLine(models.Model):
     _inherit = "sale.order.line"
 
     has_ref_to_condi = fields.Boolean(string="C.A.", default=False)
+    show_images = fields.Boolean(string="Ajout Fiches", default=True)
 
     is_section = fields.Boolean(string="Est une section de l'offre", default=False)
     category_id = fields.Many2one(comodel_name="product.category", string="Product category")

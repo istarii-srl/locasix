@@ -56,6 +56,7 @@
                 <field name="has_ref_to_condi" optional="show"/>
                 <field name="usage_rate_display" invisible="1"/>
                 <field name="has_24_price" optional="show" attrs="{'invisible': [('usage_rate_display', '=', '8')]}"/>
+                <field name="show_images" optional="hide"/>
                 <field name="temporary_product" optional="hide"/>
             </xpath>
             <xpath expr="//tree/field[@name='price_subtotal']" position="attributes">
