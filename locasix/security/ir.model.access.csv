@@ -1,6 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_locasix_day_user,locasix.locasix.day,model_locasix_day,locasix.group_locasix_agenda_user,1,1,1,1
-access_locasix_day_user,locasix.locasix.day,model_locasix_day,locasix.group_locasix_agenda_read,1,0,0,0
+access_locasix_day_user,locasix.locasix.day,model_locasix_day,group_locasix_agenda_user,1,1,1,1
+access_locasix_day_user,locasix.locasix.day,model_locasix_day,group_locasix_agenda_read,1,0,0,0
 access_sale_order_user,locasix.sale.order,model_sale_order,base.group_user,1,1,1,1
 access_product_product_user,locasix.product.product,model_product_product,base.group_user,1,1,1,1
 access_product_template_user,locasix.product.template,model_product_template,base.group_user,1,1,1,1
