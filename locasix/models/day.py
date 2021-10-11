@@ -15,8 +15,8 @@ class Day(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
 
-    aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers")
-    retour_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Retours")
+    aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers", domain=[('aller_type', '=', 'out')])
+    retour_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Retours", domain=[('aller_type', '=', 'in')])
 
     notes = fields.Text(string="Notes")
 
