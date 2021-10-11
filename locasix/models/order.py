@@ -27,9 +27,9 @@ class Order(models.Model):
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
     exported_to_agenda = fields.Boolean(default=False)
 
-    aller_ids = fields.One2many(string="Allers", comodel_name="locasix.aller", inverse_name="order_id")
+    aller_ids = fields.One2many(string="Allers", comodel_name="locasix.aller", inverse_name="order_id", domain=[('aller_type', '=', 'out')])
     aller_count = fields.Integer(compute="_compute_aller_count")
-    retour_ids = fields.One2many(string="Retours", comodel_name="locasix.retour", inverse_name="order_id")
+    retour_ids = fields.One2many(string="Retours", comodel_name="locasix.aller", inverse_name="order_id", domain=[('aller_type', '=', 'in')])
     retour_count = fields.Integer(compute="_compute_retour_count")
 
     client_ref = fields.Char(string="Votre référence")
