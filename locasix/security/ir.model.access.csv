@@ -17,13 +17,13 @@ access_locasix_product_plan_user,locasix.locasix.product.plan,model_locasix_prod
 access_locasix_plan_counter_user,locasix.locasix.plan.counter,model_locasix_plan_counter,base.group_user,1,1,1,1
 access_locasix_product_technical_user,locasix.locasix.product.technical,model_locasix_product_technical,base.group_user,1,1,1,1
 access_locasix_technical_counter_user,locasix.locasix.technical.counter,model_locasix_technical_counter,base.group_user,1,1,1,1
-access_locasix_aller_user,locasix.locasix.aller,model_locasix_aller,base.group_user,1,1,1,1
-access_locasix_agg_aller_user,locasix.locasix.agg.aller,model_locasix_agg_aller,base.group_user,1,1,1,1
+access_locasix_aller_user,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_user,1,1,1,1
+access_locasix_aller_user,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_read,1,0,0,0
+access_locasix_agg_aller_user,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_user,1,1,1,1
+access_locasix_agg_aller_user,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_read,1,0,0,0
 access_locasix_assemblage_link_user,locasix.locasix.assemblage.link,model_locasix_assemblage_link,base.group_user,1,1,1,1
 access_locasix_remarque_user,locasix.locasix.remarque,model_locasix_remarque,base.group_user,1,1,1,1
 access_locasix_product_ref_user,locasix.locasix.product.ref,model_locasix_product_ref,base.group_user,1,1,1,1
 access_locasix_duplicate_aller_user,locasix.locasix.duplicate.aller,model_locasix_duplicate_aller,base.group_user,1,1,1,1
 access_locasix_order_agenda_user,locasix.locasix.order.agenda,model_locasix_order_agenda,base.group_user,1,1,1,1
 access_locasix_template_html_user,locasix.locasix.template.html,model_locasix_template_html,base.group_user,1,1,1,1
-access_locasix_agg_retour_user,locasix.locasix.agg.retour,model_locasix_agg_retour,base.group_user,1,1,1,1
-access_locasix_retour_user,locasix.locasix.retour,model_locasix_retour,base.group_user,1,1,1,1
