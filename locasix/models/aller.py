@@ -118,11 +118,6 @@ class Aller(models.Model):
                 new_aller.remarque_ids = [(4, remarque.id, 0)]
     
 
-    @api.onchange('product_id')
-    def _on_product_changed(self):
-        for aller in self:
-            return {'domain': {'product_unique_ref': [('product_id', '=', aller.product_id.product_tmpl_id.id)]}}
-
     def open_agg(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')
         return {
