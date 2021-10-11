@@ -10,6 +10,7 @@
                 <sheet>
                     <group>
                         <group>
+                            <field name="aller_type" invisible="1"/>
                             <field name="day_id" invisible="1"/>
                             <field name="date"/>
                             <field name="address_id"/>
