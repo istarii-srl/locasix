@@ -1,6 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_locasix_day_user,locasix.locasix.day,model_locasix_day,group_locasix_agenda_read,1,0,0,0
-access_locasix_day_user,locasix.locasix.day,model_locasix_day,group_locasix_agenda_user,1,1,1,1
+access_locasix_day_user_read,locasix.locasix.day,model_locasix_day,group_locasix_agenda_read,1,0,0,0
+access_locasix_day_user_use,locasix.locasix.day,model_locasix_day,group_locasix_agenda_user,1,1,1,1
 access_sale_order_user,locasix.sale.order,model_sale_order,base.group_user,1,1,1,1
 access_product_product_user,locasix.product.product,model_product_product,base.group_user,1,1,1,1
 access_product_template_user,locasix.product.template,model_product_template,base.group_user,1,1,1,1
@@ -17,10 +17,10 @@ access_locasix_product_plan_user,locasix.locasix.product.plan,model_locasix_prod
 access_locasix_plan_counter_user,locasix.locasix.plan.counter,model_locasix_plan_counter,base.group_user,1,1,1,1
 access_locasix_product_technical_user,locasix.locasix.product.technical,model_locasix_product_technical,base.group_user,1,1,1,1
 access_locasix_technical_counter_user,locasix.locasix.technical.counter,model_locasix_technical_counter,base.group_user,1,1,1,1
-access_locasix_aller_user,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_read,1,0,0,0
-access_locasix_aller_user,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_user,1,1,1,1
-access_locasix_agg_aller_user,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_read,1,0,0,0
-access_locasix_agg_aller_user,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_user,1,1,1,1
+access_locasix_aller_user_read,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_read,1,0,0,0
+access_locasix_aller_user_use,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_user,1,1,1,1
+access_locasix_agg_aller_user_read,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_read,1,0,0,0
+access_locasix_agg_aller_user_use,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_user,1,1,1,1
 access_locasix_assemblage_link_user,locasix.locasix.assemblage.link,model_locasix_assemblage_link,base.group_user,1,1,1,1
 access_locasix_remarque_user,locasix.locasix.remarque,model_locasix_remarque,base.group_user,1,1,1,1
 access_locasix_product_ref_user,locasix.locasix.product.ref,model_locasix_product_ref,base.group_user,1,1,1,1
