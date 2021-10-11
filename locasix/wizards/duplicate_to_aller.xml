@@ -5,6 +5,7 @@
         <field name="arch" type="xml">
             <form string="Dupliquer">
                 <field name="new_date"/>
+                <field name="aller_type"/>
                 <footer>
                     <button name="validate" string="Dupliquer" type="object" class="btn-primary"/>
                     <button string="Annuler" class="btn-secondary" special="cancel"/>
