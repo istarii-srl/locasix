@@ -35,6 +35,7 @@
                                         'default_remarque_ids': parent.remarque_ids,
                                         'default_day_id': parent.day_id,
                                         'default_date': parent.date,
+                                        'default_aller_type': parent.aller_type,
                                         'default_address_id': parent.address_id,
                                         'default_state': parent.state,
                                         'default_note': parent.note
