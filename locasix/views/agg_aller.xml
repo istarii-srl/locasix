@@ -42,6 +42,7 @@
                                         'default_note': parent.note
                                         }"/>
                                     </control>
+                                    <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="product_unique_ref"/>
                                     <field name="day_id" invisible="1"/>
