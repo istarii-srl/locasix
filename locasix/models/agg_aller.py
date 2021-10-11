@@ -178,7 +178,7 @@ class AggAller(models.Model):
             'target': 'current',
             }              
 
-    def duplicate_to(self, new_date):
+    def duplicate_to(self, new_date, aller_type):
         for aggAller in self:
             newday_id = self.env["locasix.day"].search([("day", "=", new_date)], limit=1)
             if not newday_id:
@@ -187,7 +187,7 @@ class AggAller(models.Model):
             new_agg = self.env["locasix.agg.aller"].create({
                 "day_id": newday_id.id,
                 "date": newday_id.day,
-                "aller_type": "out",
+                "aller_type": aller_type,
                 "address_id": aggAller.address_id.id,
                 "contract": aggAller.contract,
                 #"remarque_ids": aggAller.remarque_ids,
