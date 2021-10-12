@@ -83,19 +83,19 @@ class Aller(models.Model):
         old_contract = self.contract
         res = super(Aller, self).write(vals)
         if "address_id_depl" in vals:
-            if old_address_depl and self.address_id_depl:
+            if old_address_depl and self.address_id_depl and old_address_depl.city and self.address_id_depl.city:
                 self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_address_depl.display_name+", "+old_address_depl.city+" -> "+self.address_id_depl.display_name+", "+self.address_id_depl.city)
-            elif old_address_depl:
+            elif old_address_depl and old_address_depl.city:
                 self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_address_depl.display_name+", "+old_address_depl.city+" -> Aucune addresse")
-            elif self.address_id_depl:
+            elif self.address_id_depl and self.address_id_depl.city:
                 self.create_history_message("Changement de l'addresse d'arrivée du déplacement : Aucune addresse -> "+self.address_id_depl.display_name+", "+self.address_id_depl.city)            
         
         if "address_id" in vals:
-            if old_address_id and self.address_id:
+            if old_address_id and self.address_id and old_address_id.city and self.address_id.city:
                 self.create_history_message("Changement d'addresse : "+old_address_id.display_name+", "+old_address_id.city+" -> "+self.address_id.display_name+", "+self.address_id.city)
-            elif old_address_id:
+            elif old_address_id and old_address_id.city:
                 self.create_history_message("Changement d'addresse : "+old_address_id.display_name+", "+old_address_id.city+" -> Aucune addresse")
-            elif self.address_id:
+            elif self.address_id and self.address_id.city:
                 self.create_history_message("Changement d'addresse : Aucune addresse -> "+self.address_id.display_name+", "+self.address_id.city)
             if self.date == self.agg_id.date:
                 new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("aller_type", "=", self.aller_type), ("is_depl", "=", self.is_depl)], limit=1)
