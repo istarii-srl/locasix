@@ -7,7 +7,7 @@ class Aller(models.Model):
     _name = "locasix.aller"
     _description = "Un aller"
 
-    name = fields.Char(string="Nom", compute="_compute_name")
+    name = fields.Char(string="Nom", compute="_compute_name", store=True)
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date", required=True)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
