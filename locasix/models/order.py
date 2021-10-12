@@ -17,9 +17,9 @@ class Order(models.Model):
     weekend_offer = fields.Boolean(string="Offre week-end", default=False)
     usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")], default="8", required=True)
 
-    show_discount2 = fields.Boolean(string="Afficher la remise des 2 mois", default=False)
-    show_discount3 = fields.Boolean(string="Afficher la remise des 3 mois", default=False)
-    show_discount6 = fields.Boolean(string="Afficher la remise des 6 mois", default=False)
+    show_discount2 = fields.Boolean(string="Afficher remise 2 mois", default=False)
+    show_discount3 = fields.Boolean(string="Afficher remise 3 mois", default=False)
+    show_discount6 = fields.Boolean(string="Afficher remise 6 mois", default=False)
 
     months_2_discount_rate = fields.Float(string="G.E. 2 mois", default=0.10)
     months_3_discount_rate = fields.Float(string="G.E. 3 mois", default=0.15)
