@@ -17,7 +17,7 @@ class Aller(models.Model):
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
     address_id_depl = fields.Many2one(comodel_name="res.partner", string="Contact arrivé déplacement")
-    is_depl = fields.Boolean(string="Est un déplacement", required=True, default=False)
+    is_depl = fields.Boolean(string="Est un déplacement", default=False)
 
     full_name = fields.Char(string="Client", related="address_id.display_name")
     city = fields.Char(string="Ville", compute="_compute_city", store=True)

@@ -15,7 +15,7 @@ class AggAller(models.Model):
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
     address_id_depl = fields.Many2one(comodel_name="res.partner", string="Contact arrivé déplacement")
-    is_depl = fields.Boolean(string="Est un déplacement", required=True, default=False)
+    is_depl = fields.Boolean(string="Est un déplacement", default=False)
 
     city = fields.Char(string="Ville", compute="_compute_city", store=True)
     contract = fields.Char(string="Contrat")
