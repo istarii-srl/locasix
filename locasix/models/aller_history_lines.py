@@ -6,5 +6,5 @@ class AllerHistoryLines(models.Model):
 
     aller_id = fields.Many2one(string="Aller", comodel_name="locasix.aller", required=True)
     timestamp = fields.Datetime(string="Date")
-    user_id = fields.Many2one(string="User", comodel_name="res.user")
+    user_id = fields.Many2one(string="User", comodel_name="res.users")
     message = fields.Char(string="Message")

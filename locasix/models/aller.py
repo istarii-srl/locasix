@@ -101,7 +101,7 @@ class Aller(models.Model):
                 self.day_id = newday_id
 
         if "state" in vals:
-            self.create_history_message("Changement de statut : "+str(old_state)+" -> "+str(self.state))
+            self.create_history_message("Changement de statut : "+str(old_state.selection)+" -> "+str(self.state.selection))
             if self.state == "done":
                 self.active = False
         
