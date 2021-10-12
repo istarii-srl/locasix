@@ -6,6 +6,7 @@ _logger = logging.getLogger(__name__)
 
 class Day(models.Model):
     _name = "locasix.day"
+    _inherit = ['mail.thread']
     _description = "Gestion des allers et retours pour une journée"
 
     name = fields.Char(string="Jour", compute="_compute_name", store=True)
