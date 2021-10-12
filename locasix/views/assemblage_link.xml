@@ -10,7 +10,7 @@
         <field name="name">locasix.assemblage.link.tree</field>
         <field name="model">locasix.assemblage.link</field>
         <field name="arch" type="xml">
-            <tree string="Liens produits">
+            <tree string="Liens produits" editable="bottom">
                 <field name="assemblage_product_id"/>
                 <field name="linked_product_id"/>
             </tree>
