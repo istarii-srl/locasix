@@ -65,7 +65,7 @@ class Day(models.Model):
     def action_today(self):
         for day in self:
             today = datetime.date.today()
-            day_id = self.env["locasix.day"].search(["day", "=", today], limit=1)
+            day_id = self.env["locasix.day"].search([("day", "=", today)], limit=1)
             if day_id:
                 view = self.env.ref("locasix.locasix_day_form")
                 return {
