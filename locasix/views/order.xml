@@ -26,7 +26,9 @@
 
             <field name="partner_id" position="after">
                 <field name="weekend_offer"/>
-                <field name="show_discount_rates"/>
+                <field name="show_discount2"/>
+                <field name="show_discount3"/>
+                <field name="show_discount6"/>
                 <field name="usage_rate_display"/>
                 <field name="has_computed" invisible="1"/>
             </field>
