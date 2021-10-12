@@ -61,6 +61,7 @@ class ProductTemplate(models.Model):
                 plans = product.plan_ids[:]
                 for assemblage in product.assemblage_ids:
                     plans += assemblage.linked_product_id.get_plans()
+                return plans
             else:
                 return product.plan_ids
     
@@ -70,5 +71,6 @@ class ProductTemplate(models.Model):
                 plans = product.technical_ids[:]
                 for assemblage in product.assemblage_ids:
                     plans += assemblage.linked_product_id.get_technicals()
+                return plans
             else:
                 return product.technical_ids
