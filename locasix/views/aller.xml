@@ -81,8 +81,11 @@
             <tree string="Allers" create="0">
                 <field name="aller_type" invisible="1"/>
                 <field name="date"/>
+                <field name="product_default_code"/>
+                <field name="product_unique_ref"/>
                 <field name="address_id"/>
                 <field name="city"/>
+                <field name="contract"/>
                 <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
                 <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
@@ -96,9 +99,10 @@
         <field name="arch" type="xml">
             <tree string="Allers" create="0">
                 <field name="aller_type" invisible="1"/>
-                <field name="product_id"/>
+                <field name="product_default_code"/>
                 <field name="product_unique_ref"/>
                 <field name="city"/>
+                <field name="contract"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
                 <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
@@ -121,9 +125,12 @@
                             <field name="date"/>
                             <field name="address_id"/>
                             <field name="city"/>
-                            <field name="state"/>
+                            <field name="contract"/>
                         </group>
                         <group>
+                            <field name="product_id"/>
+                            <field name="product_unique_ref"/>
+                            <field name="state"/>
                             <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="note"/>
                         </group>
