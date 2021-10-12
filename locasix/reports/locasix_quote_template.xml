@@ -41,11 +41,11 @@
                     <div style="width: 15px;"/>
                     <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
                         <span>
-                            Coordonnées de Locasix <br/>
-                            Rue de Tournai 192 <br/>
-                            7330 Stambruges <br/>
-                            0472 92 90 15 <br/>
-                            BE0719889755 <br/>
+                            <span t-field="doc.company_id.name"> <br/>
+                            <span t-field="doc.company_id.street"> <br/>
+                            <span t-field="doc.company_id.zip"> <span t-field="doc.company_id.city"> <br/>
+                            <span t-field="doc.company_id.phone"> <br/>
+                            <span t-field="doc.company_id.vat"> <br/>
                         </span>
                     </div>
                     <div style="width: 10px;"/>
@@ -73,12 +73,11 @@
                 <div class="col-5" style="font-size: 11px;">
                     <div style="height:42px;"/>
                     <div style="height: 105px; border: 1px solid black; padding: 3px 5px 3px 5px;">
-                        Coordonnées de Locasix <br/>
-                        Rue de Tournai 192 <br/>
-                        7330 Stambruges <br/>
-                        Nicolas Six <br/>
-                        0472 92 90 15 <br/>
-                        BE0719889755 <br/>
+                        <span t-field="doc.company_id.name"> <br/>
+                        <span t-field="doc.company_id.street"> <br/>
+                        <span t-field="doc.company_id.zip"> <span t-field="doc.company_id.city"> <br/>
+                        <span t-field="doc.company_id.phone"> <br/>
+                        <span t-field="doc.company_id.vat"> <br/>
                     </div>
                 </div>
                 <div class="col-7" style="font-size: 11px;">
