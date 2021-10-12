@@ -6,7 +6,7 @@ _logger = logging.getLogger(__name__)
 
 class Day(models.Model):
     _name = "locasix.day"
-    
+
     _description = "Gestion des allers et retours pour une journée"
 
     name = fields.Char(string="Jour", compute="_compute_name", store=True)
@@ -61,6 +61,25 @@ class Day(models.Model):
             'default_date': self.day,
             },
         }  
+
+    def action_today(self):
+        for day in self:
+            today = datetime.date.today()
+            day_id = self.env["locasix.day"].search(["day", "=", today], limit=1)
+            if day_id:
+                view = self.env.ref("locasix.locasix_day_form")
+                return {
+                    'name': 'Journée',
+                    'type': 'ir.actions.act_window',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'res_model': 'locasix.day',
+                    'views': [(view.id, 'form')],
+                    'view_id': view.id,
+                    'target': "main",
+                    'res_id': day_id.id,
+                    'context': {'active_id': day_id.id},
+                }            
 
     def action_previous(self):
         for day in self:

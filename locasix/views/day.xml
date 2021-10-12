@@ -35,6 +35,7 @@
             <form string="Jours">
                 <header>
                     <button name="action_previous" type="object" icon="fa-arrow-left" class="oe_highlight"/>
+                    <button name="action_today" type="object" string="Aujourd'hui" class="oe_highlight"/>
                     <button name="action_next" type="object" icon="fa-arrow-right" class="oe_highlight"/>
                 </header>
                 <header>
