@@ -101,11 +101,24 @@ class Aller(models.Model):
                 self.day_id = newday_id
 
         if "state" in vals:
-            self.create_history_message("Changement de statut : "+str(old_state.selection)+" -> "+str(self.state.selection))
+            self.create_history_message("Changement de statut : "+str(self.state_to_string(old_state))+" -> "+str(self.state_to_string(self.state)))
             if self.state == "done":
                 self.active = False
         
         return res
+    
+    def state_to_string(self, state_key):
+        if state_key == "progress":
+            return "En cours"
+        elif state_key == "done":
+            return "Fini"
+        elif state_key == "cancel":
+            return "Annulé"
+        elif state_key == "move":
+            return "Déplacé"
+        else:
+            return "Pas de statut"
+
 
 
     def create_history_message(self, message):
