@@ -79,7 +79,17 @@ class Aller(models.Model):
         old_state = self.state
         old_date = self.date
         old_address_id = self.address_id
+        old_address_depl = self.address_id_depl
+        old_contract = self.contract
         res = super(Aller, self).write(vals)
+        if "address_id_depl" in vals:
+            if old_address_depl and self.address_id_depl:
+                self.create_history_message("Changement d'addresse : "+old_address_depl.display_name+", "+old_address_depl.city+" -> "+self.address_id_depl.display_name+", "+self.address_id_depl.city)
+            elif old_address_depl:
+                self.create_history_message("Changement d'addresse : "+old_address_depl.display_name+", "+old_address_depl.city+" -> Aucune addresse")
+            elif self.address_id_depl:
+                self.create_history_message("Changement d'addresse : Aucune addresse -> "+self.address_id_depl.display_name+", "+self.address_id_depl.city)            
+        
         if "address_id" in vals:
             if old_address_id and self.address_id:
                 self.create_history_message("Changement d'addresse : "+old_address_id.display_name+", "+old_address_id.city+" -> "+self.address_id.display_name+", "+self.address_id.city)
@@ -123,7 +133,13 @@ class Aller(models.Model):
             self.create_history_message("Changement de statut : "+str(self.state_to_string(old_state))+" -> "+str(self.state_to_string(self.state)))
             if self.state == "done":
                 self.active = False
-        
+        if "contract" in vals:
+            if self.contract and old_contract:
+                self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ self.contract)
+            elif self.contract:
+                self.create_history_message("Changement de contrat : "+ "Pas de contrat" +" -> "+ self.contract)
+            elif old_contract:
+                self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ "Pas de contrat")
         return res
     
     def state_to_string(self, state_key):
