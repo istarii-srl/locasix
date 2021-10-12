@@ -101,6 +101,7 @@
                 <field name="aller_type" invisible="1"/>
                 <field name="product_default_code"/>
                 <field name="product_unique_ref"/>
+                <field name="full_name"/>
                 <field name="city"/>
                 <field name="contract"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>

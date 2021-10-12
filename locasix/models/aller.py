@@ -16,6 +16,7 @@ class Aller(models.Model):
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
+    full_name = fields.Char(string="Client", related="address_id.display_name")
     city = fields.Char(string="Ville", related="address_id.city", store=True)
     contract = fields.Char(string="Contrat")
 
