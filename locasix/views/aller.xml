@@ -9,7 +9,6 @@
                 <field name="contract" string="Contrat" filter_domain="['|', ('contract', 'ilike', self), ('contract', 'ilike', self)]"/>
                 <field name="product_id" string="Référence produit" filter_domain="['|', '|', ('product_unique_ref.name', 'ilike', self), ('product_id.default_code', 'ilike', self), ('product_id.name', 'ilike', self)]"/>
                 <filter string="Aujourd'hui" name="today" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
-
                 <separator/>
                 <filter string="Date" name="today" date="date"/>
                 <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
@@ -42,6 +41,8 @@
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
                 <field name="state"/>
+                <field name="remarque_ids"/>
+                <field name="note"/>
             </calendar>
         </field>
     </record>
