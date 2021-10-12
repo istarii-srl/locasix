@@ -48,7 +48,7 @@ class Aller(models.Model):
     def _compute_name(self):
         for aggAller in self:
             if aggAller.address_id:
-                aggAller.name = aggAller.address_id.name + " - "+aggAller.city if aggAller.city else ""
+                aggAller.name = aggAller.address_id.name + (" - "+aggAller.city if aggAller.city else "")
             else:
                 aggAller.name = "/"
 
