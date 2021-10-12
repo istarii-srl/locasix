@@ -24,6 +24,7 @@
         <field name="arch" type="xml">
             <map res_partner="address_id" hide_address="False">
                 <field name="contract" string="Référence"/>
+                <field name="aller_type"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
             </map>
