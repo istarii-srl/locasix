@@ -5,9 +5,9 @@
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
             <search string="Allers">
-                <field name="name" string="Journée" filter_domain="['|', '|', '|', '|', '|', '|',('name', 'ilike', self), ('address_id.name', 'ilike', self), ('address_id.display_name', 'ilike', self), ('address_id.name', 'ilike', self), ('address_id.display_name', 'ilike', self), ('city', 'ilike', self), ('city', 'ilike', self)]"/>
+                <field name="name" string="Journée" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('address_id.name', 'ilike', self), ('address_id.display_name', 'ilike', self), ('city', 'ilike', self)]"/>
                 <field name="name" string="Contrat" filter_domain="['|', ('contract', 'ilike', self), ('contract', 'ilike', self)]"/>
-                <field name="name" string="Référence produit" filter_domain="['|', '|', '|', '|', '|',('product_unique_ref.name', 'ilike', self), ('product_unique_ref.default_code', 'ilike', self), ('product_unique_ref.default_code', 'ilike', self), ('product_unique_ref.name', 'ilike', self), ('product_id.name', 'ilike', self), ('product_id.name', 'ilike', self)]"/>
+                <field name="name" string="Référence produit" filter_domain="['|', '|', ('product_unique_ref.name', 'ilike', self), ('product_unique_ref.default_code', 'ilike', self), ('product_id.name', 'ilike', self)]"/>
                 <filter string="Aujourd'hui" name="today" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
 
                 <separator/>
