@@ -125,6 +125,8 @@
                             <field name="day_id" readonly="1"/>
                             <field name="date"/>
                             <field name="address_id"/>
+                            <field name="is_depl"/>
+                            <field name="address_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}" />
                             <field name="city"/>
                             <field name="contract"/>
                         </group>

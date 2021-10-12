@@ -12,8 +12,10 @@
                         <group>
                             <field name="aller_type" invisible="1"/>
                             <field name="day_id" invisible="1"/>
+                            <field name="is_depl" invisible="1"/>
                             <field name="date"/>
                             <field name="address_id"/>
+                            <field name="address_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}"/>
                             <field name="city"/>
                             <field name="state"/>
                         </group>
@@ -35,6 +37,8 @@
                                         <create name="add_product_control" string="Ajouter un aller" context="{
                                         'default_remarque_ids': parent.remarque_ids,
                                         'default_day_id': parent.day_id,
+                                        'default_is_depl': parent.is_depl,
+                                        'default_address_id_depl': parent.address_id_depl,
                                         'default_date': parent.date,
                                         'default_aller_type': parent.aller_type,
                                         'default_address_id': parent.address_id,

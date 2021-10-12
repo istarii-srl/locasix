@@ -39,6 +39,7 @@
                     <button name="action_next" type="object" icon="fa-arrow-right" class="oe_highlight"/>
                     <button name="action_add_aller" type="object" string="Ajouter un aller" />
                     <button name="action_add_retour" type="object" string="Ajouter un retour"/>
+                    <button name="action_add_depl" type="object" string="Ajouter un déplacement"/>
                 </header>
 
                 <sheet >

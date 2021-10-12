@@ -14,7 +14,10 @@ class AggAller(models.Model):
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
-    city = fields.Char(string="Ville", related="address_id.city")
+    address_id_depl = fields.Many2one(comodel_name="res.partner", string="Contact arrivé déplacement")
+    is_depl = fields.Boolean(string="Est un déplacement", required=True, default=False)
+
+    city = fields.Char(string="Ville", compute="_compute_city", store=True)
     contract = fields.Char(string="Contrat")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
@@ -28,11 +31,22 @@ class AggAller(models.Model):
     def _get_default_date(self):
         return datetime.date.today()
 
+    @api.depends('address_id', 'address_id_depl', 'is_depl')
+    def _compute_city(self):
+        for aller in self:
+            if not aller.is_depl:
+                aller.city = aller.address_id.city
+            else:
+                if aller.address_id_depl:
+                    aller.city = aller.address_id.city + " -> "+aller.address_id_depl.city
+                else:
+                    aller.city = aller.address_id.city
+
 
     # TODO USE THAT IN WRITE AND CREATE
     def check_and_merge(self):
         for agg_aller in self:
-            aggs = self.env["locasix.agg.aller"].search([("date", '=', agg_aller.date), ("address_id", "=", agg_aller.address_id.id), ("id", '!=', agg_aller.id), ("aller_type", "=", agg_aller.aller_type)])
+            aggs = self.env["locasix.agg.aller"].search([("date", '=', agg_aller.date), ("address_id", "=", agg_aller.address_id.id), ("id", '!=', agg_aller.id), ("aller_type", "=", agg_aller.aller_type), ("is_depl", "=", agg_aller.is_depl)])
             for other_agg in aggs:
                 if other_agg.is_retours_created:
                     agg_aller.is_retours_created = True
@@ -46,7 +60,7 @@ class AggAller(models.Model):
     def weekend_check(self):
         for agg_aller in self:
             if agg_aller.date_retour and not agg_aller.is_retours_created and agg_aller.address_id and agg_aller.is_weekend:
-                agg_retour_id = self.env["locasix.agg.aller"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id.id), ("aller_type", "=", "in")], limit=1)
+                agg_retour_id = self.env["locasix.agg.aller"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id.id), ("aller_type", "=", "in"), ("is_depl", "=", False)], limit=1)
                 if not agg_retour_id:
                     newday_id = self.env["locasix.day"].search([("day", "=", agg_aller.date_retour)], limit=1)
                     if not newday_id:
@@ -112,22 +126,6 @@ class AggAller(models.Model):
                 aggAller.name = aggAller.date.strftime('%d/%m/%Y') + " - " + aggAller.address_id.name
             else:
                 aggAller.name = "/"
-    
-    # def action_open_duplicate_wizard(self):
-    #     view = self.env.ref('locasix.locasix_agg_aller_form')
-    #     return {
-    #     'name': 'Allers',
-    #     'type': 'ir.actions.act_window',
-    #     'view_type': 'form',
-    #     'view_mode': 'form',
-    #     'res_model': 'locasix.agg.aller',
-    #     'views': [(view.id, 'form')],
-    #     'view_id': view.id,
-    #     'target': 'new',
-    #     'context': {
-    #         "default_address_id": self.address_id.id,
-    #         }
-    #     }      
 
     def action_open_duplicate_wizard(self):
         view = self.env.ref('locasix.locasix_duplicate_aller_form')
@@ -156,6 +154,8 @@ class AggAller(models.Model):
                 "day_id": newday_id.id,
                 "date": newday_id.day,
                 "aller_type": aller_type,
+                "is_depl": aggAller.is_depl,
+                "address_id_depl": aggAller.address_id_depl.id,
                 "address_id": aggAller.address_id.id,
                 "contract": aggAller.contract,
                 #"remarque_ids": aggAller.remarque_ids,

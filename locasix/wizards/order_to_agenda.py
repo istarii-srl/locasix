@@ -26,7 +26,7 @@ class OrderToAgenda(models.TransientModel):
                     if not newday_id:
                         newday_id = self.env["locasix.day"].create({"day": wizard.aller_date})
                 
-                    new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.aller_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "out")], limit=1)
+                    new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.aller_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "out"), ('is_depl', '=', False)], limit=1)
                     if not new_agg_id:
                         new_agg_id = self.env["locasix.agg.aller"].create({
                             "day_id": newday_id.id,
@@ -49,7 +49,7 @@ class OrderToAgenda(models.TransientModel):
                         if not newday_id:
                             newday_id = self.env["locasix.day"].create({"day": wizard.retour_date})
                     
-                        new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.retour_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "in")], limit=1)
+                        new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.retour_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "in"), ("is_depl", "=", False)], limit=1)
                         if not new_agg_id:
                             new_agg_id = self.env["locasix.agg.aller"].create({
                                 "day_id": newday_id.id,

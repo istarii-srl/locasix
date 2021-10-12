@@ -26,6 +26,25 @@ class Day(models.Model):
     ]
     # UNIQUE CONSTRAINTS
 
+    def action_add_depl(self):
+        view = self.env.ref('locasix.locasix_agg_aller_form')
+        return {
+        'name': 'Allers',
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'locasix.agg.aller',
+        'views': [(view.id, 'form')],
+        'view_id': view.id,
+        'target': 'new',
+        'context': {
+            'default_is_depl': True,
+            'default_aller_type': 'out',
+            'default_day_id': self.id,
+            'default_date': self.day,
+            },
+        }     
+
     def action_add_aller(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')
         return {
