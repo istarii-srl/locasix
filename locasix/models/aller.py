@@ -69,7 +69,12 @@ class Aller(models.Model):
         old_address_id = self.address_id
         res = super(Aller, self).write(vals)
         if "address_id" in vals:
-            self.create_history_message("Changement d'addresse : "+str(old_address_id)+" -> "+str(self.address_id))
+            if old_address_id and self.address_id:
+                self.create_history_message("Changement d'addresse : "+old_address_id.display_name+", "+old_address_id.city+" -> "+self.address_id.display_name+", "+self.address_id.city)
+            elif old_address_id:
+                self.create_history_message("Changement d'addresse : "+old_address_id.display_name+", "+old_address_id.city+" -> Aucune addresse")
+            elif self.address_id:
+                self.create_history_message("Changement d'addresse : Aucune addresse -> "+self.address_id.display_name+", "+self.address_id.city)
             if self.date == self.agg_id.date:
                 new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("aller_type", "=", self.aller_type)], limit=1)
                 if not new_agg_id:
