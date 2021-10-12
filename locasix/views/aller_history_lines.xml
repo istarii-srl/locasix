@@ -1,0 +1,14 @@
+<odoo>
+    <record model="ir.ui.view" id="locasix_aller_history_line_form">
+        <field name="name">locasix.aller.history.line.form</field>
+        <field name="model">locasix.aller.history.line</field>
+        <field name="arch" type="xml">
+            <tree string="Historique">
+                <field name="timestamp"/>
+                <field name="user_id"/>
+                <field name="message"/>
+                <field name="aller_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

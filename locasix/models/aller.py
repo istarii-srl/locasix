@@ -1,5 +1,5 @@
 from odoo import fields, api, models
-
+import datetime
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -23,6 +23,7 @@ class Aller(models.Model):
     product_id = fields.Many2one(string="Produit", comodel_name="product.product")
     product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
 
+    history_ids = fields.One2many(string="Lignes de l'historique", comodel_name="locasix.aller.history.line", inverse_name="aller_id")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
 
@@ -63,8 +64,12 @@ class Aller(models.Model):
     def write(self, vals):
         _logger.info("write Aller")
         _logger.info(vals)
+        old_state = self.state
+        old_date = self.date
+        old_address_id = self.address_id
         res = super(Aller, self).write(vals)
         if "address_id" in vals:
+            self.create_history_message("Changement d'addresse : "+str(old_address_id)+" -> "+str(self.address_id))
             if self.date == self.agg_id.date:
                 new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("aller_type", "=", self.aller_type)], limit=1)
                 if not new_agg_id:
@@ -77,6 +82,7 @@ class Aller(models.Model):
                 self.agg_id = new_agg_id
 
         if "date" in vals:
+            self.create_history_message("Changement de date : "+str(old_date)+" -> "+str(self.date))
             if self.date != self.agg_id.date:
                 newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)
                 if not newday_id:
@@ -95,12 +101,23 @@ class Aller(models.Model):
                 self.day_id = newday_id
 
         if "state" in vals:
+            self.create_history_message("Changement de statut : "+str(old_state)+" -> "+str(self.state))
             if self.state == "done":
-                _logger.info("yyoyoyoy")
                 self.active = False
-
+        
         return res
 
+
+    def create_history_message(self, message):
+        for aller in self:
+            user = self.env.user
+            timestamp = datetime.datetime.now()
+            self.env["locasix.aller.history.line"].create({
+                "user_id": user.id,
+                "timestamp": timestamp,
+                "aller_id": aller.id,
+                "message": message,
+            })
 
     def create_copy_to_new_agg(self, new_agg):
         for aller in self:

@@ -17,3 +17,4 @@ from . import remarque
 from . import product_unique_reference
 from . import html_template
 from . import retour_dummy
+from . import aller_history_lines

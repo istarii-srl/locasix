@@ -135,6 +135,11 @@
                             <field name="note"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Historique">
+                            <field name="history_ids"/>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
