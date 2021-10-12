@@ -347,7 +347,7 @@
                         <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[2]"/>
                     </div>
                 </th>
-                <th width="10%">
+                <th width="10%" t-if="doc.show_discount2">
                     <div class="col">
                         <span class="block reduction" t-esc="column_names_before_first_line[3]"/>
                         <span class="block">Prix/mois</span>
@@ -355,7 +355,7 @@
                         <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[3]"/>
                     </div>
                 </th>
-                <th width="10%">
+                <th width="10%" t-if="doc.show_discount3">
                     <div class="col">
                         <span class="block reduction" t-esc="column_names_before_first_line[4]"/>
                         <span class="block">Prix/mois</span>
@@ -363,7 +363,7 @@
                         <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[4]"/>
                     </div>
                 </th>
-                <th width="10%">
+                <th width="10%" t-if="doc.show_discount6">
                     <div class="col">
                         <span class="block reduction" t-esc="column_names_before_first_line[5]"/>
                         <span class="block">Prix/mois</span>
@@ -404,15 +404,15 @@
                             <span t-esc="line.month_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
-                        <td width="10%" class="text-center">
+                        <td width="10%" class="text-center" t-if="doc.show_discount2">
                             <span t-esc="line.months_2_discount * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
-                        <td width="10%" class="text-center">
+                        <td width="10%" class="text-center" t-if="doc.show_discount3">
                             <span t-esc="line.months_3_discount * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
-                        <td width="10%" class="text-center">
+                        <td width="10%" class="text-center" t-if="doc.show_discount6">
                             <span t-esc="line.months_6_discount * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </td>
