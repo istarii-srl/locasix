@@ -24,7 +24,7 @@ class Aller(models.Model):
     contract = fields.Char(string="Contrat")
 
     product_default_code = fields.Char(string="Ref", related="product_id.default_code")
-    product_id = fields.Many2one(string="Produit", comodel_name="product.product")
+    product_id = fields.Many2one(string="Produit", comodel_name="product.product", required=True)
     product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
 
     history_ids = fields.One2many(string="Lignes de l'historique", comodel_name="locasix.aller.history.line", inverse_name="aller_id")
