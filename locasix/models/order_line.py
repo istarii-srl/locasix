@@ -18,7 +18,9 @@ class OrderLine(models.Model):
     is_multi = fields.Boolean(string="A plusieurs tarifs", default=False)
     from_compute = fields.Boolean(string="Est venu automatiqument", default=False)
     usage_rate_display = fields.Selection(related="order_id.usage_rate_display")
-    show_discount_rates = fields.Boolean(related="order_id.show_discount_rates")
+    show_discount2 = fields.Boolean(related="order_id.show_discount2")
+    show_discount3 = fields.Boolean(related="order_id.show_discount3")
+    show_discount6 = fields.Boolean(related="order_id.show_discount6")
     weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer")
     has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
     temporary_product = fields.Boolean(string="Temporaire", related="product_id.is_temporary_product", readonly=False, default=False)
@@ -35,27 +37,30 @@ class OrderLine(models.Model):
     months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount", store=True)
     months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount", store=True)
 
+    def show_discount_rates(self):
+        for line in self:
+            return line.show_discount2 or line.show_discount3 or line.show_discount6
 
 
     def get_line_type(self):
         for line in self:
             if line.weekend_offer:
                 return "weekend"
-            elif line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates and line.has_24_price:
+            elif line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates() and line.has_24_price:
                 return "prix_6_double"
-            elif line.is_multi and line.usage_rate_display == "24" and line.show_discount_rates and line.has_24_price:
+            elif line.is_multi and line.usage_rate_display == "24" and line.show_discount_rates() and line.has_24_price:
                 return "prix_6_24"
-            elif line.is_multi and line.usage_rate_display == "8" and line.show_discount_rates and line.has_24_price:
+            elif line.is_multi and line.usage_rate_display == "8" and line.show_discount_rates() and line.has_24_price:
                 return "prix_6_8"
-            elif line.is_multi and line.usage_rate_display == "duo" and not line.show_discount_rates and line.has_24_price:
+            elif line.is_multi and line.usage_rate_display == "duo" and not line.show_discount_rates() and line.has_24_price:
                 return "prix_3_double"
-            elif line.is_multi and line.usage_rate_display == "24" and not line.show_discount_rates and line.has_24_price:
+            elif line.is_multi and line.usage_rate_display == "24" and not line.show_discount_rates() and line.has_24_price:
                 return "prix_3_24"
-            elif line.is_multi and line.usage_rate_display == "8" and not line.show_discount_rates and line.has_24_price:
+            elif line.is_multi and line.usage_rate_display == "8" and not line.show_discount_rates() and line.has_24_price:
                 return "prix_3_8"
-            elif line.is_multi and line.show_discount_rates:
+            elif line.is_multi and line.show_discount_rates():
                 return "prix_6"
-            elif line.is_multi and not line.show_discount_rates:
+            elif line.is_multi and not line.show_discount_rates():
                 return "prix_3"
             elif not line.is_multi and line.product_id and line.product_id.uom_id.name == "Jours" and line.has_24_price and line.usage_rate_display == "duo":
                 return "prix_jour_double"
