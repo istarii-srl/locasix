@@ -6,7 +6,7 @@ class DuplicateToAller(models.TransientModel):
     _description = "Assistant pour la duplication d'un aller"
 
     new_date = fields.Date(string="Nouvelle date", default=lambda self: self._get_default_date() , required=True)
-    aller_type = fields.Selection(string="Aller ou retour", selection=[("out", "Aller"), ("in", "Retour")], default="out")
+    aller_type = fields.Selection(string="Aller ou retour", selection=[("out", "Aller"), ("in", "Retour")], default="out", required=True)
     agg_id = fields.Many2one(string="Allers", comodel_name="locasix.agg.aller", required=True)
 
     def _get_default_date(self):
