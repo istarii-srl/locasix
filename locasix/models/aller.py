@@ -84,11 +84,11 @@ class Aller(models.Model):
         res = super(Aller, self).write(vals)
         if "address_id_depl" in vals:
             if old_address_depl and self.address_id_depl:
-                self.create_history_message("Changement d'addresse : "+old_address_depl.display_name+", "+old_address_depl.city+" -> "+self.address_id_depl.display_name+", "+self.address_id_depl.city)
+                self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_address_depl.display_name+", "+old_address_depl.city+" -> "+self.address_id_depl.display_name+", "+self.address_id_depl.city)
             elif old_address_depl:
-                self.create_history_message("Changement d'addresse : "+old_address_depl.display_name+", "+old_address_depl.city+" -> Aucune addresse")
+                self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_address_depl.display_name+", "+old_address_depl.city+" -> Aucune addresse")
             elif self.address_id_depl:
-                self.create_history_message("Changement d'addresse : Aucune addresse -> "+self.address_id_depl.display_name+", "+self.address_id_depl.city)            
+                self.create_history_message("Changement de l'addresse d'arrivée du déplacement : Aucune addresse -> "+self.address_id_depl.display_name+", "+self.address_id_depl.city)            
         
         if "address_id" in vals:
             if old_address_id and self.address_id:
