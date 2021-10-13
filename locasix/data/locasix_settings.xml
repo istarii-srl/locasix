@@ -100,4 +100,11 @@
         </record>
     </data>
 
+    <data noupdate="1">
+        <record model="locasix.template.html" id="locasix_template_condi_sale">
+            <field name="name" eval="'Template conditions additionnelles de vente'"/>
+            <field name="template" eval="Texte à remplir"/>
+        </record>
+    </data>
+
 </odoo>
