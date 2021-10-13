@@ -36,7 +36,7 @@ class Aller(models.Model):
     def _state_selection(self):
         select = [("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé")]
         if self.env.user.has_group('locasix.group_locasix_admin'):
-            select += ('done', "Fini")
+            select.append(('done', "Fini"))
         return select
 
     @api.depends('address_id', 'address_id_depl', 'is_depl')
