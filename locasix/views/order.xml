@@ -32,6 +32,12 @@
                 <field name="usage_rate_display"/>
                 <field name="has_computed" invisible="1"/>
             </field>
+            <field name="validity_date" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="payment_term_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
             <group name="note_group" position="attributes">
                 <attribute name="invisible">1</attribute>
             </group>
