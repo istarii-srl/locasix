@@ -72,6 +72,7 @@ class Order(models.Model):
     def create(self, vals):
         obj = super(Order, self).create(vals)
         obj.adapt_front_page()
+        obj.name = obj.name
         return obj
 
     def write(self, vals):
