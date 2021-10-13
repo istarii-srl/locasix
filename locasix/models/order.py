@@ -188,8 +188,10 @@ class Order(models.Model):
             
 
     def _action_confirm(self):
+        _logger.info("action confirm")
         for order in self:
             if order.has_transport_prices():
+                _logger.info("has transport price")
                 super(Order, self)._action_confirm()
                 self.done_order = True
                 for line in self.order_line:

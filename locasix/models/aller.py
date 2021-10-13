@@ -11,7 +11,7 @@ class Aller(models.Model):
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date", required=True)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
-    state = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("done", "Fini"), ("cancel", "Annulé"), ("move", "Déplacé")], default="progress", required=True)
+    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="progress", required=True)
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
@@ -32,6 +32,12 @@ class Aller(models.Model):
     note = fields.Text(string="Remarque libre")
 
     active = fields.Boolean(string="Actif", default=True)
+
+    def _state_selection(self):
+        select = [("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé")]
+        if self.env.user.has_group('locasix.group_locasix_admin'):
+            select += ('done', "Fini")
+        return select
 
     @api.depends('address_id', 'address_id_depl', 'is_depl')
     def _compute_city(self):
