@@ -15,7 +15,7 @@ class Order(models.Model):
     added_terms_week_end = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_weekend())
     added_terms_sale = fields.Html(string="Conditions additionnelles de vente", default=lambda self: self._get_added_terms_sale())
     
-    offer_type = fields.Selection(string="Type d'offre", selection=[("classic", "Location"), ("weekend", "Weekend"), ("sale", "Vente")], default="classic")
+    offer_type = fields.Selection(string="Type d'offre", selection=[("classic", "Location"), ("weekend", "Weekend"), ("sale", "Vente")], default="classic", required=True)
     usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")], default="8", required=True)
     show_discount2 = fields.Boolean(string="Afficher remise 2 mois", default=False)
     show_discount3 = fields.Boolean(string="Afficher remise 3 mois", default=False)
