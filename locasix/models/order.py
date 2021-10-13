@@ -77,6 +77,12 @@ class Order(models.Model):
     def write(self, vals):
         _logger.info("write template")
         _logger.info(vals)
+        if "name" in vals:
+            user_names = self.env.user.name.split(" ")
+            initials = ""
+            for name in user_names:
+                initials = initials+name[0]
+            vals["name"] = vals["name"] + "-"+ initials
         if vals.get('adapt_front_page', False):
             vals.pop('adapt_front_page', 1)
             res = super(Order, self).write(vals)
@@ -91,6 +97,9 @@ class Order(models.Model):
             self.adapt_front_page()
             self.enforce_cuve()
             self.enforce_computations()
+        
+
+
             
         return res
 
