@@ -25,6 +25,7 @@
             </button>
 
             <field name="partner_id" position="after">
+                <field name="client_ref"/>
                 <field name="offer_type"/>
                 <field name="show_discount2"/>
                 <field name="show_discount3"/>

@@ -407,7 +407,7 @@ class Order(models.Model):
             if not transport_address_in_order:
                 self.env["sale.order.line"].create({
                     'order_id': self.id,
-                    'product_id': transport_address_in_order.product_variant_id.id,
+                    'product_id': transport_address_product_id.product_variant_id.id,
                     'name': self.get_transport_address(),
                     #'section_id': line.section_id.id,
                     'from_compute': True, 
