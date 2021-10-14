@@ -95,17 +95,17 @@
             </div>
             <t t-set="section_lines" t-value="doc.get_sections()"/>
             <t t-foreach="section_lines" t-as="section_line">
-                <t t-if="doc.space_between_section == 'small'">
+                <t t-if="doc.space_between_sections == 'small'">
                     <div style="font-size: 15px; padding-top: 20px; padding-bottom: 10px;">
                         <span t-field="section_line.name"/>
                     </div>
                 </t>
-                <t t-if="doc.space_between_section == 'medium'">
+                <t t-if="doc.space_between_sections == 'medium'">
                     <div style="font-size: 15px; padding-top: 50px; padding-bottom: 20px;">
                         <span t-field="section_line.name"/>
                     </div>
                 </t>
-                <t t-if="doc.space_between_section == 'large'">
+                <t t-if="doc.space_between_sections == 'large'">
                     <div style="font-size: 15px; padding-top: 80px; padding-bottom: 30px;">
                         <span t-field="section_line.name"/>
                     </div>
@@ -220,7 +220,7 @@
             <tbody>
             <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
                 <t t-set="line_coefficient" t-value="coefficient if line.product_id.has_24_price else 1"/>
-                <tr t-if="not line.is_section and line.display_type != 'line_note'" class="space_above">
+                <tr t-if="not line.is_section and line.display_type != 'line_note' and not line.product_id.is_transport_address_product" class="space_above">
                     <td width="8%" class="text-center">
                         <span t-field="line.product_id.default_code"/>
                     </td>
@@ -243,6 +243,12 @@
                         <div t-if="line.price_unit == 0">
                             <span class="reduction text-center">Offert !</span>
                         </div>
+                    </td>
+                </tr>
+                <tr t-if="line.product_id.is_transport_address_product">
+                    <td colspan="1"></td>
+                    <td colspan="3">
+                        <span t-field="line.name" style="font-style: italic"/>
                     </td>
                 </tr>
                 <tr t-if="line.display_type == 'line_note'">
