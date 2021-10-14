@@ -71,7 +71,7 @@
                     <field name="sale_confirm"/>
                 </page>
                 <page name="display_fix" string="Ajustement d'affichage">
-                    <field name="space_between_sections"/>
+                    <group><field name="space_between_sections"/></group>
                 </page>
             </page>
             <xpath expr="//tree/field[@name='name']" position="after">

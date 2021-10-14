@@ -68,7 +68,7 @@ class Order(models.Model):
         if template:
             return template.template
         else:
-            return "<p><b><font style='font-size: 10px;'>Confirmation de la commande :</font></b> <br></p><p><br></p><p><font style='font-size: 10px;'>Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention</font></p><p><font style='font-size: 10px;'>&nbsp;\"Bon pour accord\" + le cachet de l'entreprise.</font><br></p>"
+            return "<span style='font-size:10px'><b>Confirmation de la commande :</b><br>Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention<br>\"Bon pour accord\" + le cachet de l'entreprise.</span>"
 
     def _get_added_terms_sale(self):
         template = self.env["locasix.template.html"].search([('name', '=', 'Template conditions additionnelles de vente')], limit=1)
