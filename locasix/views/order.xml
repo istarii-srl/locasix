@@ -38,7 +38,7 @@
             <field name="payment_term_id" position="after">
                 <field name="city" options="{'no_create': True}" required="1"/>
                 <field name="rue"/>
-                <field name="numéro"/>
+                <field name="street_number"/>
                 <field name="street_note"/>
             </field>
             <field name="payment_term_id" position="attributes">
