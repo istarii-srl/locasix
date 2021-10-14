@@ -8,7 +8,8 @@
                     <group>
                         <group>
                             <field name="order_id" readonly="1"/>
-                            <field name="aller_date"/>
+                            <field name="localite_id" options="{'no_create': True}"/>
+                            <field name="aller_date"/> 
                         </group>
                         <group>
                             <field name="should_create_retour"/>
