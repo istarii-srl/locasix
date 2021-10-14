@@ -76,3 +76,14 @@ class ProductTemplate(models.Model):
                 return plans
             else:
                 return product.technical_ids
+
+
+class ProductCron(models.Model):
+    _name ="locasix.product.cron"
+    _description = "Archivage automatique des produits temporaire"
+
+    def run_cron(self):
+        _logger.info("Cron product")
+        products = self.env["product.template"].search([("active", "=", True), ("is_temporary", "=", True)])
+        for product in products:
+            product.active = False

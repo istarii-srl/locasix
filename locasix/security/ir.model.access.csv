@@ -34,3 +34,4 @@ access_locasix_retour_user,locasix.locasix.retour,model_locasix_retour,base.grou
 access_locasix_agg_retour_user,locasix.locasix.agg.retour,model_locasix_agg_retour,base.group_user,1,1,1,1
 access_locasix_aller_history_line_user,locasix.locasix.aller.history.line,model_locasix_aller_history_line,base.group_user,1,1,1,1
 access_locasix_municipality_user,locasix.locasix.municipality,model_locasix_municipality,base.group_user,1,1,1,1
+access_locasix_product_cron_user,locasix.locasix.product.cron,model_locasix_product_cron,base.group_user,1,1,1,1
