@@ -21,7 +21,7 @@ class Aller(models.Model):
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
 
-    full_name = fields.Char(string="Client", related="address_id.display_name")
+    full_name = fields.Char(string="Nom du client", related="address_id.display_name")
     city = fields.Char(string="Ville", compute="_compute_city", store=True)
     contract = fields.Char(string="Contrat")
 
