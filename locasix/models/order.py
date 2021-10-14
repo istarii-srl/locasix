@@ -26,6 +26,11 @@ class Order(models.Model):
     months_3_discount_rate = fields.Float(string="G.E. 3 mois", default=0.15)
     months_6_discount_rate = fields.Float(string="G.E. 6 mois", default=0.2)
 
+    city = fields.Many2one(string="Ville", comodel_name="locasix.municipality")
+    rue = fields.Char(string="Rue")
+    street_number = fields.Char(string="Numéro")
+    street_note = fields.Char(string="Remarque libre")
+
     done_order = fields.Boolean(string="Offre terminée", default=False)
     is_computing = fields.Boolean(string="En cours de calculation", default=False)
     has_computed = fields.Boolean(string="Y a t-il eu une calculation ?", default=False)
