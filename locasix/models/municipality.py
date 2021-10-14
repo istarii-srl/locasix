@@ -10,7 +10,7 @@ class Municipality(models.Model):
     is_sub_municipality = fields.Boolean(string="Est une sous-commune", default=False)
     municipality = fields.Char(string="Commune")
 
-    @api.depens("postal_code", 'city')
+    @api.depends("postal_code", 'city')
     def _compute_name(self):
         for municipality in self:
             municipality.name = municipality.postal_code + "-"+municipality.city
