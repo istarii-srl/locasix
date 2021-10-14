@@ -491,8 +491,8 @@ class Order(models.Model):
                         sections[line.section_id.id]["next_available"] += 1
             if address_transport_line:
                 _logger.info("address transport correction")
-                line.sequence = sections[line.section_id.id]["next_available"]
-                sections[line.section_id.id]["next_available"] += 1
+                address_transport_line.sequence = sections[address_transport_line.section_id.id]["next_available"]
+                sections[address_transport_line.section_id.id]["next_available"] += 1
 
     
     def remove_doublons(self, sections):
