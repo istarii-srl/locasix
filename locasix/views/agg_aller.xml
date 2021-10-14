@@ -15,7 +15,8 @@
                             <field name="is_depl" invisible="1"/>
                             <field name="date"/>
                             <field name="address_id"/>
-                            <field name="address_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}"/>
+                            <field name="localite_id" required="1"/>
+                            <field name="localite_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}"/>
                             <field name="city"/>
                             <field name="state"/>
                         </group>
@@ -38,10 +39,11 @@
                                         'default_remarque_ids': parent.remarque_ids,
                                         'default_day_id': parent.day_id,
                                         'default_is_depl': parent.is_depl,
-                                        'default_address_id_depl': parent.address_id_depl,
+                                        'default_localite_id': parent.localite_id,
+                                        'default_localite_id_depl': parent.localite_id_depl,
                                         'default_date': parent.date,
                                         'default_aller_type': parent.aller_type,
-                                        'default_address_id': parent.address_id,
+                                        'default_address_id': parent.address_id.id,
                                         'default_state': parent.state,
                                         'default_note': parent.note
                                         }"/>
@@ -52,6 +54,8 @@
                                     <field name="contract"/>
                                     <field name="day_id" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
+                                    <field name="localite_id" invisible="1"/>
+                                    <field name="localite_id_depl" invisible="1" />
                                     <field name="state"/>
                                     <field name="note" invisible="1"/>
                                     <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>

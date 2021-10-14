@@ -50,7 +50,7 @@
     <record model="ir.actions.act_window" id="action_aller">
         <field name="name">Allers</field>
         <field name="res_model">locasix.aller</field>
-        <field name="view_mode">calendar,tree,form,map</field>
+        <field name="view_mode">calendar,tree,form</field>
         <field name="view_id" ref="locasix.locasix_aller_calendar"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
         <field name="domain">[('aller_type', '=', 'out')]</field>
@@ -59,7 +59,7 @@
     <record model="ir.actions.act_window" id="action_retour">
         <field name="name">Retours</field>
         <field name="res_model">locasix.aller</field>
-        <field name="view_mode">calendar,tree,form,map</field>
+        <field name="view_mode">calendar,tree,form</field>
         <field name="view_id" ref="locasix.locasix_aller_calendar"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
         <field name="domain">[('aller_type', '=', 'in')]</field>
@@ -127,8 +127,9 @@
                             <field name="day_id" readonly="1"/>
                             <field name="date"/>
                             <field name="address_id"/>
+                            <field name="localite_id"/>
                             <field name="is_depl" readonly="1"/>
-                            <field name="address_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}" />
+                            <field name="localite_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}" />
                             <field name="city"/>
                             <field name="contract"/>
                         </group>
