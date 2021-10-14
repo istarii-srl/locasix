@@ -480,10 +480,20 @@ class Order(models.Model):
     def place_products(self, sections):
         _logger.info("place products")
         for order in self:
+            address_transport_line = False
             for line in order.order_line:
                 if not line.is_section and line.section_id:
-                    line.sequence = sections[line.section_id.id]["next_available"]
-                    sections[line.section_id.id]["next_available"] += 1
+                    if line.product_id and line.product_id.is_transport_address_product:
+                        _logger.info("address transport")
+                        address_transport_line = line
+                    else:
+                        line.sequence = sections[line.section_id.id]["next_available"]
+                        sections[line.section_id.id]["next_available"] += 1
+            if address_transport_line:
+                _logger.info("address transport correction")
+                address_transport_line.sequence = sections[address_transport_line.section_id.id]["next_available"]
+                sections[address_transport_line.section_id.id]["next_available"] += 1
+
     
     def remove_doublons(self, sections):
         _logger.info("remove doublons")
