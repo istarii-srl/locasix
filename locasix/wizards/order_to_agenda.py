@@ -7,6 +7,7 @@ class OrderToAgenda(models.TransientModel):
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order", required=True)
     line_ids = fields.Many2many(string="Lignes", comodel_name="sale.order.line")
+    localite_id = fields.Many2one(string="Ville", comodel_name="locasix.municipality")
 
     aller_date = fields.Date(string="Date de l'aller", default=lambda self: self._get_default_date(), required=True)
 
@@ -26,12 +27,12 @@ class OrderToAgenda(models.TransientModel):
                     if not newday_id:
                         newday_id = self.env["locasix.day"].create({"day": wizard.aller_date})
                 
-                    new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.aller_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "out"), ("localite_id", "=", wizard.order_id.city.id), ('is_depl', '=', False)], limit=1)
+                    new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.aller_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "out"), ("localite_id", "=", wizard.localite_id.id), ('is_depl', '=', False)], limit=1)
                     if not new_agg_id:
                         new_agg_id = self.env["locasix.agg.aller"].create({
                             "day_id": newday_id.id,
                             "aller_type": "out",
-                            "localite_id": wizard.order_id.city.id,
+                            "localite_id": wizard.localite_id.id,
                             "date": wizard.aller_date,
                             "address_id": wizard.order_id.partner_id.id,
                         })
@@ -40,7 +41,7 @@ class OrderToAgenda(models.TransientModel):
                         "day_id": newday_id.id,
                         "date": new_agg_id.date,
                         "agg_id": new_agg_id.id,
-                        "localite_id": wizard.order_id.city.id,
+                        "localite_id": wizard.localite_id.id,
                         "aller_type": "out",
                         "order_id": wizard.order_id.id,
                         "address_id": new_agg_id.address_id.id,
@@ -51,11 +52,11 @@ class OrderToAgenda(models.TransientModel):
                         if not newday_id:
                             newday_id = self.env["locasix.day"].create({"day": wizard.retour_date})
                     
-                        new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.retour_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "in"), ("is_depl", "=", False), ("localite_id", "=", wizard.order_id.city.id)], limit=1)
+                        new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.retour_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "in"), ("is_depl", "=", False), ("localite_id", "=", wizard.localite_id.id)], limit=1)
                         if not new_agg_id:
                             new_agg_id = self.env["locasix.agg.aller"].create({
                                 "day_id": newday_id.id,
-                                "localite_id": wizard.order_id.city.id,
+                                "localite_id": wizard.localite_id.id,
                                 "date": wizard.retour_date,
                                 "aller_type": "in",
                                 "address_id": wizard.order_id.partner_id.id,
@@ -64,7 +65,7 @@ class OrderToAgenda(models.TransientModel):
                         self.env["locasix.aller"].create({
                             "day_id": newday_id.id,
                             "date": new_agg_id.date,
-                            "localite_id": wizard.order_id.city.id,
+                            "localite_id": wizard.localite_id.id,
                             "aller_type": "in",
                             "agg_id": new_agg_id.id,
                             "order_id": wizard.order_id.id,

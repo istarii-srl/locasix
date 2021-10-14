@@ -632,6 +632,7 @@ class Order(models.Model):
             'context': {
                 "default_order_id": order.id,
                 "default_line_ids": line_ids.ids,
+                "default_localite_id": order.city.id,
                 },
             }    
     
