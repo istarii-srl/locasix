@@ -63,6 +63,9 @@
                 <page name="confirm" string="Confirmation de la commande">
                     <field name="sale_confirm"/>
                 </page>
+                <page name="display_fix" string="Ajustement d'affichage">
+                    <field name="space_between_sections"/>
+                </page>
             </page>
             <xpath expr="//tree/field[@name='name']" position="after">
                 <field name="has_ref_to_condi" optional="show"/>

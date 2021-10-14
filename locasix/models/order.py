@@ -38,6 +38,8 @@ class Order(models.Model):
 
     client_ref = fields.Char(string="Votre référence")
 
+    space_between_sections = fields.Selection(string="Espace entre les sections", selection=[('small', 'Petit'), ('medium', 'Moyen'), ('large', 'Grand')], default="medium");
+
 
     def _get_sale_confirm(self):
         template = self.env["locasix.template.html"].search([('name', '=', 'Template confirmation de commande')], limit=1)
