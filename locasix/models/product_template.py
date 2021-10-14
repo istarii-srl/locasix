@@ -29,6 +29,8 @@ class ProductTemplate(models.Model):
 
     is_temporary_product = fields.Boolean(string="Temporaire", default=True)
     is_assemblage_product = fields.Boolean(string="Assemblage", default=True)
+    
+    is_transport_address_product = fields.Boolean(default=False)
 
 
     technical_ids = fields.One2many(comodel_name="locasix.product.technical", inverse_name="product_tmpl_id")

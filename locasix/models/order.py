@@ -46,6 +46,23 @@ class Order(models.Model):
     space_between_sections = fields.Selection(string="Espace entre les sections", selection=[('small', 'Petit'), ('medium', 'Moyen'), ('large', 'Grand')], default="medium");
 
 
+    def get_transport_address(self):
+        for order in self:
+            text = ""
+            if order.rue:
+                text += order.rue
+            if order.street_number:
+                text += " "+order.street_number + ", "
+            if order.city:
+                text += order.city.postal_code+ " "+order.city.city+", "
+                if order.city.postal_code == "FR":
+                    text += "France"
+                else:
+                    text += "Belgique"
+            if order.street_note:
+                text+= " : "+order.street_note
+            return text
+
     def _get_sale_confirm(self):
         template = self.env["locasix.template.html"].search([('name', '=', 'Template confirmation de commande')], limit=1)
         if template:
@@ -377,6 +394,23 @@ class Order(models.Model):
                     'product_id': tr.product_variant_id.id,
                 #    'section_id': line.section_id.id,
                     'from_compute': True,
+                })
+            transport_address_product_id = self.env["product.template"].search([("is_transport_address_product", "=", True)], limit=1)
+            if not transport_address_product_id:
+                transport_address_product_id = self.env["product.template"].create({
+                    "name": "Adresse de transport",
+                    "categ_id": categ_id.id,
+                    "is_transport_address_product": True,
+                    "list_price": 0.0
+                })
+            transport_address_in_order = self.env["sale.order.line"].search([("product_id", "=", transport_address_product_id.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
+            if not transport_address_in_order:
+                self.env["sale.order.line"].create({
+                    'order_id': self.id,
+                    'product_id': transport_address_in_order.product_variant_id.id,
+                    'name': self.get_transport_address(),
+                    #'section_id': line.section_id.id,
+                    'from_compute': True, 
                 })
     
         
