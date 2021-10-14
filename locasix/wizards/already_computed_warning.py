@@ -10,5 +10,5 @@ class AlreadyComputedWarning(models.Model):
 
     def action_compute(self):
         for wizard in self:
-            wizard.order_id.action_remove_computed_lines
+            wizard.order_id.action_remove_computed_lines()
             wizard.order_id.line_computations()
