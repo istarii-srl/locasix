@@ -460,7 +460,7 @@
                 <div t-if="doc.offer_type == 'weekend'" style="height: 750px;"><p style="font-size:10px;" t-field="doc.added_terms_week_end"/></div>
                 <div t-if="doc.offer_type == 'sale'" style="height: 750px;"><p style="font-size:10px;" t-field="doc.added_terms_sale"/></div>
                 <div style="height: 200px; width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
-                    <p style="font-size:10px;" t-field="doc.sale_confirm"/>
+                    <span style="font-size:10px;" t-field="doc.sale_confirm"/>
                 </div>
             </div>
         </div>
