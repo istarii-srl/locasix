@@ -43,7 +43,7 @@
                                         'default_localite_id_depl': parent.localite_id_depl,
                                         'default_date': parent.date,
                                         'default_aller_type': parent.aller_type,
-                                        'default_address_id': parent.address_id.id,
+                                        'default_address_id': parent.address_id,
                                         'default_state': parent.state,
                                         'default_note': parent.note
                                         }"/>
