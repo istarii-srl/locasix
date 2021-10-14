@@ -13,4 +13,7 @@ class Municipality(models.Model):
     @api.depends("postal_code", 'city')
     def _compute_name(self):
         for municipality in self:
-            municipality.name = municipality.postal_code + "-"+municipality.city
+            if municipality.postal_code and municipality.city:
+                municipality.name = municipality.postal_code + "-"+municipality.city
+            else:
+                municipality.name = "En cours de création"
