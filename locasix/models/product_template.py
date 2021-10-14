@@ -39,6 +39,13 @@ class ProductTemplate(models.Model):
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
     insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)
 
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        self.ensure_one()
+        if default is None:
+            default = {}
+        default["is_temporary_product"] = True
+        return super(ProductTemplate, self).copy(default=default)
 
 
     def launch_import(self):
@@ -84,6 +91,6 @@ class ProductCron(models.Model):
 
     def run_cron(self):
         _logger.info("Cron product")
-        products = self.env["product.template"].search([("active", "=", True), ("is_temporary", "=", True)])
+        products = self.env["product.template"].search([("active", "=", True), ("is_temporary_product", "=", True)])
         for product in products:
             product.active = False
