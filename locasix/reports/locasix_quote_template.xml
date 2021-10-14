@@ -95,9 +95,21 @@
             </div>
             <t t-set="section_lines" t-value="doc.get_sections()"/>
             <t t-foreach="section_lines" t-as="section_line">
-                <div style="font-size: 15px; padding-top: 50px; padding-bottom: 20px;">
-                    <span t-field="section_line.name"/>
-                </div>
+                <t t-if="doc.space_between_section == 'small'">
+                    <div style="font-size: 15px; padding-top: 20px; padding-bottom: 10px;">
+                        <span t-field="section_line.name"/>
+                    </div>
+                </t>
+                <t t-if="doc.space_between_section == 'medium'">
+                    <div style="font-size: 15px; padding-top: 50px; padding-bottom: 20px;">
+                        <span t-field="section_line.name"/>
+                    </div>
+                </t>
+                <t t-if="doc.space_between_section == 'large'">
+                    <div style="font-size: 15px; padding-top: 80px; padding-bottom: 30px;">
+                        <span t-field="section_line.name"/>
+                    </div>
+                </t>
                 <t t-if="section_line.get_section_type() == 'prix_fixe'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix'"/>

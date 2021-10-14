@@ -53,6 +53,9 @@
                     <field name="added_terms" attrs="{'invisible': [('weekend_offer', '=', True)]}"/>
                     <field name="added_terms_week_end" attrs="{'invisible': [('weekend_offer', '=', False)]}"/>
                 </page>
+                <page name="display_fix" string="Ajustement d'affichage">
+                    <field name="space_between_sections"/>
+                </page>
             </page>
             <xpath expr="//tree/field[@name='name']" position="after">
                 <field name="has_ref_to_condi" optional="show"/>
