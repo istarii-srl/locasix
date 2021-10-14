@@ -60,6 +60,9 @@
                     <field name="added_terms_week_end" attrs="{'invisible': [('offer_type', '!=', 'weekend')]}"/>
                     <field name="added_terms_sale" attrs="{'invisible': [('offer_type', '!=', 'sale')]}"/>
                 </page>
+                <page name="confirm" string="Confirmation de la commande">
+                    <field name="sale_confirm"/>
+                </page>
             </page>
             <xpath expr="//tree/field[@name='name']" position="after">
                 <field name="has_ref_to_condi" optional="show"/>

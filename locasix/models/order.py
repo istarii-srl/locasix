@@ -14,6 +14,7 @@ class Order(models.Model):
     added_terms = fields.Html(string="Conditions additionnelles", default=lambda self: self._get_added_terms())
     added_terms_week_end = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_weekend())
     added_terms_sale = fields.Html(string="Conditions additionnelles de vente", default=lambda self: self._get_added_terms_sale())
+    sale_confirm = fields.Html(string="Confirmation de la commande", default=lambda self: self._get_sale_confirm())
     
     offer_type = fields.Selection(string="Type d'offre", selection=[("classic", "Location"), ("weekend", "Weekend"), ("sale", "Vente")], default="classic", required=True)
     usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")], default="8", required=True)
@@ -37,6 +38,13 @@ class Order(models.Model):
 
     client_ref = fields.Char(string="Votre référence")
 
+
+    def _get_sale_confirm(self):
+        template = self.env["locasix.template.html"].search([('name', '=', 'Template confirmation de commande')], limit=1)
+        if template:
+            return template.template
+        else:
+            return "<p><b><font style='font-size: 10px;'>Confirmation de la commande :</font></b> <br></p><p><br></p><p><font style='font-size: 10px;'>Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention</font></p><p><font style='font-size: 10px;'>&nbsp;\"Bon pour accord\" + le cachet de l'entreprise.</font><br></p>"
 
     def _get_added_terms_sale(self):
         template = self.env["locasix.template.html"].search([('name', '=', 'Template conditions additionnelles de vente')], limit=1)
