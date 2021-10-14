@@ -1,0 +1,45 @@
+<odoo>
+
+    <record model="ir.actions.act_window" id="action_city">
+        <field name="name">Villes</field>
+        <field name="res_model">locasix.municipality</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="locasix_city_tree" model="ir.ui.view">
+        <field name="name">locasix.city.tree</field>
+        <field name="model">locasix.city</field>
+        <field name="arch" type="xml">
+            <tree string="Villes">
+                <field name="name" invisible="1"/>
+                <field name="postal_code"/>
+                <field name="city"/>
+                <field name="is_sub_municipality"/>
+                <field name="municipality"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="locasix_city_form">
+        <field name="name">locasix.city.form</field>
+        <field name="model">locasix.municipality</field>
+        <field name="arch" type="xml">
+            <form string="Villes">
+                <sheet >
+                    <group>
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <field name="postal_code"/>
+                            <field name="city"/>
+                        </group>
+                        <group>
+                            <field name="is_sub_municipality"/>
+                            <field name="municipality"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

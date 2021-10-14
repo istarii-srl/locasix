@@ -48,13 +48,13 @@
                                     </control>
                                     <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
-                                    <field name="product_unique_ref"/>
+                                    <field name="product_unique_ref" options="{'no_quick_create': True}"/>
                                     <field name="contract"/>
                                     <field name="day_id" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
                                     <field name="state"/>
                                     <field name="note" invisible="1"/>
-                                    <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_quick_create': True}"/>
                                 </tree>
                             </field>
 
