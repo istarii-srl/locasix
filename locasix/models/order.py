@@ -236,18 +236,17 @@ class Order(models.Model):
                 order.line_computations()
             
 
-    def _action_confirm(self):
+    def action_confirm(self):
         _logger.info("action confirm")
         for order in self:
             if order.has_transport_prices():
                 _logger.info("has transport price")
-                super(Order, self)._action_confirm()
                 self.done_order = True
                 for line in self.order_line:
                     if line.temporary_product and line.product_id:
                         line.product_id.active = False
                         line.product_id.product_tmpl_id.active = False
-                return True
+                return super(Order, self).action_confirm()
             else:
                 _logger.info("warning")
                 view = self.env.ref('locasix.view_warning_transport')
