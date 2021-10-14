@@ -25,12 +25,18 @@
             </button>
 
             <field name="partner_id" position="after">
-                <field name="weekend_offer"/>
+                <field name="offer_type"/>
                 <field name="show_discount2"/>
                 <field name="show_discount3"/>
                 <field name="show_discount6"/>
                 <field name="usage_rate_display"/>
                 <field name="has_computed" invisible="1"/>
+            </field>
+            <field name="validity_date" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="payment_term_id" position="attributes">
+                <attribute name="invisible">1</attribute>
             </field>
             <group name="note_group" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -50,8 +56,12 @@
                     <field name="front_page_body"/>
                 </page>
                 <page name="terms" string="Conditions additionnelles">
-                    <field name="added_terms" attrs="{'invisible': [('weekend_offer', '=', True)]}"/>
-                    <field name="added_terms_week_end" attrs="{'invisible': [('weekend_offer', '=', False)]}"/>
+                    <field name="added_terms" attrs="{'invisible': [('offer_type', '!=', 'classic')]}"/>
+                    <field name="added_terms_week_end" attrs="{'invisible': [('offer_type', '!=', 'weekend')]}"/>
+                    <field name="added_terms_sale" attrs="{'invisible': [('offer_type', '!=', 'sale')]}"/>
+                </page>
+                <page name="confirm" string="Confirmation de la commande">
+                    <field name="sale_confirm"/>
                 </page>
                 <page name="display_fix" string="Ajustement d'affichage">
                     <field name="space_between_sections"/>
@@ -71,17 +81,17 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="after">
-                <field name="weekend_offer" invisible = "1"/>
+                <field name="offer_type" invisible = "1"/>
                 <field name="is_multi" invisible = "1"/>
                 <field name="months_2_discount_rate" invisible="1"/>
                 <field name="months_3_discount_rate" invisible="1" />
                 <field name="months_6_discount_rate" invisible="1" />
-                <field name="day_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
-                <field name="week_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
-                <field name="month_price" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
-                <field name="months_2_discount" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
-                <field name="months_3_discount" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
-                <field name="months_6_discount" optional="hide" attrs="{'invisible': [('weekend_offer', '=', True)]}" />
+                <field name="day_price" optional="hide" attrs="{'invisible': [('offer_type', '=', 'weekend')]}" />
+                <field name="week_price" optional="hide" attrs="{'invisible': [('offer_type', '=', 'weekend')]}" />
+                <field name="month_price" optional="hide" attrs="{'invisible': [('offer_type', '=', 'weekend')]}" />
+                <field name="months_2_discount" optional="hide" attrs="{'invisible': [('offer_type', '=', 'weekend')]}" />
+                <field name="months_3_discount" optional="hide" attrs="{'invisible': [('offer_type', '=', 'weekend')]}" />
+                <field name="months_6_discount" optional="hide" attrs="{'invisible': [('offer_type', '=', 'weekend')]}" />
             </xpath>
         </field>
     </record>

@@ -26,6 +26,25 @@ class Day(models.Model):
     ]
     # UNIQUE CONSTRAINTS
 
+    def action_add_depl(self):
+        view = self.env.ref('locasix.locasix_agg_aller_form')
+        return {
+        'name': 'Allers',
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'locasix.agg.aller',
+        'views': [(view.id, 'form')],
+        'view_id': view.id,
+        'target': 'new',
+        'context': {
+            'default_is_depl': True,
+            'default_aller_type': 'out',
+            'default_day_id': self.id,
+            'default_date': self.day,
+            },
+        }     
+
     def action_add_aller(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')
         return {
@@ -81,13 +100,25 @@ class Day(models.Model):
                     'context': {'active_id': day_id.id},
                 }            
 
+    def is_day_empty(self, day):
+        if (day.aller_ids and len(day.aller_ids) > 0) or (day.retour_ids and len(day.retour_ids) > 0):
+            if day.aller_ids:
+                for aller in day.aller_ids:
+                    if aller.active:
+                        return False
+            if day.retour_ids:
+                for aller in day.retour_ids:
+                    if aller.active:
+                        return False
+        return True
+
     def action_previous(self):
         for day in self:
             min_date = day.day - datetime.timedelta(days=40)
             previous_days = self.env["locasix.day"].search([("day", ">", min_date),("day", "<", day.day)])
             previous_days_sorted = sorted(previous_days, key= lambda x: x.day, reverse=True)
             for new_day in previous_days_sorted:
-                if (new_day.aller_ids and len(new_day.aller_ids) > 0) or (new_day.retour_ids and len(new_day.retour_ids) > 0):
+                if not day.is_day_empty(new_day):
                     view = self.env.ref("locasix.locasix_day_form")
                     return {
                         'name': 'Journée',
@@ -122,7 +153,7 @@ class Day(models.Model):
             next_days = self.env["locasix.day"].search([("day", "<", max_date),("day", ">", day.day)])
             next_days_sorted = sorted(next_days, key= lambda x: x.day)
             for new_day in next_days_sorted:
-                if (new_day.aller_ids and len(new_day.aller_ids) > 0) or (new_day.retour_ids and len(new_day.retour_ids) > 0):
+                if not day.is_day_empty(new_day):
                     view = self.env.ref("locasix.locasix_day_form")
                     return {
                         'name': 'Journée',

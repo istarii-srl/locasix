@@ -13,10 +13,11 @@ class Order(models.Model):
 
     added_terms = fields.Html(string="Conditions additionnelles", default=lambda self: self._get_added_terms())
     added_terms_week_end = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_weekend())
+    added_terms_sale = fields.Html(string="Conditions additionnelles de vente", default=lambda self: self._get_added_terms_sale())
+    sale_confirm = fields.Html(string="Confirmation de la commande", default=lambda self: self._get_sale_confirm())
     
-    weekend_offer = fields.Boolean(string="Offre week-end", default=False)
+    offer_type = fields.Selection(string="Type d'offre", selection=[("classic", "Location"), ("weekend", "Weekend"), ("sale", "Vente")], default="classic", required=True)
     usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")], default="8", required=True)
-
     show_discount2 = fields.Boolean(string="Afficher remise 2 mois", default=False)
     show_discount3 = fields.Boolean(string="Afficher remise 3 mois", default=False)
     show_discount6 = fields.Boolean(string="Afficher remise 6 mois", default=False)
@@ -39,6 +40,20 @@ class Order(models.Model):
 
     space_between_sections = fields.Selection(string="Espace entre les sections", selection=[('small', 'Petit'), ('medium', 'Moyen'), ('large', 'Grand')], default="medium");
 
+
+    def _get_sale_confirm(self):
+        template = self.env["locasix.template.html"].search([('name', '=', 'Template confirmation de commande')], limit=1)
+        if template:
+            return template.template
+        else:
+            return "<p><b><font style='font-size: 10px;'>Confirmation de la commande :</font></b> <br></p><p><br></p><p><font style='font-size: 10px;'>Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention</font></p><p><font style='font-size: 10px;'>&nbsp;\"Bon pour accord\" + le cachet de l'entreprise.</font><br></p>"
+
+    def _get_added_terms_sale(self):
+        template = self.env["locasix.template.html"].search([('name', '=', 'Template conditions additionnelles de vente')], limit=1)
+        if template:
+            return template.template
+        else:
+            return "<span><b style='font-size:11px;'>Conditions de location</b></span><ul><li style='margin:0px;'><span>Prix hors TVA 21%.</span></li><li style='margin:0px;'><span>Facturation minimale de 28 jours.</span></li><li style='margin:0px;'><span>Si annulation de la commande dans les 48H avant la date de livraison, des frais de dossier de 50,00€ par pièce vous seront facturés.</span></li><li style='margin:0px;'><span>Si demande de retour impératif à une date précise, les frais de transport seront majorés de 30%.</span></li><li style='margin:0px;'><span>Une caution peut vous être demandée avant la livraison.</span></li><li style='margin:0px;'><span><u>Si location de groupes électrogènes et/ou mâts d'éclairage :</u></span><ul><li style='margin:0px;'><span>Entretien journalier : carburant, niveau d'huile, niveau d'eau ... à votre charge.</span></li><li style='margin:0px;'><span>Entretien périodique comprenant filtres, huile ... à notre charge.</span></li><li style='margin:0px;'><span>Service de dépannage assuré uniquement du lundi au vendredi de 7h à 16h.</span></li></ul></li><li style='margin:0px;'><span>Délai : à convenir et suivant disponibilité.</span></li><li style='margin:0px;'><span>Validité de l'offre : 30 jours.</span></li><li style='margin:0px;'><span>Tous raccordements électriques et raccordements à l'alimentation en eau sont à votre charge.</span></li><li style='margin:0px;'><span>Voir conditions détaillées en dernière page.<br></span></li></ul><span><br></span><span><b style='font-size:11px;'><br/>Transport<br/></b></span><span>Transport et déchargement de l'ensemble repris ci-dessus sur un terrain dur, horizontal et accessible par nos camions-grues.<br/></span><span>Attention, selon le type de matériel livré, nos camions peuvent avoir une longueur entre 11 et 21m, une largeur entre 2,6 et 3m, une hauteur entre 4 et 11m, un poids entre 17 et 26T.<br/></span><span>Si demande de retour impératif à une date précise, les frais de transport seront majorés de 30%.</span><span><br></span><span><b style='font-size:11px;'><br/>Assurance contre bris de machine<br/></b></span><span>Y compris vol, incendie, dégâts des eaux (8% du loyer) :<br/></span><span>Une franchise de 350,00€ par sinistre éventuel, sauf en cas de vol, la franchise sera de 20% de la valeur du bien. Sauf en cas de faute grave, dol ou malveillance. La Compagnie renonce au recours qu'elle serait en droit d'exercer contre le locataire.<br/></span><span>Pour le mobilier des modules habitables, une franchise de 500,00€ est d'application.<br/></span><span>Veuillez nous confirmer la souscription à l'option assurance lors de votre commande.</span><span><br></span><span><b style='font-size:11px;'><br/>Contribution environnementale<br/></b></span><span>Par respect pour l'environnement et dans le cadre de la législation en vigueur, Locasix ne cesse de faire des efforts. Traitement et enlèvement des déchets utilisés au cours du projet (filtres, pièces de rechange, lubrifiants, mazout pollué, réfrigérant, etc. Locasix demande au locataire une contribution environnementale forfaitaire de 2% du loyer total de la (des) machine(s).</span><span><br></span><span><b style='font-size:11px;'><br/>Nettoyage<br/></b></span><span>Texte à rédiger. Inclus dans les limites du raisonnable. On se réserve le droit de facturer. Un forfait de nettoyage à partir de 150€ HTVA/pièce vous sera facturé au retour si l'état de propreté et d'hygiène le requiert.</span>"        
 
     def _get_added_terms(self):
         template = self.env["locasix.template.html"].search([('name', '=', 'Template conditions additionnelles')], limit=1)
@@ -67,15 +82,22 @@ class Order(models.Model):
     def create(self, vals):
         obj = super(Order, self).create(vals)
         obj.adapt_front_page()
+        obj.name = obj.name
         return obj
 
     def write(self, vals):
         _logger.info("write template")
         _logger.info(vals)
+        if "name" in vals:
+            user_names = self.env.user.name.split(" ")
+            initials = ""
+            for name in user_names:
+                initials = initials+name[0]
+            vals["name"] = vals["name"] + "-"+ initials
         if vals.get('adapt_front_page', False):
             vals.pop('adapt_front_page', 1)
             res = super(Order, self).write(vals)
-        elif "weekend_offer" in vals:
+        elif "offer_type" in vals:
             res = super(Order, self).write(vals)
             _logger.info("order trigger")
             self.enforce_cuve()
@@ -86,6 +108,9 @@ class Order(models.Model):
             self.adapt_front_page()
             self.enforce_cuve()
             self.enforce_computations()
+        
+
+
             
         return res
 
@@ -107,7 +132,7 @@ class Order(models.Model):
 
     def update_prices(self):
         for order in self:
-            if order.weekend_offer:
+            if order.offer_type == "weekend":
                 products_lst_price = {}
                 for line in order.order_line:
                     if line.product_id:
@@ -190,8 +215,10 @@ class Order(models.Model):
             
 
     def _action_confirm(self):
+        _logger.info("action confirm")
         for order in self:
             if order.has_transport_prices():
+                _logger.info("has transport price")
                 super(Order, self)._action_confirm()
                 self.done_order = True
                 for line in self.order_line:
@@ -282,12 +309,13 @@ class Order(models.Model):
             order.has_computed = True
             order.is_computing = False
     
-    @api.onchange('weekend_offer')
+    @api.onchange('offer_type')
     def weekend_offer_changed(self):
         _logger.info("weekend offer changed")
         for order in self:
-            for line in order.order_line:
-                line.update_line_values(pricing=True)
+            if order.offer_type == "weekend":
+                for line in order.order_line:
+                    line.update_line_values(pricing=True)
             #order.enforce_computations()
 
     def mark_manual_sections(self):
@@ -307,7 +335,7 @@ class Order(models.Model):
                     "name": "Transport",
                     "show_section_order": True,
                 })
-            if order.weekend_offer:
+            if order.offer_type == "weekend":
                 tar = self.env["product.template"].search([("default_code", "=", "TAR")], limit=1)
                 if not tar:
                     tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour", "categ_id": categ_id.id, "list_price": 0.0})
@@ -443,20 +471,13 @@ class Order(models.Model):
                     _logger.info(links)
                     for link in links:
                         _logger.info("links")
-                        #no_doublon = True
-                        #lines = self.retrieve_lines_from_section(line.section_id)
-                        #for section_line in lines:
-                        #    if section_line.product_id.product_tmpl_id.id == link.product_linked_id.id:
-                        #        no_doublon = False
-                        #_logger.info("doublon status")
-                        #_logger.info(no_doublon)
-                        #if no_doublon:
-                        new_line = self.env["sale.order.line"].create({
-                            'order_id': line.order_id.id,
-                            'product_id': link.product_linked_id.product_variant_id.id,
-                        #    'section_id': line.section_id.id,
-                            'from_compute': True,
-                        })
+                        if not link.product_linked_id.is_insurance or not order.offer_type == "weekend":
+                            new_line = self.env["sale.order.line"].create({
+                                'order_id': line.order_id.id,
+                                'product_id': link.product_linked_id.product_variant_id.id,
+                            #    'section_id': line.section_id.id,
+                                'from_compute': True,
+                            })
                             #'sequence': sections[line.section_id.id]["next_available"]})
                         #sections[line.section_id.id]["next_available"] += 1
                         new_line.update_line_values()

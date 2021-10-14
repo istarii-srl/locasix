@@ -21,7 +21,7 @@ class OrderLine(models.Model):
     show_discount2 = fields.Boolean(related="order_id.show_discount2")
     show_discount3 = fields.Boolean(related="order_id.show_discount3")
     show_discount6 = fields.Boolean(related="order_id.show_discount6")
-    weekend_offer = fields.Boolean(string="Est une offre de weekend", related="order_id.weekend_offer")
+    offer_type = fields.Selection(string="Type d'offre", related="order_id.offer_type")
     has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
     temporary_product = fields.Boolean(string="Temporaire", related="product_id.is_temporary_product", readonly=False, default=False)
 
@@ -44,7 +44,7 @@ class OrderLine(models.Model):
 
     def get_line_type(self):
         for line in self:
-            if line.weekend_offer:
+            if line.offer_type == "weekend":
                 return "weekend"
             elif line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates() and line.has_24_price:
                 return "prix_6_double"
@@ -198,7 +198,7 @@ class OrderLine(models.Model):
         self.update_line_values()
         return res        
 
-    @api.onchange('product_id', 'order_id', 'weekend_offer')
+    @api.onchange('product_id', 'order_id', 'offer_type')
     def product_changed(self):
         _logger.info("product changed")
         self.update_line_values()
@@ -223,7 +223,7 @@ class OrderLine(models.Model):
                 self.recompute_insurance()
 
 
-        if (vals.get('product_id', False) or 'weekend_offer' in vals) and not vals.get("from_update", False):
+        if (vals.get('product_id', False) or 'offer_type' in vals) and not vals.get("from_update", False):
             vals.pop("from_update", 1)
             res = super(OrderLine, self).write(vals)
             self.update_line_values(pricing=False)
@@ -307,7 +307,7 @@ class OrderLine(models.Model):
             _logger.info(product.weekend_price)
             _logger.info(product.name)
             _logger.info(product.has_multi_price)
-            _logger.info(self.weekend_offer)
+            _logger.info(self.offer_type)
             _logger.info(product.categ_id)
             vals = {}
             if not self.category_id:
@@ -320,7 +320,7 @@ class OrderLine(models.Model):
             vals["is_multi"] = product.has_multi_price
             vals["from_update"] = True
             if pricing:
-                if self.weekend_offer and product.weekend_price and product.weekend_price != 0.0:
+                if self.offer_type == "weekend" and product.weekend_price and product.weekend_price != 0.0:
                     _logger.info("update price for weekend")
                     if self.order_id.pricelist_id:
                         lst_price = product.lst_price

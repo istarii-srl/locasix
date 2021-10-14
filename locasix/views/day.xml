@@ -39,6 +39,7 @@
                     <button name="action_next" type="object" icon="fa-arrow-right" class="oe_highlight"/>
                     <button name="action_add_aller" type="object" string="Ajouter un aller" />
                     <button name="action_add_retour" type="object" string="Ajouter un retour"/>
+                    <button name="action_add_depl" type="object" string="Ajouter un déplacement"/>
                 </header>
 
                 <sheet >
@@ -84,7 +85,7 @@
             <search string="Allers et retours">
                 <field name="name" string="Journée" filter_domain="['|', '|', '|', '|', '|', '|', ('name', 'ilike', self), ('aller_ids.address_id.name', 'ilike', self), ('aller_ids.address_id.display_name', 'ilike', self), ('retour_ids.address_id.name', 'ilike', self), ('retour_ids.address_id.display_name', 'ilike', self), ('aller_ids.city', 'ilike', self), ('retour_ids.city', 'ilike', self)]"/>
                 <field name="name" string="Contrat" filter_domain="['|', ('aller_ids.contract', 'ilike', self), ('retour_ids.contract', 'ilike', self)]"/>
-                <field name="name" string="Référence produit" filter_domain="['|', '|', '|', '|', '|',('aller_ids.product_unique_ref.name', 'ilike', self), ('retour_ids.product_unique_ref.default_code', 'ilike', self), ('aller_ids.product_id.default_code', 'ilike', self), ('retour_ids.product_id.name', 'ilike', self), ('aller_ids.product_id.name', 'ilike', self), ('retour_ids.product_id.name', 'ilike', self)]"/>
+                <field name="name" string="Référence produit" filter_domain="['|', '|', '|', '|', '|',('aller_ids.product_unique_ref.name', 'ilike', self), ('retour_ids.product_unique_ref.name', 'ilike', self), ('aller_ids.product_id.default_code', 'ilike', self), ('retour_ids.product_id.default_code', 'ilike', self), ('aller_ids.product_id.name', 'ilike', self), ('retour_ids.product_id.name', 'ilike', self)]"/>
                 <separator/>
                 <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
             </search>

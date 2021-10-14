@@ -9,7 +9,6 @@
                 <field name="contract" string="Contrat" filter_domain="['|', ('contract', 'ilike', self), ('contract', 'ilike', self)]"/>
                 <field name="product_id" string="Référence produit" filter_domain="['|', '|', ('product_unique_ref.name', 'ilike', self), ('product_id.default_code', 'ilike', self), ('product_id.name', 'ilike', self)]"/>
                 <filter string="Aujourd'hui" name="today" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
-
                 <separator/>
                 <filter string="Date" name="today" date="date"/>
                 <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
@@ -24,6 +23,7 @@
         <field name="arch" type="xml">
             <map res_partner="address_id" hide_address="False">
                 <field name="contract" string="Référence"/>
+                <field name="aller_type" string="Type"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
             </map>
@@ -41,6 +41,8 @@
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
                 <field name="state"/>
+                <field name="remarque_ids"/>
+                <field name="note"/>
             </calendar>
         </field>
     </record>
@@ -101,6 +103,7 @@
                 <field name="aller_type" invisible="1"/>
                 <field name="product_default_code"/>
                 <field name="product_unique_ref"/>
+                <field name="full_name"/>
                 <field name="city"/>
                 <field name="contract"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
@@ -124,6 +127,8 @@
                             <field name="day_id" readonly="1"/>
                             <field name="date"/>
                             <field name="address_id"/>
+                            <field name="is_depl" readonly="1"/>
+                            <field name="address_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}" />
                             <field name="city"/>
                             <field name="contract"/>
                         </group>
