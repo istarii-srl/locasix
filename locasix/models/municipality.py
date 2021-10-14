@@ -1,7 +1,7 @@
 from odoo import fields , api, models
 
 class Municipality(models.Model):
-    _name = "locasix.municipaly"
+    _name = "locasix.municipality"
     _description = "Une localité"
 
     name = fields.Char(string="Nom", compute="_compute_name", store=True)

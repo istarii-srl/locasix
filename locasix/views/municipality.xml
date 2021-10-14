@@ -8,7 +8,7 @@
 
     <record id="locasix_city_tree" model="ir.ui.view">
         <field name="name">locasix.city.tree</field>
-        <field name="model">locasix.city</field>
+        <field name="model">locasix.municipality</field>
         <field name="arch" type="xml">
             <tree string="Villes">
                 <field name="name" invisible="1"/>
