@@ -16,7 +16,7 @@
                             <field name="date"/>
                             <field name="address_id"/>
                             <field name="localite_id" required="1"/>
-                            <field name="localite_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}"/>
+                            <field name="localite_id_depl" attrs="{'invisible': [('is_depl', '=', False)], 'required': [('is_depl', '=', True)]}"/>
                             <field name="city"/>
                             <field name="state"/>
                         </group>
