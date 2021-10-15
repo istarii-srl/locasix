@@ -23,13 +23,13 @@ class OrderToAgenda(models.TransientModel):
             wizard.order_id.exported_to_agenda = True
             for line in wizard.line_ids:
                 if line.product_id:
-                    newday_id = self.env["locasix.day"].search([("day", "=", wizard.aller_date)], limit=1)
+                    newday_id = self.env["locasix.day"].sudo().search([("day", "=", wizard.aller_date)], limit=1)
                     if not newday_id:
-                        newday_id = self.env["locasix.day"].create({"day": wizard.aller_date})
+                        newday_id = self.env["locasix.day"].sudo().create({"day": wizard.aller_date})
                 
-                    new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.aller_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "out"), ("localite_id", "=", wizard.localite_id.id), ('is_depl', '=', False)], limit=1)
+                    new_agg_id = self.env["locasix.agg.aller"].sudo().search([("date", "=", wizard.aller_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "out"), ("localite_id", "=", wizard.localite_id.id), ('is_depl', '=', False)], limit=1)
                     if not new_agg_id:
-                        new_agg_id = self.env["locasix.agg.aller"].create({
+                        new_agg_id = self.env["locasix.agg.aller"].sudo().create({
                             "day_id": newday_id.id,
                             "aller_type": "out",
                             "localite_id": wizard.localite_id.id,
@@ -37,7 +37,7 @@ class OrderToAgenda(models.TransientModel):
                             "address_id": wizard.order_id.partner_id.id,
                         })
 
-                    self.env["locasix.aller"].create({
+                    self.env["locasix.aller"].sudo().create({
                         "day_id": newday_id.id,
                         "date": new_agg_id.date,
                         "agg_id": new_agg_id.id,
@@ -48,13 +48,13 @@ class OrderToAgenda(models.TransientModel):
                         "product_id": line.product_id.id,
                     })
                     if wizard.should_create_retour:
-                        newday_id = self.env["locasix.day"].search([("day", "=", wizard.retour_date)], limit=1)
+                        newday_id = self.env["locasix.day"].sudo().search([("day", "=", wizard.retour_date)], limit=1)
                         if not newday_id:
-                            newday_id = self.env["locasix.day"].create({"day": wizard.retour_date})
+                            newday_id = self.env["locasix.day"].sudo().create({"day": wizard.retour_date})
                     
-                        new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", wizard.retour_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "in"), ("is_depl", "=", False), ("localite_id", "=", wizard.localite_id.id)], limit=1)
+                        new_agg_id = self.env["locasix.agg.aller"].sudo().search([("date", "=", wizard.retour_date), ("address_id", "=", wizard.order_id.partner_id.id), ("day_id", "=", newday_id.id), ("aller_type", "=", "in"), ("is_depl", "=", False), ("localite_id", "=", wizard.localite_id.id)], limit=1)
                         if not new_agg_id:
-                            new_agg_id = self.env["locasix.agg.aller"].create({
+                            new_agg_id = self.env["locasix.agg.aller"].sudo().create({
                                 "day_id": newday_id.id,
                                 "localite_id": wizard.localite_id.id,
                                 "date": wizard.retour_date,
@@ -62,7 +62,7 @@ class OrderToAgenda(models.TransientModel):
                                 "address_id": wizard.order_id.partner_id.id,
                             })
 
-                        self.env["locasix.aller"].create({
+                        self.env["locasix.aller"].sudo().create({
                             "day_id": newday_id.id,
                             "date": new_agg_id.date,
                             "localite_id": wizard.localite_id.id,
