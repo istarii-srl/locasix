@@ -14,7 +14,8 @@ class AggAller(models.Model):
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
-    address_id_depl = fields.Many2one(comodel_name="res.partner", string="Contact arrivé déplacement")
+    localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
+    localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
 
     city = fields.Char(string="Ville", compute="_compute_city", store=True)
@@ -31,22 +32,27 @@ class AggAller(models.Model):
     def _get_default_date(self):
         return datetime.date.today()
 
-    @api.depends('address_id', 'address_id_depl', 'is_depl')
+    @api.depends('localite_id', 'localite_id_depl', 'is_depl')
     def _compute_city(self):
         for aller in self:
             if not aller.is_depl:
-                aller.city = aller.address_id.city
-            else:
-                if aller.address_id_depl:
-                    aller.city = aller.address_id.city + " -> "+aller.address_id_depl.city
+                if aller.localite_id:
+                    aller.city = aller.localite_id.city
                 else:
-                    aller.city = aller.address_id.city
+                    aller.city = "/"
+            else:
+                if aller.localite_id_depl and aller.localite_id:
+                    aller.city = aller.localite_id.city + " -> "+aller.localite_id_depl.city
+                elif aller.localite_id:
+                    aller.city = aller.localite_id.city
+                else:
+                    aller.city = "/"
 
 
     # TODO USE THAT IN WRITE AND CREATE
     def check_and_merge(self):
         for agg_aller in self:
-            aggs = self.env["locasix.agg.aller"].search([("date", '=', agg_aller.date), ("address_id", "=", agg_aller.address_id.id), ("id", '!=', agg_aller.id), ("aller_type", "=", agg_aller.aller_type), ("is_depl", "=", agg_aller.is_depl)])
+            aggs = self.env["locasix.agg.aller"].search([("date", '=', agg_aller.date), ("address_id", "=", agg_aller.address_id.id), ("id", '!=', agg_aller.id), ("aller_type", "=", agg_aller.aller_type), ("is_depl", "=", agg_aller.is_depl), ("localite_id", "=", agg_aller.localite_id.id)])
             for other_agg in aggs:
                 if other_agg.is_retours_created:
                     agg_aller.is_retours_created = True
@@ -60,7 +66,7 @@ class AggAller(models.Model):
     def weekend_check(self):
         for agg_aller in self:
             if agg_aller.date_retour and not agg_aller.is_retours_created and agg_aller.address_id and agg_aller.is_weekend:
-                agg_retour_id = self.env["locasix.agg.aller"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id.id), ("aller_type", "=", "in"), ("is_depl", "=", False)], limit=1)
+                agg_retour_id = self.env["locasix.agg.aller"].search([("date", "=", agg_aller.date_retour), ("address_id", "=", agg_aller.address_id.id), ("aller_type", "=", "in"), ("is_depl", "=", False), ("localite_id", "=", agg_aller.localite_id.id)], limit=1)
                 if not agg_retour_id:
                     newday_id = self.env["locasix.day"].search([("day", "=", agg_aller.date_retour)], limit=1)
                     if not newday_id:
@@ -68,6 +74,7 @@ class AggAller(models.Model):
                     agg_retour_id = self.env["locasix.agg.aller"].create({
                         "day_id": newday_id.id,
                         "aller_type": "in",
+                        "localite_id": agg_aller.localite_id.id,
                         "date": agg_aller.date_retour,
                         "address_id": agg_aller.address_id.id,
                     })
@@ -77,6 +84,7 @@ class AggAller(models.Model):
                     "aller_type": "in",
                     "date": agg_retour_id.date,
                     "agg_id": agg_retour_id.id,
+                    "localite_id": aller.localite_id.id,
                     "address_id": aller.address_id.id,
                     "contract": aller.contract,
                     "product_id": aller.product_id.id,
@@ -98,9 +106,10 @@ class AggAller(models.Model):
         _logger.info("write aggAller")
         _logger.info(vals)
         res = super(AggAller, self).write(vals)
-        if "address_id" in vals:
+        if "address_id" in vals or "localite_id" in vals:
             if self.date == self.day_id.day:
                 for aller in self.aller_ids:
+                    aller.localite_id = self.localite_id
                     aller.address_id = self.address_id
                 self.check_and_merge()                
 
@@ -155,7 +164,8 @@ class AggAller(models.Model):
                 "date": newday_id.day,
                 "aller_type": aller_type,
                 "is_depl": aggAller.is_depl,
-                "address_id_depl": aggAller.address_id_depl.id,
+                "localite_id": aggAller.localite_id.id,
+                "localite_id_depl": aggAller.localite_id_depl.id,
                 "address_id": aggAller.address_id.id,
                 "contract": aggAller.contract,
                 #"remarque_ids": aggAller.remarque_ids,
