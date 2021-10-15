@@ -509,6 +509,13 @@ class Order(models.Model):
                             product_count[line.product_id.id] = 1
 
                     
+    def should_create_link(self, product):
+        for order in self:
+            if product.is_insurance and (order.offer_type == "weekend" or order.offer_type == "sale"):
+                return False
+            elif product.default_code in ["FN", "FNG", "FNC"] and order.offer_type == "sale":
+                return False
+            return True
 
     def enforce_links(self):
         _logger.info("enforce links")
@@ -519,7 +526,7 @@ class Order(models.Model):
                     _logger.info(links)
                     for link in links:
                         _logger.info("links")
-                        if not link.product_linked_id.is_insurance or not order.offer_type == "weekend":
+                        if order.should_create_link(link.product_linked_id):
                             new_line = self.env["sale.order.line"].create({
                                 'order_id': line.order_id.id,
                                 'product_id': link.product_linked_id.product_variant_id.id,
