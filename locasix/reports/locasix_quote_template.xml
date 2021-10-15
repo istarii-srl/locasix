@@ -247,8 +247,8 @@
                 </tr>
                 <tr t-if="line.product_id.is_transport_address_product">
                     <td colspan="1"></td>
-                    <td colspan="3">
-                        <span style="text-decoration: underline">Adresse de livraison:</span><span t-field="line.name" style="padding-top:20px;"/>
+                    <td colspan="3" style="padding-top:20px;">
+                        <span style="text-decoration: underline">Adresse de livraison</span><span>: </span><span t-field="line.name"/>
                     </td>
                 </tr>
                 <tr t-if="line.display_type == 'line_note'">
