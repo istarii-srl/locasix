@@ -535,20 +535,20 @@ class Order(models.Model):
                             })
                             #'sequence': sections[line.section_id.id]["next_available"]})
                         #sections[line.section_id.id]["next_available"] += 1
-                        new_line.update_line_values()
-                        if not new_line.product_id.categ_id or not new_line.product_id.categ_id.show_section_order:
-                            _logger.info("change of category")
-                            _logger.info(new_line.category_id.name)
-                            new_line.category_id = line.category_id
-                            _logger.info(new_line.category_id.name)
-                            _logger.info(line.category_id.name)
-                        _logger.info(new_line.name)
-                        if new_line.is_insurance():
-                            _logger.info("MULTO 2")
-                            _logger.info(line.is_multi)
-                            _logger.info(line.name)
-                            _logger.info(line.product_id.has_multi_price)
-                            new_line.is_multi = line.product_id.has_multi_price
+                            new_line.update_line_values()
+                            if not new_line.product_id.categ_id or not new_line.product_id.categ_id.show_section_order:
+                                _logger.info("change of category")
+                                _logger.info(new_line.category_id.name)
+                                new_line.category_id = line.category_id
+                                _logger.info(new_line.category_id.name)
+                                _logger.info(line.category_id.name)
+                            _logger.info(new_line.name)
+                            if new_line.is_insurance():
+                                _logger.info("MULTO 2")
+                                _logger.info(line.is_multi)
+                                _logger.info(line.name)
+                                _logger.info(line.product_id.has_multi_price)
+                                new_line.is_multi = line.product_id.has_multi_price
 
     def enforce_computations(self):
         _logger.info("enforce computations")
