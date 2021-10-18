@@ -16,6 +16,7 @@
             <field name="vat" position="before">
                 <field name="compte"/>
                 <field name="alpha_key"/>
+                <field name="has_insurance"/>
             </field>
         </field>
     </record>

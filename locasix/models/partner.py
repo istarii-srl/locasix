@@ -6,4 +6,6 @@ class Partner(models.Model):
 
     compte = fields.Char(string="Compte")
     alpha_key = fields.Char(string="Clé alpha")
+
+    has_insurance = fields.Boolean(string="Mettre une assurance dans les offres", default=True)
     

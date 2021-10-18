@@ -321,6 +321,7 @@ class Order(models.Model):
             order.is_computing = True
             order.mark_manual_sections()
             order.enforce_links()
+            order.enforce_assemblage_fee()
             order.enforce_transport()
             order.enforce_sections(sections)
             order.place_sections(sections)
@@ -347,6 +348,47 @@ class Order(models.Model):
                     line.is_section = True
                     line.section_id = line.id
     
+    def enforce_assemblage_fee(self):
+        _logger.info("enforce assemblage fee")
+        for order in self:
+            has_assemblage = False
+            for line in order.order_line:
+                if line.product_id and line.product_id.is_assemblage_product:
+                    has_assemblage = True
+            if has_assemblage:
+                categ_id = self.env["product.category"].search([("name", "=", "Montage et assemblage")], limit=1)
+                if not categ_id:
+                    categ_id = self.env["product.category"].create({
+                        "name": "Transport",
+                        "show_section_order": True,
+                    })
+                montage = self.env["product.template"].search([("default_code", "=", "FASSA")], limit=1)
+                if not montage:
+                    montage = self.env["product.template"].create({"default_code": "FASSA", "name": "Frais de montage et assemblage aller", "categ_id": categ_id.id, "list_price": 0.0})
+                demontage = self.env["product.template"].search([("default_code", "=", "FASSR")], limit=1)
+                if not demontage:
+                    demontage = self.env["product.template"].create({"default_code": "FASSR", "name": "Frais de montage et assemblage retour", "categ_id": categ_id.id, "list_price": 0.0})
+                montage_in_order = self.env["sale.order.line"].search([("product_id", "=", montage.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
+                if not montage_in_order:
+                    self.env["sale.order.line"].create({
+                    'order_id': self.id,
+                    'product_id': montage.product_variant_id.id,
+                #    'section_id': line.section_id.id,
+                    'from_compute': True,
+                })
+                demontage_in_order = self.env["sale.order.line"].search([("product_id", "=", demontage.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
+                if not demontage_in_order:
+                    self.env["sale.order.line"].create({
+                    'order_id': self.id,
+                    'product_id': demontage.product_variant_id.id,
+                #    'section_id': line.section_id.id,
+                    'from_compute': True,
+                })
+
+                
+
+
+
     def enforce_transport(self):
         _logger.info("enforce transport")
         for order in self:
@@ -514,6 +556,8 @@ class Order(models.Model):
             if product.is_insurance and (order.offer_type == "weekend" or order.offer_type == "sale"):
                 return False
             elif product.default_code in ["FN", "FNG", "FNC"] and order.offer_type == "sale":
+                return False
+            elif product.is_insurance and not order.partner_id.has_insurance:
                 return False
             return True
 
