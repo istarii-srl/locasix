@@ -4,6 +4,14 @@ class ProductProduct(models.Model):
     _name = "product.product"
     _inherit = "product.product"
 
+    @api.onchange('is_assemblage_product')
+    def is_assemblage_changed(self):
+        if self.is_assemblage_product:
+            categ_id = self.env["product.category"].search([("name", "=", "Location de modules habitables - containers maritimes")], limit=1)
+        else:
+            categ_id = self.env["product.category"].search([("name", "=", "All")], limit=1)
+        if categ_id:
+            self.categ_id = categ_id
 
     @tools.ormcache()
     def _get_default_category_id(self):
