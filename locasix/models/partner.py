@@ -16,3 +16,9 @@ class Partner(models.Model):
         else:
             return True
     
+    @api.model
+    def create(self, vals):
+        obj = super(Partner, self).create(vals)
+        if obj.parent_id:
+            obj.has_insurance = obj.parent_id.has_insurance
+        return obj
