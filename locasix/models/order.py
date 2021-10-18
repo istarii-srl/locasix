@@ -359,7 +359,7 @@ class Order(models.Model):
                 categ_id = self.env["product.category"].search([("name", "=", "Montage et assemblage")], limit=1)
                 if not categ_id:
                     categ_id = self.env["product.category"].create({
-                        "name": "Transport",
+                        "name": "Montage et assemblage",
                         "show_section_order": True,
                     })
                 montage = self.env["product.template"].search([("default_code", "=", "FASSA")], limit=1)
@@ -385,7 +385,7 @@ class Order(models.Model):
                     'from_compute': True,
                 })
 
-                
+
 
 
 
