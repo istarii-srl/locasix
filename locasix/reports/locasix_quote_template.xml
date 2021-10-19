@@ -461,6 +461,14 @@
                 <t t-set="added_terms_week_end" t-value="doc.added_terms_week_end.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
                 <t t-set="added_terms_sale" t-value="doc.added_terms_sale.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
                 <t t-set="sale_confirm" t-value="doc.sale_confirm.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
+                <t t-set="added_terms" t-value="added_terms.replace('<p>','')"/>
+                <t t-set="added_terms" t-value="added_terms.replace('</p>','')"/>
+                <t t-set="added_terms_week_end" t-value="added_terms_week_end.replace('<p>','')"/>
+                <t t-set="added_terms_week_end" t-value="added_terms_week_end.replace('</p>','')"/>
+                <t t-set="added_terms_sale" t-value="added_terms_sale.replace('<p>','')"/>
+                <t t-set="added_terms_sale" t-value="added_terms_sale.replace('</p>','')"/>
+                <t t-set="sale_confirm" t-value="sale_confirm.replace('<p>','')"/>
+                <t t-set="sale_confirm" t-value="sale_confirm.replace('</p>','')"/>
                 <div t-if="doc.offer_type == 'classic'" style="height: 750px;"><p style="font-size:10px;" t-raw="added_terms"/></div>
                 <div t-if="doc.offer_type == 'weekend'" style="height: 750px;"><p style="font-size:10px;" t-raw="added_terms_week_end"/></div>
                 <div t-if="doc.offer_type == 'sale'" style="height: 750px;"><p style="font-size:10px;" t-raw="added_terms_sale"/></div>
