@@ -5,6 +5,7 @@
         <field name="arch" type="xml">
             <form string="Ajout automatique">
                 <group>
+                    <field name="order_id" invisible="1"/>
                     <field name="offer_type" invisible="1"/>
                     <field name="has_assemblage" invisible="1"/>
                     <field name="transport_aller" required="1"/>
