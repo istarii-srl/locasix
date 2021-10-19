@@ -248,7 +248,7 @@
                 </tr>
                 <tr style="background-color: rgba(244,244,244,0.7)" t-if="line.product_id.is_transport_address_product">
                     <td colspan="1"></td>
-                    <td colspan="3" style="padding-top:20px;">
+                    <td colspan="3" style="padding-top:10px;">
                         <span style="text-decoration: underline">Adresse de livraison</span><span>: </span><span t-field="line.name"/>
                     </td>
                 </tr>
@@ -260,7 +260,7 @@
                 </tr>
                 <tr style="background-color: rgba(244,244,244,0.7)" t-if="line.product_id.name == 'Date retour'">
                     <td colspan="1"></td>
-                    <td colspan="3" style="padding-top:0px;">
+                    <td colspan="3" style="padding-bottom:10px;">
                         <span>Date retour</span><span>: </span><span t-field="line.name"/>
                     </td>
                 </tr>
