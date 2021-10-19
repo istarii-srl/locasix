@@ -87,7 +87,7 @@
                     </div>
                     <div style="height:10px;"/>
                     <div style="height: 105px; border: 1px solid black; padding: 3px 5px 3px 5px;">
-                        <div class="row" style="margin: 0px !important;"><span t-field="doc.partner_id.name"/>
+                        <div class="row" style="margin: 0px !important;"><span t-field="doc.partner_id.name"/></div>
                         <div class="row" style="margin: 0px !important;"><span>Numéro d'offre : </span><span t-field="doc.name"/></div>
                         <div class="row" style="margin: 0px !important;"><span>Votre référence : </span><span t-field="doc.client_ref"/></div>
                         <div class="row" style="margin: 0px !important;"><span>Date de l'offre : </span><span t-field="doc.date_order"  t-options='{"widget": "date"}'/></div>
