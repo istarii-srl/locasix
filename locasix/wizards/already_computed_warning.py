@@ -1,4 +1,5 @@
 from odoo import fields, api, models
+from odoo.exceptions import UserError
 
 class AlreadyComputedWarning(models.Model):
 
@@ -9,11 +10,11 @@ class AlreadyComputedWarning(models.Model):
     offer_type = fields.Selection(related="order_id.offer_type")
     has_assemblage = fields.Boolean(compute="_compute_has_assemblage")
 
-    transport_aller = fields.Float(string="Prix transport aller / weekend", default=False)
-    transport_retour = fields.Float(string="Prix transport retour", default=False)
+    transport_aller = fields.Float(string="Prix transport aller / weekend")
+    transport_retour = fields.Float(string="Prix transport retour")
 
-    frais_assemblage_aller = fields.Float(string="Frais assemblage aller", default=False)
-    frais_assemblage_retour = fields.Float(string="Frais assemblage retour", default=False)
+    frais_assemblage_aller = fields.Float(string="Frais assemblage aller")
+    frais_assemblage_retour = fields.Float(string="Frais assemblage retour")
 
     @api.depends("order_id")
     def _compute_has_assemblage(self):
@@ -27,5 +28,11 @@ class AlreadyComputedWarning(models.Model):
 
     def action_compute(self):
         for wizard in self:
+            if wizard.transport_aller == 0.0:
+                raise UserError("Montant(s) de zéro !")
+            if wizard.transport_retour == 0.0 and wizard.offer_type == "classic":
+                raise UserError("Montant(s) de zéro !")
+            if (wizard.frais_assemblage_retour == 0.0 or wizard.frais_assemblage_aller == 0.0) and wizard.has_assemblage:
+                raise UserError("Montant(s) de zéro !")
             wizard.order_id.action_remove_computed_lines()
             wizard.order_id.line_computations(wizard.transport_aller, wizard.transport_retour, wizard.frais_assemblage_aller, wizard.frais_assemblage_retour)
