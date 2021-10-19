@@ -220,23 +220,20 @@ class Order(models.Model):
     def action_compute(self):
         _logger.info("action compute")
         for order in self:
-            if order.has_computed:
-                view = self.env.ref('locasix.view_warning_computed')
-                return {
-                'name': 'Attention ! Lignes déjà ajoutées',
-                'type': 'ir.actions.act_window',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'locasix.compute.warning',
-                'views': [(view.id, 'form')],
-                'view_id': view.id,
-                'target': 'new',
-                'context': {
-                    'default_order_id': order.id,
-                    },
-                }
-            else:
-                order.line_computations()
+            view = self.env.ref('locasix.view_warning_computed')
+            return {
+            'name': 'Ajout automatique',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.compute.warning',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                'default_order_id': order.id,
+                },
+            }
             
 
     def action_confirm(self):
@@ -318,14 +315,14 @@ class Order(models.Model):
         self.done_order = False
         return True        
 
-    def line_computations(self):
+    def line_computations(self, transport_aller, transport_retour, assemblage_aller, assemblage_retour):
         sections = {}
         for order in self:
             order.is_computing = True
             order.mark_manual_sections()
             order.enforce_links()
-            order.enforce_assemblage_fee()
-            order.enforce_transport()
+            order.enforce_assemblage_fee(assemblage_aller, assemblage_retour)
+            order.enforce_transport(transport_aller, transport_retour)
             order.enforce_sections(sections)
             order.place_sections(sections)
             order.place_products(sections)
@@ -351,7 +348,7 @@ class Order(models.Model):
                     line.is_section = True
                     line.section_id = line.id
     
-    def enforce_assemblage_fee(self):
+    def enforce_assemblage_fee(self, assemblage_aller, assemblage_retour):
         _logger.info("enforce assemblage fee")
         for order in self:
             has_assemblage = False
@@ -376,6 +373,7 @@ class Order(models.Model):
                     self.env["sale.order.line"].create({
                     'order_id': self.id,
                     'product_id': montage.product_variant_id.id,
+                    'price_unit': assemblage_aller,
                 #    'section_id': line.section_id.id,
                     'from_compute': True,
                 })
@@ -385,6 +383,7 @@ class Order(models.Model):
                     'order_id': self.id,
                     'product_id': demontage.product_variant_id.id,
                 #    'section_id': line.section_id.id,
+                    'price_unit': assemblage_retour,
                     'from_compute': True,
                 })
 
@@ -392,7 +391,7 @@ class Order(models.Model):
 
 
 
-    def enforce_transport(self):
+    def enforce_transport(self, transport_aller, transport_retour):
         _logger.info("enforce transport")
         for order in self:
             categ_id = self.env["product.category"].search([("name", "=", "Transport")], limit=1)
@@ -411,6 +410,7 @@ class Order(models.Model):
 
                     self.env["sale.order.line"].create({
                         'order_id': self.id,
+                        'price_unit': transport_aller,
                         'product_id': tar.product_variant_id.id,
                         'from_compute': True,
                     })
@@ -427,18 +427,21 @@ class Order(models.Model):
                     self.env["sale.order.line"].create({
                     'order_id': self.id,
                     'product_id': ta.product_variant_id.id,
+                    'price_unit': transport_aller,
                 #    'section_id': line.section_id.id,
                     'from_compute': True,
                 })
 
-                tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                if not tr_in_order:
-                    self.env["sale.order.line"].create({
-                    'order_id': self.id,
-                    'product_id': tr.product_variant_id.id,
-                #    'section_id': line.section_id.id,
-                    'from_compute': True,
-                })
+                if order.offer_type != "sale":
+                    tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
+                    if not tr_in_order:
+                        self.env["sale.order.line"].create({
+                        'order_id': self.id,
+                        'product_id': tr.product_variant_id.id,
+                        'price_unit': transport_retour,
+                    #    'section_id': line.section_id.id,
+                        'from_compute': True,
+                    })
             transport_address_product_id = self.env["product.template"].search([("is_transport_address_product", "=", True)], limit=1)
             if not transport_address_product_id:
                 transport_address_product_id = self.env["product.template"].create({
