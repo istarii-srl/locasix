@@ -9,11 +9,11 @@ class AlreadyComputedWarning(models.Model):
     offer_type = fields.Selection(related="order_id.offer_type")
     has_assemblage = fields.Boolean(compute="_compute_has_assemblage")
 
-    transport_aller = fields.Float(string="Prix transport aller / weekend")
-    transport_retour = fields.Float(string="Prix transport retour")
+    transport_aller = fields.Float(string="Prix transport aller / weekend", default=False)
+    transport_retour = fields.Float(string="Prix transport retour", default=False)
 
-    frais_assemblage_aller = fields.Float(string="Frais assemblage aller")
-    frais_assemblage_retour = fields.Float(string="Frais assemblage retour")
+    frais_assemblage_aller = fields.Float(string="Frais assemblage aller", default=False)
+    frais_assemblage_retour = fields.Float(string="Frais assemblage retour", default=False)
 
     @api.depends("order_id")
     def _compute_has_assemblage(self):
