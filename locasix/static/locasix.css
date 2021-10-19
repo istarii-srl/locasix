@@ -20,7 +20,7 @@
 }
 
 .font-treble {
-    font-family: "treble";
+    font-family: "treble" !important;
 }
 
 .font-calibri {
