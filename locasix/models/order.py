@@ -26,6 +26,9 @@ class Order(models.Model):
     months_3_discount_rate = fields.Float(string="G.E. 3 mois", default=0.15)
     months_6_discount_rate = fields.Float(string="G.E. 6 mois", default=0.2)
 
+    date_aller = fields.Char(string="Date aller")
+    date_retour = fields.Char(string="Date retour")
+
     city = fields.Many2one(string="Ville", comodel_name="locasix.municipality")
     rue = fields.Char(string="Rue")
     street_number = fields.Char(string="Numéro")
@@ -453,6 +456,42 @@ class Order(models.Model):
                     #'section_id': line.section_id.id,
                     'from_compute': True, 
                 })
+            if order.offer_type == "weekend":
+                if order.date_aller:
+                    date_aller_product_id = self.env["product.template"].search([("name", "=", "Date aller")], limit=1)
+                    if not date_aller_product_id:
+                        date_aller_product_id = self.env["product.template"].create({
+                            "name": "Date aller",
+                            "categ_id": categ_id.id,
+                            "list_price": 0.0
+                        })
+                    date_aller_in_order = self.env["sale.order.line"].search([("product_id", "=", date_aller_product_id.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
+                    if not date_aller_in_order:
+                        self.env["sale.order.line"].create({
+                            'order_id': self.id,
+                            'product_id': date_aller_product_id.product_variant_id.id,
+                            'name': order.date_aller,
+                            #'section_id': line.section_id.id,
+                            'from_compute': True, 
+                        })
+                if order.date_retour:
+                    date_retour_product_id = self.env["product.template"].search([("name", "=", "Date retour")], limit=1)
+                    if not date_retour_product_id:
+                        date_retour_product_id = self.env["product.template"].create({
+                            "name": "Date retour",
+                            "categ_id": categ_id.id,
+                            "list_price": 0.0
+                        })
+                    date_retour_in_order = self.env["sale.order.line"].search([("product_id", "=", date_retour_product_id.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
+                    if not date_retour_in_order:
+                        self.env["sale.order.line"].create({
+                            'order_id': self.id,
+                            'product_id': date_retour_product_id.product_variant_id.id,
+                            'name': order.date_retour,
+                            #'section_id': line.section_id.id,
+                            'from_compute': True, 
+                        })
+                
     
         
 
@@ -522,11 +561,17 @@ class Order(models.Model):
         _logger.info("place products")
         for order in self:
             address_transport_line = False
+            date_retour = False
+            date_aller = False
             for line in order.order_line:
                 if not line.is_section and line.section_id:
                     if line.product_id and line.product_id.is_transport_address_product:
                         _logger.info("address transport")
                         address_transport_line = line
+                    if line.product_id and line.product_id.name == "Date aller":
+                        date_aller = line
+                    if line.product_id and line.product_id.name =="Date retour":
+                        date_retour = line
                     else:
                         line.sequence = sections[line.section_id.id]["next_available"]
                         sections[line.section_id.id]["next_available"] += 1
@@ -534,6 +579,14 @@ class Order(models.Model):
                 _logger.info("address transport correction")
                 address_transport_line.sequence = sections[address_transport_line.section_id.id]["next_available"]
                 sections[address_transport_line.section_id.id]["next_available"] += 1
+            if date_aller:
+                _logger.info("date aller correction")
+                date_aller.sequence = sections[date_aller.section_id.id]["next_available"]
+                sections[date_aller.section_id.id]["next_available"] += 1
+            if date_retour:
+                _logger.info("date retour correction")
+                date_retour.sequence = sections[date_retour.section_id.id]["next_available"]
+                sections[date_retour.section_id.id]["next_available"] += 1
 
     
     def remove_doublons(self, sections):
