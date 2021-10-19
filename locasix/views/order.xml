@@ -27,6 +27,8 @@
             <field name="partner_id" position="after">
                 <field name="client_ref"/>
                 <field name="offer_type"/>
+                <field name="date_aller" attrs="{'invisible': [('offer_type', '!=', 'weekend')]}"/>
+                <field name="date_retour" attrs="{'invisible': [('offer_type', '!=', 'weekend')]}"/>
                 <field name="show_discount2"/>
                 <field name="show_discount3"/>
                 <field name="show_discount6"/>
