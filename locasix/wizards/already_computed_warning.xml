@@ -3,10 +3,15 @@
         <field name="name">locasix.compute.warning.form</field>
         <field name="model">locasix.compute.warning</field>
         <field name="arch" type="xml">
-            <form string="Attention ! Lignes déjà ajoutées">
-                <p>
-                    Des lignes ont déjà été automatiquement ajoutées sur cette offre. Si vous continuez, celles-ci seront écrasées par de nouvelles.
-                </p>
+            <form string="Ajout automatique">
+                <group>
+                    <field name="offer_type" invisible="1"/>
+                    <field name="has_assemblage" invisible="1"/>
+                    <field name="transport_aller"/>
+                    <field name="transport_retour" attrs="{'invisible': [('offer_type', '!=', 'classic')]}"/>
+                    <field name="frais_assemblage_aller" attrs="{'invisible': [('has_assemblage', '!=', True)]}"/>
+                    <field name="frais_assemblage_retour" attrs="{'invisible': [('has_assemblage', '!=', True)]}"/>
+                </group>
                 <footer>
                     <button name="action_compute" string="Continuer" type="object" class="btn-primary"/>
                     <button string="Annuler" class="btn-secondary" special="cancel"/>

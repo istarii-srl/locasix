@@ -220,23 +220,20 @@ class Order(models.Model):
     def action_compute(self):
         _logger.info("action compute")
         for order in self:
-            if order.has_computed:
-                view = self.env.ref('locasix.view_warning_computed')
-                return {
-                'name': 'Attention ! Lignes déjà ajoutées',
-                'type': 'ir.actions.act_window',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'locasix.compute.warning',
-                'views': [(view.id, 'form')],
-                'view_id': view.id,
-                'target': 'new',
-                'context': {
-                    'default_order_id': order.id,
-                    },
-                }
-            else:
-                order.line_computations()
+            view = self.env.ref('locasix.view_warning_computed')
+            return {
+            'name': 'Ajout automatique',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.compute.warning',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                'default_order_id': order.id,
+                },
+            }
             
 
     def action_confirm(self):
@@ -431,14 +428,15 @@ class Order(models.Model):
                     'from_compute': True,
                 })
 
-                tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                if not tr_in_order:
-                    self.env["sale.order.line"].create({
-                    'order_id': self.id,
-                    'product_id': tr.product_variant_id.id,
-                #    'section_id': line.section_id.id,
-                    'from_compute': True,
-                })
+                if order.offer_type != "sale":
+                    tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
+                    if not tr_in_order:
+                        self.env["sale.order.line"].create({
+                        'order_id': self.id,
+                        'product_id': tr.product_variant_id.id,
+                    #    'section_id': line.section_id.id,
+                        'from_compute': True,
+                    })
             transport_address_product_id = self.env["product.template"].search([("is_transport_address_product", "=", True)], limit=1)
             if not transport_address_product_id:
                 transport_address_product_id = self.env["product.template"].create({
