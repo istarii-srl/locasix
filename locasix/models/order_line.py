@@ -220,6 +220,8 @@ class OrderLine(models.Model):
                 res = super(OrderLine, self).write(vals)
                 if self.product_id and self.product_id.default_code in ["TA", "TR"] and vals.get('price_unit', False):
                     self.update_transport_costs(vals.get('price_unit'))
+                if self.product_id and self.product_id.default_code in ["FASSA", "FASSR"] and vals.get('price_unit', False):
+                    self.update_assemblage_costs(vals.get('price_unit'))
                 self.recompute_insurance()
 
 
@@ -237,6 +239,24 @@ class OrderLine(models.Model):
             vals.pop("from_compute_ins", None)
             res = super(OrderLine, self).write(vals)
         return res
+
+    def update_assemblage_costs(self, new_price):
+        _logger.info("update assemblage costs")
+        for line in self:
+            assemblage_product = False
+            if line.product_id.default_code == "FASSA":
+                assemblage_product = self.env["product.product"].search([("default_code", "=", "FASSR")], limit=1)
+            elif line.product_id.default_code == "FASSR":
+                assemblage_product = self.env["product.product"].search([("default_code", "=", "FASSA")], limit=1)
+
+            if assemblage_product:
+                other_transport_line = self.env["sale.order.line"].search([("product_id", "=", assemblage_product.id)], limit=1)
+                if other_transport_line:
+                    other_transport_line.write({
+                        "price_unit": new_price,
+                        "from_transport": True
+                    })
+
 
     def update_transport_costs(self, new_price):
         _logger.info("update transport costs")

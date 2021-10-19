@@ -1,4 +1,4 @@
-from odoo import fields, api, models
+from odoo import fields, api, models, tools
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -38,6 +38,25 @@ class ProductTemplate(models.Model):
 
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
     insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)
+
+
+    @api.onchange('is_assemblage_product')
+    def is_assemblage_changed(self):
+        if self.is_assemblage_product:
+            categ_id = self.env["product.category"].search([("name", "=", "Location de modules habitables - containers maritimes")], limit=1)
+        else:
+            categ_id = self.env["product.category"].search([("name", "=", "All")], limit=1)
+        if categ_id:
+            self.categ_id = categ_id
+
+    @tools.ormcache()
+    def _get_default_category_id(self):
+        # Deletion forbidden (at least through unlink)
+        categ_id = self.env["product.category"].search([("name", "=", "Location de modules habitables - containers maritimes")], limit=1)
+        if not categ_id:
+            return self.env.ref('product.product_category_all')
+        else:
+            return categ_id
 
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):

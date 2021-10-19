@@ -41,7 +41,7 @@
             <field name="model_id" ref="product.model_product_template"/>
             <field name="groups" eval="[(4, ref('group_locasix_user'))]"/>
             <field name="perm_read" eval="1"/>
-            <field name="perm_write" eval="0"/>
+            <field name="perm_write" eval="1"/>
             <field name="perm_create" eval="0"/>
             <field name="perm_unlink" eval="0"/>
             <field name="domain_force">[('is_temporary_product','=', False)]</field>

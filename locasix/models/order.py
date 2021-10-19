@@ -321,6 +321,7 @@ class Order(models.Model):
             order.is_computing = True
             order.mark_manual_sections()
             order.enforce_links()
+            order.enforce_assemblage_fee()
             order.enforce_transport()
             order.enforce_sections(sections)
             order.place_sections(sections)
@@ -347,6 +348,47 @@ class Order(models.Model):
                     line.is_section = True
                     line.section_id = line.id
     
+    def enforce_assemblage_fee(self):
+        _logger.info("enforce assemblage fee")
+        for order in self:
+            has_assemblage = False
+            for line in order.order_line:
+                if line.product_id and line.product_id.is_assemblage_product:
+                    has_assemblage = True
+            if has_assemblage:
+                categ_id = self.env["product.category"].search([("name", "=", "Montage et assemblage")], limit=1)
+                if not categ_id:
+                    categ_id = self.env["product.category"].create({
+                        "name": "Montage et assemblage",
+                        "show_section_order": True,
+                    })
+                montage = self.env["product.template"].search([("default_code", "=", "FASSA")], limit=1)
+                if not montage:
+                    montage = self.env["product.template"].create({"default_code": "FASSA", "name": "Frais de montage et assemblage aller", "categ_id": categ_id.id, "list_price": 0.0})
+                demontage = self.env["product.template"].search([("default_code", "=", "FASSR")], limit=1)
+                if not demontage:
+                    demontage = self.env["product.template"].create({"default_code": "FASSR", "name": "Frais de montage et assemblage retour", "categ_id": categ_id.id, "list_price": 0.0})
+                montage_in_order = self.env["sale.order.line"].search([("product_id", "=", montage.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
+                if not montage_in_order:
+                    self.env["sale.order.line"].create({
+                    'order_id': self.id,
+                    'product_id': montage.product_variant_id.id,
+                #    'section_id': line.section_id.id,
+                    'from_compute': True,
+                })
+                demontage_in_order = self.env["sale.order.line"].search([("product_id", "=", demontage.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
+                if not demontage_in_order:
+                    self.env["sale.order.line"].create({
+                    'order_id': self.id,
+                    'product_id': demontage.product_variant_id.id,
+                #    'section_id': line.section_id.id,
+                    'from_compute': True,
+                })
+
+
+
+
+
     def enforce_transport(self):
         _logger.info("enforce transport")
         for order in self:
@@ -509,6 +551,15 @@ class Order(models.Model):
                             product_count[line.product_id.id] = 1
 
                     
+    def should_create_link(self, product):
+        for order in self:
+            if product.is_insurance and (order.offer_type == "weekend" or order.offer_type == "sale"):
+                return False
+            elif product.default_code in ["FN", "FNG", "FNC"] and order.offer_type == "sale":
+                return False
+            elif product.is_insurance and not order.partner_id.has_insurance:
+                return False
+            return True
 
     def enforce_links(self):
         _logger.info("enforce links")
@@ -519,7 +570,7 @@ class Order(models.Model):
                     _logger.info(links)
                     for link in links:
                         _logger.info("links")
-                        if not link.product_linked_id.is_insurance or not order.offer_type == "weekend":
+                        if order.should_create_link(link.product_linked_id):
                             new_line = self.env["sale.order.line"].create({
                                 'order_id': line.order_id.id,
                                 'product_id': link.product_linked_id.product_variant_id.id,
@@ -528,20 +579,20 @@ class Order(models.Model):
                             })
                             #'sequence': sections[line.section_id.id]["next_available"]})
                         #sections[line.section_id.id]["next_available"] += 1
-                        new_line.update_line_values()
-                        if not new_line.product_id.categ_id or not new_line.product_id.categ_id.show_section_order:
-                            _logger.info("change of category")
-                            _logger.info(new_line.category_id.name)
-                            new_line.category_id = line.category_id
-                            _logger.info(new_line.category_id.name)
-                            _logger.info(line.category_id.name)
-                        _logger.info(new_line.name)
-                        if new_line.is_insurance():
-                            _logger.info("MULTO 2")
-                            _logger.info(line.is_multi)
-                            _logger.info(line.name)
-                            _logger.info(line.product_id.has_multi_price)
-                            new_line.is_multi = line.product_id.has_multi_price
+                            new_line.update_line_values()
+                            if not new_line.product_id.categ_id or not new_line.product_id.categ_id.show_section_order:
+                                _logger.info("change of category")
+                                _logger.info(new_line.category_id.name)
+                                new_line.category_id = line.category_id
+                                _logger.info(new_line.category_id.name)
+                                _logger.info(line.category_id.name)
+                            _logger.info(new_line.name)
+                            if new_line.is_insurance():
+                                _logger.info("MULTO 2")
+                                _logger.info(line.is_multi)
+                                _logger.info(line.name)
+                                _logger.info(line.product_id.has_multi_price)
+                                new_line.is_multi = line.product_id.has_multi_price
 
     def enforce_computations(self):
         _logger.info("enforce computations")

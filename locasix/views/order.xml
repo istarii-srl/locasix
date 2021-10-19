@@ -7,11 +7,11 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
-                <button name="action_open_aller" type="object" class="oe_stat_button" icon="fa-cube" attrs="{'invisible': [('aller_count', '=', 0)]}">
+                <button name="action_open_aller" type="object" class="oe_stat_button" icon="fa-cube" groups="locasix.group_locasix_agenda_read" attrs="{'invisible': [('aller_count', '=', 0)]}">
                     <field name="aller_count" widget="statinfo" nolabel="1"/>
                     <span class="o_stat_text">Allers</span>
                 </button>
-                <button name="action_open_retour" type="object" class="oe_stat_button" icon="fa-cube" attrs="{'invisible': [('retour_count', '=', 0)]}">
+                <button name="action_open_retour" type="object" class="oe_stat_button" icon="fa-cube" groups="locasix.group_locasix_agenda_read" attrs="{'invisible': [('retour_count', '=', 0)]}">
                     <field name="retour_count" widget="statinfo" nolabel="1"/>
                     <span class="o_stat_text">Retours</span>
                 </button>
