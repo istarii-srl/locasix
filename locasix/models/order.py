@@ -72,7 +72,7 @@ class Order(models.Model):
         if template:
             return template.template
         else:
-            return "<span style='font-size:10px'><b>Confirmation de la commande :</b><br>Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention<br>\"Bon pour accord\" + le cachet de l'entreprise.</span>"
+            return "<p>Nous portons à votre connaissance que nous n’avons pas de service de dépannage organisé durant les weekends (Du vendredi 16h00 jusqu’au lundi 07h00).</p><p><br></p><p>Notre expérience nous démontre que les problèmes qui surviennent sont généralement : </p><ul><li><p>Soit une panne par manque de gasoil </p></li><li><p>Soit un acte de malveillance. </p></li></ul><p>Nous constatons également qu’entre le moment où le technicien est informé du problème et le dépannage sur site (Ou encore remplacement de la machine), plusieurs heures sont parfois nécessaires. </p><p><br></p><p>Aussi, pour palier à ces inconvénients et vous protéger contre tout problème qui pourrait surgir, nous vous proposons la location d’un second groupe électrogène ou mât d'éclairage en réserve (Sous réserve des stocks disponibles). </p><p><br></p><p>Cette deuxième machine (Sous réserve qu’elle n’ait pas été utilisée) serait facturée à 50 \% du prix de la première. Si cette proposition vous intéresse, merci de nous en informer. </p><p><br></p><p>Cette démarche ne nous empêche nullement de toujours faire le maximum pour vous servir un matériel en parfait état de fonctionnement.<br></p>"
     def _get_sale_confirm(self):
         template = self.env["locasix.template.html"].search([('name', '=', 'Template confirmation de commande')], limit=1)
         if template:
