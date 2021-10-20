@@ -14,6 +14,7 @@ class Order(models.Model):
     added_terms = fields.Html(string="Conditions additionnelles", default=lambda self: self._get_added_terms())
     added_terms_week_end = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_weekend())
     added_terms_sale = fields.Html(string="Conditions additionnelles de vente", default=lambda self: self._get_added_terms_sale())
+    electro_annexe = fields.Html(string="Annexe groupes électrogènes", default=lambda self: self._get_electro_annexe())
     sale_confirm = fields.Html(string="Confirmation de la commande", default=lambda self: self._get_sale_confirm())
     
     offer_type = fields.Selection(string="Type d'offre", selection=[("classic", "Location"), ("weekend", "Weekend"), ("sale", "Vente")], default="classic", required=True)
@@ -66,6 +67,12 @@ class Order(models.Model):
                 text+= " : "+order.street_note
             return text
 
+    def _get_electro_annexe(self):
+        template = self.env["locasix.template.html"].search([('name', '=', 'Template annexe groupes électrogènes')], limit=1)
+        if template:
+            return template.template
+        else:
+            return "<span style='font-size:10px'><b>Confirmation de la commande :</b><br>Veuillez nous retourner toutes les pages de l'offre paraphées ainsi que cette page signée avec la mention<br>\"Bon pour accord\" + le cachet de l'entreprise.</span>"
     def _get_sale_confirm(self):
         template = self.env["locasix.template.html"].search([('name', '=', 'Template confirmation de commande')], limit=1)
         if template:
@@ -177,10 +184,11 @@ class Order(models.Model):
 
     def has_electro_annexe(self):
         for order in self:
-            for line in order.order_line:
-                if line.product_id and line.product_id.categ_id:
-                    if line.product_id.categ_id.show_electro_annexe:
-                        return True
+            if order.offer_type == "weekend":
+                for line in order.order_line:
+                    if line.product_id and line.product_id.categ_id:
+                        if line.product_id.categ_id.show_electro_annexe:
+                            return True
             return False
 
     def adapt_front_page(self):
@@ -315,14 +323,14 @@ class Order(models.Model):
         self.done_order = False
         return True        
 
-    def line_computations(self, transport_aller, transport_retour, assemblage_aller, assemblage_retour):
+    def line_computations(self, transport_aller, transport_retour, assemblage_aller, assemblage_retour, already_transport):
         sections = {}
         for order in self:
             order.is_computing = True
             order.mark_manual_sections()
             order.enforce_links()
             order.enforce_assemblage_fee(assemblage_aller, assemblage_retour)
-            order.enforce_transport(transport_aller, transport_retour)
+            order.enforce_transport(transport_aller, transport_retour, already_transport)
             order.enforce_sections(sections)
             order.place_sections(sections)
             order.place_products(sections)
@@ -389,9 +397,7 @@ class Order(models.Model):
 
 
 
-
-
-    def enforce_transport(self, transport_aller, transport_retour):
+    def enforce_transport(self, transport_aller, transport_retour, already_transport):
         _logger.info("enforce transport")
         for order in self:
             categ_id = self.env["product.category"].search([("name", "=", "Transport")], limit=1)
@@ -400,48 +406,49 @@ class Order(models.Model):
                     "name": "Transport",
                     "show_section_order": True,
                 })
-            if order.offer_type == "weekend":
-                tar = self.env["product.template"].search([("default_code", "=", "TAR")], limit=1)
-                if not tar:
-                    tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-                
-                tar_in_order = self.env["sale.order.line"].search([("product_id", "=", tar.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                if not tar_in_order:
+            if not already_transport:
+                if order.offer_type == "weekend":
+                    tar = self.env["product.template"].search([("default_code", "=", "TAR")], limit=1)
+                    if not tar:
+                        tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                    
+                    tar_in_order = self.env["sale.order.line"].search([("product_id", "=", tar.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
+                    if not tar_in_order:
 
-                    self.env["sale.order.line"].create({
-                        'order_id': self.id,
-                        'price_unit': transport_aller,
-                        'product_id': tar.product_variant_id.id,
-                        'from_compute': True,
-                    })
-            else:
-                ta = self.env["product.template"].search([("default_code", "=", "TA")], limit=1)
-                if not ta:
-                    ta = self.env["product.template"].create({"default_code": "TA", "name": "Transport aller", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-                tr = self.env["product.template"].search([("default_code", "=", "TR")], limit=1)
-                if not tr:
-                    tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-                
-                ta_in_order = self.env["sale.order.line"].search([("product_id", "=", ta.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
-                if not ta_in_order:
-                    self.env["sale.order.line"].create({
-                    'order_id': self.id,
-                    'product_id': ta.product_variant_id.id,
-                    'price_unit': transport_aller,
-                #    'section_id': line.section_id.id,
-                    'from_compute': True,
-                })
-
-                if order.offer_type != "sale":
-                    tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                    if not tr_in_order:
+                        self.env["sale.order.line"].create({
+                            'order_id': self.id,
+                            'price_unit': transport_aller,
+                            'product_id': tar.product_variant_id.id,
+                            'from_compute': True,
+                        })
+                else:
+                    ta = self.env["product.template"].search([("default_code", "=", "TA")], limit=1)
+                    if not ta:
+                        ta = self.env["product.template"].create({"default_code": "TA", "name": "Transport aller", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                    tr = self.env["product.template"].search([("default_code", "=", "TR")], limit=1)
+                    if not tr:
+                        tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                    
+                    ta_in_order = self.env["sale.order.line"].search([("product_id", "=", ta.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
+                    if not ta_in_order:
                         self.env["sale.order.line"].create({
                         'order_id': self.id,
-                        'product_id': tr.product_variant_id.id,
-                        'price_unit': transport_retour,
+                        'product_id': ta.product_variant_id.id,
+                        'price_unit': transport_aller,
                     #    'section_id': line.section_id.id,
                         'from_compute': True,
                     })
+
+                    if order.offer_type != "sale":
+                        tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
+                        if not tr_in_order:
+                            self.env["sale.order.line"].create({
+                            'order_id': self.id,
+                            'product_id': tr.product_variant_id.id,
+                            'price_unit': transport_retour,
+                        #    'section_id': line.section_id.id,
+                            'from_compute': True,
+                        })
             transport_address_product_id = self.env["product.template"].search([("is_transport_address_product", "=", True)], limit=1)
             if not transport_address_product_id:
                 transport_address_product_id = self.env["product.template"].create({

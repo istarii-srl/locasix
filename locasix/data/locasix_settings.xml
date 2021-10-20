@@ -114,4 +114,11 @@
         </record>
     </data>
 
+    <data noupdate="1">
+        <record model="locasix.template.html" id="locasix_template_electro">
+            <field name="name" eval="'Template annexe groupes électrogènes'"/>
+            <field name="template" eval="'Texte à remplir'"/>
+        </record>
+    </data>
+
 </odoo>

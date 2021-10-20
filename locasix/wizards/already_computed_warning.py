@@ -10,6 +10,8 @@ class AlreadyComputedWarning(models.Model):
     offer_type = fields.Selection(related="order_id.offer_type")
     has_assemblage = fields.Boolean(compute="_compute_has_assemblage")
 
+    already_transport = fields.Boolean(string="Transport déjà encodé", default=False)
+
     transport_aller = fields.Float(string="Prix transport aller / weekend")
     transport_retour = fields.Float(string="Prix transport retour")
 
@@ -28,11 +30,11 @@ class AlreadyComputedWarning(models.Model):
 
     def action_compute(self):
         for wizard in self:
-            if wizard.transport_aller == 0.0:
+            if wizard.transport_aller == 0.0 and not wizard.already_transport:
                 raise UserError("Montant(s) de zéro !")
-            if wizard.transport_retour == 0.0 and wizard.offer_type == "classic":
+            if wizard.transport_retour == 0.0 and wizard.offer_type == "classic" and not wizard.already_transport:
                 raise UserError("Montant(s) de zéro !")
             if (wizard.frais_assemblage_retour == 0.0 or wizard.frais_assemblage_aller == 0.0) and wizard.has_assemblage:
                 raise UserError("Montant(s) de zéro !")
             wizard.order_id.action_remove_computed_lines()
-            wizard.order_id.line_computations(wizard.transport_aller, wizard.transport_retour, wizard.frais_assemblage_aller, wizard.frais_assemblage_retour)
+            wizard.order_id.line_computations(wizard.transport_aller, wizard.transport_retour, wizard.frais_assemblage_aller, wizard.frais_assemblage_retour, wizard.already_transport)

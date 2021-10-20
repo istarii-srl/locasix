@@ -72,6 +72,9 @@
                 <page name="confirm" string="Confirmation de la commande">
                     <field name="sale_confirm"/>
                 </page>
+                <page string="Annexe groupes électrogènes">
+                    <field name="electro_annexe"/>
+                </page>
                 <page name="display_fix" string="Ajustement d'affichage">
                     <group>
                         <group>
