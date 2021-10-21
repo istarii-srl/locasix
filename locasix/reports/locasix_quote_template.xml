@@ -321,7 +321,7 @@
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
                     </td>
-                    <t t-if="line.day_price != 0">
+                    <t t-if="line.day_price != 0 or line.week_price != 0 or line.month_price != 0">
                         <td width="15%" class="text-center">
                             <span t-esc="line.day_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
@@ -335,7 +335,7 @@
                             <span> HT</span>
                         </td>
                     </t>
-                    <t t-if="line.day_price == 0">
+                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0">
                         <td colspan="3" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
@@ -423,7 +423,7 @@
                     <td width="7%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
                     </td>
-                    <t t-if="line.day_price != 0">
+                    <t t-if="line.day_price != 0 or line.week_price != 0 or line.month_price != 0">
                         <td width="10%" class="text-center">
                             <span t-esc="line.day_price * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
@@ -449,7 +449,7 @@
                             <span> HT</span>
                         </td>
                     </t>
-                    <t t-if="line.day_price == 0">
+                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0">
                         <td colspan="6" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
