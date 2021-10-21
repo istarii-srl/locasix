@@ -361,7 +361,7 @@ class Order(models.Model):
         for order in self:
             has_assemblage = False
             for line in order.order_line:
-                if line.product_id and line.product_id.is_assemblage_product:
+                if line.product_id and line.product_id.is_assemblage_product and not line.from_compute:
                     has_assemblage = True
             if has_assemblage:
                 categ_id = self.env["product.category"].search([("name", "=", "Montage et assemblage")], limit=1)

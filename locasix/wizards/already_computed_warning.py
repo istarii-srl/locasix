@@ -23,7 +23,7 @@ class AlreadyComputedWarning(models.Model):
         for wizard in self:
             has_assemblage = False
             for line in wizard.order_id.order_line:
-                if line.product_id and line.product_id.is_assemblage_product:
+                if line.product_id and line.product_id.is_assemblage_product and not line.from_compute:
                     has_assemblage = True
             wizard.has_assemblage = has_assemblage
 
