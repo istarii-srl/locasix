@@ -577,7 +577,7 @@
     <template id="electro_appendix">
         <div class="page" style="page-break-before: always; font-size: 11px;">
             <t t-set="electro_annex" t-value="doc._get_electro_annexe()"/>
-            <t t-set="electro_annex" t-value="doc.electro_annex.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
+            <t t-set="electro_annex" t-value="electro_annex.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
             <t t-set="electro_annex" t-value="electro_annex.replace('&lt;p&gt;','')"/>
             <t t-set="electro_annex" t-value="electro_annex.replace('&lt;/p&gt;','')"/>
             <p style="font-size:11px;" t-raw="electro_annex"/>
