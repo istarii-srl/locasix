@@ -121,8 +121,8 @@ class OrderLine(models.Model):
                "prix_jour_double": 7,
                "prix_jour_8": 8,
                "prix_jour_24": 8,
-               "prix_jour": 9,
-               "prix_mois": 10,
+               "prix_mois": 9,
+               "prix_jour": 10,
                "prix_fixe": 11
             }
             section_lines = line.order_id.retrieve_lines_from_section_without_id(line)
@@ -315,9 +315,15 @@ class OrderLine(models.Model):
                         else:
                             price_unit += section_line.price_unit * percentage
 
+                if line.get_section_type() == "prix_mois":
+                    uom = self.env["uom.uom"].search([("name", "=", "Mois")], limit=1)
+                    if not uom:
+                        uom = line.product_uom
+                else:
+                    uom = line.product_uom
                 _logger.info(price_unit)
                 _logger.info(day_price)
-                vals = {"price_unit": price_unit, "day_price": day_price, "week_price": week_price, "month_price": month_price , 'from_compute_ins': True}
+                vals = {"price_unit": price_unit, "product_uom": uom, "day_price": day_price, "week_price": week_price, "month_price": month_price , 'from_compute_ins': True}
                 line.write(vals)
 
     def update_line_values(self, pricing=True):
