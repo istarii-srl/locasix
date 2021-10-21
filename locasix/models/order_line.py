@@ -320,7 +320,9 @@ class OrderLine(models.Model):
                     if not uom:
                         uom = line.product_uom
                 else:
-                    uom = line.product_uom
+                    uom = uom = self.env["uom.uom"].search([("name", "=", "Jours")], limit=1)
+                    if not uom:
+                        uom = line.product_uom
                 _logger.info(price_unit)
                 _logger.info(day_price)
                 vals = {"price_unit": price_unit, "product_uom": uom, "day_price": day_price, "week_price": week_price, "month_price": month_price , 'from_compute_ins': True}
