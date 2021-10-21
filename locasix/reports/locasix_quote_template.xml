@@ -576,26 +576,11 @@
 
     <template id="electro_appendix">
         <div class="page" style="page-break-before: always; font-size: 11px;">
-            <span class="appendix-title">Annexe groupes électrogènes et/ou mâts d'éclairage de réserves :</span>
-            <br/><br/>
-            <span>Nous portons à votre connaissance que nous n’avons pas de service de dépannage organisé durant les weekends (Du vendredi 16h00 jusqu’au lundi 07h00).</span>
-            <br/><br/>
-            <span>Notre expérience nous démontre que les problèmes qui surviennent sont généralement : <ul><li>Soit une panne par manque de gasoil</li><li>Soit un acte de malveillance.</li></ul></span>
-            <br/><br/>
-            <span>Nous constatons également qu’entre le moment où le technicien est informé du problème et le dépannage sur site (Ou encore remplacement de la machine), plusieurs heures sont parfois nécessaires.</span>
-            <br/><br/>
-            <span>Aussi, pour palier à ces inconvénients et vous protéger contre tout problème qui pourrait surgir, nous vous proposons la location d’un second groupe électrogène ou mât d'éclairage en réserve (Sous réserve des stocks disponibles).</span>
-            <br/><br/>
-            <span>Cette deuxième machine (Sous réserve qu’elle n’ait pas été utilisée) serait facturée à 50 % du prix de la première. Si cette proposition vous intéresse, merci de nous en informer.</span>
-            <br/><br/>
-            <span>Cette démarche ne nous empêche nullement de toujours faire le maximum pour vous servir un matériel en parfait état de fonctionnement.</span>
-            <br/><br/><br/>
-            <!-- <div class="row">
-                <div class="col-8"/>
-                <div class="col-4">
-                    <span>Fait à SAINT-GHISLAIN le 04/08/21</span>
-                </div>
-            </div> -->
+            <t t-set="electro_annex" t-value="doc._get_electro_annexe()"/>
+            <t t-set="electro_annex" t-value="doc.electro_annex.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
+            <t t-set="electro_annex" t-value="electro_annex.replace('&lt;p&gt;','')"/>
+            <t t-set="electro_annex" t-value="electro_annex.replace('&lt;/p&gt;','')"/>
+            <p style="font-size:11px;" t-raw="electro_annex"/>
         </div>
     </template>
 
