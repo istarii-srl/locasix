@@ -577,6 +577,7 @@
     <template id="electro_appendix">
         <div class="page" style="page-break-before: always; font-size: 11px;">
             <span class="appendix-title">Annexe groupes électrogènes et/ou mâts d'éclairage de réserves :</span>
+            <span> </span>
             <t t-set="electro_annex" t-value="doc.electro_annexe"/>
             <t t-set="electro_annex" t-value="electro_annex.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
             <t t-set="electro_annex" t-value="electro_annex.replace('&lt;p&gt;','')"/>
