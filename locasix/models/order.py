@@ -517,7 +517,9 @@ class Order(models.Model):
                 _logger.info(line.name)
                 _logger.info(line.category_id)
                 if line.product_id and line.order_id:
+                    _logger.info("1")
                     if line.category_id and line.category_id.show_section_order:
+                        _logger.info("2")
                         section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.category_id.id), ('order_id', "=", line.order_id.id)], limit=1)
                         if not section_id:
                             section_id = self.env["sale.order.line"].create({
@@ -588,6 +590,7 @@ class Order(models.Model):
             date_aller = False
             for line in order.order_line:
                 if not line.is_section and line.section_id:
+                    _logger.info("yoyoyo")
                     if line.product_id and line.product_id.is_transport_address_product:
                         _logger.info("address transport")
                         address_transport_line = line
