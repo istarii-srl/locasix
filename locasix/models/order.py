@@ -574,10 +574,10 @@ class Order(models.Model):
                     sections[section_id]["next_available"] = i+1
                     i += 40
             if transport:
-                sections[section_id]["section"].sequence = i
-                sections[section_id]["first"] = i
-                sections[section_id]["last"] = i+39
-                sections[section_id]["next_available"] = i+1
+                transport[section_id]["section"].sequence = i
+                transport[section_id]["first"] = i
+                transport[section_id]["last"] = i+39
+                transport[section_id]["next_available"] = i+1
                 i += 40
         _logger.info(sections)
 
