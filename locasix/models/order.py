@@ -599,6 +599,8 @@ class Order(models.Model):
                     if line.product_id and line.product_id.name =="Date retour":
                         date_retour = line
                     else:
+                        _logger.info(line.name)
+                        _logger.info(sections[line.section_id.id]["next_available"])
                         line.sequence = sections[line.section_id.id]["next_available"]
                         sections[line.section_id.id]["next_available"] += 1
             if address_transport_line:
