@@ -594,9 +594,9 @@ class Order(models.Model):
                     if line.product_id and line.product_id.is_transport_address_product:
                         _logger.info("address transport")
                         address_transport_line = line
-                    if line.product_id and line.product_id.name == "Date aller":
+                    elif line.product_id and line.product_id.name == "Date aller":
                         date_aller = line
-                    if line.product_id and line.product_id.name =="Date retour":
+                    elif line.product_id and line.product_id.name =="Date retour":
                         date_retour = line
                     else:
                         _logger.info(line.name)
