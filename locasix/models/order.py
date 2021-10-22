@@ -600,6 +600,7 @@ class Order(models.Model):
                         date_retour = line
                     else:
                         _logger.info(line.name)
+                        _logger.info(sections[line.section_id.id]["section"].name)
                         _logger.info(sections[line.section_id.id]["next_available"])
                         line.sequence = sections[line.section_id.id]["next_available"]
                         sections[line.section_id.id]["next_available"] += 1
