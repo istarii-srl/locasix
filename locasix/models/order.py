@@ -561,7 +561,17 @@ class Order(models.Model):
         _logger.info(sections)
         for order in self:
             i = 1
+            transport = False
             for section_id in sorted(sections.keys()):
+                if sections[section_id]["section"].name == "Transport":
+                    transport = sections[section_id]
+                else:
+                    sections[section_id]["section"].sequence = i
+                    sections[section_id]["first"] = i
+                    sections[section_id]["last"] = i+39
+                    sections[section_id]["next_available"] = i+1
+                    i += 40
+            if transport:
                 sections[section_id]["section"].sequence = i
                 sections[section_id]["first"] = i
                 sections[section_id]["last"] = i+39

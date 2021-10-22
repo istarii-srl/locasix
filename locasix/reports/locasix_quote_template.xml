@@ -243,7 +243,7 @@
                             <span t-esc="line.price_unit * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </div>
-                        <div t-if="line.price_unit == 0">
+                        <div t-if="line.price_unit == 0 and line.product_id.show_offert">
                             <span class="reduction text-center">Offert !</span>
                         </div>
                     </td>
@@ -335,7 +335,7 @@
                             <span> HT</span>
                         </td>
                     </t>
-                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0">
+                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0 and line.product_id.show_offert">
                         <td colspan="3" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
@@ -449,7 +449,7 @@
                             <span> HT</span>
                         </td>
                     </t>
-                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0">
+                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0 and line.product_id.show_offert">
                         <td colspan="6" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
