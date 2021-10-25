@@ -517,7 +517,9 @@ class Order(models.Model):
                 _logger.info(line.name)
                 _logger.info(line.category_id)
                 if line.product_id and line.order_id:
+                    _logger.info("1")
                     if line.category_id and line.category_id.show_section_order:
+                        _logger.info("2")
                         section_id = self.env["sale.order.line"].search([("is_section", "=", True), ("category_id", "=", line.category_id.id), ('order_id', "=", line.order_id.id)], limit=1)
                         if not section_id:
                             section_id = self.env["sale.order.line"].create({
@@ -561,11 +563,21 @@ class Order(models.Model):
         _logger.info(sections)
         for order in self:
             i = 1
+            transport = False
             for section_id in sorted(sections.keys()):
-                sections[section_id]["section"].sequence = i
-                sections[section_id]["first"] = i
-                sections[section_id]["last"] = i+39
-                sections[section_id]["next_available"] = i+1
+                if sections[section_id]["section"].name == "Transport":
+                    transport = sections[section_id]
+                else:
+                    sections[section_id]["section"].sequence = i
+                    sections[section_id]["first"] = i
+                    sections[section_id]["last"] = i+39
+                    sections[section_id]["next_available"] = i+1
+                    i += 40
+            if transport:
+                transport["section"].sequence = i
+                transport["first"] = i
+                transport["last"] = i+39
+                transport["next_available"] = i+1
                 i += 40
         _logger.info(sections)
 
@@ -581,11 +593,14 @@ class Order(models.Model):
                     if line.product_id and line.product_id.is_transport_address_product:
                         _logger.info("address transport")
                         address_transport_line = line
-                    if line.product_id and line.product_id.name == "Date aller":
+                    elif line.product_id and line.product_id.name == "Date aller":
                         date_aller = line
-                    if line.product_id and line.product_id.name =="Date retour":
+                    elif line.product_id and line.product_id.name =="Date retour":
                         date_retour = line
                     else:
+                        _logger.info(line.name)
+                        _logger.info(sections[line.section_id.id]["section"].name)
+                        _logger.info(sections[line.section_id.id]["next_available"])
                         line.sequence = sections[line.section_id.id]["next_available"]
                         sections[line.section_id.id]["next_available"] += 1
             if address_transport_line:

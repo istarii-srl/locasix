@@ -243,7 +243,7 @@
                             <span t-esc="line.price_unit * line_coefficient * line.product_uom_qty" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                         </div>
-                        <div t-if="line.price_unit == 0">
+                        <div t-if="line.price_unit == 0 and line.product_id.show_offert">
                             <span class="reduction text-center">Offert !</span>
                         </div>
                     </td>
@@ -335,7 +335,7 @@
                             <span> HT</span>
                         </td>
                     </t>
-                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0">
+                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0 and line.product_id.show_offert">
                         <td colspan="3" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
@@ -449,7 +449,7 @@
                             <span> HT</span>
                         </td>
                     </t>
-                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0">
+                    <t t-if="line.day_price == 0 and line.week_price == 0 and line.month_price == 0 and line.product_id.show_offert">
                         <td colspan="6" class="text-center">
                             <span class="reduction text-center">Offert !</span>
                         </td>
@@ -577,6 +577,7 @@
     <template id="electro_appendix">
         <div class="page" style="page-break-before: always; font-size: 11px;">
             <span class="appendix-title">Annexe groupes électrogènes et/ou mâts d'éclairage de réserves :</span>
+            <br/><br/>
             <t t-set="electro_annex" t-value="doc.electro_annexe"/>
             <t t-set="electro_annex" t-value="electro_annex.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
             <t t-set="electro_annex" t-value="electro_annex.replace('&lt;p&gt;','')"/>

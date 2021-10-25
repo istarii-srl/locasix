@@ -9,7 +9,7 @@
                     <field name="offer_type" invisible="1"/>
                     <field name="has_assemblage" invisible="1"/>
                     <field name="already_transport"/>
-                    <field name="transport_aller" attrs="{'invisible': ['|',('already_transport', '=', True), ('offer_type', '!=', 'classic')]}" required="1"/>
+                    <field name="transport_aller" attrs="{'invisible': [('already_transport', '=', True)]}" required="1"/>
                     <field name="transport_retour" attrs="{'invisible': ['|', ('already_transport', '=', True), ('offer_type', '!=', 'classic')], 'required': [('offer_type', '=', 'classic')]}"/>
                     <field name="frais_assemblage_aller" attrs="{'invisible': [('has_assemblage', '!=', True)], 'required': [('has_assemblage', '=', True)]}"/>
                     <field name="frais_assemblage_retour" attrs="{'invisible': [('has_assemblage', '!=', True)], 'required': [('has_assemblage', '=', True)]}"/>

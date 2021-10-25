@@ -32,6 +32,8 @@ class ProductTemplate(models.Model):
     
     is_transport_address_product = fields.Boolean(default=False)
 
+    show_offert = fields.Boolean(string="Affiche 'offert' si prix égal 0", default=True)
+
 
     technical_ids = fields.One2many(comodel_name="locasix.product.technical", inverse_name="product_tmpl_id")
     plan_ids = fields.One2many(comodel_name="locasix.product.plan", inverse_name="product_tmpl_id")
