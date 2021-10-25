@@ -210,7 +210,7 @@ class OrderLine(models.Model):
         _logger.info("write order line")
         _logger.info(vals)
 
-        if vals.get('day_price', False) or vals.get('week_price', False) or vals.get('month_price', False) or vals.get('months_2_discount', False) or vals.get('months_3_discount', False) or vals.get('months_6_discount', False) or vals.get('price_unit', False) or vals.get('sequence', False):
+        if vals.get('day_price', False) or vals.get('week_price', False) or vals.get('month_price', False) or vals.get('months_2_discount', False) or vals.get('months_3_discount', False) or vals.get('months_6_discount', False) or vals.get('price_unit', False) or vals.get('sequence', False) or vals.get("product_uom_qty", False):
             vals.pop("from_update", 1)
             if vals.get("from_compute_ins", False) or vals.get('from_transport', False):
                 vals.pop("from_transport", None)
@@ -309,11 +309,11 @@ class OrderLine(models.Model):
                 for section_line in section_lines:
                     if not section_line.is_insurance() and section_line.product_id:
                         if is_multi:
-                            day_price += section_line.day_price * percentage * section_line.product_uom_quantity
-                            week_price += section_line.week_price * percentage * section_line.product_uom_quantity
-                            month_price += section_line.month_price * percentage * section_line.product_uom_quantity
+                            day_price += section_line.day_price * percentage * section_line.product_uom_qty
+                            week_price += section_line.week_price * percentage * section_line.product_uom_qty
+                            month_price += section_line.month_price * percentage * section_line.product_uom_qty
                         else:
-                            price_unit += section_line.price_unit * percentage * section_line.product_uom_quantity
+                            price_unit += section_line.price_unit * percentage * section_line.product_uom_qty
 
                 if line.get_section_type() == "prix_mois":
                     uom = self.env["uom.uom"].search([("name", "=", "Mois")], limit=1)
