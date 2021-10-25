@@ -37,24 +37,26 @@
                     <br/>PRIX
                 </h2>
                 <div style="height: 85px;"/>
-                <div class="row" style="height: 200px;">
-                    <div style="width: 15px;"/>
-                    <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
-                        <span>
-                            <span t-field="doc.company_id.name"/> <br/>
-                            <span t-field="doc.company_id.street"/> <br/>
-                            <span t-field="doc.company_id.zip"/> <span t-field="doc.company_id.city"/> <br/>
-                            <span t-field="doc.company_id.phone"/> <br/>
-                            <span t-field="doc.company_id.vat"/> <br/>
-                        </span>
-                    </div>
-                    <div style="width: 10px;"/>
-                    <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
-                        <div class="row" style="margin: 0px !important;"><span t-field="doc.partner_id.name"/></div>
-                        <div class="row" style="margin: 0px !important;"><span>Numéro d'offre : </span><span t-field="doc.name"/></div>
-                        <div class="row" style="margin: 0px !important;"><span>Votre référence : </span><span t-field="doc.client_ref"/></div>
-                        <div class="row" style="margin: 0px !important;"><span>Date de l'offre : </span><span t-field="doc.date_order"  t-options='{"widget": "date"}'/></div>
-                        <div class="row" style="margin: 0px !important;"><span>Votre contact : </span><span t-field="doc.user_id.name"/></div>
+                <div style="height: 200px;">
+                    <div class="row">
+                        <div style="width: 15px;"/>
+                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                            <span>
+                                <span t-field="doc.company_id.name"/> <br/>
+                                <span t-field="doc.company_id.street"/> <br/>
+                                <span t-field="doc.company_id.zip"/> <span t-field="doc.company_id.city"/> <br/>
+                                <span t-field="doc.company_id.phone"/> <br/>
+                                <span t-field="doc.company_id.vat"/> <br/>
+                            </span>
+                        </div>
+                        <div style="width: 10px;"/>
+                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                            <div class="row" style="margin: 0px !important;"><span t-field="doc.partner_id.name"/></div>
+                            <div class="row" style="margin: 0px !important;"><span>Numéro d'offre : </span><span t-field="doc.name"/></div>
+                            <div class="row" style="margin: 0px !important;"><span>Votre référence : </span><span t-field="doc.client_ref"/></div>
+                            <div class="row" style="margin: 0px !important;"><span>Date de l'offre : </span><span t-field="doc.date_order"  t-options='{"widget": "date"}'/></div>
+                            <div class="row" style="margin: 0px !important;"><span>Votre contact : </span><span t-field="doc.user_id.name"/></div>
+                        </div>
                     </div>
                 </div>
                 <div style="height: 75px;"/>
