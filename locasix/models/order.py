@@ -328,7 +328,7 @@ class Order(models.Model):
             technicals = []
             used_product = set()
             for line in order.order_line:
-                if line.product_id and not line.product_id.id in used_product:
+                if line.show_images and line.product_id and not line.product_id.id in used_product:
                     used_product.add(line.product_id.id)
                     technicals += line.product_id.get_technicals()
             return technicals
@@ -338,7 +338,7 @@ class Order(models.Model):
             plans = []
             used_product = set()
             for line in order.order_line:
-                if line.product_id and not line.product_id.id in used_product:
+                if line.show_images and line.product_id and not line.product_id.id in used_product:
                     used_product.add(line.product_id.id)
                     plans += line.product_id.get_plans()
             return plans
