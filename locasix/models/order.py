@@ -323,6 +323,27 @@ class Order(models.Model):
         self.done_order = False
         return True        
 
+    def get_order_technicals(self):
+        for order in self:
+            technicals = []
+            used_product = set()
+            for line in order.order_line:
+                if line.product_id and not line.product_id.id in used_product:
+                    used_product.add(line.product_id.id)
+                    technicals += line.product_id.get_technicals()
+            return technicals
+    
+    def get_order_plans(self):
+        for order in self:
+            plans = []
+            used_product = set()
+            for line in order.order_line:
+                if line.product_id and not line.product_id.id in used_product:
+                    used_product.add(line.product_id.id)
+                    plans += line.product_id.get_plans()
+            return plans
+
+
     def line_computations(self, transport_aller, transport_retour, assemblage_aller, assemblage_retour, already_transport):
         sections = {}
         for order in self:

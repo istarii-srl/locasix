@@ -307,13 +307,13 @@ class OrderLine(models.Model):
                 _logger.info("MULTO")
                 _logger.info(is_multi)
                 for section_line in section_lines:
-                    if not section_line.is_insurance():
+                    if not section_line.is_insurance() and section_line.product_id:
                         if is_multi:
-                            day_price += section_line.day_price * percentage
-                            week_price += section_line.week_price * percentage
-                            month_price += section_line.month_price * percentage
+                            day_price += section_line.day_price * percentage * section_line.product_uom_quantity
+                            week_price += section_line.week_price * percentage * section_line.product_uom_quantity
+                            month_price += section_line.month_price * percentage * section_line.product_uom_quantity
                         else:
-                            price_unit += section_line.price_unit * percentage
+                            price_unit += section_line.price_unit * percentage * section_line.product_uom_quantity
 
                 if line.get_section_type() == "prix_mois":
                     uom = self.env["uom.uom"].search([("name", "=", "Mois")], limit=1)
