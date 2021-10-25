@@ -590,7 +590,6 @@ class Order(models.Model):
             date_aller = False
             for line in order.order_line:
                 if not line.is_section and line.section_id:
-                    _logger.info("yoyoyo")
                     if line.product_id and line.product_id.is_transport_address_product:
                         _logger.info("address transport")
                         address_transport_line = line
