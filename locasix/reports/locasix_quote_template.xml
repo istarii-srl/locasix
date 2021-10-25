@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div style="height: 75px;"/>
-                <div style="height: 400px;">
+                <div style="height: 410px;">
                     <t t-set="front_page_body_formatted" t-value="doc.front_page_body.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
                     <span t-raw="front_page_body_formatted"/>
                 </div>
