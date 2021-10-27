@@ -54,9 +54,9 @@ class Order(models.Model):
         for order in self:
             text = ""
             if order.rue:
-                text += order.rue
+                text += order.rue + " "
             if order.street_number:
-                text += " "+order.street_number + ", "
+                text += order.street_number + ", "
             if order.city:
                 text += order.city.postal_code+ " "+order.city.city+", "
                 if order.city.postal_code == "FR":
