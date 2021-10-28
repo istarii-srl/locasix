@@ -15,6 +15,7 @@
                 <field name="has_ref_to_condi"/>
                 <field name="show_offert"/>
                 <field name="is_insurance"/>
+                <field name="qty_same_as_parent"/>
                 <field name="insurance_percentage" attrs="{'invisible': [('is_insurance', '=', False)]}" widget="percentage"/>
                 <field name="is_temporary_product" groups="locasix.group_locasix_admin"/>
                 <field name="is_assemblage_product"/>

@@ -676,6 +676,7 @@ class Order(models.Model):
                             new_line = self.env["sale.order.line"].create({
                                 'order_id': line.order_id.id,
                                 'product_id': link.product_linked_id.product_variant_id.id,
+                                'product_uom_qty': line.product_uom_qty if link.product_linked_id.qty_same_as_parent else 1,
                             #    'section_id': line.section_id.id,
                                 'from_compute': True,
                             })

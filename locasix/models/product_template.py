@@ -27,6 +27,8 @@ class ProductTemplate(models.Model):
     months_3_discount = fields.Float(string="Remise 3 mois")
     months_6_discount = fields.Float(string="Remise 6 mois")
 
+    qty_same_as_parent = fields.Boolean(string="Même quantity que le produit parent", default=False)
+
     is_temporary_product = fields.Boolean(string="Temporaire", default=True)
     is_assemblage_product = fields.Boolean(string="Assemblage", default=True)
     
