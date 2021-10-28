@@ -36,7 +36,7 @@ class AlreadyComputedWarning(models.Model):
                 raise UserError("Montant(s) de zéro !")
             if wizard.frais_assemblage_aller == 0.0 and wizard.has_assemblage:
                 raise UserError("Montant(s) de zéro !")
-            if wizard.frais_assemblage_retour == 0.0 and wizard.has_assemblage and wizard.offer_type == "sale":
+            if wizard.frais_assemblage_retour == 0.0 and wizard.has_assemblage and wizard.offer_type != "sale":
                 raise UserError("Montant(s) de zéro !")
             wizard.order_id.action_remove_computed_lines()
             wizard.order_id.line_computations(wizard.transport_aller, wizard.transport_retour, wizard.frais_assemblage_aller, wizard.frais_assemblage_retour, wizard.already_transport)
