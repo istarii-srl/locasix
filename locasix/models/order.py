@@ -394,9 +394,7 @@ class Order(models.Model):
                 montage = self.env["product.template"].search([("default_code", "=", "FASSA")], limit=1)
                 if not montage:
                     montage = self.env["product.template"].create({"default_code": "FASSA", "name": "Frais de montage et assemblage aller", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-                demontage = self.env["product.template"].search([("default_code", "=", "FASSR")], limit=1)
-                if not demontage:
-                    demontage = self.env["product.template"].create({"default_code": "FASSR", "name": "Frais de montage et assemblage retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+
                 montage_in_order = self.env["sale.order.line"].search([("product_id", "=", montage.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
                 if not montage_in_order:
                     self.env["sale.order.line"].create({
@@ -406,15 +404,19 @@ class Order(models.Model):
                 #    'section_id': line.section_id.id,
                     'from_compute': True,
                 })
-                demontage_in_order = self.env["sale.order.line"].search([("product_id", "=", demontage.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
-                if not demontage_in_order:
-                    self.env["sale.order.line"].create({
-                    'order_id': self.id,
-                    'product_id': demontage.product_variant_id.id,
-                #    'section_id': line.section_id.id,
-                    'price_unit': assemblage_retour,
-                    'from_compute': True,
-                })
+                if order.offer_type != "sale":
+                    demontage = self.env["product.template"].search([("default_code", "=", "FASSR")], limit=1)
+                    if not demontage:
+                        demontage = self.env["product.template"].create({"default_code": "FASSR", "name": "Frais de montage et assemblage retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                    demontage_in_order = self.env["sale.order.line"].search([("product_id", "=", demontage.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
+                    if not demontage_in_order:
+                        self.env["sale.order.line"].create({
+                        'order_id': self.id,
+                        'product_id': demontage.product_variant_id.id,
+                    #    'section_id': line.section_id.id,
+                        'price_unit': assemblage_retour,
+                        'from_compute': True,
+                    })
 
 
 
