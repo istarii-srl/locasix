@@ -48,7 +48,7 @@ class Aller(models.Model):
 
     def _compute_color(self):
         for record in self:
-            record.color = COLORS_BY_STATE[record.state]
+            record.color = COLORS_BY_STATE[record.aller_type]
 
     def _state_selection(self):
         select = [("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé")]
