@@ -59,8 +59,7 @@
                 <field name="contract" string="Référence"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
-                <field name="aller_type" filters="1"/>
-                <field name="color" invisible="1"/>
+                <field name="aller_type" filters="1" color="color"/>
                 <field name="state"/>
                 <field name="remarque_ids"/>
                 <field name="note"/>
@@ -123,6 +122,7 @@
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
             <tree string="Allers" create="0">
+                <field name="color" invisible="1"/>
                 <field name="aller_type" invisible="1"/>
                 <field name="product_default_code"/>
                 <field name="product_unique_ref"/>
@@ -146,6 +146,7 @@
                     <field name="active" invisible="1"/>
                     <group>
                         <group>
+                            <field name="color" invisible="1"/>
                             <field name="aller_type" invisible="1"/>
                             <field name="day_id" readonly="1"/>
                             <field name="date"/>
