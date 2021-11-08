@@ -49,7 +49,7 @@
     </record>
 
     <record model="ir.ui.view" id="locasix_both_calendar">
-        <field name="name">locasix.aller.calendar</field>
+        <field name="name">locasix.both.calendar</field>
         <field name="model">locasix.aller</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
