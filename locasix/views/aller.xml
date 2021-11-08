@@ -60,6 +60,7 @@
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
                 <field name="aller_type" filters="1"/>
+                <field name="color" invisible="1"/>
                 <field name="state"/>
                 <field name="remarque_ids"/>
                 <field name="note"/>
