@@ -17,6 +17,7 @@
         </field>
     </record>
 
+
     <record model="ir.ui.view" id="locasix_assemblage_link_form">
         <field name="name">locasix.assemblage.link.form</field>
         <field name="model">locasix.assemblage.link</field>
