@@ -3,6 +3,14 @@ import datetime
 import logging
 _logger = logging.getLogger(__name__)
 
+
+COLORS_BY_STATE = {
+    'out': 0,
+    'in': 1,
+    'depl': 2,
+}
+
+
 class Aller(models.Model):
     _name = "locasix.aller"
     _description = "Un aller"
@@ -13,6 +21,8 @@ class Aller(models.Model):
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="progress", required=True)
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
+    color = fields.Integer(compute='_compute_color')
+
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
@@ -34,6 +44,11 @@ class Aller(models.Model):
     note = fields.Text(string="Remarque libre")
 
     active = fields.Boolean(string="Actif", default=True)
+
+
+    def _compute_color(self):
+        for record in self:
+            record.color = COLORS_BY_STATE[record.state]
 
     def _state_selection(self):
         select = [("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé")]
