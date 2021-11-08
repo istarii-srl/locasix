@@ -36,6 +36,7 @@
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
             <calendar string="Calendar View" date_start="date" color="address_id" mode="month" event_limit="5" create="0">
+                <field name="day_id"/>
                 <field name="address_id" filters="1"/>
                 <field name="contract" string="Référence"/>
                 <field name="city" string="Ville"/>
@@ -65,13 +66,14 @@
         <field name="domain">[('aller_type', '=', 'in')]</field>
     </record>
 
-    <record model="ir.actions.act_window" id="action_both">
+    <record model="ir.actions.act_window" id="action_aller_retour">
         <field name="name">Allers et Retours</field>
         <field name="res_model">locasix.aller</field>
-        <field name="view_mode">map</field>
+        <field name="view_mode">calendar,tree,form</field>
         <field name="view_id" ref="locasix.locasix_aller_calendar"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
     </record>
+
 
 
 

@@ -198,7 +198,7 @@ class DayCron(models.Model):
     def run_cron(self):
         _logger.info("CRON JOB Day")
         today = datetime.date.today()
-        max_limit = today + datetime.timedelta(days=180)
+        max_limit = today + datetime.timedelta(days=365)
         
         # Automated archiving
         #min_limit = today - datetime.timedelta(days=15)
