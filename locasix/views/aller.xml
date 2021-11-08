@@ -59,7 +59,7 @@
                 <field name="contract" string="Référence"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
-                <field name="aller_type"/>
+                <field name="aller_type" filters="1"/>
                 <field name="state"/>
                 <field name="remarque_ids"/>
                 <field name="note"/>
