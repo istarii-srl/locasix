@@ -6,8 +6,8 @@ _logger = logging.getLogger(__name__)
 
 COLORS_BY_STATE = {
     'out': 1,
-    'in': 4,
-    'depl': 7,
+    'in': 6,
+    'depl': 8,
 }
 
 
