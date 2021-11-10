@@ -135,7 +135,7 @@
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix weekend'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_second_line" t-value="['16h/weekend']"/>
+                    <t t-set="column_names_second_line" t-value="['40h/weekend']"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
