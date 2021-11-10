@@ -44,7 +44,13 @@ class OrderLine(models.Model):
 
     def get_line_type(self):
         for line in self:
-            if line.offer_type == "weekend":
+            if line.offer_type == "weekend" and line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates() and line.has_24_price:
+                return "weekend_double"
+            elif line.offer_type == "weekend" and line.is_multi and line.usage_rate_display == "24" and line.show_discount_rates() and line.has_24_price:
+                return "weekend_24"
+            elif line.offer_type == "weekend" and line.is_multi and line.usage_rate_display == "8" and line.show_discount_rates() and line.has_24_price:
+                return "weekend_8"
+            elif line.offer_type == "weekend":
                 return "weekend"
             elif line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates() and line.has_24_price:
                 return "prix_6_double"
@@ -109,21 +115,24 @@ class OrderLine(models.Model):
         # section forfait mensuel
         for line in self:
             precedence = {
-               "weekend":0,
-               "prix_6_double": 1,
-               "prix_6_24": 2,
-               "prix_6_8": 2,
-               "prix_3_double": 3,
-               "prix_3_24": 4,
-               "prix_3_8": 4,
-               "prix_6": 5,
-               "prix_3": 6,
-               "prix_jour_double": 7,
-               "prix_jour_8": 8,
-               "prix_jour_24": 8,
-               "prix_mois": 9,
-               "prix_jour": 10,
-               "prix_fixe": 11
+               "weekend_double": 0,
+               "weekend_24": 1,
+               "weekend_8": 2,
+               "weekend":3,
+               "prix_6_double": 4,
+               "prix_6_24": 5,
+               "prix_6_8": 5,
+               "prix_3_double": 5,
+               "prix_3_24": 6,
+               "prix_3_8": 6,
+               "prix_6": 7,
+               "prix_3": 8,
+               "prix_jour_double": 9,
+               "prix_jour_8": 10,
+               "prix_jour_24": 10,
+               "prix_mois": 11,
+               "prix_jour": 12,
+               "prix_fixe": 13
             }
             section_lines = line.order_id.retrieve_lines_from_section_without_id(line)
             best_type = "prix_fixe"
