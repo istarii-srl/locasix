@@ -44,11 +44,11 @@ class OrderLine(models.Model):
 
     def get_line_type(self):
         for line in self:
-            if line.offer_type == "weekend" and line.is_multi and line.usage_rate_display == "duo" and line.show_discount_rates() and line.has_24_price:
+            if line.offer_type == "weekend" and line.usage_rate_display == "duo" and line.show_discount_rates() and line.has_24_price:
                 return "weekend_double"
-            elif line.offer_type == "weekend" and line.is_multi and line.usage_rate_display == "24" and line.show_discount_rates() and line.has_24_price:
+            elif line.offer_type == "weekend" and line.usage_rate_display == "24" and line.show_discount_rates() and line.has_24_price:
                 return "weekend_24"
-            elif line.offer_type == "weekend" and line.is_multi and line.usage_rate_display == "8" and line.show_discount_rates() and line.has_24_price:
+            elif line.offer_type == "weekend" and line.usage_rate_display == "8" and line.show_discount_rates() and line.has_24_price:
                 return "weekend_8"
             elif line.offer_type == "weekend":
                 return "weekend"
