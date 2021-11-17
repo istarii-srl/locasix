@@ -136,7 +136,7 @@ class OrderLine(models.Model):
             }
             section_lines = line.order_id.retrieve_lines_from_section_without_id(line)
             best_type = "prix_fixe"
-            prec = 11
+            prec = 13
             best_has_24 = False
             hour_suffix = ""
             for line in section_lines:
