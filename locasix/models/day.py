@@ -16,7 +16,7 @@ class Day(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
 
-    aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers", domain=[('aller_type', '=', 'out')])
+    aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers", domain=[('aller_type', '=', 'out'), ('is_first_line', '=', False)])
     retour_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Retours", domain=[('aller_type', '=', 'in')])
 
     notes = fields.Text(string="Notes")
@@ -104,11 +104,11 @@ class Day(models.Model):
         if (day.aller_ids and len(day.aller_ids) > 0) or (day.retour_ids and len(day.retour_ids) > 0):
             if day.aller_ids:
                 for aller in day.aller_ids:
-                    if aller.active:
+                    if aller.active and not aller.is_first_line:
                         return False
             if day.retour_ids:
                 for aller in day.retour_ids:
-                    if aller.active:
+                    if aller.active and not aller.is_first_line:
                         return False
         return True
 
