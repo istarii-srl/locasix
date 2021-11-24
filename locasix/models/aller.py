@@ -305,7 +305,7 @@ class AllerCron(models.Model):
 
         allers = self.env["locasix.aller"].search([('date', '>=', min_limit), ('date', '<', max_limit), ('is_first_line', '=', True)])
         sorted_days = sorted(allers, key=lambda day: day.date)
-        new_day = today
+        new_day = min_limit
         i = 0
         while new_day < max_limit and i < len(sorted_days):
             if sorted_days[i].date == new_day:
