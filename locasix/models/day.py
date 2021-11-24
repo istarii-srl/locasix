@@ -214,7 +214,7 @@ class DayCron(models.Model):
             if sorted_days[i].day == new_day:
                 i += 1
                 new_day = new_day + datetime.timedelta(days=1)
-            elif sorted_days[i.day].day < new_day:
+            elif sorted_days[i].day < new_day:
                 i += 1
             else:
                 self.env["locasix.day"].create({

@@ -311,7 +311,7 @@ class AllerCron(models.Model):
             if sorted_days[i].date == new_day:
                 i += 1
                 new_day = new_day + datetime.timedelta(days=1)
-            elif sorted_days[i.day].date < new_day:
+            elif sorted_days[i].date < new_day:
                 i += 1
             else:
                 self.create_aller(new_day)
