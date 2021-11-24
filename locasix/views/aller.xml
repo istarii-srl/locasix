@@ -74,7 +74,7 @@
         <field name="view_mode">calendar,tree,form</field>
         <field name="view_id" ref="locasix.locasix_aller_calendar"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
-        <field name="domain">[('aller_type', '=', 'out')]</field>
+        <field name="domain">[('aller_type', '=', 'out'), ('is_first_line', '=', False)]</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_retour">
@@ -83,7 +83,7 @@
         <field name="view_mode">calendar,tree,form</field>
         <field name="view_id" ref="locasix.locasix_aller_calendar"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
-        <field name="domain">[('aller_type', '=', 'in')]</field>
+        <field name="domain">[('aller_type', '=', 'in'), ('is_first_line', '=', False)]</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_aller_retour">

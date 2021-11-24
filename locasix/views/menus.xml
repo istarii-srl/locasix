@@ -1,9 +1,8 @@
 <odoo>
     <menuitem name="Agenda" id="locasix_root_menu" web_icon="locasix,static/logo_locasix.png" groups="locasix.group_locasix_agenda_read"/>
-    <menuitem name="Journées" id="locasix_day_menu" parent="locasix_root_menu" sequence="1" action="locasix.action_day"/>
+    <menuitem name="Journées" id="locasix_day_menu" parent="locasix_root_menu" sequence="1" action="locasix.action_aller_retour"/>
     <menuitem name="Allers" id="locasix_aller_menu" parent="locasix_root_menu" sequence="2" action="locasix.action_aller"/>
     <menuitem name="Retours" id="locasix_retour_menu" parent="locasix_root_menu" sequence="3" action="locasix.action_retour"/>
-    <menuitem name="Allers et retours" id="locasix_aller_retour_menu" parent="locasix_root_menu" sequence="4" action="locasix.action_aller_retour"/>
     <menuitem name="Configuration" id="locasix_settings_menu" parent="locasix_root_menu" groups="locasix.group_locasix_admin" sequence="5"/>
     <menuitem name="Remarques" id="locasix_remarque_menu" parent="locasix_settings_menu" action="locasix.action_remarques" sequence="1"/>
     <menuitem name="Références des pièces" id="locasix_unique_ref_menu" parent="locasix_settings_menu" action="action_unique_ref" sequence="2"/>
