@@ -270,17 +270,17 @@ class AllerCron(models.Model):
                 })
 
             agg_id = self.env['locasix.agg.aller'].create({
-                "address_id": address_id,
+                "address_id": address_id.id,
                 "date": date,
-                "day_id": day_id,
-                "localite_id": localite_id,
+                "day_id": day_id.id,
+                "localite_id": localite_id.id,
                 "is_first_agg": True,
             })
 
         self.env["locasix.aller"].create({
                     'date': date,
-                    "day_id": day_id,
-                    "agg_id": agg_id,
+                    "day_id": day_id.id,
+                    "agg_id": agg_id.id,
                     "is_first_line": True,
         })
 
