@@ -257,7 +257,7 @@ class AllerCron(models.Model):
     def create_aller(self, date):
         day_id = self.env["locasix.day"].search([("day", "=", date)], limit=1)
         agg_id = self.env["locasix.agg.aller"].search([("is_first_agg", "=", True), ("day_id", "=", day_id.id)], limit=1)
-        product_id = self.env["product.template"].search(["name", "=", "Produit aller"], limit=1)
+        product_id = self.env["product.template"].search([("name", "=", "Produit aller")], limit=1)
         if not product_id:
             product_id = self.env["product.template"].create({
                 "name": "Produit aller",
