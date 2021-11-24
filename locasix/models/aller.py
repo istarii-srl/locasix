@@ -258,7 +258,7 @@ class AllerCron(models.Model):
         day_id = self.env["locasix.day"].search([("day", "=", date)], limit=1)
         agg_id = self.env["locasix.agg.aller"].search([("is_first_agg", "=", True), ("day_id", "=", day_id.id)], limit=1)
         if not agg_id:
-            address_id = self.env["res.partner"].search([("name", "=", "Contact de configuration")], limit="1")
+            address_id = self.env["res.partner"].search([("name", "=", "Contact de configuration")], limit=1)
             if not address_id:
                 address_id = self.env["res.partner"].create({"name": "Contact de configuration"})
             
