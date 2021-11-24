@@ -256,39 +256,40 @@ class AllerCron(models.Model):
 
     def create_aller(self, date):
         day_id = self.env["locasix.day"].search([("day", "=", date)], limit=1)
-        agg_id = self.env["locasix.agg.aller"].search([("is_first_agg", "=", True), ("day_id", "=", day_id.id)], limit=1)
-        product_id = self.env["product.template"].search([("name", "=", "Produit aller")], limit=1)
-        if not product_id:
-            product_id = self.env["product.template"].create({
-                "name": "Produit aller",
-            })
-        if not agg_id:
-            address_id = self.env["res.partner"].search([("name", "=", "Contact de configuration")], limit=1)
-            if not address_id:
-                address_id = self.env["res.partner"].create({"name": "Contact de configuration"})
-            
-            localite_id = self.env["locasix.municipality"].search([("postal_code", "=", "0000")], limit=1)
-            if not localite_id:
-                localite_id = self.env["locasix.municipality"].create({
-                    "postal_code": "0000",
-                    "city": "Commune de configuration",
+        if day_id:
+            agg_id = self.env["locasix.agg.aller"].search([("is_first_agg", "=", True), ("day_id", "=", day_id.id)], limit=1)
+            product_id = self.env["product.template"].search([("name", "=", "Produit aller")], limit=1)
+            if not product_id:
+                product_id = self.env["product.template"].create({
+                    "name": "Produit aller",
+                })
+            if not agg_id:
+                address_id = self.env["res.partner"].search([("name", "=", "Contact de configuration")], limit=1)
+                if not address_id:
+                    address_id = self.env["res.partner"].create({"name": "Contact de configuration"})
+                
+                localite_id = self.env["locasix.municipality"].search([("postal_code", "=", "0000")], limit=1)
+                if not localite_id:
+                    localite_id = self.env["locasix.municipality"].create({
+                        "postal_code": "0000",
+                        "city": "Commune de configuration",
+                    })
+
+                agg_id = self.env['locasix.agg.aller'].create({
+                    "address_id": address_id.id,
+                    "date": date,
+                    "day_id": day_id.id,
+                    "localite_id": localite_id.id,
+                    "is_first_agg": True,
                 })
 
-            agg_id = self.env['locasix.agg.aller'].create({
-                "address_id": address_id.id,
-                "date": date,
-                "day_id": day_id.id,
-                "localite_id": localite_id.id,
-                "is_first_agg": True,
+            self.env["locasix.aller"].create({
+                        'date': date,
+                        "day_id": day_id.id,
+                        "agg_id": agg_id.id,
+                        "product_id": product_id.product_variant_id.id,
+                        "is_first_line": True,
             })
-
-        self.env["locasix.aller"].create({
-                    'date': date,
-                    "day_id": day_id.id,
-                    "agg_id": agg_id.id,
-                    "product_id": product_id.product_variant_id.id,
-                    "is_first_line": True,
-        })
 
     def run_cron(self):
         _logger.info("CRON JOB Aller")
