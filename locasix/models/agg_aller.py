@@ -28,6 +28,7 @@ class AggAller(models.Model):
     is_weekend = fields.Boolean("Weekend", default=False)
     date_retour = fields.Datetime(string="Date de retour", default=lambda self: self._get_default_date())
     is_retours_created = fields.Boolean(default=False)
+    is_first_agg = fields.Boolean(default=False)
 
     def _get_default_date(self):
         return datetime.date.today()

@@ -10,6 +10,7 @@
                 <sheet>
                     <group>
                         <group>
+                            <field name="is_first_agg" invisible="1"/>
                             <field name="aller_type" invisible="1"/>
                             <field name="day_id" invisible="1"/>
                             <field name="is_depl" invisible="1"/>

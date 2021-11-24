@@ -23,6 +23,8 @@ class Aller(models.Model):
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
     color = fields.Integer(compute='_compute_color')
 
+    is_first_line = fields.Boolean(default=False)
+
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
@@ -75,7 +77,9 @@ class Aller(models.Model):
     @api.depends('date', 'address_id')
     def _compute_name(self):
         for aggAller in self:
-            if aggAller.address_id:
+            if aggAller.is_first_line and aggAller.date:
+                aggAller.name = aggAller.date.strftime('%d/%m/%Y')
+            elif aggAller.address_id:
                 aggAller.name = aggAller.address_id.name + (" - "+aggAller.city if aggAller.city else "")
             else:
                 aggAller.name = "/"
@@ -244,4 +248,68 @@ class Aller(models.Model):
         'view_id': view.id,
         'res_id': self.agg_id.id,
         'target': 'new',
-        }      
+        }
+
+class AllerCron(models.Model):
+    _name = "locasix.aller.cron"
+    _description = "Cron job to create allers"
+
+    def create_aller(self, date):
+        day_id = self.env["locasix.day"].search([("day", "=", date)], limit=1)
+        agg_id = self.env["locasix.agg.aller"].search([("is_first_agg", "=", True), ("day_id", "=", day_id.id)], limit=1)
+        if not agg_id:
+            address_id = self.env["res.partner"].search([("name", "=", "Contact de configuration")], limit="1")
+            if not address_id:
+                address_id = self.env["res.partner"].create({"name": "Contact de configuration"})
+            
+            localite_id = self.env["locasix.municipality"].search([("postal_code", "=", "0000")], limit=1)
+            if not localite_id:
+                localite_id = self.env["locasix.municipality"].create({
+                    "postal_code": "0000",
+                    "city": "Commune de configuration",
+                })
+
+            agg_id = self.env['locasix.agg.aller'].create({
+                "address_id": address_id,
+                "date": date,
+                "day_id": day_id,
+                "localite_id": localite_id,
+                "is_first_agg": True,
+            })
+
+        self.env["locasix.aller"].create({
+                    'date': date,
+                    "day_id": day_id,
+                    "agg_id": agg_id,
+                    "is_first_line": True,
+        })
+
+    def run_cron(self):
+        _logger.info("CRON JOB Aller")
+        today = datetime.date.today()
+        max_limit = today + datetime.timedelta(days=363)
+        
+        # Automated archiving
+        #min_limit = today - datetime.timedelta(days=15)
+        #days_to_archived = self.env["locasix.day"].search([("day", '<', min_limit)])
+        #for day in days_to_archived:
+        #    day.active = False
+
+        allers = self.env["locasix.aller"].search([('date', '>=', today), ('date', '<', max_limit)])
+        sorted_days = sorted(allers, key=lambda day: day.day)
+        new_day = today
+        i = 0
+        while new_day < max_limit and i < len(sorted_days):
+            if sorted_days[i].date == new_day:
+                i += 1
+                new_day = new_day + datetime.timedelta(days=1)
+            elif sorted_days[i.day].date < new_day:
+                i += 1
+            else:
+                self.create_aller(new_day)
+                new_day = new_day + datetime.timedelta(days=1)
+        while new_day < max_limit:
+            self.create_aller(new_day)
+            new_day = new_day + datetime.timedelta(days=1)
+
+        return      

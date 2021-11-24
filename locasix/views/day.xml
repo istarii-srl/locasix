@@ -53,7 +53,7 @@
                     <field name="day"/>
                     <group>
                         <group style="width: 50% !important;" string="Allers">
-                            <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}" nolabel="1"/>
+                            <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}" domain="[('is_first_line', '=', False)]" nolabel="1"/>
 
                         </group>
                         <group style="width: 50% !important;" string="Retours">
