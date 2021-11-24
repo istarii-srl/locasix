@@ -295,6 +295,7 @@ class AllerCron(models.Model):
         _logger.info("CRON JOB Aller")
         today = datetime.date.today()
         max_limit = today + datetime.timedelta(days=363)
+        min_limit = today - datetime.timedelta(days=30)
         
         # Automated archiving
         #min_limit = today - datetime.timedelta(days=15)
@@ -302,7 +303,7 @@ class AllerCron(models.Model):
         #for day in days_to_archived:
         #    day.active = False
 
-        allers = self.env["locasix.aller"].search([('date', '>=', today), ('date', '<', max_limit)])
+        allers = self.env["locasix.aller"].search([('date', '>=', min_limit), ('date', '<', max_limit), ('is_first_line', '=', True)])
         sorted_days = sorted(allers, key=lambda day: day.day)
         new_day = today
         i = 0
