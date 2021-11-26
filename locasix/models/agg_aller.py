@@ -13,7 +13,7 @@ class AggAller(models.Model):
     date = fields.Date(string="Date", required=True)
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
 
-    address_id = fields.Many2one(comodel_name="res.partner", string="Contact", required=True)
+    address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
