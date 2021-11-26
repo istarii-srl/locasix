@@ -32,7 +32,7 @@
                         <field name="date_retour" attrs="{'invisible': [('is_weekend', '=', False)], 'readonly': [('is_retours_created', '=', True)]}"/>
                     </group>
                     <notebook>
-                        <page string="Allers" attrs="{'invisible': [('aller_type', '=', 'out')]}">
+                        <page string="Allers" attrs="{'invisible': [('aller_type', '=', 'in')]}">
                             <field name="aller_ids" mode="tree">
                                 <tree editable="bottom" string="Allers">
                                     <control>
@@ -63,7 +63,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Retours" attrs="{'invisible': [('aller_type', '!=', 'out')]}">
+                        <page string="Retours" attrs="{'invisible': [('aller_type', '!=', 'in')]}">
                             <field name="aller_ids" mode="tree">
                                 <tree editable="bottom" string="Allers">
                                     <control>
