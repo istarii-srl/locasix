@@ -42,6 +42,7 @@
                         <div style="width: 15px;"/>
                         <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
                             <span>
+                                <span t-field="doc.company_id.parent_id.name"/>
                                 <span t-if="doc.company_id.parent_id" t-esc="doc.company_id.parent_id.name"/> 
                                 <span t-if="not doc.company_id.parent_id" t-esc="doc.company_id.name"/> 
                                 <br/>
