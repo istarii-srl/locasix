@@ -10,11 +10,11 @@ class Partner(models.Model):
 
     has_insurance = fields.Boolean(string="Mettre une assurance dans les offres", default=lambda self: self._get_default_has_insurance())
 
-    def _get_name(self):
-        name = super(Partner, self)._get_name()
-        if self.compte:
-            name = "["+self.compte+"] "+ name
-        return name
+    #def _get_name(self):
+    #    name = super(Partner, self)._get_name()
+    #    if self.compte:
+    #        name = "["+self.compte+"] "+ name
+    #    return name
 
     @api.depends('is_company', 'name', 'parent_id.display_name', 'type', 'company_name', 'compte')
     def _compute_display_name(self):
