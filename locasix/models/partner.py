@@ -23,7 +23,7 @@ class Partner(models.Model):
             
             display_name = names.get(partner.id)
             if partner.compte:
-                partner.display_name = "["+partner.compte+"] "+display_name
+                partner.display_name = +display_name +" ["+partner.compte+"]"
             else:
                 partner.display_name = display_name
 
