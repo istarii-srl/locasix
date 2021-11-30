@@ -50,4 +50,4 @@ class ProductCron(models.Model):
     def run_recompute(self):
         partners = self.env["res.partner"].search([])
         for partner in partners:
-            partner.recompute()
+            partner._compute_display_name()
