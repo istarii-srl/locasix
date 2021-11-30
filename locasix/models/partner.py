@@ -41,6 +41,12 @@ class Partner(models.Model):
             obj.has_insurance = obj.parent_id.has_insurance
         return obj
 
+
+class ProductCron(models.Model):
+    _name ="locasix.partner.cron"
+    _description = "Archivage automatique des produits temporaire"
+
+
     def run_recompute(self):
         partners = self.env["res.partner"].search([])
         for partner in partners:

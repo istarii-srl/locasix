@@ -50,7 +50,7 @@
             <field name="interval_type">minutes</field>
             <field name="numbercall">1</field>
             <field eval="False" name="doall"/>
-            <field name="model_id" ref="res.model_res_partner"/>
+            <field name="model_id" ref="locasix.model_locasix_partner_cron"/>
             <field name="state">code</field>
             <field name="code">model.run_recompute()</field>
         </record>
