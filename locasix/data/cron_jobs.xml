@@ -41,4 +41,18 @@
             <field name="nextcall" eval="(DateTime.now().replace(hour=3, minute=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />
         </record>
     </data>
+
+    <data>
+        <record id="ir_cron_recompute_contacts" model="ir.cron">
+            <field name="name">Recompute contacts</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">1</field>
+            <field eval="False" name="doall"/>
+            <field name="model_id" ref="res.model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.run_recompute()</field>
+        </record>
+    </data>
 </odoo>

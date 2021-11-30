@@ -40,3 +40,8 @@ class Partner(models.Model):
         if obj.parent_id:
             obj.has_insurance = obj.parent_id.has_insurance
         return obj
+
+    def run_recompute(self):
+        partners = self.env["res.partner"].search([])
+        for partner in partners:
+            partner.recompute()
