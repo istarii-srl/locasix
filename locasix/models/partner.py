@@ -20,13 +20,13 @@ class Partner(models.Model):
     def _compute_display_name(self):
         diff = dict(show_address=None, show_address_only=None, show_email=None, html_format=None, show_vat=None)
         names = dict(self.with_context(**diff).name_get())
-        for partner in self:
+        #for partner in self:
             
-            display_name = names.get(partner.id)
-            if partner.compte:
-                partner.display_name = "["+partner.compte+"] "+display_name
-            else:
-                partner.display_name = display_name
+            #display_name = names.get(partner.id)
+            #if partner.compte:
+            #    partner.display_name = "["+partner.compte+"] "+display_name
+            #else:
+            #    partner.display_name = display_name
 
 
     def _get_default_has_insurance(self):
