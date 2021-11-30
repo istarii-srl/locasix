@@ -6,6 +6,7 @@ class Partner(models.Model):
 
     compte = fields.Char(string="Compte")
     alpha_key = fields.Char(string="Clé alpha")
+    display_name = fields.Char(compute='_compute_display_name', store=False, index=True)
 
     has_insurance = fields.Boolean(string="Mettre une assurance dans les offres", default=lambda self: self._get_default_has_insurance())
 
@@ -14,6 +15,19 @@ class Partner(models.Model):
         if self.compte:
             name = "["+self.compte+"] "+ name
         return name
+
+    @api.depends('is_company', 'name', 'parent_id.display_name', 'type', 'company_name', 'compte')
+    def _compute_display_name(self):
+        diff = dict(show_address=None, show_address_only=None, show_email=None, html_format=None, show_vat=None)
+        names = dict(self.with_context(**diff).name_get())
+        for partner in self:
+            
+            display_name = names.get(partner.id)
+            if partner.compte:
+                partner.display_name = "["+partner.compte+"] "+display_name
+            else:
+                partner.display_name = display_name
+
 
     def _get_default_has_insurance(self):
         if self.parent_id:
