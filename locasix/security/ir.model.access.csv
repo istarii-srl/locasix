@@ -23,7 +23,7 @@ access_locasix_aller_user_read,locasix.locasix.aller,model_locasix_aller,group_l
 access_locasix_aller_user_use,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_user,1,1,1,0
 access_locasix_aller_user_admin,locasix.locasix.aller,model_locasix_aller,group_locasix_admin,1,1,1,1
 access_locasix_agg_aller_user_read,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_read,1,0,0,0
-access_locasix_agg_aller_user_use,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_user,1,1,1,0
+access_locasix_agg_aller_user_use,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_user,1,1,1,1
 access_locasix_agg_aller_user_admin,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_admin,1,1,1,1
 access_locasix_assemblage_link_user,locasix.locasix.assemblage.link,model_locasix_assemblage_link,base.group_user,1,1,1,1
 access_locasix_remarque_user,locasix.locasix.remarque,model_locasix_remarque,base.group_user,1,1,1,1
