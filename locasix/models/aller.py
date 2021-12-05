@@ -83,6 +83,12 @@ class Aller(models.Model):
                 aggAller.name = aggAller.address_id.name + (" - "+aggAller.city if aggAller.city else "")
             else:
                 aggAller.name = "/"
+    
+    def unlink(self):
+        for aller in self:
+            for history in aller.history_ids:
+                history.unlink()
+        return super(Aller, self).unlink()
 
     @api.model
     def create(self, vals):
