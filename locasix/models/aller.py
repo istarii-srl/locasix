@@ -53,15 +53,15 @@ class Aller(models.Model):
     def _compute_displayed_names(self):
         for aller in self:
             if aller.city:
-                if len(aller.city) > 15:
+                if len(aller.city) > 14:
                     aller.displayed_city = aller.city[:14] +".."
                 else:
                     aller.displayed_city = aller.city
             else:
                 aller.displayed_city = "/"
             if aller.address_id and aller.address_id.display_name:
-                if len(aller.address_id.display_name) > 15:
-                    aller.displayed_client = aller.address_id.display_name[:14] +".."
+                if len(aller.address_id.display_name) > 18:
+                    aller.displayed_client = aller.address_id.display_name[:18] +".."
                 else:
                     aller.displayed_client = aller.address_id.display_name
             else:
