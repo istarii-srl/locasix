@@ -53,8 +53,8 @@ class Aller(models.Model):
     def _compute_displayed_names(self):
         for aller in self:
             if aller.city:
-                if len(aller.city) > 14:
-                    aller.displayed_city = aller.city[:14] +".."
+                if len(aller.city) > 17:
+                    aller.displayed_city = aller.city[:17] +".."
                 else:
                     aller.displayed_city = aller.city
             else:
