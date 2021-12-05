@@ -49,7 +49,7 @@ class Aller(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
 
-    @api.depends('city', 'address_id', 'localite_id', 'localite_id_depl', 'is_depl')
+    @api.depends('city', 'address_id')
     def _compute_displayed_names(self):
         for aller in self:
             if aller.city:
@@ -60,8 +60,8 @@ class Aller(models.Model):
             else:
                 aller.displayed_city = "/"
             if aller.address_id and aller.address_id.display_name:
-                if len(aller.address_id.display_name) > 18:
-                    aller.displayed_client = aller.address_id.display_name[:18] +".."
+                if len(aller.address_id.display_name) > 23:
+                    aller.displayed_client = aller.address_id.display_name[:23] +".."
                 else:
                     aller.displayed_client = aller.address_id.display_name
             else:
