@@ -134,6 +134,7 @@ class Aller(models.Model):
             agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
             vals["date"] = agg_id.date
         obj = super(Aller, self).create(vals)
+        obj.is_depl = obj.agg_id.is_depl
         obj.create_history_message("Création de l'aller")
         return obj
 
