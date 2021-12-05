@@ -33,8 +33,10 @@ class Aller(models.Model):
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
 
-    full_name = fields.Char(string="Nom du client", related="address_id.display_name")
-    city = fields.Char(string="Ville", compute="_compute_city", store=True)
+    full_name = fields.Char(string="Nom du client ", related="address_id.display_name")
+    displayed_client = fields.Char(string="Nom du client", compute="_compute_displayed_names")
+    city = fields.Char(string="Ville ", compute="_compute_city", store=True)
+    displayed_city = fields.Char(string="Ville", compute="_compute_displayed_names")
     contract = fields.Char(string="Contrat")
 
     product_default_code = fields.Char(string="Ref", related="product_id.default_code")
@@ -46,6 +48,24 @@ class Aller(models.Model):
     note = fields.Text(string="Remarque libre")
 
     active = fields.Boolean(string="Actif", default=True)
+
+    @api.depends('city', 'address_id')
+    def _compute_displayed_names(self):
+        for aller in self:
+            if aller.city:
+                if len(aller.city) > 15:
+                    aller.displayed_city = aller.city[:14] +".."
+                else:
+                    aller.displayed_city = aller.city
+            else:
+                aller.displayed_city = "/"
+            if aller.address_id and aller.address_id.display_name:
+                if len(aller.address_id.display_name) > 15:
+                    aller.displayed_client = aller.address_id.display_name[:14] +".."
+                else:
+                    aller.displayed_client = aller.address_id.display_name
+            else:
+                aller.displayed_client = "/"
 
 
     def _compute_color(self):
