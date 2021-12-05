@@ -49,7 +49,7 @@ class Aller(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
 
-    @api.depends('city', 'address_id')
+    @api.depends('city', 'address_id', 'localite_id', 'localite_id_depl', 'is_depl')
     def _compute_displayed_names(self):
         for aller in self:
             if aller.city:
