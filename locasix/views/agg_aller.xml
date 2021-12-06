@@ -67,7 +67,7 @@
                             <field name="aller_ids" mode="tree">
                                 <tree editable="bottom" string="Allers">
                                     <control>
-                                        <create name="add_product_control" string="Ajouter un aller" context="{
+                                        <create name="add_product_control" string="Ajouter un retour" context="{
                                         'default_remarque_ids': parent.remarque_ids,
                                         'default_day_id': parent.day_id,
                                         'default_is_depl': parent.is_depl,
