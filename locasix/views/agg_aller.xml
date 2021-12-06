@@ -64,7 +64,7 @@
                             </field>
                         </page>
                         <page string="Retours" attrs="{'invisible': [('aller_type', '!=', 'in')]}">
-                            <field name="aller_ids" mode="tree"> d
+                            <field name="aller_ids" mode="tree">
                                 <tree editable="bottom" string="Allers">
                                     <control>
                                         <create name="add_product_control_2" string="Ajouter un retour" context="{
