@@ -132,6 +132,8 @@ class Aller(models.Model):
             vals["is_depl"] = agg_id.is_depl
         if not "date" in vals or not vals.get("date", False):
             agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
+            if not "day_id" in vals or not vals.get("day_id", False):
+                vals["day_id"] = agg_id.day_id.id
             vals["date"] = agg_id.date
         obj = super(Aller, self).create(vals)
         obj.is_depl = obj.agg_id.is_depl
