@@ -114,27 +114,13 @@ class Aller(models.Model):
     def create(self, vals):
         # CHECK IF MERGE NEEDED
         _logger.info("in create aller")
-        if not "address_id" in vals or not vals.get("address_id", False):
-            _logger.info("address")
-            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
-            _logger.info(agg_id.address_id)
-            vals["address_id"] = agg_id.address_id.id
-        if not "localite_id" in vals or not vals.get("localite_id", False):
-            _logger.info("address")
-            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
-            _logger.info(agg_id.localite_id)
-            vals["localite_id"] = agg_id.localite_id.id
-        if not "localite_id_depl" in vals or not vals.get("localite_id_depl", False):
-            _logger.info("address")
-            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
-            _logger.info(agg_id.address_id)
-            vals["localite_id_depl"] = agg_id.localite_id_depl.id
-            vals["is_depl"] = agg_id.is_depl
-        if not "date" in vals or not vals.get("date", False):
-            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
-            if not "day_id" in vals or not vals.get("day_id", False):
-                vals["day_id"] = agg_id.day_id.id
-            vals["date"] = agg_id.date
+        agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
+        vals["localite_id_depl"] = agg_id.localite_id_depl.id
+        vals["is_depl"] = agg_id.is_depl
+        vals["address_id"] = agg_id.address_id.id
+        vals["localite_id"] = agg_id.localite_id.id
+        vals["day_id"] = agg_id.day_id.id
+        vals["date"] = agg_id.date
         obj = super(Aller, self).create(vals)
         obj.is_depl = obj.agg_id.is_depl
         obj.create_history_message("Création de l'aller")
