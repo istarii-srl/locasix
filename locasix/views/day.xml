@@ -52,11 +52,11 @@
                     </div>
                     <field name="day"/>
                     <group>
-                        <group style="width: 40% !important;" string="Allers">
+                        <group style="width: 50% !important;" string="Allers">
                             <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}" domain="[('is_first_line', '=', False)]" nolabel="1"/>
 
                         </group>
-                        <group style="width: 40% !important;" string="Retours">
+                        <group style="width: 50% !important;" string="Retours">
                             <field name="retour_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree'}" nolabel="1"/>
 
                         </group>
