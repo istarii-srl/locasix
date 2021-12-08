@@ -343,7 +343,8 @@ class Order(models.Model):
                 if line.show_images and line.product_id and not line.product_id.id in used_product:
                     used_product.add(line.product_id.id)
                     pl = line.product_id.get_plans()
-                    plans += pl
+                    if pl:
+                        plans += pl
             return plans
 
 
