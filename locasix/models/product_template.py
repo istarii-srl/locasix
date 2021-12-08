@@ -90,9 +90,14 @@ class ProductTemplate(models.Model):
     def get_plans(self):
         for product in self:
             if product.is_assemblage_product:
-                plans = product.plan_ids[:]
+                if product.plan_ids:
+                    plans = product.plan_ids[:]
+                else:
+                    plans = []
                 for assemblage in product.assemblage_ids:
-                    plans += assemblage.linked_product_id.get_plans()
+                    pl = assemblage.linked_product_id.get_plans()
+                    if pl:
+                        plans += pl
                 return plans
             else:
                 return product.plan_ids
@@ -100,9 +105,14 @@ class ProductTemplate(models.Model):
     def get_technicals(self):
         for product in self:
             if product.is_assemblage_product:
-                plans = product.technical_ids[:]
+                if product.technical_ids:
+                    plans = product.technical_ids[:]
+                else:
+                    plans = []
                 for assemblage in product.assemblage_ids:
-                    plans += assemblage.linked_product_id.get_technicals()
+                    tec = assemblage.linked_product_id.get_technicals()
+                    if tec:
+                        plans += tec
                 return plans
             else:
                 return product.technical_ids
