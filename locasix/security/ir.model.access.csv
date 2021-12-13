@@ -23,7 +23,7 @@ access_locasix_aller_user_read,locasix.locasix.aller,model_locasix_aller,group_l
 access_locasix_aller_user_use,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_user,1,1,1,0
 access_locasix_aller_user_admin,locasix.locasix.aller,model_locasix_aller,group_locasix_admin,1,1,1,1
 access_locasix_agg_aller_user_read,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_read,1,0,0,0
-access_locasix_agg_aller_user_use,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_user,1,1,1,0
+access_locasix_agg_aller_user_use,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_user,1,1,1,1
 access_locasix_agg_aller_user_admin,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_admin,1,1,1,1
 access_locasix_assemblage_link_user,locasix.locasix.assemblage.link,model_locasix_assemblage_link,base.group_user,1,1,1,1
 access_locasix_remarque_user,locasix.locasix.remarque,model_locasix_remarque,base.group_user,1,1,1,1
@@ -37,3 +37,5 @@ access_locasix_aller_history_line_user,locasix.locasix.aller.history.line,model_
 access_locasix_municipality_user,locasix.locasix.municipality,model_locasix_municipality,base.group_user,1,1,1,1
 access_locasix_product_cron_user,locasix.locasix.product.cron,model_locasix_product_cron,base.group_user,1,1,1,1
 access_locasix_aller_cron_user,locasix.locasix.aller.cron,model_locasix_aller_cron,base.group_user,1,1,1,1
+access_locasix_partner_cron_user,locasix.locasix.partner.cron,model_locasix_partner_cron,base.group_user,1,1,1,1
+access_locasix_contract_user,locasix.locasix.contract,model_locasix_contract,base.group_user,1,1,1,1

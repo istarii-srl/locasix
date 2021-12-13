@@ -32,7 +32,7 @@
         <field name="name">locasix.day.form</field>
         <field name="model">locasix.day</field>
         <field name="arch" type="xml">
-            <form string="Jours">
+            <form string="Jours" create="0">
                 <header>
                     <button name="action_previous" type="object" icon="fa-arrow-left" class="oe_highlight"/>
                     <button name="action_today" type="object" string="Aujourd'hui" class="oe_highlight"/>

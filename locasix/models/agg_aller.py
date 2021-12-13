@@ -99,31 +99,37 @@ class AggAller(models.Model):
     @api.model
     def create(self, vals):
         obj = super(AggAller, self).create(vals)
+        obj.enforce_day_matches_date()
         obj.check_and_merge()
         obj.weekend_check()
         return obj
+    
+    def enforce_day_matches_date(self):
+        if self.date != self.day_id.day:
+            newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)
+            if not newday_id:
+                newday_id = self.env["locasix.day"].create({"day": self.date})
+            
+            self.day_id = newday_id
+            for aller in self.aller_ids:
+                aller.day_id = newday_id
+                aller.date = self.date        
 
     def write(self, vals):
         _logger.info("write aggAller")
         _logger.info(vals)
         res = super(AggAller, self).write(vals)
-        if "address_id" in vals or "localite_id" in vals:
+        if "address_id" in vals or "localite_id" in vals or "localite_id_depl" in vals:
             if self.date == self.day_id.day:
                 for aller in self.aller_ids:
                     aller.localite_id = self.localite_id
                     aller.address_id = self.address_id
+                    aller.localite_id_depl = self.localite_id_depl
                 self.check_and_merge()                
 
         if "date" in vals:
             if self.date != self.day_id.day:
-                newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)
-                if not newday_id:
-                    newday_id = self.env["locasix.day"].create({"day": self.date})
-                
-                self.day_id = newday_id
-                for aller in self.aller_ids:
-                    aller.day_id = newday_id
-                    aller.date = self.date
+                self.enforce_day_matches_date()
                 self.check_and_merge()
         self.weekend_check()
 

@@ -33,9 +33,12 @@ class Aller(models.Model):
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
 
-    full_name = fields.Char(string="Nom du client", related="address_id.display_name")
-    city = fields.Char(string="Ville", compute="_compute_city", store=True)
-    contract = fields.Char(string="Contrat")
+    full_name = fields.Char(string="Nom du client ", related="address_id.display_name")
+    displayed_client = fields.Char(string="Nom du client", compute="_compute_displayed_names")
+    city = fields.Char(string="Ville ", compute="_compute_city", store=True)
+    displayed_city = fields.Char(string="Ville", compute="_compute_displayed_names")
+    contract = fields.Char(string="Contrat ")
+    contract_id = fields.Many2one(string="Contrat", comodel_name="locasix.contract")
 
     product_default_code = fields.Char(string="Ref", related="product_id.default_code")
     product_id = fields.Many2one(string="Produit", comodel_name="product.product", required=True)
@@ -43,9 +46,36 @@ class Aller(models.Model):
 
     history_ids = fields.One2many(string="Lignes de l'historique", comodel_name="locasix.aller.history.line", inverse_name="aller_id")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
-    note = fields.Text(string="Remarque libre")
+    note = fields.Text(string="Remarque libre ")
+    displayed_note = fields.Text(string="Remarque libre", compute="_compute_displayed_names")
 
     active = fields.Boolean(string="Actif", default=True)
+
+    @api.depends('city', 'address_id', 'localite_id', 'localite_id_depl', 'is_depl', 'note')
+    def _compute_displayed_names(self):
+        for aller in self:
+            if aller.city:
+                if len(aller.city) > 23:
+                    aller.displayed_city = aller.city[:23] +".."
+                else:
+                    aller.displayed_city = aller.city
+            else:
+                aller.displayed_city = "/"
+            if aller.address_id and aller.address_id.display_name:
+                if len(aller.address_id.display_name) > 17:
+                    aller.displayed_client = aller.address_id.display_name[:17] +".."
+                else:
+                    aller.displayed_client = aller.address_id.display_name
+            else:
+                aller.displayed_client = "/"
+            if aller.note:
+                if len(aller.note) > 20:
+                    aller.displayed_note = aller.note[:20] + ".."
+                else:
+                    aller.displayed_note = aller.note
+            else:
+                aller.displayed_note = "/"
+                
 
 
     def _compute_color(self):
@@ -83,31 +113,26 @@ class Aller(models.Model):
                 aggAller.name = aggAller.address_id.name + (" - "+aggAller.city if aggAller.city else "")
             else:
                 aggAller.name = "/"
+    
+    def unlink(self):
+        for aller in self:
+            for history in aller.history_ids:
+                history.unlink()
+        return super(Aller, self).unlink()
 
     @api.model
     def create(self, vals):
         # CHECK IF MERGE NEEDED
         _logger.info("in create aller")
-        if not "address_id" in vals or not vals.get("address_id", False):
-            _logger.info("address")
-            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
-            _logger.info(agg_id.address_id)
-            vals["address_id"] = agg_id.address_id.id
-        if not "localite_id" in vals or not vals.get("localite_id", False):
-            _logger.info("address")
-            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
-            _logger.info(agg_id.localite_id)
-            vals["localite_id"] = agg_id.localite_id.id
-        if not "localite_id_depl" in vals or not vals.get("localite_id_depl", False):
-            _logger.info("address")
-            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
-            _logger.info(agg_id.address_id)
-            vals["localite_id_depl"] = agg_id.localite_id_depl.id
-            vals["is_depl"] = agg_id.is_depl
-        if not "date" in vals or not vals.get("date", False):
-            agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
-            vals["date"] = agg_id.date
+        agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
+        vals["localite_id_depl"] = agg_id.localite_id_depl.id
+        vals["is_depl"] = agg_id.is_depl
+        vals["address_id"] = agg_id.address_id.id
+        vals["localite_id"] = agg_id.localite_id.id
+        vals["day_id"] = agg_id.day_id.id
+        vals["date"] = agg_id.date
         obj = super(Aller, self).create(vals)
+        obj.is_depl = obj.agg_id.is_depl
         obj.create_history_message("Création de l'aller")
         return obj
 
