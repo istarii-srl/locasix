@@ -13,6 +13,15 @@ class ModifyContract(models.TransientModel):
 
     status = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ("done", "fini")], default="done")
 
+    @api.onchange('day_id')
+    def _on_mission_changed(self):
+        for wizard in self:
+            allers = self.env["locasix.aller"].search([("day_id", "=", wizard.day_id.id)])
+            names = []
+            for aller in allers:
+                if aller.contract_id:
+                    names.append(aller.contract_id.name)      
+            return {'domain': {'contract_id': [('name', 'in', names)]}}
 
     def modify(self):
         for wizard in self:
