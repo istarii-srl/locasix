@@ -52,13 +52,13 @@
                                     <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
-                                    <field name="contract"/>
+                                    <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
                                     <field name="localite_id" invisible="1"/>
                                     <field name="localite_id_depl" invisible="1" />
                                     <field name="state"/>
-                                    <field name="note" invisible="1"/>
+                                    <field name="note"/>
                                     <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
                                 </tree>
                             </field>
@@ -83,7 +83,7 @@
                                     <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
-                                    <field name="contract"/>
+                                    <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
                                     <field name="localite_id" invisible="1"/>
@@ -157,13 +157,13 @@
                                     <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
-                                    <field name="contract"/>
+                                    <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
                                     <field name="localite_id" invisible="1"/>
                                     <field name="localite_id_depl" invisible="1" />
                                     <field name="state"/>
-                                    <field name="note" invisible="1"/>
+                                    <field name="note"/>
                                     <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
                                 </tree>
                             </field>
@@ -188,7 +188,7 @@
                                     <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
-                                    <field name="contract"/>
+                                    <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
                                     <field name="localite_id" invisible="1"/>
