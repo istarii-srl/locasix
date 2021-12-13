@@ -1,0 +1,27 @@
+<odoo>
+
+    <record id="view_modify_contract" model="ir.ui.view">
+        <field name="name">locasix.modify.contract.form</field>
+        <field name="model">locasix.modify.contract</field>
+        <field name="arch" type="xml">
+            <form string="Modifier le statut">
+                <group>
+                    <group>
+                        <field name="include_aller"/>
+                    </group>
+                    <group>
+                        <field name="include_retours"/>
+                    </group>
+                    <field name="contract_id"/>
+                    <field name="day_id" invisible="1"/>
+                    <field name="status"/>
+                </group>
+                <footer>
+                    <button name="modify" type="object" string="Modifier" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
