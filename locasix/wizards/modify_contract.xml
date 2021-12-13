@@ -8,14 +8,18 @@
                 <group>
                     <group>
                         <field name="include_aller"/>
+
+                    </group>
+                    <group>
+                        <field name="include_retours"/>
+                    </group>
+                    <group>
                         <field name="contract_id"/>
                         <field name="day_id"/>
                         <field name="status"/>
                     </group>
                     <group>
-                        <field name="include_retours"/>
                     </group>
-
                 </group>
                 <footer>
                     <button name="modify" type="object" string="Modifier" class="btn-primary"/>
