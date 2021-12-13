@@ -16,8 +16,8 @@ class Day(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
 
-    aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers", domain=[('aller_type', '=', 'out'), ('is_first_line', '=', False)])
-    retour_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Retours", domain=[('aller_type', '=', 'in')])
+    aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers", domain= lambda self: self._get_default_aller_domain())
+    retour_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Retours", domain= lambda self: self._get_default_retour_domain())
 
     notes = fields.Text(string="Notes")
 
@@ -25,6 +25,18 @@ class Day(models.Model):
         ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
     ]
     # UNIQUE CONSTRAINTS
+
+    def _get_default_aller_domain(self):
+        if self.env.user.has_group('locasix.group_locasix_admin'):
+            return [('aller_type', '=', 'out'), ('is_first_line', '=', False), '|', ('active', '=', False), ('active', '=', True)]
+        else:
+            return [('aller_type', '=', 'out'), ('is_first_line', '=', False)]
+
+    def _get_default_retour_domain(self):
+        if self.env.user.has_group('locasix.group_locasix_admin'):
+            return [('aller_type', '=', 'in'), '|', ('active', '=', False), ('active', '=', True)]
+        else:
+            return [('aller_type', '=', 'in')]
 
     def action_add_depl(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')
