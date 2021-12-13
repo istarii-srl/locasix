@@ -501,10 +501,10 @@
                 <t t-set="added_terms_sale" t-value="added_terms_sale.replace('&lt;/p&gt;','')"/>
                 <t t-set="sale_confirm" t-value="sale_confirm.replace('&lt;p&gt;','')"/>
                 <t t-set="sale_confirm" t-value="sale_confirm.replace('&lt;/p&gt;','')"/>
-                <div t-if="doc.offer_type == 'classic'" style="height: 750px;"><p style="font-size:10px;" t-raw="added_terms"/></div>
-                <div t-if="doc.offer_type == 'weekend'" style="height: 750px;"><p style="font-size:10px;" t-raw="added_terms_week_end"/></div>
-                <div t-if="doc.offer_type == 'sale'" style="height: 750px;"><p style="font-size:10px;" t-raw="added_terms_sale"/></div>
-                <div style="height: 200px; width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                <div t-if="doc.offer_type == 'classic'"><p style="font-size:10px;" t-raw="added_terms"/></div>
+                <div t-if="doc.offer_type == 'weekend'"><p style="font-size:10px;" t-raw="added_terms_week_end"/></div>
+                <div t-if="doc.offer_type == 'sale'"><p style="font-size:10px;" t-raw="added_terms_sale"/></div>
+                <div style="width: 100%; border: 1px solid black; padding: 15px 8px 15px 8px;">
                     <span style="font-size:10px;" t-raw="sale_confirm"/>
                 </div>
             </div>
