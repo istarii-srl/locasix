@@ -46,7 +46,7 @@ class Aller(models.Model):
     history_ids = fields.One2many(string="Lignes de l'historique", comodel_name="locasix.aller.history.line", inverse_name="aller_id")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre ")
-    display_note = fields.Text(string="Remarque libre", compute="_compute_displayed_names")
+    displayed_note = fields.Text(string="Remarque libre", compute="_compute_displayed_names")
 
     active = fields.Boolean(string="Actif", default=True)
 
@@ -71,7 +71,7 @@ class Aller(models.Model):
                 if len(aller.note) > 20:
                     aller.displayed_note = aller.note[:20] + ".."
                 else:
-                    aller.displayed_client = aller.note
+                    aller.displayed_note = aller.note
             else:
                 aller.displayed_note = "/"
                 
