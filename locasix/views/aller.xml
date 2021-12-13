@@ -134,8 +134,9 @@
                 <field name="displayed_city"/>
                 <field name="contract"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="note"/>
                 <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
-                <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
+                <button name="open_agg" string="" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
         </field>
     </record>
