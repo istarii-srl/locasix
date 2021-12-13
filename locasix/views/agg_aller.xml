@@ -89,7 +89,7 @@
                                     <field name="localite_id" invisible="1"/>
                                     <field name="localite_id_depl" invisible="1" />
                                     <field name="state"/>
-                                    <field name="note" invisible="1"/>
+                                    <field name="note"/>
                                     <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
                                 </tree>
                             </field>
