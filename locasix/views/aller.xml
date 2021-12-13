@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <search string="Allers">
                 <field name="name" string="Journée" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('address_id.name', 'ilike', self), ('address_id.display_name', 'ilike', self), ('city', 'ilike', self)]"/>
-                <field name="contract" string="Contrat" filter_domain="['|', ('contract', 'ilike', self), ('contract', 'ilike', self)]"/>
+                <field name="contract_id" string="Contrat" filter_domain="['|', ('contract_id.name', 'ilike', self), ('contract_id.name', 'ilike', self)]"/>
                 <field name="product_id" string="Référence produit" filter_domain="['|', '|', ('product_unique_ref.name', 'ilike', self), ('product_id.default_code', 'ilike', self), ('product_id.name', 'ilike', self)]"/>
                 <filter string="Aujourd'hui" name="today" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
                 <separator/>
@@ -22,7 +22,7 @@
         <field name="priority" eval="3"/>
         <field name="arch" type="xml">
             <map res_partner="address_id" hide_address="False">
-                <field name="contract" string="Référence"/>
+                <field name="contract_id" string="Référence"/>
                 <field name="aller_type" string="Type"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
@@ -38,7 +38,7 @@
             <calendar string="Calendar View" date_start="date" color="address_id" mode="month" event_limit="5" create="0">
                 <field name="day_id"/>
                 <field name="address_id" filters="1"/>
-                <field name="contract" string="Référence"/>
+                <field name="contract_id" string="Référence"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
                 <field name="state"/>
@@ -56,7 +56,7 @@
             <calendar string="Calendar View" date_start="date" color="color" mode="month" event_limit="5" create="0">
                 <field name="day_id"/>
                 <field name="address_id"/>
-                <field name="contract" string="Référence"/>
+                <field name="contract_id" string="Référence"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
                 <field name="aller_type" filters="1" color="color"/>
@@ -110,7 +110,7 @@
                 <field name="product_unique_ref"/>
                 <field name="address_id"/>
                 <field name="city"/>
-                <field name="contract"/>
+                <field name="contract_id"/>
                 <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
                 <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
@@ -132,7 +132,7 @@
                 <field name="displayed_client"/>
                 <field name="city" invisible="1"/>
                 <field name="displayed_city"/>
-                <field name="contract"/>
+                <field name="contract_id"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="note" invisible="1"/>
                 <field name="displayed_note" />
@@ -162,7 +162,7 @@
                             <field name="is_depl" readonly="1"/>
                             <field name="localite_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}" />
                             <field name="city"/>
-                            <field name="contract"/>
+                            <field name="contract_id"/>
                         </group>
                         <group>
                             <field name="product_id"/>
