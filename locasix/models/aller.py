@@ -84,7 +84,7 @@ class Aller(models.Model):
             record.color = COLORS_BY_STATE[record.aller_type]
 
     def _state_selection(self):
-        select = [("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé")]
+        select = [("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ('a', 'First line')]
         if self.env.user.has_group('locasix.group_locasix_admin'):
             select.append(('zdone', "Fini"))
         return select
@@ -304,6 +304,7 @@ class AllerCron(models.Model):
                 agg_id = self.env['locasix.agg.aller'].create({
                     "address_id": address_id.id,
                     "date": date,
+                    "state": "a",
                     "day_id": day_id.id,
                     "localite_id": localite_id.id,
                     "is_first_agg": True,
@@ -313,6 +314,7 @@ class AllerCron(models.Model):
                         'date': date,
                         "day_id": day_id.id,
                         "agg_id": agg_id.id,
+                        'state': "a",
                         "product_id": product_id.product_variant_id.id,
                         "is_first_line": True,
             })
@@ -334,6 +336,7 @@ class AllerCron(models.Model):
         new_day = min_limit
         i = 0
         while new_day < max_limit and i < len(sorted_days):
+            sorted_days[i].state = "a"
             if sorted_days[i].date == new_day:
                 i += 1
                 new_day = new_day + datetime.timedelta(days=1)
