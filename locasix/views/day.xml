@@ -40,6 +40,7 @@
                     <button name="action_add_aller" type="object" string="Ajouter un aller" />
                     <button name="action_add_retour" type="object" string="Ajouter un retour"/>
                     <button name="action_add_depl" type="object" string="Ajouter un déplacement"/>
+                    <button name="action_modify" type="object" string="Modifier statut" groups="locasix.group_locasix_admin"/>
                 </header>
 
                 <sheet >

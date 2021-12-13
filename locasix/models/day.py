@@ -81,6 +81,22 @@ class Day(models.Model):
             },
         }  
 
+    def action_modify(self):
+        view = self.env.ref('locasix.view_modify_contract')
+        return {
+        'name': 'Modifier le statut',
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'locasix.modify.contract',
+        'views': [(view.id, 'form')],
+        'view_id': view.id,
+        'target': 'new',
+        'context': {
+            'default_day_id': self.id,
+            },
+        }          
+
     def action_today(self):
         for day in self:
             today = datetime.date.today()
