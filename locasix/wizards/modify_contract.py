@@ -11,7 +11,7 @@ class ModifyContract(models.TransientModel):
     include_aller = fields.Boolean("Allers", default=True)
     include_retours = fields.Boolean("Retours", default=True)
 
-    status = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ("done", "fini")], default="done")
+    status = fields.Selection(string="Statut", selection=[("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ("zdone", "fini")], default="zdone")
 
     @api.onchange('day_id')
     def _on_mission_changed(self):

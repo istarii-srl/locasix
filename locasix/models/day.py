@@ -24,7 +24,6 @@ class Day(models.Model):
     _sql_constraints = [
         ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
     ]
-    # UNIQUE CONSTRAINTS
 
     def _get_default_aller_domain(self):
         if self.env.user.has_group('locasix.group_locasix_admin'):

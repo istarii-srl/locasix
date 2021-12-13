@@ -86,7 +86,7 @@ class Aller(models.Model):
     def _state_selection(self):
         select = [("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé")]
         if self.env.user.has_group('locasix.group_locasix_admin'):
-            select.append(('done', "Fini"))
+            select.append(('zdone', "Fini"))
         return select
 
     @api.depends('localite_id', 'localite_id_depl', 'is_depl')
@@ -220,7 +220,7 @@ class Aller(models.Model):
     def state_to_string(self, state_key):
         if state_key == "progress":
             return "En cours"
-        elif state_key == "done":
+        elif state_key == "zdone":
             return "Fini"
         elif state_key == "cancel":
             return "Annulé"

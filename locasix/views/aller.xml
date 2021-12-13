@@ -111,7 +111,7 @@
                 <field name="address_id"/>
                 <field name="city"/>
                 <field name="contract_id"/>
-                <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
+                <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'zdone'"/>
                 <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
         </field>
@@ -136,7 +136,7 @@
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="note" invisible="1"/>
                 <field name="displayed_note" />
-                <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
+                <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'zdone'"/>
                 <button name="open_agg" string="" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
         </field>
