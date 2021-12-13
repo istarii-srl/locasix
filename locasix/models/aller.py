@@ -38,7 +38,7 @@ class Aller(models.Model):
     city = fields.Char(string="Ville ", compute="_compute_city", store=True)
     displayed_city = fields.Char(string="Ville", compute="_compute_displayed_names")
     contract = fields.Char(string="Contrat ")
-    contract_id = fields.Many2one(string="Contrat")
+    contract_id = fields.Many2one(string="Contrat", comodel_name="locasix.contract")
 
     product_default_code = fields.Char(string="Ref", related="product_id.default_code")
     product_id = fields.Many2one(string="Produit", comodel_name="product.product", required=True)
