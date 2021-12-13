@@ -30,13 +30,13 @@ class Day(models.Model):
         if self.env.user.has_group('locasix.group_locasix_admin'):
             return [('aller_type', '=', 'out'), ('is_first_line', '=', False), '|', ('active', '=', False), ('active', '=', True)]
         else:
-            return [('aller_type', '=', 'out'), ('is_first_line', '=', False)]
+            return [('aller_type', '=', 'out'), ('is_first_line', '=', False), ('active', '=', True)]
 
     def _get_default_retour_domain(self):
         if self.env.user.has_group('locasix.group_locasix_admin'):
             return [('aller_type', '=', 'in'), '|', ('active', '=', False), ('active', '=', True)]
         else:
-            return [('aller_type', '=', 'in')]
+            return [('aller_type', '=', 'in'), ('active', '=', True)]
 
     def action_add_depl(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')
