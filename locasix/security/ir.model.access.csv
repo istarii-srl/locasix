@@ -39,3 +39,4 @@ access_locasix_product_cron_user,locasix.locasix.product.cron,model_locasix_prod
 access_locasix_aller_cron_user,locasix.locasix.aller.cron,model_locasix_aller_cron,base.group_user,1,1,1,1
 access_locasix_partner_cron_user,locasix.locasix.partner.cron,model_locasix_partner_cron,base.group_user,1,1,1,1
 access_locasix_contract_user,locasix.locasix.contract,model_locasix_contract,base.group_user,1,1,1,1
+access_locasix_modify_contract_user,locasix.locasix.modify.contract,model_locasix_modify_contract,base.group_user,1,1,1,1
