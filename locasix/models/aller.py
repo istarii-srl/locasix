@@ -45,11 +45,12 @@ class Aller(models.Model):
 
     history_ids = fields.One2many(string="Lignes de l'historique", comodel_name="locasix.aller.history.line", inverse_name="aller_id")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
-    note = fields.Text(string="Remarque libre")
+    note = fields.Text(string="Remarque libre ")
+    display_note = fields.Text(string="Remarque libre", compute="_compute_displayed_names")
 
     active = fields.Boolean(string="Actif", default=True)
 
-    @api.depends('city', 'address_id', 'localite_id', 'localite_id_depl', 'is_depl')
+    @api.depends('city', 'address_id', 'localite_id', 'localite_id_depl', 'is_depl', 'note')
     def _compute_displayed_names(self):
         for aller in self:
             if aller.city:
@@ -60,12 +61,20 @@ class Aller(models.Model):
             else:
                 aller.displayed_city = "/"
             if aller.address_id and aller.address_id.display_name:
-                if len(aller.address_id.display_name) > 20:
-                    aller.displayed_client = aller.address_id.display_name[:20] +".."
+                if len(aller.address_id.display_name) > 17:
+                    aller.displayed_client = aller.address_id.display_name[:17] +".."
                 else:
                     aller.displayed_client = aller.address_id.display_name
             else:
                 aller.displayed_client = "/"
+            if aller.note:
+                if len(aller.note) > 20:
+                    aller.displayed_note = aller.note[:20] + ".."
+                else:
+                    aller.displayed_client = aller.note
+            else:
+                aller.displayed_note = "/"
+                
 
 
     def _compute_color(self):

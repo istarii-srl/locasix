@@ -134,7 +134,8 @@
                 <field name="displayed_city"/>
                 <field name="contract"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                <field name="note"/>
+                <field name="note" invisible="1"/>
+                <field name="displayed_note" />
                 <field name="state" widget="badge" decoration-danger="state == 'cancel'" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
                 <button name="open_agg" string="" type="object" icon="fa-arrow-circle-o-right"/>
             </tree>
@@ -169,6 +170,7 @@
                             <field name="state"/>
                             <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
                             <field name="note"/>
+                            <field name="displayed_note" invisible="1"/>
                         </group>
                     </group>
                     <notebook>
