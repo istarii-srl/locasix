@@ -206,8 +206,9 @@ class Aller(models.Model):
 
         if "state" in vals:
             self.create_history_message("Changement de statut : "+str(self.state_to_string(old_state))+" -> "+str(self.state_to_string(self.state)))
-            if self.state == "done":
-                self.active = False
+            if self.state == "zdone":
+                pass
+                #self.active = False
         if "contract" in vals:
             if self.contract and old_contract:
                 self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ self.contract)
