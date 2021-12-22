@@ -70,6 +70,13 @@ class ProductTemplate(models.Model):
         default["is_temporary_product"] = True
         return super(ProductTemplate, self).copy(default=default)
 
+    def should_display_hour(self):
+        for product in self:
+            if product.uom_id.name == "Heures":
+                return True
+            else: 
+                return False
+
 
     def launch_import(self):
         _logger.info("in launch import")
