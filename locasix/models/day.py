@@ -11,7 +11,7 @@ class Day(models.Model):
 
     name = fields.Char(string="Jour", compute="_compute_name", store=True)
     day = fields.Date(string="Date", required=True)
-    aller_note = fields.Html(string="Notes allers")
+    aller_note = fields.Html(string="Notes")
     retour_note = fields.Html(string="Notes retours")
 
     active = fields.Boolean(string="Actif", default=True)

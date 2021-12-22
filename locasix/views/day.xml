@@ -46,12 +46,19 @@
                 <sheet >
                     <widget name="web_ribbon" title="Archivé" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <field name="active" invisible="1"/>
-                    <div class="oe_title">
-                        <h1>
-                            <field name="name" placeholder="ex: Vente Hergé 3"/>
-                        </h1>
-                    </div>
-                    <field name="day"/>
+                    <group>
+                        <group>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="name" placeholder="ex: Vente Hergé 3"/>
+                                </h1>
+                            </div>
+                            <field name="day"/>
+                        </group>
+                        <group>
+                            <field name="aller_note"/>
+                        </group>
+                    </group>
                     <group>
                         <group style="width: 50% !important;" string="Allers">
                             <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree', 'active_test': False}" domain="[('is_first_line', '=', False)]" nolabel="1"/>
@@ -62,18 +69,6 @@
 
                         </group>
                     </group>
-                    <notebook>
-                        <page string="notes">
-                            <group>
-                                <group>
-                                    <field name="aller_note"/>
-                                </group>
-                                <group>
-                                    <field name="retour_note"/>
-                                </group>
-                            </group>
-                        </page>
-                    </notebook>
                 </sheet>
             </form>
         </field>
