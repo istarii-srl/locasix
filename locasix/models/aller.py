@@ -142,11 +142,22 @@ class Aller(models.Model):
         _logger.info(vals)
         old_state = self.state
         old_date = self.date
+        old_note = self.note
         old_address_id = self.address_id
         old_localite_depl = self.localite_id_depl
         old_localite = self.localite_id
         old_contract = self.contract
         res = super(Aller, self).write(vals)
+        if "note" in vals:
+            if old_note and self.note:
+                self.create_history_message("Changement de la remarque libre : "+old_note+" -> "+self.note)
+            elif old_note:
+                self.create_history_message("Changement de la remarque libre : "+old_note+" -> pas de remarque")
+            elif self.note:
+                self.create_history_message("Changement de la remarque libre : "+ "pas de remarque -> "+self.note)
+        if "remarque_ids" in vals:
+            self.create_history_message("Une ou plusieurs remarques ont été modifiés")
+
         if "localite_id_depl" in vals:
             if old_localite_depl and self.localite_id_depl:
                 self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_localite_depl.name+" -> "+self.localite_id_depl.name)
