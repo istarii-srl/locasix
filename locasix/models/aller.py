@@ -14,7 +14,7 @@ COLORS_BY_STATE = {
 class Aller(models.Model):
     _name = "locasix.aller"
     _description = "Un aller"
-    _order = "state"
+    _order = "state, address_id"
 
     name = fields.Char(string="Nom", compute="_compute_name", store=True)
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
