@@ -22,7 +22,7 @@
         <field name="arch" type="xml">
             <calendar string="Calendar View" date_start="day" mode="month" event_limit="5" create="0">
                 <field name="name"/>
-                <field name="notes" string="Notes"/>
+                <field name="aller_note" string="Notes"/>
             </calendar>
         </field>
     </record>

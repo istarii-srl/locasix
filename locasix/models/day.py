@@ -19,7 +19,7 @@ class Day(models.Model):
     aller_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Allers", domain= lambda self: self._get_default_aller_domain())
     retour_ids = fields.One2many(comodel_name="locasix.aller", inverse_name="day_id", string="Retours", domain= lambda self: self._get_default_retour_domain())
 
-    notes = fields.Text(string="Notes")
+    notes = fields.Text(string="Notes ")
 
     _sql_constraints = [
         ('day_uniq', 'unique (day)', "Cette date a déjà été utilisée. Veuillez en choisir une autre !"),
