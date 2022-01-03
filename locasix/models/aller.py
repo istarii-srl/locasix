@@ -52,6 +52,12 @@ class Aller(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
 
+    @api.onchange("agg_id")
+    def on_agg_id_changed_remarque(self):
+        for aller in self:
+            if aller.agg_id and not aller.remarque_ids:
+                aller.remarque_ids = aller.agg_id.remarque_ids
+
     @api.depends('city', 'address_id', 'localite_id', 'localite_id_depl', 'is_depl', 'note')
     def _compute_displayed_names(self):
         for aller in self:
