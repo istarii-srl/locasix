@@ -46,11 +46,19 @@ class Aller(models.Model):
     product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
 
     history_ids = fields.One2many(string="Lignes de l'historique", comodel_name="locasix.aller.history.line", inverse_name="aller_id")
-    remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
+    remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque", default=lambda self: self.get_default_remarque())
     note = fields.Text(string="Remarque libre ")
     displayed_note = fields.Text(string="Remarque libre", compute="_compute_displayed_names")
 
     active = fields.Boolean(string="Actif", default=True)
+
+
+    def get_default_remarque(self):
+        for aller in self:
+            if aller.agg_id and not aller.remarque_ids:
+                return aller.agg_id.remarque_ids
+            else:
+                return False          
 
     @api.onchange("agg_id")
     def on_agg_id_changed_remarque(self):
