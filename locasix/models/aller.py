@@ -142,6 +142,7 @@ class Aller(models.Model):
         agg_id = self.env["locasix.agg.aller"].search([("id", "=", vals["agg_id"])])
         vals["localite_id_depl"] = agg_id.localite_id_depl.id
         vals["is_depl"] = agg_id.is_depl
+        vals["aller_type"] = agg_id.aller_type
         vals["address_id"] = agg_id.address_id.id
         vals["localite_id"] = agg_id.localite_id.id
         vals["day_id"] = agg_id.day_id.id
