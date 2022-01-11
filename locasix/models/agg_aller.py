@@ -75,6 +75,7 @@ class AggAller(models.Model):
                     agg_retour_id = self.env["locasix.agg.aller"].create({
                         "day_id": newday_id.id,
                         "aller_type": "in",
+                        "is_weekend": True,
                         "localite_id": agg_aller.localite_id.id,
                         "date": agg_aller.date_retour,
                         "address_id": agg_aller.address_id.id,

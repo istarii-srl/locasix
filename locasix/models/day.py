@@ -208,13 +208,32 @@ class Day(models.Model):
                 'res_id': next_days_sorted[0].id,
                 'context': {'active_id': next_days_sorted[0].id},
             }
+    
+    def weekday_to_string(self):
+        for day in self:
+            if day.day.weekday() == 0:
+                return "Lundi"
+            elif day.day.weekday() == 1:
+                return "Mardi"
+            elif day.day.weekday() == 2:
+                return "Mercredi"
+            elif day.day.weekday() == 3:
+                return "Jeudi"
+            elif day.day.weekday() == 4:
+                return "Vendredi"
+            elif day.day.weekday() == 5:
+                return "Samedi"
+            elif day.day.weekday() == 6:
+                return "Dimanche"
+            else:
+                return "Lundi"
             
 
     @api.depends('day')
     def _compute_name(self):
         for day in self:
             if day.day:
-                day.name = day.day.strftime('%d/%m/%Y')
+                day.name = day.day.strftime('%d/%m/%Y') +"-"+ day.weekday_to_string()
             else:
                 day.name = "En cours de création..."
 
