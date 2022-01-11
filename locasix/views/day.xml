@@ -61,7 +61,7 @@
                             <field name="aller_note"/>
                         </group>
                     </group>
-                    <field name="weekday_name" nolabel="1"/>
+                    <field name="weekday_name" nolabel="1" invisible="1"/>
                     <group>
                         <group style="width: 50% !important;" string="Allers">
                             <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree', 'active_test': False}" domain="[('is_first_line', '=', False)]" nolabel="1"/>
