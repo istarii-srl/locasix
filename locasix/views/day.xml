@@ -53,6 +53,7 @@
                                     <field name="name" placeholder="ex: Vente Hergé 3"/>
                                 </h1>
                             </div>
+                            <field name="weekday_name" nolabel="1"/>
                             <field name="day" invisible="1"/>
                         </group>
                         <group>

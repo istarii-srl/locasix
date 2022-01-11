@@ -10,6 +10,7 @@ class Day(models.Model):
     _description = "Gestion des allers et retours pour une journée"
 
     name = fields.Char(string="Jour", compute="_compute_name", store=True)
+    weekday_name = fields.Char(string="Journée", compute="_compute_weekday_name")
     day = fields.Date(string="Date", required=True)
     aller_note = fields.Html(string="Notes")
     retour_note = fields.Html(string="Notes retours")
@@ -230,10 +231,15 @@ class Day(models.Model):
             
 
     @api.depends('day')
+    def _compute_weekday_name(self):
+        for day in self:
+            day.weekday_name = day.weekday_to_string()
+
+    @api.depends('day')
     def _compute_name(self):
         for day in self:
             if day.day:
-                day.name = day.day.strftime('%d/%m/%Y') +"-"+ day.weekday_to_string()
+                day.name = day.day.strftime('%d/%m/%Y')
             else:
                 day.name = "En cours de création..."
 
