@@ -50,7 +50,8 @@
                         <group>
                             <div class="oe_title">
                                 <h1>
-                                    <field name="name" placeholder="ex: Vente Hergé 3"/>
+                                    <field name="full_name"/>
+                                    <field name="name" placeholder="ex: Vente Hergé 3" invisible="1"/>
                                 </h1>
                             </div>
 
