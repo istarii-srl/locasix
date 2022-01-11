@@ -45,6 +45,8 @@ class Aller(models.Model):
     product_id = fields.Many2one(string="Produit", comodel_name="product.product", required=True)
     product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
 
+    is_weekend = fields.Boolean(string="weekend", related="agg_id.is_weekend")
+
     history_ids = fields.One2many(string="Lignes de l'historique", comodel_name="locasix.aller.history.line", inverse_name="aller_id")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque", default=lambda self: self.get_default_remarque())
     note = fields.Text(string="Remarque libre ")
