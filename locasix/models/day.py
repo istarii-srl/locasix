@@ -8,7 +8,7 @@ class Day(models.Model):
     _name = "locasix.day"
 
     _description = "Gestion des allers et retours pour une journée"
-
+    full_name = fields.Char(string="Jour complet", compute="_compute_full_name")
     name = fields.Char(string="Jour", compute="_compute_name", store=True)
     weekday_name = fields.Char(string="Journée", compute="_compute_weekday_name")
     day = fields.Date(string="Date", required=True)
@@ -229,6 +229,10 @@ class Day(models.Model):
             else:
                 return "Lundi"
             
+    @api.depends("day")
+    def _compute_full_name(self):
+        for day in self:
+            day.full_name = day.name + " - " + day.weekday_name
 
     @api.depends('day')
     def _compute_weekday_name(self):
