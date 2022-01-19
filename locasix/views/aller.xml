@@ -122,7 +122,7 @@
         <field name="priority">100</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
-            <tree string="Allers" decoration-success="(is_weekend == True)" decoration-bf="(is_weekend == True)" create="0">
+            <tree string="Allers" decoration-info="(is_weekend == True)" decoration-bf="(is_weekend == True)" create="0">
                 <field name="is_weekend" invisible="1"/>
                 <field name="is_first_line" invisible="1"/>
                 <field name="color" invisible="1"/>
