@@ -381,4 +381,11 @@ class AllerCron(models.Model):
             self.create_aller(new_day)
             new_day = new_day + datetime.timedelta(days=1)
 
-        return      
+        return 
+
+    def run_cron_migrate(self):
+        _logger.info("migrate cron")
+        allers = self.env["locasix.aller"].search([])
+        for aller in allers:
+            if aller.state == "progress":
+                aller.state = "aprogress"     
