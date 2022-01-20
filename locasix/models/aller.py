@@ -20,7 +20,7 @@ class Aller(models.Model):
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date", required=True)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
-    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="progress", required=True)
+    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
     color = fields.Integer(compute='_compute_color')
 
@@ -250,7 +250,7 @@ class Aller(models.Model):
         return res
     
     def state_to_string(self, state_key):
-        if state_key == "progress":
+        if state_key == "aprogress":
             return "En cours"
         elif state_key == "zdone":
             return "Fini"
@@ -336,7 +336,7 @@ class AllerCron(models.Model):
                 agg_id = self.env['locasix.agg.aller'].create({
                     "address_id": address_id.id,
                     "date": date,
-                    "state": "progress",
+                    "state": "aprogress",
                     "day_id": day_id.id,
                     "localite_id": localite_id.id,
                     "is_first_agg": True,
@@ -388,4 +388,7 @@ class AllerCron(models.Model):
         allers = self.env["locasix.aller"].search([])
         for aller in allers:
             if aller.state == "progress":
-                aller.state = "aprogress"     
+                aller.state = "aprogress" 
+        aggs = self.env["locasix.agg.aller"].search([])
+        for agg in aggs:
+            agg.state = "aprogress"  

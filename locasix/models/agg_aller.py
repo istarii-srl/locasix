@@ -22,7 +22,7 @@ class AggAller(models.Model):
     contract = fields.Char(string="Contrat")
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
-    state = fields.Selection(string='Statut', selection=[("progress", "En cours")], default="progress", required=True)
+    state = fields.Selection(string='Statut', selection=[("aprogress", "En cours")], default="aprogress", required=True)
     aller_ids = fields.One2many(comodel_name="locasix.aller", string="Allers", inverse_name="agg_id")
 
     is_weekend = fields.Boolean("Weekend", default=False)
