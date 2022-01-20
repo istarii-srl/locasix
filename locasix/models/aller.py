@@ -100,7 +100,7 @@ class Aller(models.Model):
             record.color = COLORS_BY_STATE[record.aller_type]
 
     def _state_selection(self):
-        select = [("progress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ('a', "Statut technique")]
+        select = [("aprogress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ('a', "Statut technique")]
         if self.env.user.has_group('locasix.group_locasix_admin'):
             select.append(('zdone', "Fini"))
         return select
