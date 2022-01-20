@@ -27,7 +27,7 @@ class ModifyContract(models.TransientModel):
         for wizard in self:
             allers = self.env["locasix.aller"].search([("day_id", "=", wizard.day_id.id)])
             for aller in allers:
-                if aller.contract_id and aller.contract_id.id == wizard.contract_id.id:
+                if aller.contract_id and aller.contract_id.name == wizard.contract_id.name:
                     if (aller.aller_type == "out" or aller.aller_type == "depl") and wizard.include_aller:
                         aller.state = wizard.status
                     elif aller.aller_type == "in" and wizard.include_retours:
