@@ -208,4 +208,110 @@
             </form>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="locasix_agg_depl_form">
+        <field name="name">locasix.agg.depl.form</field>
+        <field name="model">locasix.agg.aller</field>
+        <field name="arch" type="xml">
+            <form string="Allers">
+                <header>
+                    <button name="action_open_duplicate_wizard" type="object" string="Dupliquer" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="is_first_agg" invisible="1"/>
+                            <field name="aller_type" invisible="1"/>
+                            <field name="day_id" invisible="1"/>
+                            <field name="is_depl" invisible="1"/>
+                            <field name="date"/>
+                            <field name="address_id"/>
+                            <field name="localite_id" required="1"/>
+                            <field name="localite_id_depl" attrs="{'invisible': [('is_depl', '=', False)], 'required': [('is_depl', '=', True)]}"/>
+                            <field name="city"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="is_retours_created" invisible="1"/>
+                        <field name="is_weekend" attrs="{'readonly': [('is_retours_created', '=', True)], 'invisible': [('aller_type', '!=', 'out')]}"/>
+                        <field name="date_retour" attrs="{'invisible': [('is_weekend', '=', False)], 'readonly': [('is_retours_created', '=', True)]}"/>
+                    </group>
+                    <notebook>
+                        <page name="aller_4" string="Allers" attrs="{'invisible': [('aller_type', '=', 'in')]}">
+                            <field name="aller_ids" mode="tree">
+                                <tree editable="bottom" string="Déplacements">
+                                    <control>
+                                        <create name="add_product_control" string="Ajouter un déplacement" context="{
+                                        'default_remarque_ids': parent.remarque_ids,
+                                        'default_day_id': parent.day_id,
+                                        'default_is_depl': parent.is_depl,
+                                        'default_localite_id': parent.localite_id,
+                                        'default_localite_id_depl': parent.localite_id_depl,
+                                        'default_date': parent.date,
+                                        'default_aller_type': parent.aller_type,
+                                        'default_address_id': parent.address_id,
+                                        'default_state': parent.state,
+                                        'default_note': parent.note
+                                        }"/>
+                                    </control>
+                                    <field name="aller_type" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="product_unique_ref" options="{'no_create': True}"/>
+                                    <field name="contract_id"/>
+                                    <field name="day_id" invisible="1"/>
+                                    <field name="address_id" invisible="1"/>
+                                    <field name="localite_id" invisible="1"/>
+                                    <field name="localite_id_depl" invisible="1" />
+                                    <field name="state"/>
+                                    <field name="note"/>
+                                    <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="aller_3" string="Retours" attrs="{'invisible': [('aller_type', '!=', 'in')]}">
+                            <field name="aller_ids" mode="tree">
+                                <tree editable="bottom" string="Déplacements">
+                                    <control>
+                                        <create name="add_product_control_2" string="Ajouter un déplacement" context="{
+                                        'default_remarque_ids': parent.remarque_ids,
+                                        'default_day_id': parent.day_id,
+                                        'default_is_depl': parent.is_depl,
+                                        'default_localite_id': parent.localite_id,
+                                        'default_localite_id_depl': parent.localite_id_depl,
+                                        'default_date': parent.date,
+                                        'default_aller_type': parent.aller_type,
+                                        'default_address_id': parent.address_id,
+                                        'default_state': parent.state,
+                                        'default_note': parent.note
+                                        }"/>
+                                    </control>
+                                    <field name="aller_type" invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="product_unique_ref" options="{'no_create': True}"/>
+                                    <field name="contract_id"/>
+                                    <field name="day_id" invisible="1"/>
+                                    <field name="address_id" invisible="1"/>
+                                    <field name="localite_id" invisible="1"/>
+                                    <field name="localite_id_depl" invisible="1" />
+                                    <field name="state"/>
+                                    <field name="note"/>
+                                    <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_validate" string="Valider" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
 </odoo>

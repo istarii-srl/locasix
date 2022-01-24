@@ -39,7 +39,7 @@ class Day(models.Model):
             return [('aller_type', '=', 'in'), ('active', '=', True), ('state', '!=', 'zdone')]
 
     def action_add_depl(self):
-        view = self.env.ref('locasix.locasix_agg_aller_form')
+        view = self.env.ref('locasix.locasix_agg_depl_form')
         return {
         'name': 'Allers',
         'type': 'ir.actions.act_window',

@@ -296,6 +296,11 @@ class Aller(models.Model):
 
     def open_agg(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')
+        if self.is_depl:
+            view = self.env.ref('locasix.locasix_agg_depl_form')
+        elif self.aller_type == "in":
+            view = self.env.ref('locasix.locasix_agg_retour_form')
+            
         return {
         'name': 'Allers',
         'type': 'ir.actions.act_window',
