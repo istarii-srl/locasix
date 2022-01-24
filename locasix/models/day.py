@@ -41,7 +41,7 @@ class Day(models.Model):
     def action_add_depl(self):
         view = self.env.ref('locasix.locasix_agg_depl_form')
         return {
-        'name': 'Allers',
+        'name': 'Déplacements',
         'type': 'ir.actions.act_window',
         'view_type': 'form',
         'view_mode': 'form',
