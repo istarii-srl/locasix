@@ -198,6 +198,11 @@ class AggAller(models.Model):
             }      
 
 
+    def action_archive(self):
+        for agg in self:
+            for aller in agg.aller_ids:
+                aller.active = False
+
 
     def action_validate(self):
         return

@@ -6,6 +6,7 @@
             <form string="Allers">
                 <header>
                     <button name="action_open_duplicate_wizard" type="object" string="Dupliquer" class="oe_highlight"/>
+                    <button name="action_archive" type="object" string="Archiver" groups="locasix.group_locasix_admin"/>
                 </header>
                 <sheet>
                     <group>
@@ -111,6 +112,7 @@
             <form string="Retours">
                 <header>
                     <button name="action_open_duplicate_wizard" type="object" string="Dupliquer" class="oe_highlight"/>
+                    <button name="action_archive" type="object" string="Archiver" groups="locasix.group_locasix_admin"/>
                 </header>
                 <sheet>
                     <group>
@@ -213,9 +215,10 @@
         <field name="name">locasix.agg.depl.form</field>
         <field name="model">locasix.agg.aller</field>
         <field name="arch" type="xml">
-            <form string="Allers">
+            <form string="Déplacements">
                 <header>
                     <button name="action_open_duplicate_wizard" type="object" string="Dupliquer" class="oe_highlight"/>
+                    <button name="action_archive" type="object" string="Archiver" groups="locasix.group_locasix_admin"/>
                 </header>
                 <sheet>
                     <group>
