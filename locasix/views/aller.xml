@@ -56,9 +56,11 @@
             <calendar string="Calendar View" date_start="date" color="color" mode="month" event_limit="5" create="0">
                 <field name="day_id"/>
                 <field name="address_id"/>
-                <field name="contract_id" string="Référence"/>
+                <field name="contract_id" string="Contrat"/>
                 <field name="city" string="Ville"/>
                 <field name="date" string="Date prévue"/>
+                <field name="product_id"/>
+                <field name="product_unique_ref"/>
                 <field name="aller_type" filters="1" color="color"/>
                 <field name="state"/>
                 <field name="remarque_ids"/>
