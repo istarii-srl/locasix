@@ -101,8 +101,8 @@ class Aller(models.Model):
 
     def _state_selection(self):
         select = [("aprogress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ('a', "Statut technique")]
-        if self.env.user.has_group('locasix.group_locasix_admin'):
-            select.append(('zdone', "Fini"))
+        #if self.env.user.has_group('locasix.group_locasix_admin'):
+        select.append(('zdone', "Fini"))
         return select
 
     @api.depends('localite_id', 'localite_id_depl', 'is_depl')
