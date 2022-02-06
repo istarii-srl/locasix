@@ -414,8 +414,9 @@
                 </th>
                 <th width="10%" t-if="doc.show_discount3">
                     <div class="col">
-                        <div t-if="len(column_names_before_first_line) > 1">
-                            <span class="block reduction" t-esc="column_names_before_first_line[4]"/>
+                        <span class="block reduction" t-esc="column_names_before_first_line[4]"/>
+                        <div t-if="column_names_before_first_line[4] == ''">
+                            <br/>
                         </div>
                         <span class="block">Prix/mois</span>
                         <span class="block small-italic">Min. 3 mois</span>
@@ -424,8 +425,9 @@
                 </th>
                 <th width="10%" t-if="doc.show_discount6">
                     <div class="col">
-                        <div t-if="len(column_names_before_first_line) > 1">
-                            <span class="block reduction" t-esc="column_names_before_first_line[5]"/>
+                        <span class="block reduction" t-esc="column_names_before_first_line[5]"/>
+                        <div t-if="column_names_before_first_line[5] == ''">
+                            <br/>
                         </div>
                         <span class="block">Prix/mois</span>
                         <span class="block small-italic">Min. 6 mois</span>
