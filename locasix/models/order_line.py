@@ -170,7 +170,7 @@ class OrderLine(models.Model):
     @api.depends('month_price','months_2_discount_rate')
     def _compute_2_discount(self):
         for line in self:
-            if line.product_id and line.product_id.categ_id and not line.product_id.has_months_discounts:
+            if line.product_id and line.product_id.categ_id and not line.product_id.categ_id.has_months_discounts:
                 line.months_2_discount = line.month_price
             else:
                 line.months_2_discount = line.month_price * (1-line.months_2_discount_rate)
@@ -178,7 +178,7 @@ class OrderLine(models.Model):
     @api.depends('month_price','months_3_discount_rate')
     def _compute_3_discount(self):
         for line in self:
-            if line.product_id and line.product_id.categ_id and not line.product_id.has_months_discounts:
+            if line.product_id and line.product_id.categ_id and not line.product_id.categ_id.has_months_discounts:
                 line.months_3_discount = line.month_price
             else:
                 line.months_3_discount = line.month_price * (1-line.months_3_discount_rate)
@@ -186,7 +186,7 @@ class OrderLine(models.Model):
     @api.depends('month_price','months_6_discount_rate')
     def _compute_6_discount(self):
         for line in self:
-            if line.product_id and line.product_id.categ_id and not line.product_id.has_months_discounts:
+            if line.product_id and line.product_id.categ_id and not line.product_id.categ_id.has_months_discounts:
                 line.months_6_discount = line.month_price
             else:
                 line.months_6_discount = line.month_price * (1-line.months_6_discount_rate)
