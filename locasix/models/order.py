@@ -554,6 +554,7 @@ class Order(models.Model):
                                 "order_id": line.order_id.id,
                                 "name": line.category_id.name,
                                 "category_id": line.category_id.id,
+                                "has_months_discounts": line.category_id.has_months_discounts,
                                 "is_section": True,
                                 "from_compute": True,
                                 "is_multi": line.product_id.has_multi_price,
@@ -797,10 +798,13 @@ class Order(models.Model):
                 },
             }    
     
-    def get_discount_rates(self):
+    def get_discount_rates(self, section_line):
         for order in self:
-            return [
-                f'-{int(order.months_2_discount_rate*100)}%', 
-                f'-{int(order.months_3_discount_rate*100)}%', 
-                f'-{int(order.months_6_discount_rate*100)}%'
-                    ]
+            if section_line.has_months_discounts:
+                return [
+                    f'-{int(order.months_2_discount_rate*100)}%', 
+                    f'-{int(order.months_3_discount_rate*100)}%', 
+                    f'-{int(order.months_6_discount_rate*100)}%'
+                        ]
+            else:
+                return ['', '', '']

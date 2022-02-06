@@ -42,11 +42,6 @@
                             <field name="week_price"/>
                             <field name="month_price"/>
                         </group>
-                        <group string="Remises">
-                            <field name="months_2_discount" widget="percentage"/>
-                            <field name="months_3_discount" widget="percentage"/>
-                            <field name="months_6_discount" widget="percentage"/>
-                        </group>
                     </group>
                 </page>
                 <page string="Liens" attrs="{'invisible': [('is_temporary_product', '=', True)]}" groups="locasix.group_locasix_admin">

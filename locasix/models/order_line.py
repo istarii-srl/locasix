@@ -23,6 +23,7 @@ class OrderLine(models.Model):
     show_discount6 = fields.Boolean(related="order_id.show_discount6")
     offer_type = fields.Selection(string="Type d'offre", related="order_id.offer_type")
     has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
+    has_months_discounts = fields.Boolean(string="Appliquer les réductions sur locations longues durées", default=True)
     temporary_product = fields.Boolean(string="Temporaire", related="product_id.is_temporary_product", readonly=False, default=False)
 
     day_price = fields.Float(string="Prix/jour", default=0.0)
@@ -169,17 +170,26 @@ class OrderLine(models.Model):
     @api.depends('month_price','months_2_discount_rate')
     def _compute_2_discount(self):
         for line in self:
-            line.months_2_discount = line.month_price * (1-line.months_2_discount_rate)
+            if line.product_id and line.product_id.categ_id and not line.product_id.has_months_discounts:
+                line.months_2_discount = line.month_price
+            else:
+                line.months_2_discount = line.month_price * (1-line.months_2_discount_rate)
 
     @api.depends('month_price','months_3_discount_rate')
     def _compute_3_discount(self):
         for line in self:
-            line.months_3_discount = line.month_price * (1-line.months_3_discount_rate)
+            if line.product_id and line.product_id.categ_id and not line.product_id.has_months_discounts:
+                line.months_3_discount = line.month_price
+            else:
+                line.months_3_discount = line.month_price * (1-line.months_3_discount_rate)
 
     @api.depends('month_price','months_6_discount_rate')
     def _compute_6_discount(self):
         for line in self:
-            line.months_6_discount = line.month_price * (1-line.months_6_discount_rate)
+            if line.product_id and line.product_id.categ_id and not line.product_id.has_months_discounts:
+                line.months_6_discount = line.month_price
+            else:
+                line.months_6_discount = line.month_price * (1-line.months_6_discount_rate)
 
 
     def retrieve_top_section(self, lines):
