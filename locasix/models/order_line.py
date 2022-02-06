@@ -40,7 +40,7 @@ class OrderLine(models.Model):
 
     def show_discount_rates(self):
         for line in self:
-            return line.show_discount2 or line.show_discount3 or line.show_discount6
+            return (line.show_discount2 or line.show_discount3 or line.show_discount6) and line.has_months_discounts
 
 
     def get_line_type(self):
