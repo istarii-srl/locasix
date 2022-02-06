@@ -403,8 +403,9 @@
                 </th>
                 <th width="10%" t-if="doc.show_discount2">
                     <div class="col">
-                        <div t-if="len(column_names_before_first_line) > 1">
-                            <span class="block reduction" t-esc="column_names_before_first_line[3]"/>
+                        <span class="block reduction" t-esc="column_names_before_first_line[3]"/>
+                        <div t-if="column_names_before_first_line[3] == ''">
+                            <br/>
                         </div>
                         <span class="block">Prix/mois</span>
                         <span class="block small-italic">Min. 2 mois</span>
