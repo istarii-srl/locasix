@@ -40,7 +40,10 @@ class OrderLine(models.Model):
 
     def show_discount_rates(self):
         for line in self:
-            return (line.show_discount2 or line.show_discount3 or line.show_discount6) and line.has_months_discounts
+            if not line.has_months_discounts or (line.product_id and not line.product_id.categ_id.has_months_discounts):
+                return False
+            else:
+                return (line.show_discount2 or line.show_discount3 or line.show_discount6)
 
 
     def get_line_type(self):
