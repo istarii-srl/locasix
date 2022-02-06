@@ -199,21 +199,21 @@
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_6'">
                     <t t-set="column_names_n_lines" t-value="1"/>
-                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line) if section_line.has_months_discounts else []"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() in ['prix_6_8', 'prix_6_double']">
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line) if section_line.has_months_discounts else []"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois', '', '', '']"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <t t-if="section_line.get_section_type() in ['prix_6_24', 'prix_6_double']">
                     <t t-set="column_names_n_lines" t-value="2"/>
-                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
+                    <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line) if section_line.has_months_discounts else []"/>
                     <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h', '24/24h', '24/24h', '24/24h']"/>
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_six_price_section"/>
