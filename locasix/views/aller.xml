@@ -8,7 +8,7 @@
                 <field name="name" string="Journée" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('address_id.name', 'ilike', self), ('address_id.display_name', 'ilike', self), ('city', 'ilike', self)]"/>
                 <field name="contract_id" string="Contrat" filter_domain="['|', ('contract_id.name', 'ilike', self), ('contract_id.name', 'ilike', self)]"/>
                 <field name="product_id" string="Référence produit" filter_domain="['|', '|', ('product_unique_ref.name', 'ilike', self), ('product_id.default_code', 'ilike', self), ('product_id.name', 'ilike', self)]"/>
-                <field name="num_piece" string="Numéro pièce" filter_domain="[('product_unique_ref.name', 'ilike', self)]" />
+                <field name="product_unique_ref" string="Numéro pièce" filter_domain="[('product_unique_ref.name', 'ilike', self)]" />
                 <filter string="Aujourd'hui" name="today" domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
                 <separator/>
                 <filter string="Date" name="today" date="date"/>
