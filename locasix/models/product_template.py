@@ -136,6 +136,6 @@ class ProductCron(models.Model):
             product.active = False
 
     def run_cron_migrate(self):
-        products = self.env["product.template"].search([("active", "=", True), ("is_temporary_product", "=", True)])
+        products = self.env["product.template"].search([("active", "=", True)])
         for product in products:
             product.qty_same_as_parent = True
