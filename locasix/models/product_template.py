@@ -27,7 +27,7 @@ class ProductTemplate(models.Model):
     months_3_discount = fields.Float(string="Remise 3 mois")
     months_6_discount = fields.Float(string="Remise 6 mois")
 
-    qty_same_as_parent = fields.Boolean(string="Même quantity que le produit parent", default=False)
+    qty_same_as_parent = fields.Boolean(string="Même quantité que le produit parent", default=True)
 
     is_temporary_product = fields.Boolean(string="Temporaire", default=True)
     is_assemblage_product = fields.Boolean(string="Assemblage", default=True)
@@ -134,3 +134,8 @@ class ProductCron(models.Model):
         products = self.env["product.template"].search([("active", "=", True), ("is_temporary_product", "=", True)])
         for product in products:
             product.active = False
+
+    def run_cron_migrate(self):
+        products = self.env["product.template"].search([("active", "=", True), ("is_temporary_product", "=", True)])
+        for product in products:
+            product.qty_same_as_parent = True

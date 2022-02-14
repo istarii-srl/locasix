@@ -657,8 +657,12 @@ class Order(models.Model):
                     if line.product_id and not line.is_section and line.from_compute:
                         if line.product_id.id in product_count:
                             order.order_line = [(2, line.id, 0)]
+                            product_count[line.product_id.id] += line.product_uom_qty
                         else:
-                            product_count[line.product_id.id] = 1
+                            product_count[line.product_id.id] = line.product_uom_qty
+                for line in section_lines:
+                    if line.product_id.id in product_count and line.product_id.qty_same_as_parent:
+                        line.product_uom_qty = product_count[line.product_id]
 
                     
     def should_create_link(self, product):
