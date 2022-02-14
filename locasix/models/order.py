@@ -653,15 +653,17 @@ class Order(models.Model):
             for section in sections:
                 product_count = {}
                 section_lines = self.retrieve_lines_from_section(sections[section]["section"])
+                product_line = {}
                 for line in section_lines:
                     if line.product_id and not line.is_section and line.from_compute:
                         if line.product_id.id in product_count:
                             order.order_line = [(2, line.id, 0)]
                             product_count[line.product_id.id] += line.product_uom_qty
                         else:
+                            product_line[line.product_id.id] = line
                             product_count[line.product_id.id] = line.product_uom_qty
-                section_lines = self.retrieve_lines_from_section(sections[section]["section"])
-                for line in section_lines:
+
+                for line in product_line:
                     if line.product_id.id in product_count and line.product_id.qty_same_as_parent:
                         line.product_uom_qty = product_count[line.product_id]
 
