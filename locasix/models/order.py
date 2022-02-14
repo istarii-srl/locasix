@@ -664,7 +664,7 @@ class Order(models.Model):
                             product_count[line.product_id.id] = line.product_uom_qty
                 for line in product_line_dic.values():
                     if line.product_id.id in product_count and line.product_id.qty_same_as_parent:
-                        line.product_uom_qty = product_count[line.product_id]
+                        line.product_uom_qty = product_count[line.product_id.id]
 
                     
     def should_create_link(self, product):
