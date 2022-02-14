@@ -662,7 +662,7 @@ class Order(models.Model):
                         else:
                             product_line_dic[line.product_id.id] = line
                             product_count[line.product_id.id] = line.product_uom_qty
-                for line in product_line_dic:
+                for line in product_line_dic.values():
                     if line.product_id.id in product_count and line.product_id.qty_same_as_parent:
                         line.product_uom_qty = product_count[line.product_id]
 
