@@ -16,6 +16,7 @@ class Order(models.Model):
     added_terms_sale = fields.Html(string="Conditions additionnelles de vente", default=lambda self: self._get_added_terms_sale())
     electro_annexe = fields.Html(string="Annexe groupes électrogènes", default=lambda self: self._get_electro_annexe())
     sale_confirm = fields.Html(string="Confirmation de la commande", default=lambda self: self._get_sale_confirm())
+    sale_confirm_template = fields.Char(string="Confirmation de la commande template") 
     
     offer_type = fields.Selection(string="Type d'offre", selection=[("classic", "Location"), ("weekend", "Weekend"), ("sale", "Vente")], default="classic", required=True)
     usage_rate_display = fields.Selection(string="Affichage des tarifs", selection=[('24', "Afficher les tarifs 24h"), ('8', "Afficher les tarifs 8h"), ("duo", "Afficher les deux tarifs")], default="8", required=True)
@@ -113,7 +114,7 @@ class Order(models.Model):
     @api.model
     def create(self, vals):
         obj = super(Order, self).create(vals)
-        obj.adapt_front_page()
+        obj.adapt_pages()
         obj.name = obj.name
         return obj
 
@@ -126,7 +127,8 @@ class Order(models.Model):
             for name in user_names:
                 initials = initials+name[0]
             vals["name"] = vals["name"] + "-"+ initials
-        if vals.get('adapt_front_page', False):
+        if vals.get('adapt_front_page', False) or vals.get('adapt_sale_confirm', False):
+            vals.pop('adapt_sale_confirm', 1)
             vals.pop('adapt_front_page', 1)
             res = super(Order, self).write(vals)
         elif "offer_type" in vals:
@@ -137,7 +139,7 @@ class Order(models.Model):
         else:
             res = super(Order, self).write(vals)
             _logger.info("order trigger")
-            self.adapt_front_page()
+            self.adapt_pages()
             self.enforce_cuve()
             self.enforce_computations()
         
@@ -190,6 +192,50 @@ class Order(models.Model):
                         if line.product_id.categ_id.show_electro_annexe:
                             return True
             return False
+    
+
+    def adapt_pages(self):
+        for order in self:
+            order.adapt_front_page()
+            order.adapt_confirmation_page()
+
+    
+    def get_text_transformed(self, text):
+        for order in self:
+            if order.partner_id.title:
+                text = text.replace("!title!", order.partner_id.title.name)
+            else:
+                text = text.replace("!title!", "")
+            text = text.replace("!name!", order.partner_id.name)
+
+            text = text.replace("!uname!", order.user_id.name)
+            text = text.replace("!login!", order.user_id.login)
+            text = text.replace("!offernum!", order.name)
+            if order.user_id.phone:
+                text = text.replace("!phone!", "T : "+order.user_id.phone)
+            else:
+                text = text.replace("!phone!", "")
+        return text
+
+    def adapt_confirmation_page(self):
+        _logger.info("adapt confirmation template")
+        for order in self:
+            if order.partner_id and order.partner_id.name:
+                condi = not order.sale_confirm_template
+                if condi:
+                    copy_txt = str(order.sale_confirm)
+                if not condi:
+                    text = order.sale_confirm_template
+                else:
+                    text = order.sale_confirm
+                
+                text = order.get_text_transformed(text)
+
+                if condi:
+                    order.write({"sale_confirm": text, "adapt_sale_confirm": True, "sale_confirm_template": copy_txt})
+                else:
+                    order.write({"sale_confirm": text, "adapt_sale_confirm": True})
+
 
     def adapt_front_page(self):
         _logger.info("adapt front page")
@@ -205,18 +251,8 @@ class Order(models.Model):
                     text = order.front_page_body_template
                 else:
                     text = order.front_page_body
-                if order.partner_id.title:
-                    text = text.replace("!title!", order.partner_id.title.name)
-                else:
-                    text = text.replace("!title!", "")
-                text = text.replace("!name!", order.partner_id.name)
 
-                text = text.replace("!uname!", order.user_id.name)
-                text = text.replace("!login!", order.user_id.login)
-                if order.user_id.phone:
-                    text = text.replace("!phone!", "T : "+order.user_id.phone)
-                else:
-                    text = text.replace("!phone!", "")
+                text = order.get_text_transformed(text)
 
                 if condi:
                     order.write({"front_page_body": text, "adapt_front_page": True, "front_page_body_template": copy_txt,})
