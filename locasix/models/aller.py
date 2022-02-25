@@ -1,4 +1,5 @@
 from odoo import fields, api, models
+from odoo.exceptions import UserError
 import datetime
 import logging
 _logger = logging.getLogger(__name__)
@@ -98,6 +99,12 @@ class Aller(models.Model):
     def _compute_color(self):
         for record in self:
             record.color = COLORS_BY_STATE[record.aller_type]
+
+    @api.constrains("state")
+    def not_done_if_not_admin(self):
+        for aller in self:
+            if aller.state == "zdone" and not self.env.user.has_group('locasix.group_locasix_admin'):
+                raise UserError("Seul les administrateurs peuvent mettre une ligne à 'fini' !")
 
     def _state_selection(self):
         select = [("aprogress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ('a', "Statut technique")]
