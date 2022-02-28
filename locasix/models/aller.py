@@ -54,6 +54,7 @@ class Aller(models.Model):
     displayed_note = fields.Text(string="Remarque libre", compute="_compute_displayed_names")
 
     active = fields.Boolean(string="Actif", default=True)
+    has_been_set_done = fields.Boolean(string="Déjà fini", default=False)
 
 
     def get_default_remarque(self):
@@ -105,6 +106,8 @@ class Aller(models.Model):
         for aller in self:
             if aller.state == "zdone" and not self.env.user.has_group('locasix.group_locasix_admin'):
                 raise UserError("Seul les administrateurs peuvent mettre une ligne à 'fini' !")
+            elif aller.has_been_set_done and not self.env.user.has_group('locasix.group_locasix_admin'):
+                raise UserError("Seul les administrateurs peuvent changer le statut d'une ligne finie !")
 
     def _state_selection(self):
         select = [("aprogress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ('a', "Statut technique")]
@@ -245,7 +248,9 @@ class Aller(models.Model):
         if "state" in vals:
             self.create_history_message("Changement de statut : "+str(self.state_to_string(old_state))+" -> "+str(self.state_to_string(self.state)))
             if self.state == "zdone":
-                pass
+                self.has_been_set_done = True
+            else:
+                self.has_been_set_done = False
                 #self.active = False
         if "contract" in vals:
             if self.contract and old_contract:
