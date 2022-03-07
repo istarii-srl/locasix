@@ -361,14 +361,15 @@ class OrderLine(models.Model):
                 line.write(vals)
             elif line.is_transport():
                 price = 0
+                rate = float(self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate'))
                 for section in section_lines:
                     if section.product_id:
                         if section.product_id.default_code == "TAR" and line.product_id.default_code == "SURCAR":
-                            price = self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') * section.price_unit
+                            price = rate * section.price_unit
                         elif section.product_id.default_code == "TA" and line.product_id.default_code == "SURCA":
-                            price = self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') * section.price_unit
+                            price = rate * section.price_unit
                         elif section.product_id.default_code == "TR" and line.product_id.default_code == "SURCR":
-                            price = self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') * section.price_unit
+                            price = rate * section.price_unit
                 vals = {"price_unit": price, 'from_compute_ins': True}
                 line.write(vals)
 
