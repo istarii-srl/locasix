@@ -318,6 +318,16 @@ class OrderLine(models.Model):
         for line in self:
             return line.product_id.is_insurance
 
+    def is_transport(self):
+        for line in self:
+            categ_id = self.env["product.category"].search([("name", "=", "Transport")], limit=1)
+            if not categ_id:
+                categ_id = self.env["product.category"].create({
+                    "name": "Transport",
+                    "show_section_order": True,
+                })
+            return line.product_id.categ_id.id == categ_id.id 
+
     def enforce_computation(self, is_multi, section_lines):
         for line in self:
             if line.is_insurance():
@@ -349,6 +359,17 @@ class OrderLine(models.Model):
                 _logger.info(day_price)
                 vals = {"price_unit": price_unit, "product_uom": uom, "day_price": day_price, "week_price": week_price, "month_price": month_price , 'from_compute_ins': True}
                 line.write(vals)
+            elif line.is_transport():
+                price = 0
+                for section in section_lines:
+                    if section.product_id:
+                        if section.product_id.default_code == "TAR" and line.product_id.default_code == "SURCAR":
+                            price = self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') * section.price_unit
+                        elif section.product_id.default_code == "TA" and line.product_id.default_code == "SURCA":
+                            price = self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') * section.price_unit
+                        elif section.product_id.default_code == "TR" and line.product_id.default_code == "SURCR":
+                            price = self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') * section.price_unit
+                vals = {"price_unit": price, 'from_compute_ins': True}
 
     def update_line_values(self, pricing=True):
         if self.product_id:
