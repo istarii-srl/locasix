@@ -1,0 +1,27 @@
+<odoo>
+    <record id="shopidoo_settings" model="ir.ui.view">
+        <field name="name">shopidoo.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Locasix" string="Locasix" data-key="Locasix">
+                    <h2>Surcoût de transport</h2>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div>
+                            <group>
+                                <field name="has_extra_cost_transport"/>
+                            </group>
+                        </div>
+                        <div>
+                            <group>
+                                <field name="extra_cost_transport_rate" widget="percentage"/>
+                            </group>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

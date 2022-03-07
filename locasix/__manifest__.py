@@ -16,7 +16,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'ERP',
-    'version': '0.18.461',
+    'version': '0.18.462',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale_management', 'product', 'contacts'],
@@ -29,6 +29,7 @@
         'data/cron_jobs.xml',
         'reports/locasix_quote_template.xml',
         'reports/locasix_quote_report.xml',
+        "views/settings.xml",
         'views/day.xml',
         'views/order_line.xml',
         'views/product_link.xml',
