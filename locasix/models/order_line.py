@@ -370,6 +370,7 @@ class OrderLine(models.Model):
                         elif section.product_id.default_code == "TR" and line.product_id.default_code == "SURCR":
                             price = self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') * section.price_unit
                 vals = {"price_unit": price, 'from_compute_ins': True}
+                line.write(vals)
 
     def update_line_values(self, pricing=True):
         if self.product_id:

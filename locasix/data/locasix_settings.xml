@@ -3,6 +3,7 @@
 
         <record model="res.config.settings" id="locasix_default_settings">
             <field name="group_uom" eval="1"/>
+            <field name="extra_cost_transport_rate" eval="0.06"/>
         </record>
 
         <function model="res.config.settings" name="execute">
