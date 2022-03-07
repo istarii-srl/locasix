@@ -18,7 +18,7 @@ class LocasixSettings(models.TransientModel):
         extra_cost_transport_rate = self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate')
  
         res.update({
-            'shopify_matching_field': has_extra_cost_transport,
-            'odoo_matching_field': extra_cost_transport_rate,
+            'has_extra_cost_transport': has_extra_cost_transport,
+            'extra_cost_transport_rate': extra_cost_transport_rate,
         });
         return res
