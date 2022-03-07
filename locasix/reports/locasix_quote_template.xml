@@ -246,7 +246,7 @@
                         <span t-field="line.product_id.default_code"/>
                     </td>
                     <td width="40%" class="text-left">
-                        <span t-field="line.product_id.name"/>
+                        <span t-field="line.name"/>
                         <span t-if="line.has_ref_to_condi"> (*)</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
@@ -330,7 +330,7 @@
                         <span t-field="line.product_id.default_code"/>
                     </td>
                     <td width="40%" class="text-left">
-                        <span t-field="line.product_id.name"/>
+                        <span t-field="line.name"/>
                         <span t-if="line.has_ref_to_condi"> (*)</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
@@ -444,7 +444,7 @@
                         <span t-field="line.product_id.default_code"/>
                     </td>
                     <td width="25%" class="text-left">
-                        <span t-field="line.product_id.name"/>
+                        <span t-field="line.name"/>
                         <span t-if="line.has_ref_to_condi"> (*)</span>
                         <br/>
                         <span class="small-italic" t-field="line.product_id.product_description"/>
