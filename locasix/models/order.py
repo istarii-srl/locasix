@@ -507,7 +507,6 @@ class Order(models.Model):
                     if not surc_ar_in_order and order.has_extra_cost_transport:
                         self.env["sale.order.line"].create({
                             'order_id': self.id,
-                            'name': "Surcoût transport aller et retour ("+str(round(order.extra_cost_transport_rate*100))+"%)",
                             'price_unit': transport_aller * order.extra_cost_transport_rate,
                             'product_id': surc_ar.product_variant_id.id,
                             'from_compute': True,
@@ -535,7 +534,6 @@ class Order(models.Model):
                     if not surc_a_in_order and order.has_extra_cost_transport:
                         self.env["sale.order.line"].create({
                             'order_id': self.id,
-                            'name': "Surcoût transport aller ("+str(round(order.extra_cost_transport_rate*100))+"%)",
                             'price_unit': transport_aller * order.extra_cost_transport_rate,
                             'product_id': surc_a.product_variant_id.id,
                             'from_compute': True,
@@ -556,7 +554,6 @@ class Order(models.Model):
                         if not surc_r_in_order and order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
-                                'name': "Surcoût transport retour ("+str(round(order.extra_cost_transport_rate*100))+"%)",
                                 'price_unit': transport_retour * order.extra_cost_transport_rate,
                                 'product_id': surc_r.product_variant_id.id,
                                 'from_compute': True,
