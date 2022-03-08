@@ -731,6 +731,7 @@ class Order(models.Model):
                         if not surc_ar_in_order and order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
+                                "name": surc_ar.name,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
@@ -747,8 +748,9 @@ class Order(models.Model):
                         if not surc_a_in_order and order.has_extra_cost_transport:
                             _logger.info("create surca")
                             _logger.info(line.price_unit)
-                            line2 = self.env["sale.order.line"].create({
+                            self.env["sale.order.line"].create({
                                 'order_id': self.id,
+                                "name": surc_a.name,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
@@ -763,6 +765,7 @@ class Order(models.Model):
                         if not surc_r_in_order and order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
+                                "name": surc_r.name,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
