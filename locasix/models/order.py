@@ -746,7 +746,8 @@ class Order(models.Model):
                         _logger.info(surc_a_in_order)
                         if not surc_a_in_order and order.has_extra_cost_transport:
                             _logger.info("create surca")
-                            self.env["sale.order.line"].create({
+                            _logger.info(line.price_unit)
+                            line2 = self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
@@ -754,6 +755,7 @@ class Order(models.Model):
                                 'product_id': surc_a.product_variant_id.id,
                                 'from_compute': True,
                             })
+                            line2.price_unit = line.price_unit * order.extra_cost_transport_rate
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TR" in line.product_id.default_code:
                         line.sequence = sections[line.section_id.id]["next_available"]
