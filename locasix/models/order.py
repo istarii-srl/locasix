@@ -477,15 +477,6 @@ class Order(models.Model):
                     "show_section_order": True,
                 })
 
-            # surc_a = self.env["product.template"].search([('default_code', "=", "SURCA")], limit=1)
-            # if not surc_a:
-            #     surc_a = self.env["product.template"].create({"default_code": "SURCA", "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-            # surc_r = self.env["product.template"].search([('default_code', "=", "SURCR")], limit=1)
-            # if not surc_r:
-            #     surc_r = self.env["product.template"].create({"default_code": "SURCR", "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-            # surc_ar = self.env["product.template"].search([('default_code', "=", "SURCAR")], limit=1)
-            # if not surc_ar:
-            #     surc_ar = self.env["product.template"].create({"default_code": "SURCAR", "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
 
             if not already_transport:
                 if order.offer_type == "weekend":
@@ -502,15 +493,7 @@ class Order(models.Model):
                             'product_id': tar.product_variant_id.id,
                             'from_compute': True,
                         })
-                    
-                    # surc_ar_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_ar.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                    # if not surc_ar_in_order and order.has_extra_cost_transport:
-                    #     self.env["sale.order.line"].create({
-                    #         'order_id': self.id,
-                    #         'price_unit': transport_aller * order.extra_cost_transport_rate,
-                    #         'product_id': surc_ar.product_variant_id.id,
-                    #         'from_compute': True,
-                    #     })
+
 
                 else:
                     ta = self.env["product.template"].search([("default_code", "=", "TA")], limit=1)
@@ -530,15 +513,6 @@ class Order(models.Model):
                         'from_compute': True,
                     })
 
-                    # surc_a_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_a.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                    # if not surc_a_in_order and order.has_extra_cost_transport:
-                    #     self.env["sale.order.line"].create({
-                    #         'order_id': self.id,
-                    #         'price_unit': transport_aller * order.extra_cost_transport_rate,
-                    #         'product_id': surc_a.product_variant_id.id,
-                    #         'from_compute': True,
-                    #     })
-
                     if order.offer_type != "sale":
                         tr_in_order = self.env["sale.order.line"].search([("product_id", "=", tr.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
                         if not tr_in_order:
@@ -549,15 +523,6 @@ class Order(models.Model):
                         #    'section_id': line.section_id.id,
                             'from_compute': True,
                         })
-
-                        # surc_r_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_r.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                        # if not surc_r_in_order and order.has_extra_cost_transport:
-                        #     self.env["sale.order.line"].create({
-                        #         'order_id': self.id,
-                        #         'price_unit': transport_retour * order.extra_cost_transport_rate,
-                        #         'product_id': surc_r.product_variant_id.id,
-                        #         'from_compute': True,
-                        #     })
 
             transport_address_product_id = self.env["product.template"].search([("is_transport_address_product", "=", True)], limit=1)
             if not transport_address_product_id:
@@ -727,8 +692,7 @@ class Order(models.Model):
                         date_retour = line
                     elif line.product_id and line.product_id.default_code in ["TAR", "TA/RC", "TA/R"]:
                         line.sequence = sections[line.section_id.id]["next_available"]                        
-                        surc_ar_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_ar.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                        if not surc_ar_in_order and order.has_extra_cost_transport:
+                        if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 "name": surc_ar.name,
@@ -742,10 +706,7 @@ class Order(models.Model):
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TA" in line.product_id.default_code:
                         _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_a_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_a.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                        _logger.info("ttoto")
-                        _logger.info(surc_a_in_order)
-                        if not surc_a_in_order and order.has_extra_cost_transport:
+                        if order.has_extra_cost_transport:
                             _logger.info("create surca")
                             _logger.info(line.price_unit)
                             self.env["sale.order.line"].create({
@@ -761,8 +722,7 @@ class Order(models.Model):
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TR" in line.product_id.default_code:
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_r_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_r.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
-                        if not surc_r_in_order and order.has_extra_cost_transport:
+                        if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 "name": surc_r.name,
