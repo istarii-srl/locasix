@@ -696,6 +696,7 @@ class Order(models.Model):
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 "name": surc_ar.name,
+                                "extra_cost_link": line.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 "product_uom_qty": 1,
@@ -713,6 +714,7 @@ class Order(models.Model):
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 "name": surc_a.name,
+                                "extra_cost_link": line.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 "product_uom_qty": 1,
@@ -728,6 +730,7 @@ class Order(models.Model):
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 "name": surc_r.name,
+                                "extra_cost_link": line.id,
                                 "product_uom_qty": 1,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,

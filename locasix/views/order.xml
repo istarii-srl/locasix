@@ -102,6 +102,7 @@
             </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="after">
                 <field name="offer_type" invisible = "1"/>
+                <field name="extra_cost_link" invisible="1"/>
                 <field name="is_multi" invisible = "1"/>
                 <field name="has_months_discounts" invisible="1"/>
                 <field name="months_2_discount_rate" invisible="1"/>
