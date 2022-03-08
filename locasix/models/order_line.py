@@ -370,9 +370,12 @@ class OrderLine(models.Model):
                         "show_section_order": True,
                     })
                 for section in section_lines:
+                    _logger.info("ttoto")
                     if section.product_id and section.product_id.default_code and line.extra_cost_link and line.extra_cost_link.id == section.id:
+                        _logger.info("in recompute")
+                        
                         price = rate * section.price_unit
-
+                        _logger.info(price)
                         # if section.product_id.categ_id.id == categ_id.id and section.product_id.default_code in ["TAR", "TA/R", "TA/RC"] and line.product_id.default_code == "SURCAR":
                         #     price = rate * section.price_unit
                         # elif section.product_id.categ_id.id == categ_id.id and "TA" in section.product_id.default_code and line.product_id.default_code == "SURCA":
