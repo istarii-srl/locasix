@@ -691,62 +691,60 @@ class Order(models.Model):
                     elif line.product_id and line.product_id.name =="Date retour":
                         date_retour = line
                     elif line.product_id and line.product_id.default_code in ["TAR", "TA/RC", "TA/R"]:
-                        line.sequence = sections[line.section_id.id]["next_available"]                        
+                        line.sequence = sections[line.section_id.id]["next_available"]
+                        surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        if not surc_temp:
+                            self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
-                                "name": surc_ar.name + line.name[:4],
+                                "name": surc_ar.name,
                                 "extra_cost_link": line.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 "product_uom_qty": 1,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
-                                'product_id': surc_ar.product_variant_id.id,
+                                'product_id': surc_temp.product_variant_id.id,
                                 'from_compute': True,
                             })
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TA" in line.product_id.default_code:
                         _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
+                        surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        if not surc_temp:
+                            self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             _logger.info("create surca")
                             _logger.info(line.price_unit)
-                            order.order_line = [(0, 0, {
+                            self.env["sale.order.line"].create({
                                 'order_id': self.id,
-                                "name": surc_a.name + line.name[:4],
+                                "name": surc_a.name,
                                 "extra_cost_link": line.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 "product_uom_qty": 1,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
-                                'product_id': surc_a.product_variant_id.id,
+                                'product_id': surc_temp.product_variant_id.id,
                                 'from_compute': True,
-                            })]
-                            # self.env["sale.order.line"].create({
-                            #     'order_id': self.id,
-                            #     "name": surc_a.name + line.name[:4],
-                            #     "extra_cost_link": line.id,
-                            #     'price_unit': line.price_unit * order.extra_cost_transport_rate,
-                            #     'section_id': line.section_id.id,
-                            #     "product_uom_qty": 1,
-                            #     'sequence': sections[line.section_id.id]["next_available"] +1,
-                            #     'product_id': surc_a.product_variant_id.id,
-                            #     'from_compute': True,
-                            # })
+                            })
                             #line2.price_unit = line.price_unit * order.extra_cost_transport_rate
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TR" in line.product_id.default_code:
                         line.sequence = sections[line.section_id.id]["next_available"]
+                        surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        if not surc_temp:
+                            self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
-                                "name": surc_r.name + line.name[:4],
+                                "name": surc_r.name,
                                 "extra_cost_link": line.id,
                                 "product_uom_qty": 1,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
-                                'product_id': surc_r.product_variant_id.id,
+                                'product_id': surc_temp.product_variant_id.id,
                                 'from_compute': True,
                             })
                         sections[line.section_id.id]["next_available"] += 2
