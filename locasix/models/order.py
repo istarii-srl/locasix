@@ -695,7 +695,7 @@ class Order(models.Model):
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
-                                "name": surc_ar.name,
+                                "name": surc_ar.name + line.name[:4],
                                 "extra_cost_link": line.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
@@ -713,7 +713,7 @@ class Order(models.Model):
                             _logger.info(line.price_unit)
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
-                                "name": surc_a.name,
+                                "name": surc_a.name + line.name[:4],
                                 "extra_cost_link": line.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
@@ -729,7 +729,7 @@ class Order(models.Model):
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
-                                "name": surc_r.name,
+                                "name": surc_r.name + line.name[:4],
                                 "extra_cost_link": line.id,
                                 "product_uom_qty": 1,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
