@@ -694,7 +694,7 @@ class Order(models.Model):
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
                         if not surc_temp:
-                            self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                            surc_temp = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
@@ -713,7 +713,7 @@ class Order(models.Model):
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
                         if not surc_temp:
-                            self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                            surc_temp = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             _logger.info("create surca")
                             _logger.info(line.price_unit)
@@ -734,7 +734,7 @@ class Order(models.Model):
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
                         if not surc_temp:
-                            self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                            surc_temp = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
