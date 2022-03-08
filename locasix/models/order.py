@@ -841,7 +841,7 @@ class Order(models.Model):
                     lines = self.retrieve_lines_from_section_without_id(line)
                     _logger.info(line.is_section_multi())
                     line.enforce_computation(line.is_section_multi(), lines)
-                elif line.product_id and "SURC" in line.product_id.default_code:
+                elif line.product_id and line.product_id.default_code and "SURC" in line.product_id.default_code:
                     lines = self.retrieve_lines_from_section_without_id(line)
                     line.enforce_computation(line.is_section_multi(), lines)
     
