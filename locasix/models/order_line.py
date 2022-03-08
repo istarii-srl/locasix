@@ -369,7 +369,7 @@ class OrderLine(models.Model):
                         "show_section_order": True,
                     })
                 for section in section_lines:
-                    if section.product_id:
+                    if section.product_id and section.product_id.default_code:
                         if section.product_id.categ_id.id == categ_id.id and section.product_id.default_code in ["TAR", "TA/R", "TA/RC"] and line.product_id.default_code == "SURCAR":
                             price = rate * section.price_unit
                         elif section.product_id.categ_id.id == categ_id.id and "TA" in section.product_id.default_code and line.product_id.default_code == "SURCA":
