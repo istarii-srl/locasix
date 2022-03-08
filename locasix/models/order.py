@@ -698,6 +698,7 @@ class Order(models.Model):
                                 "name": surc_ar.name,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
+                                "product_uom_qty": 1,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
                                 'product_id': surc_ar.product_variant_id.id,
                                 'from_compute': True,
@@ -714,6 +715,7 @@ class Order(models.Model):
                                 "name": surc_a.name,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
+                                "product_uom_qty": 1,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
                                 'product_id': surc_a.product_variant_id.id,
                                 'from_compute': True,
@@ -726,6 +728,7 @@ class Order(models.Model):
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 "name": surc_r.name,
+                                "product_uom_qty": 1,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
