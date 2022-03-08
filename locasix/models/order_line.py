@@ -25,7 +25,7 @@ class OrderLine(models.Model):
     has_24_price = fields.Boolean(string="Option 24/24", related="product_id.product_tmpl_id.has_24_price")
     has_months_discounts = fields.Boolean(string="Appliquer les réductions sur locations longues durées", default=True)
     temporary_product = fields.Boolean(string="Temporaire", related="product_id.is_temporary_product", readonly=False, default=False)
-    extra_cost_link = fields.Many2one(string="Extra costs link", comodel_name="sale.order_line")
+    extra_cost_link = fields.Many2one(string="Extra costs link", comodel_name="sale.order.line")
 
     day_price = fields.Float(string="Prix/jour", default=0.0)
     week_price = fields.Float(string="Prix/sem.", default=0.0)
