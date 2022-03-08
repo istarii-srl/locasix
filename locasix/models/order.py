@@ -755,7 +755,7 @@ class Order(models.Model):
                                 'product_id': surc_a.product_variant_id.id,
                                 'from_compute': True,
                             })
-                            line2.price_unit = line.price_unit * order.extra_cost_transport_rate
+                            #line2.price_unit = line.price_unit * order.extra_cost_transport_rate
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TR" in line.product_id.default_code:
                         line.sequence = sections[line.section_id.id]["next_available"]

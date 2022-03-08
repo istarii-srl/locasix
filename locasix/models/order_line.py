@@ -362,13 +362,19 @@ class OrderLine(models.Model):
             elif line.is_transport() and line.product_id.default_code in ["SURCA", "SURCAR", "SURCR"]:
                 price = 0
                 rate = float(self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate'))
+                categ_id = self.env["product.category"].search([("name", "=", "Transport")], limit=1)
+                if not categ_id:
+                    categ_id = self.env["product.category"].create({
+                        "name": "Transport",
+                        "show_section_order": True,
+                    })
                 for section in section_lines:
                     if section.product_id:
-                        if section.product_id.default_code == "TAR" and line.product_id.default_code == "SURCAR":
+                        if section.product_id.categ_id.id == categ_id.id and section.product_id.default_code in ["TAR", "TA/R", "TA/RC"] and line.product_id.default_code == "SURCAR":
                             price = rate * section.price_unit
-                        elif section.product_id.default_code == "TA" and line.product_id.default_code == "SURCA":
+                        elif section.product_id.categ_id.id == categ_id.id and "TA" in section.product_id.default_code and line.product_id.default_code == "SURCA":
                             price = rate * section.price_unit
-                        elif section.product_id.default_code == "TR" and line.product_id.default_code == "SURCR":
+                        elif section.product_id.categ_id.id == categ_id.id and "TR" in section.product_id.default_code and line.product_id.default_code == "SURCR":
                             price = rate * section.price_unit
                 vals = {"price_unit": price, 'from_compute_ins': True}
                 line.write(vals)
