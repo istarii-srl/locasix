@@ -742,6 +742,8 @@ class Order(models.Model):
                         _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_a_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_a.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
+                        _logger.info("ttoto")
+                        _logger.info(surc_a_in_order)
                         if not surc_a_in_order and order.has_extra_cost_transport:
                             _logger.info("create surca")
                             self.env["sale.order.line"].create({
