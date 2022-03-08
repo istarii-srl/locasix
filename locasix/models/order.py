@@ -692,9 +692,9 @@ class Order(models.Model):
                         date_retour = line
                     elif line.product_id and line.product_id.default_code in ["TAR", "TA/RC", "TA/R"]:
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
-                        if not surc_temp:
-                            surc_temp = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                        surc_temp1 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        if not surc_temp1:
+                            surc_temp1 = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
@@ -704,16 +704,16 @@ class Order(models.Model):
                                 'section_id': line.section_id.id,
                                 "product_uom_qty": 1,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
-                                'product_id': surc_temp.product_variant_id.id,
+                                'product_id': surc_temp1.product_variant_id.id,
                                 'from_compute': True,
                             })
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TA" in line.product_id.default_code:
                         _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
-                        if not surc_temp:
-                            surc_temp = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                        surc_temp2 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        if not surc_temp2:
+                            surc_temp2 = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             _logger.info("create surca")
                             _logger.info(line.price_unit)
@@ -725,16 +725,16 @@ class Order(models.Model):
                                 'section_id': line.section_id.id,
                                 "product_uom_qty": 1,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
-                                'product_id': surc_temp.product_variant_id.id,
+                                'product_id': surc_temp2.product_variant_id.id,
                                 'from_compute': True,
                             })
                             #line2.price_unit = line.price_unit * order.extra_cost_transport_rate
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TR" in line.product_id.default_code:
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_temp = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
-                        if not surc_temp:
-                            surc_temp = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                        surc_temp3 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        if not surc_temp3:
+                            surc_temp3 = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
@@ -744,7 +744,7 @@ class Order(models.Model):
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
                                 'sequence': sections[line.section_id.id]["next_available"] +1,
-                                'product_id': surc_temp.product_variant_id.id,
+                                'product_id': surc_temp3.product_variant_id.id,
                                 'from_compute': True,
                             })
                         sections[line.section_id.id]["next_available"] += 2
@@ -841,7 +841,7 @@ class Order(models.Model):
                     lines = self.retrieve_lines_from_section_without_id(line)
                     _logger.info(line.is_section_multi())
                     line.enforce_computation(line.is_section_multi(), lines)
-                elif line.product_id and line.product_id.default_code in ["SURCA", "SURCAR", "SURCR"]:
+                elif line.product_id and "SURC" in line.product_id.default_code:
                     lines = self.retrieve_lines_from_section_without_id(line)
                     line.enforce_computation(line.is_section_multi(), lines)
     
