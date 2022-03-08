@@ -360,7 +360,7 @@ class OrderLine(models.Model):
                 _logger.info(day_price)
                 vals = {"price_unit": price_unit, "product_uom": uom, "day_price": day_price, "week_price": week_price, "month_price": month_price , 'from_compute_ins': True}
                 line.write(vals)
-            elif line.is_transport() and line.product_id.default_code in ["SURCA", "SURCAR", "SURCR"]:
+            elif line.is_transport():
                 price = 0
                 rate = float(self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate'))
                 categ_id = self.env["product.category"].search([("name", "=", "Transport")], limit=1)
