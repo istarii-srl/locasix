@@ -725,7 +725,7 @@ class Order(models.Model):
                         date_aller = line
                     elif line.product_id and line.product_id.name =="Date retour":
                         date_retour = line
-                    elif line.product_id and line.product_id.default_code in ["TAR, TA/RC"]:
+                    elif line.product_id and line.product_id.default_code in ["TAR", "TA/RC", "TA/R"]:
                         line.sequence = sections[line.section_id.id]["next_available"]                        
                         surc_ar_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_ar.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
                         if not surc_ar_in_order and order.has_extra_cost_transport:
@@ -739,9 +739,11 @@ class Order(models.Model):
                             })
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TA" in line.product_id.default_code:
+                        _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_a_in_order = self.env["sale.order.line"].search([("product_id", "=", surc_a.product_variant_id.id), ("order_id", "=", order.id)], limit=1)
                         if not surc_a_in_order and order.has_extra_cost_transport:
+                            _logger.info("create surca")
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
