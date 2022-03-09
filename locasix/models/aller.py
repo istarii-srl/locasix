@@ -45,6 +45,7 @@ class Aller(models.Model):
     product_default_code = fields.Char(string="Ref", related="product_id.default_code")
     product_id = fields.Many2one(string="Produit", comodel_name="product.product", required=True)
     product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
+    is_retour_created = fields.Boolean(string="Retour crée", default=False)
 
     is_weekend = fields.Boolean(string="weekend", related="agg_id.is_weekend")
 

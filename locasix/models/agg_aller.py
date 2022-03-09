@@ -81,21 +81,24 @@ class AggAller(models.Model):
                         "address_id": agg_aller.address_id.id,
                     })
                 for aller in agg_aller.aller_ids:
-                    retour = self.env["locasix.aller"].create({
-                    "day_id": agg_retour_id.day_id.id,
-                    "aller_type": "in",
-                    "date": agg_retour_id.date,
-                    "agg_id": agg_retour_id.id,
-                    "localite_id": aller.localite_id.id,
-                    "address_id": aller.address_id.id,
-                    "contract": aller.contract,
-                    "product_id": aller.product_id.id,
-                    "product_unique_ref": aller.product_unique_ref.id,
-                    "note": aller.note,
-                })
+                    if not aller.is_retour_created: 
+                        retour = self.env["locasix.aller"].create({
+                        "day_id": agg_retour_id.day_id.id,
+                        "aller_type": "in",
+                        "is_retour_created": True,
+                        "date": agg_retour_id.date,
+                        "agg_id": agg_retour_id.id,
+                        "localite_id": aller.localite_id.id,
+                        "address_id": aller.address_id.id,
+                        "contract": aller.contract,
+                        "product_id": aller.product_id.id,
+                        "product_unique_ref": aller.product_unique_ref.id,
+                        "note": aller.note,
+                    })
+                        aller.is_retour_created = True
                     for remarque in aller.remarque_ids:
                         retour.remarque_ids = [(4, remarque.id, 0)]     
-                agg_aller.is_retours_created = True                                   
+                #agg_aller.is_retours_created = True                                   
 
     @api.model
     def create(self, vals):
