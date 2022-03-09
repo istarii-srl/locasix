@@ -337,8 +337,6 @@ class OrderLine(models.Model):
                 day_price = 0.0
                 week_price = 0.0
                 month_price = 0.0
-                _logger.info("MULTO")
-                _logger.info(is_multi)
                 for section_line in section_lines:
                     if not section_line.is_insurance() and section_line.product_id:
                         if is_multi:
@@ -356,11 +354,9 @@ class OrderLine(models.Model):
                     uom = uom = self.env["uom.uom"].search([("name", "=", "Jours")], limit=1)
                     if not uom:
                         uom = line.product_uom
-                _logger.info(price_unit)
-                _logger.info(day_price)
                 vals = {"price_unit": price_unit, "product_uom": uom, "day_price": day_price, "week_price": week_price, "month_price": month_price , 'from_compute_ins': True}
                 line.write(vals)
-            elif line.is_transport():
+            elif line.is_transport() and line.product_id and line.product_id.default_code and "SURC" in line.product_id.default_code:
                 price = 0
                 rate = float(self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate'))
                 categ_id = self.env["product.category"].search([("name", "=", "Transport")], limit=1)
@@ -369,31 +365,21 @@ class OrderLine(models.Model):
                         "name": "Transport",
                         "show_section_order": True,
                     })
-                for section in section_lines:
-                    _logger.info("ttoto")
-                    if section.product_id and section.product_id.default_code and line.extra_cost_link and line.extra_cost_link.id == section.id:
-                        _logger.info("in recompute")
-                        
-                        price = rate * section.price_unit
-                        _logger.info(price)
-                        # if section.product_id.categ_id.id == categ_id.id and section.product_id.default_code in ["TAR", "TA/R", "TA/RC"] and line.product_id.default_code == "SURCAR":
-                        #     price = rate * section.price_unit
-                        # elif section.product_id.categ_id.id == categ_id.id and "TA" in section.product_id.default_code and line.product_id.default_code == "SURCA":
-                        #     price = rate * section.price_unit
-                        # elif section.product_id.categ_id.id == categ_id.id and "TR" in section.product_id.default_code and line.product_id.default_code == "SURCR":
-                        #     price = rate * section.price_unit
+                if line.extra_cost_link:
+                    
+                    price = rate * line.extra_cost_link.price_unit
+                    # if section.product_id.categ_id.id == categ_id.id and section.product_id.default_code in ["TAR", "TA/R", "TA/RC"] and line.product_id.default_code == "SURCAR":
+                    #     price = rate * section.price_unit
+                    # elif section.product_id.categ_id.id == categ_id.id and "TA" in section.product_id.default_code and line.product_id.default_code == "SURCA":
+                    #     price = rate * section.price_unit
+                    # elif section.product_id.categ_id.id == categ_id.id and "TR" in section.product_id.default_code and line.product_id.default_code == "SURCR":
+                    #     price = rate * section.price_unit
                 vals = {"price_unit": price, 'from_compute_ins': True}
                 line.write(vals)
 
     def update_line_values(self, pricing=True):
         if self.product_id:
             product = self.product_id.product_tmpl_id
-            _logger.info("update line values")
-            _logger.info(product.weekend_price)
-            _logger.info(product.name)
-            _logger.info(product.has_multi_price)
-            _logger.info(self.offer_type)
-            _logger.info(product.categ_id)
             vals = {}
             if not self.category_id:
                 vals["category_id"] = product.categ_id

@@ -122,7 +122,6 @@ class Order(models.Model):
 
     def write(self, vals):
         _logger.info("write template")
-        _logger.info(vals)
         if "name" in vals:
             user_names = self.env.user.name.split(" ")
             initials = ""
@@ -172,16 +171,12 @@ class Order(models.Model):
                 products_lst_price = {}
                 for line in order.order_line:
                     if line.product_id:
-                        _logger.info("reset pre")
-                        _logger.info(line.product_id.lst_price)
                         if not line.product_id.id in products_lst_price:
                             products_lst_price[line.product_id.id] = line.product_id.lst_price
                         line.product_id.lst_price = line.product_id.weekend_price
                 res = super(Order, self).update_prices()
                 for line in order.order_line:
                     if line.product_id:
-                        _logger.info("reset")
-                        _logger.info(products_lst_price[line.product_id.id])
                         line.product_id.lst_price = products_lst_price[line.product_id.id]
             else:
                 res = super(Order, self).update_prices()
@@ -749,9 +744,6 @@ class Order(models.Model):
                             })
                         sections[line.section_id.id]["next_available"] += 2
                     else:
-                        _logger.info(line.name)
-                        _logger.info(sections[line.section_id.id]["section"].name)
-                        _logger.info(sections[line.section_id.id]["next_available"])
                         line.sequence = sections[line.section_id.id]["next_available"]
                         sections[line.section_id.id]["next_available"] += 1
             if address_transport_line:
@@ -770,7 +762,6 @@ class Order(models.Model):
     
     def remove_doublons(self, sections):
         _logger.info("remove doublons")
-        _logger.info(sections)
         for order in self:
             for section in sections:
                 product_count = {}
@@ -805,9 +796,7 @@ class Order(models.Model):
             for line in order.order_line:
                 if line.product_id and line.order_id:
                     links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.product_tmpl_id.id)])
-                    _logger.info(links)
                     for link in links:
-                        _logger.info("links")
                         if order.should_create_link(link.product_linked_id):
                             new_line = self.env["sale.order.line"].create({
                                 'order_id': line.order_id.id,
@@ -823,14 +812,8 @@ class Order(models.Model):
                                 _logger.info("change of category")
                                 _logger.info(new_line.category_id.name)
                                 new_line.category_id = line.category_id
-                                _logger.info(new_line.category_id.name)
-                                _logger.info(line.category_id.name)
                             _logger.info(new_line.name)
                             if new_line.is_insurance():
-                                _logger.info("MULTO 2")
-                                _logger.info(line.is_multi)
-                                _logger.info(line.name)
-                                _logger.info(line.product_id.has_multi_price)
                                 new_line.is_multi = line.product_id.has_multi_price
 
     def enforce_computations(self):
