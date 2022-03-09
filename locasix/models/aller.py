@@ -388,7 +388,8 @@ class AllerCron(models.Model):
         new_day = min_limit
         i = 0
         while new_day < max_limit and i < len(sorted_days):
-            sorted_days[i].state = "a"
+            if sorted_days[i].state != "a":
+                sorted_days[i].state = "a"
             if sorted_days[i].date == new_day:
                 i += 1
                 new_day = new_day + datetime.timedelta(days=1)
