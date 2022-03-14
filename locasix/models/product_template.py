@@ -1,4 +1,5 @@
 from odoo import fields, api, models, tools
+from odoo.exceptions import UserError
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -42,6 +43,12 @@ class ProductTemplate(models.Model):
 
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
     insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)
+
+    @api.constrains("list_price")
+    def check_constraints(self):
+        for product in self:
+           if not product.is_temporary_product and not self.env.user.has_group('locasix.group_locasix_admin'):
+                raise UserError("Seul les administrateurs peuvent changer le prix d'un produit non temporaire !") 
 
 
     @api.onchange('is_assemblage_product')
