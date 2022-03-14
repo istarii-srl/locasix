@@ -44,7 +44,7 @@ class ProductTemplate(models.Model):
     is_insurance = fields.Boolean(string="Est une assurance", default=False)
     insurance_percentage = fields.Float(string="Pourcentage de la prime", default=0.08)
 
-    @api.constrains("list_price", "day_price", "week_price", "month_price", "has_multi_price", "has_24_price", "weekend_price", "product_description", "name", "default_code")
+    @api.constrains("list_price", "day_price", "week_price", "month_price", "has_multi_price", "has_24_price", "weekend_price", "product_description", "name", "default_code", "categ_id", "uom_id")
     def check_constraints(self):
         for product in self:
            if not product.is_temporary_product and not self.env.user.has_group('locasix.group_locasix_admin'):
