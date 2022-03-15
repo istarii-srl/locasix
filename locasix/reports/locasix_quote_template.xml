@@ -4,7 +4,12 @@
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
                     <link href="/locasix/static/locasix.css" rel="stylesheet"/>
-                    <div class="header not-first-page">
+                    <div t-if="doc.display_front_page" class="header not-first-page">
+                        <img src="/locasix/static/img/locasix_header.png" style="max-height: 90px; padding-top: 15px;"/>
+                        <!-- <a href="https://locasix.be" target="_blank" style="position: absolute; width: 450px; height: 110px; left: 10px; top: 100px; background:transparent">
+                        </a> -->
+                    </div>
+                    <div t-if="not doc.display_front_page" class="header">
                         <img src="/locasix/static/img/locasix_header.png" style="max-height: 90px; padding-top: 15px;"/>
                         <!-- <a href="https://locasix.be" target="_blank" style="position: absolute; width: 450px; height: 110px; left: 10px; top: 100px; background:transparent">
                         </a> -->
@@ -16,7 +21,10 @@
                     <t t-call="locasix.additional_conditions"/>
                     <t t-call="locasix.technical_files"/>
                     <t t-call="locasix.cgv"/>
-                    <div class="footer not-first-page">
+                    <div t-if="doc.display_front_page" class="footer not-first-page">
+                        <img src="/locasix/static/img/locasix_footer.png" style="max-width: 900px; padding-bottom: 10px;"/>
+                    </div>
+                    <div t-if="not doc.display_front_page" class="footer">
                         <img src="/locasix/static/img/locasix_footer.png" style="max-width: 900px; padding-bottom: 10px;"/>
                     </div>
                 </t>

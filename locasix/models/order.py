@@ -11,7 +11,7 @@ class Order(models.Model):
     front_page_body = fields.Html(string="Page de garde", default=lambda self: self._get_front_page())
     front_page_body_template = fields.Char(string="Page de garde template") 
 
-    added_terms_id = fields.Many2one(string="Liste de conditions additionnelles", comodel_name="locasix.template.html", domain=[("is_condi_add", "=", True)])
+    added_terms_id = fields.Many2one(string="Liste de conditions additionnelles", comodel_name="locasix.template.html", domain=['|', ("id", "=", False), ("is_condi_add", "=", True)])
     added_terms_template = fields.Html(string="Conditions additionnelles ")
     added_terms = fields.Html(string="Conditions additionnelles", default=lambda self: self._get_added_terms())
     added_terms_week_end = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_weekend())
