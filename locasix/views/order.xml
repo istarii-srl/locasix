@@ -69,9 +69,9 @@
                         <field name="added_terms_id"/>
                     </group>
                     <field name="added_terms_template" attrs="{'invisible': [('added_terms_id', '=', False)]}"/>
-                    <field name="added_terms" attrs="{'invisible': ['|', ('added_terms_id', '=', True), ('offer_type', '!=', 'classic')]}"/>
-                    <field name="added_terms_week_end" attrs="{'invisible': ['|', ('added_terms_id', '=', True), ('offer_type', '!=', 'weekend')]}"/>
-                    <field name="added_terms_sale" attrs="{'invisible': ['|', ('added_terms_id', '=', True), ('offer_type', '!=', 'sale')]}"/>
+                    <field name="added_terms" attrs="{'invisible': ['|', ('added_terms_id', '!=', False), ('offer_type', '!=', 'classic')]}"/>
+                    <field name="added_terms_week_end" attrs="{'invisible': ['|', ('added_terms_id', '!=', False), ('offer_type', '!=', 'weekend')]}"/>
+                    <field name="added_terms_sale" attrs="{'invisible': ['|', ('added_terms_id', '!=', False), ('offer_type', '!=', 'sale')]}"/>
                 </page>
                 <page name="confirm" string="Confirmation de la commande">
                     <field name="sale_confirm"/>
