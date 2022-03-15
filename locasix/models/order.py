@@ -174,12 +174,13 @@ class Order(models.Model):
                         if not line.product_id.id in products_lst_price:
                             products_lst_price[line.product_id.id] = line.product_id.lst_price
                         _logger.info("test")
-                        line.product_id.sudo().write({"lst_price": line.product_id.weekend_price})
+                        line.product_id.sudo().write({"is_switching": True, "lst_price": line.product_id.weekend_price})
                         _logger.info("test2")
                 res = super(Order, self).update_prices()
                 for line in order.order_line:
                     if line.product_id:
                         line.product_id.sudo().write({"lst_price": products_lst_price[line.product_id.id]})
+                        line.product_id.is_switching = False
             else:
                 res = super(Order, self).update_prices()
 
