@@ -747,7 +747,7 @@ class Order(models.Model):
                             })
                             #line2.price_unit = line.price_unit * order.extra_cost_transport_rate
                         sections[line.section_id.id]["next_available"] += 2
-                    elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TH" in line.product_id.default_code:
+                    elif line.product_id and line.product_id.default_code in ["TH1", "TH2"]:
                         _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_temp4 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
