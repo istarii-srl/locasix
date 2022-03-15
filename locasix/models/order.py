@@ -85,14 +85,14 @@ class Order(models.Model):
 
     def _get_electro_annexe(self):
         #template = self.env["locasix.template.html"].search([('name', '=', 'Template annexe groupes électrogènes')], limit=1)
-        template = self.env.ref("locasix_template_electro")
+        template = self.env.ref("locasix.locasix_template_electro")
         if template:
             return template.template
         else:
             return "<p>Nous portons à votre connaissance que nous n’avons pas de service de dépannage organisé durant les weekends (Du vendredi 16h00 jusqu’au lundi 07h00).</p><p><br></p><p>Notre expérience nous démontre que les problèmes qui surviennent sont généralement : </p><ul><li><p>Soit une panne par manque de gasoil </p></li><li><p>Soit un acte de malveillance. </p></li></ul><p>Nous constatons également qu’entre le moment où le technicien est informé du problème et le dépannage sur site (Ou encore remplacement de la machine), plusieurs heures sont parfois nécessaires. </p><p><br></p><p>Aussi, pour palier à ces inconvénients et vous protéger contre tout problème qui pourrait surgir, nous vous proposons la location d’un second groupe électrogène ou mât d'éclairage en réserve (Sous réserve des stocks disponibles). </p><p><br></p><p>Cette deuxième machine (Sous réserve qu’elle n’ait pas été utilisée) serait facturée à 50 \% du prix de la première. Si cette proposition vous intéresse, merci de nous en informer. </p><p><br></p><p>Cette démarche ne nous empêche nullement de toujours faire le maximum pour vous servir un matériel en parfait état de fonctionnement.<br></p>"
     def _get_sale_confirm(self):
         #template = self.env["locasix.template.html"].search([('name', '=', 'Template confirmation de commande')], limit=1)
-        template = self.env.ref("locasix_template_confirm_sale")
+        template = self.env.ref("locasix.locasix_template_confirm_sale")
         if template:
             return template.template
         else:
@@ -100,7 +100,7 @@ class Order(models.Model):
 
     def _get_added_terms_sale(self):
         #template = self.env["locasix.template.html"].search([('name', '=', 'Template conditions additionnelles de vente')], limit=1)
-        template = self.env.ref("locasix_template_condi_sale")
+        template = self.env.ref("locasix.locasix_template_condi_sale")
         if template:
             return template.template
         else:
@@ -108,7 +108,7 @@ class Order(models.Model):
 
     def _get_added_terms(self):
         #template = self.env["locasix.template.html"].search([('name', '=', 'Template conditions additionnelles')], limit=1)
-        template = self.env.ref("locasix_template_condi")
+        template = self.env.ref("locasix.locasix_template_condi")
         if template:
             return template.template
         else:
@@ -116,7 +116,7 @@ class Order(models.Model):
 
     def _get_added_terms_weekend(self):
         #template = self.env["locasix.template.html"].search([('name', '=', 'Template conditions additionnelles week-end')], limit=1)
-        template = self.env.ref("locasix_template_condi_weekend")
+        template = self.env.ref("locasix.locasix_template_condi_weekend")
         if template:
             return template.template
         else:
@@ -125,7 +125,7 @@ class Order(models.Model):
 
     def _get_front_page(self):
         #template = self.env["locasix.template.html"].search([('name', '=', 'Template page de garde')], limit=1)
-        template = self.env.ref("locasix_template_front")
+        template = self.env.ref("locasix.locasix_template_front")
         if template:
             return template.template
         else:
