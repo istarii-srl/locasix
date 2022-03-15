@@ -52,6 +52,9 @@ class Order(models.Model):
     has_extra_cost_transport = fields.Boolean(default=False)
     extra_cost_transport_rate = fields.Float(default=0)
 
+    display_front_page = fields.Boolean(string="Afficher la page de garde", default=True)
+    display_confirmation_box = fields.Boolean(string="Afficher l'encadré de confirmation", default=True)
+
 
     def get_transport_address(self):
         for order in self:

@@ -80,7 +80,10 @@
                         <group>
                             <field name="space_between_sections"/>
                         </group>
-                        <group></group>
+                        <group>
+                            <field name="display_front_page"/>
+                            <field name="display_confirmation_box"/>
+                        </group>
                     </group>
                 </page>
             </page>
