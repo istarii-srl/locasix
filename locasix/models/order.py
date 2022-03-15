@@ -697,6 +697,9 @@ class Order(models.Model):
             surc_ar = self.env["product.template"].search([('default_code', "=", "SURCAR")], limit=1)
             if not surc_ar:
                 surc_ar = self.env["product.template"].create({"default_code": "SURCAR", "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+            surc_h = self.env["product.template"].search([('default_code', "=", "SURCH")], limit=1)
+            if not surc_h:
+                surc_h = self.env["product.template"].sudo().create({"default_code": "SURCH", "name": "Surcoût transport horaire", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
 
             for line in order.order_line:
                 if not line.is_section and line.section_id:
@@ -747,7 +750,7 @@ class Order(models.Model):
                             })
                             #line2.price_unit = line.price_unit * order.extra_cost_transport_rate
                         sections[line.section_id.id]["next_available"] += 2
-                    elif line.product_id and line.product_id.default_code in ["TH1", "TH2"]:
+                    elif line.product_id and line.product_id.default_code in ["TH1", "TH2", "TH1 ", "TH2 "]:
                         _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_temp4 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
@@ -758,7 +761,7 @@ class Order(models.Model):
                             _logger.info(line.price_unit)
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
-                                "name": surc_ar.name,
+                                "name": surc_h.name,
                                 "extra_cost_link": line.id,
                                 'price_unit': line.price_unit * order.extra_cost_transport_rate,
                                 'section_id': line.section_id.id,
