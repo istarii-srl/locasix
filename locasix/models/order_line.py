@@ -395,11 +395,11 @@ class OrderLine(models.Model):
                     _logger.info("update price for weekend")
                     if self.order_id.pricelist_id:
                         lst_price = product.lst_price
-                        product.lst_price = product.weekend_price
+                        product.sudo().write({"lst_price": product.weekend_price})
                         vals["price_unit"] = self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(self.product_id), self.product_id.taxes_id, self.tax_id, self.company_id)
                         _logger.info("reset 2")
                         _logger.info(lst_price)
-                        product.lst_price = lst_price
+                        product.sudo().write({"lst_price": lst_price})
                     else:
                         vals["price_unit"] = product.weekend_price
                 else:
