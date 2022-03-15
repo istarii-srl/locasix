@@ -5,4 +5,5 @@ class HtmlTemplate(models.Model):
     _description = "Template pour les conditions additionnelles"
 
     name = fields.Char(string="Nom", default="Template des conditions additionnelles")
+    is_condi_add = fields.Boolean(string="Est une condition additionnelle", default=False)
     template = fields.Html()

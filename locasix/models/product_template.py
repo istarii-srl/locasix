@@ -24,6 +24,8 @@ class ProductTemplate(models.Model):
     week_price = fields.Float(string="Prix par semaine")
     month_price = fields.Float(string="Prix par mois")
 
+    is_switching = fields.Boolean(string="Switch", default=False)
+
     months_2_discount = fields.Float(string="Remise 2 mois")
     months_3_discount = fields.Float(string="Remise 3 mois")
     months_6_discount = fields.Float(string="Remise 6 mois")
@@ -37,7 +39,6 @@ class ProductTemplate(models.Model):
 
     show_offert = fields.Boolean(string="Affiche 'offert' si prix égal 0", default=True)
 
-
     technical_ids = fields.One2many(comodel_name="locasix.product.technical", inverse_name="product_tmpl_id")
     plan_ids = fields.One2many(comodel_name="locasix.product.plan", inverse_name="product_tmpl_id")
 
@@ -47,7 +48,7 @@ class ProductTemplate(models.Model):
     @api.constrains("list_price", "day_price", "week_price", "month_price", "has_multi_price", "has_24_price", "weekend_price", "product_description", "name", "default_code", "categ_id", "uom_id")
     def check_constraints(self):
         for product in self:
-           if not product.is_temporary_product and not self.env.user.has_group('locasix.group_locasix_admin'):
+           if not product.is_switching and not product.is_temporary_product and not self.env.user.has_group('locasix.group_locasix_admin'):
                 raise UserError("Seul les administrateurs peuvent changer un produit non temporaire !") 
 
 

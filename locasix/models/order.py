@@ -11,6 +11,8 @@ class Order(models.Model):
     front_page_body = fields.Html(string="Page de garde", default=lambda self: self._get_front_page())
     front_page_body_template = fields.Char(string="Page de garde template") 
 
+    added_terms_id = fields.Many2one(string="Liste de conditions additionnelles", comodel_name="locasix.template.html", domain=[("is_condi_add", "=", True)])
+    added_terms_template = fields.Html(string="Conditions additionnelles ")
     added_terms = fields.Html(string="Conditions additionnelles", default=lambda self: self._get_added_terms())
     added_terms_week_end = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_weekend())
     added_terms_sale = fields.Html(string="Conditions additionnelles de vente", default=lambda self: self._get_added_terms_sale())
@@ -55,6 +57,14 @@ class Order(models.Model):
     display_front_page = fields.Boolean(string="Afficher la page de garde", default=True)
     display_confirmation_box = fields.Boolean(string="Afficher l'encadré de confirmation", default=True)
 
+
+    @api.onchange("added_terms_id")
+    def on_added_terms_changed(self):
+        for order in self:
+            if order.added_terms_id:
+                order.added_terms_template = order.added_terms_id.template
+            else:
+                order.added_terms_template = False
 
     def get_transport_address(self):
         for order in self:
@@ -172,15 +182,18 @@ class Order(models.Model):
         for order in self:
             if order.offer_type == "weekend":
                 products_lst_price = {}
-                for line in order.order_line:
+                for line in order.order_line.sudo():
                     if line.product_id:
                         if not line.product_id.id in products_lst_price:
                             products_lst_price[line.product_id.id] = line.product_id.lst_price
-                        line.product_id.lst_price = line.product_id.weekend_price
+                        _logger.info("test")
+                        line.product_id.sudo().write({"is_switching": True, "lst_price": line.product_id.weekend_price})
+                        _logger.info("test2")
                 res = super(Order, self).update_prices()
                 for line in order.order_line:
                     if line.product_id:
-                        line.product_id.lst_price = products_lst_price[line.product_id.id]
+                        line.product_id.sudo().write({"lst_price": products_lst_price[line.product_id.id]})
+                        line.product_id.is_switching = False
             else:
                 res = super(Order, self).update_prices()
 
@@ -692,7 +705,7 @@ class Order(models.Model):
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_temp1 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
                         if not surc_temp1:
-                            surc_temp1 = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                            surc_temp1 = self.env["product.template"].sudo().create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
@@ -711,7 +724,7 @@ class Order(models.Model):
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_temp2 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
                         if not surc_temp2:
-                            surc_temp2 = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                            surc_temp2 = self.env["product.template"].sudo().create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             _logger.info("create surca")
                             _logger.info(line.price_unit)
@@ -732,7 +745,7 @@ class Order(models.Model):
                         line.sequence = sections[line.section_id.id]["next_available"]
                         surc_temp3 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
                         if not surc_temp3:
-                            surc_temp3 = self.env["product.template"].create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
+                            surc_temp3 = self.env["product.template"].sudo().create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
                             self.env["sale.order.line"].create({
                                 'order_id': self.id,
