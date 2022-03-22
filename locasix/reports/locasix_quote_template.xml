@@ -48,7 +48,7 @@
                 <div style="height: 150px;">
                     <div class="row">
                         <div style="width: 15px;"/>
-                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px; font-size:13px">
                             <span>
                                 <span t-field="doc.company_id.name"/><br/>
                                 <span t-field="doc.company_id.street"/> <br/>
@@ -58,7 +58,7 @@
                             </span>
                         </div>
                         <div style="width: 10px;"/>
-                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px;">
+                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px; font-size:13px">
                             <div class="row" style="margin: 0px !important;"><span t-esc="doc.partner_id.parent_id.name if doc.partner_id.parent_id else doc.partner_id.name"/></div>
                             <div class="row" style="margin: 0px !important;"><span>Numéro d'offre : </span><span t-field="doc.name"/></div>
                             <div class="row" style="margin: 0px !important;"><span>Votre référence : </span><span t-field="doc.client_ref"/></div>
@@ -84,7 +84,7 @@
             <div class="row">
                 <div class="col-5" style="font-size: 11px;">
                     <div style="height:42px;"/>
-                    <div style="height: 105px; border: 1px solid black; padding: 3px 5px 3px 5px;">
+                    <div style="height: 105px; border: 1px solid black; padding: 3px 5px 3px 5px; font-size:13px">
                         <span t-field="doc.company_id.name"/><br/>
                         <span t-field="doc.company_id.street"/> <br/>
                         <span t-field="doc.company_id.zip"/> <span t-field="doc.company_id.city"/> <br/>
@@ -94,10 +94,10 @@
                 </div>
                 <div class="col-7" style="font-size: 11px;">
                     <div style="border: 1px solid black; padding: 3px 5px 3px 5px; text-align:center;">
-                        <span style="font-size: 15px;">Offre</span>
+                        <span style="font-size: 16px;">Offre</span>
                     </div>
                     <div style="height:10px;"/>
-                    <div style="height: 105px; border: 1px solid black; padding: 3px 5px 3px 5px;">
+                    <div style="height: 105px; border: 1px solid black; padding: 3px 5px 3px 5px; font-size: 13px">
                         <div class="row" style="margin: 0px !important;"><span t-esc="doc.partner_id.parent_id.name if doc.partner_id.parent_id else doc.partner_id.name"/></div>
                         <div class="row" style="margin: 0px !important;"><span>Numéro d'offre : </span><span t-field="doc.name"/></div>
                         <div class="row" style="margin: 0px !important;"><span>Votre référence : </span><span t-field="doc.client_ref"/></div>
