@@ -275,6 +275,7 @@
                         </div>
                         <div t-else="">
                             <span style="text-decoration: line-through; text-decoration-color: rgb(199, 55, 58); text-decoration-thickness: 3px;" t-esc="line.price_unit * line_coefficient * line.product_uom_qty" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span class="reduction" t-esc="'-' + str(int(doc.discount)) + '% = '"/>
                             <span class="reduction" t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span class="reduction"> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
