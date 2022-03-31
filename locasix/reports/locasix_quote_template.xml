@@ -266,7 +266,7 @@
                     </td>
                     <td width="45%" class="text-center">
                         <div t-if="line.price_unit != 0 and not doc.visual_discounts">
-                            <span t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </div>
@@ -276,7 +276,7 @@
                         <div t-else="">
                             <span style="text-decoration: line-through" t-esc="line.price_unit * line_coefficient * line.product_uom_qty" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span style="text-decoration: line-through"> HT</span>
-                            <span style="reduction" t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span style="reduction" t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span style="reduction"> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </div>
@@ -357,17 +357,17 @@
                     </td>
                     <t t-if="line.day_price != 0 or line.week_price != 0 or line.month_price != 0">
                         <td width="15%" class="text-center">
-                            <span t-esc="(line.day_price * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.day_price * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
                         <td width="15%" class="text-center">
-                            <span t-esc="(line.week_price * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.week_price * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
                         <td width="15%" class="text-center">
-                            <span t-esc="(line.month_price * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.month_price * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
@@ -471,32 +471,32 @@
                     </td>
                     <t t-if="line.day_price != 0 or line.week_price != 0 or line.month_price != 0">
                         <td width="10%" class="text-center">
-                            <span t-esc="(line.day_price * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.day_price * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-esc="(line.week_price * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.week_price * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
                         <td width="10%" class="text-center">
-                            <span t-esc="(line.month_price * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.month_price * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
                         <td width="10%" class="text-center" t-if="doc.show_discount2">
-                            <span t-esc="(line.months_2_discount * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.months_2_discount * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
                         <td width="10%" class="text-center" t-if="doc.show_discount3">
-                            <span t-esc="(line.months_3_discount * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.months_3_discount * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
                         <td width="10%" class="text-center" t-if="doc.show_discount6">
-                            <span t-esc="(line.months_6_discount * line_coefficient * line.product_uom_qty) * (1 - line.discount)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="(line.months_6_discount * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </td>
