@@ -96,8 +96,8 @@ class AggAller(models.Model):
                         "note": aller.note,
                     })
                         aller.is_retour_created = True
-                    for remarque in aller.remarque_ids:
-                        retour.remarque_ids = [(4, remarque.id, 0)]     
+                        for remarque in aller.remarque_ids:
+                            retour.remarque_ids = [(4, remarque.id, 0)]     
                 #agg_aller.is_retours_created = True                                   
 
     @api.model
