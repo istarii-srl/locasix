@@ -1,3 +1,4 @@
+from email.policy import default
 from odoo import fields, api, models
 
 
@@ -53,6 +54,7 @@ class Order(models.Model):
     space_between_sections = fields.Selection(string="Espace entre les sections", selection=[('small', 'Petit'), ('medium', 'Moyen'), ('large', 'Grand')], default="medium");
     has_extra_cost_transport = fields.Boolean(default=False)
     extra_cost_transport_rate = fields.Float(default=0)
+    visual_discounts = fields.Boolean(string="Afficher les réductions", default=False)
 
     display_front_page = fields.Boolean(string="Afficher la page de garde", default=True)
     display_confirmation_box = fields.Boolean(string="Afficher l'encadré de confirmation", default=True)

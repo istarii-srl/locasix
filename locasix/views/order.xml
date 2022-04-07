@@ -85,6 +85,7 @@
                         <group>
                             <field name="display_front_page"/>
                             <field name="display_confirmation_box"/>
+                            <field name="visual_discounts"/>
                         </group>
                     </group>
                 </page>
