@@ -160,7 +160,6 @@ class Aller(models.Model):
         vals["localite_id"] = agg_id.localite_id.id
         vals["day_id"] = agg_id.day_id.id
         vals["date"] = agg_id.date
-        vals["note"] = agg_id.note
         obj = super(Aller, self).create(vals)
         if not obj.remarque_ids:
             obj.remarque_ids = obj.agg_id.remarque_ids
