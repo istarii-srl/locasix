@@ -58,6 +58,12 @@ class Aller(models.Model):
     has_been_set_done = fields.Boolean(string="Déjà fini", default=False)
 
 
+    @api.constrains("date")
+    def check_date_if_done(self):
+        for aller in self:
+            if aller.state == "zdone":
+                raise UserError("Vous ne pouvez pas déplacer une ligne avec le statut fini !")
+
     def get_default_remarque(self):
         for aller in self:
             if aller.agg_id and not aller.remarque_ids:
