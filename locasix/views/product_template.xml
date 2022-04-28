@@ -49,9 +49,9 @@
                         <group>
                             <field name="product_master_ids" context="{'tree_view_ref' : 'locasix.locasix_product_link_tree_master'}"/>
                         </group>
-                        <group>
+                        <!--<group>
                             <field name="product_linked_ids" context="{'tree_view_ref' : 'locasix.locasix_product_link_tree_passive'}"/>
-                        </group>
+                        </group>-->
                     </group>
                 </page>
                 <page string="Liens d'assemblage" attrs="{'invisible': [('is_assemblage_product', '=', False)]}">

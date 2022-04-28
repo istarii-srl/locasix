@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
     has_ref_to_condi = fields.Boolean(string="Conditions additionnelles", default=False)
     more_details_link = fields.Char(string="Lien vers plus de détail")
 
-    product_linked_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_linked_id", string="Liens passifs")
+    #product_linked_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_linked_id", string="Liens passifs")
     product_master_ids = fields.One2many(comodel_name="locasix.product.link", inverse_name="product_master_id", string="Liens actifs")
     assemblage_ids = fields.One2many(comodel_name="locasix.assemblage.link", inverse_name="assemblage_product_id", string="Produits assemblés")
 
