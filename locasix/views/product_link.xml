@@ -13,6 +13,10 @@
             <tree string="Liens produits" editable="bottom">
                 <field name="product_master_id" invisible="1"/>
                 <field name="product_linked_id"/>
+                <field name="is_on_classic" />
+                <field name="is_on_weekend" />
+                <field name="is_on_sale" />
+
             </tree>
         </field>
     </record>

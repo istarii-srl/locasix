@@ -829,8 +829,10 @@ class Order(models.Model):
                         line.product_uom_qty = product_count[line.product_id.id]
 
                     
-    def should_create_link(self, product):
+    def should_create_link(self, product, link):
         for order in self:
+            if (order.offer_type == "classic" and not link.is_on_classic) or (order.offer_type == "weekend" and not link.is_on_weekend) or (order.offer_type == "sale" and not link.is_on_sale):
+                return False
             if product.is_insurance and (order.offer_type == "weekend" or order.offer_type == "sale"):
                 return False
             elif product.default_code in ["FN", "FNG", "FNC"] and order.offer_type == "sale":
@@ -846,7 +848,7 @@ class Order(models.Model):
                 if line.product_id and line.order_id:
                     links = self.env["locasix.product.link"].search([("product_master_id", "=", line.product_id.product_tmpl_id.id)])
                     for link in links:
-                        if order.should_create_link(link.product_linked_id):
+                        if order.should_create_link(link.product_linked_id, link):
                             new_line = self.env["sale.order.line"].create({
                                 'order_id': line.order_id.id,
                                 'product_id': link.product_linked_id.product_variant_id.id,
