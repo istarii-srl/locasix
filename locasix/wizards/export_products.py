@@ -198,6 +198,7 @@ class ExportProducts(models.TransientModel):
             links["010"] = {}
             links["011"] = {}
             links["100"] = {}
+            links["101"] = {}
             links["110"] = {}
             links["111"] = {}
             # link structure 
