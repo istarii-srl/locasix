@@ -11,7 +11,7 @@
         <field name="model">locasix.product.link</field>
         <field name="arch" type="xml">
             <tree string="Liens produits" editable="bottom">
-                <field name="product_master_id" invisible="1"/>
+                <field name="product_master_id" invisible="0"/>
                 <field name="product_linked_id"/>
                 <field name="is_on_classic" />
                 <field name="is_on_weekend" />
