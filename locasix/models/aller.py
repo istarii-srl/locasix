@@ -123,7 +123,7 @@ class Aller(models.Model):
                 raise UserError("Seul les administrateurs peuvent changer le statut d'une ligne finie !")
             if aller.state == "zzprop" and not aller.is_proposition:
                 raise UserError("Le statut 'proposition' ne peut pas être changé manuellement")
-            if aller.state != "zzprop" and aller.is_proposition:
+            if aller.state != "zzprop" and aller.is_proposition and aller.proposition_status != "accepted":
                 raise UserError("Le statut 'proposition' ne peut pas être changé manuellement")
 
     def _state_selection(self):
@@ -329,6 +329,50 @@ class Aller(models.Model):
             for remarque in aller.remarque_ids:
                 new_aller.remarque_ids = [(4, remarque.id, 0)]
     
+    def action_accept(self):
+        for aller in self:
+            aller.proposition_status = "accepted"
+            aller.state = "aprogress"
+
+    def action_reject(self):
+        for aller in self:
+            aller.proposition_status = "rejected"
+
+    def action_ask_changes(self):
+        for aller in self:
+            _logger.info("action in prop status")
+            view = self.env.ref('locasix.locasix_prop_status_form')
+            return {
+            'name': 'Changer le statut de la proposition',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.prop.status.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                "default_aller_id": aller.id,
+                },
+            }    
+    
+    def action_ask_confirmation(self):
+        for aller in self:
+            _logger.info("action in prop status")
+            view = self.env.ref('locasix.locasix_prop_status_form')
+            return {
+            'name': 'Changer le statut de la proposition',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.prop.status.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                "default_aller_id": aller.id,
+                },
+            }    
 
     def open_agg(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')

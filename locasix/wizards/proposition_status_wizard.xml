@@ -1,0 +1,17 @@
+<odoo>
+
+    <record id="locasix_prop_status_form" model="ir.ui.view">
+        <field name="name">locasix.prop.status.form</field>
+        <field name="model">locasix.prop.status.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Changer le statut de la proposition">
+                <field name="aller_id"/>
+                <footer>
+                    <button name="validate" string="Confirmer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
