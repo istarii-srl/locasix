@@ -165,6 +165,7 @@
                 <field name="city" invisible="1"/>
                 <field name="displayed_city"/>
                 <field name="contract_id"/>
+                <field name="is_proposition" invisible="1"/>
                 <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="note" invisible="1"/>
                 <field name="displayed_note" />
