@@ -187,7 +187,7 @@
                 <header>
                     <button name="action_accept" type="object" icon="fa-arrow-left" class="oe_highlight" attrs="{'invisible': [('active', '=', True)]}"/>
                     <button name="action_ask_confirmation" type="object" string="Demander confirmation" class="oe_highlight" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
-                    <field name="state" widget="statusbar" attrs="{'invisible': [('is_proposition', '=', False)]}"/>
+                    <field name="proposition_status" widget="statusbar" attrs="{'invisible': [('is_proposition', '=', False)]}"/>
                 </header>
                 <sheet>
                     <widget name="web_ribbon" title="Archivé" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
