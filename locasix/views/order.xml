@@ -94,6 +94,7 @@
                 <field name="has_ref_to_condi" optional="show"/>
                 <field name="usage_rate_display" invisible="1"/>
                 <field name="has_24_price" optional="hide"/>
+                <field name="is_super_note" />
                 <field name="show_images" optional="hide"/>
                 <field name="temporary_product" optional="hide"/>
             </xpath>
