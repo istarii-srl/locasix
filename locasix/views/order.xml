@@ -107,10 +107,10 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//create[@name='add_note_control']" position="after">
-                <create name="add_super_note_control" string="Ajouter une note visible" context="{'default_display_type': 'line_super_note'}"/>
+                <create name="add_super_note_control" string="Ajouter une note visible" context="{'default_display_type': 'line_note', 'default_is_super_note': True}"/>
             </xpath>
             <xpath expr="//tree" position="attributes">
-                <attribute name="decoration-warning">display_type == 'line_super_note'</attribute>
+                <attribute name="decoration-warning">is_super_note == True</attribute>
             </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="after">
                 <field name="offer_type" invisible = "1"/>
