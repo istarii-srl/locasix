@@ -73,7 +73,7 @@
         <field name="name">Propositions</field>
         <field name="res_model">locasix.aller</field>
         <field name="view_mode">tree,calendar,form</field>
-        <field name="view_id" ref="locasix_prop_tree"/>
+        <field name="view_id" ref="locasix.locasix_prop_tree"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
         <field name="domain">[('is_proposition', "=", True)]</field>
     </record>
