@@ -73,7 +73,7 @@
         <field name="name">Propositions</field>
         <field name="res_model">locasix.aller</field>
         <field name="view_mode">tree,calendar,form</field>
-        <field name="view_id" ref="locasix.locasix_prop_tree"/>
+        <field name="view_id" ref="locasix_prop_tree"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
         <field name="domain">[('is_proposition', "=", True)]</field>
     </record>
@@ -132,7 +132,7 @@
         <field name="priority">120</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
-            <tree string="Propositions" create="0" default_order="">
+            <tree string="Propositions" create="0" default_order="asking_prop_time">
                 <field name="is_first_line" invisible="1"/>
                 <field name="aller_type" invisible="1"/>
                 <field name="asking_prop_time" />
