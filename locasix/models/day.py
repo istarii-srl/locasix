@@ -73,7 +73,24 @@ class Day(models.Model):
             'default_day_id': self.id,
             'default_date': self.day,
             },
-        }        
+        }
+
+    def action_add_proposition(self):
+        view = self.env.ref('locasix.locasix_agg_prop_form')
+        return {
+            'name': 'Propositions',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                'default_day_id': self.id,
+                'default_date': self.day,
+                'default_is_proposition': True,
+            }
+        } 
 
     def action_add_retour(self):
         view = self.env.ref('locasix.locasix_agg_retour_form')
