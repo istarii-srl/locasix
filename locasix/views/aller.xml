@@ -69,15 +69,6 @@
         </field>
     </record>
 
-    <record id="action_prop" model="ir.actions.act_window">
-        <field name="name">Propositions</field>
-        <field name="res_model">locasix.aller</field>
-        <field name="view_mode">tree,calendar,form</field>
-        <field name="view_id" ref="locasix.locasix_prop_tree"/>
-        <field name="search_view_id" ref="locasix.locasix_aller_search"/>
-        <field name="domain">[('is_proposition', "=", True)]</field>
-    </record>
-
     <record model="ir.actions.act_window" id="action_aller">
         <field name="name">Allers</field>
         <field name="res_model">locasix.aller</field>
@@ -146,6 +137,16 @@
             </tree>
         </field>
     </record>
+
+    <record id="action_prop" model="ir.actions.act_window">
+        <field name="name">Propositions</field>
+        <field name="res_model">locasix.aller</field>
+        <field name="view_mode">tree,calendar,form</field>
+        <field name="view_id" ref="locasix.locasix_prop_tree"/>
+        <field name="search_view_id" ref="locasix.locasix_aller_search"/>
+        <field name="domain">[('is_proposition', "=", True)]</field>
+    </record>
+
 
     <record model="ir.ui.view" id="locasix_aller_day_tree">
         <field name="name">locasix.aller.day.tree</field>
