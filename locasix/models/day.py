@@ -82,6 +82,7 @@ class Day(models.Model):
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form',
+            'res_model': 'locasix.agg.aller',
             'views': [(view.id, 'form')],
             'view_id': view.id,
             'target': 'new',
