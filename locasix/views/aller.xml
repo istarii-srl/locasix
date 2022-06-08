@@ -195,6 +195,7 @@
                     <group>
                         <group>
                             <field name="is_retour_created" invisible="1"/>
+                            <field name="is_proposition" invisible="1"/>
                             <field name="is_first_line" invisible="1"/>
                             <field name="color" invisible="1"/>
                             <field name="aller_type" invisible="1"/>
