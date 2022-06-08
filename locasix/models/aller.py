@@ -33,7 +33,7 @@ class Aller(models.Model):
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
     is_proposition = fields.Boolean(string="Est une proposition", default=False)
     asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
-    proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation"), ("pending_worker", "En attente de confirmation"), ("accepted", "Accepté")])
+    proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")])
 
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
@@ -181,7 +181,10 @@ class Aller(models.Model):
         if not obj.remarque_ids:
             obj.remarque_ids = obj.agg_id.remarque_ids
         obj.is_depl = obj.agg_id.is_depl
-        obj.create_history_message("Création de l'aller")
+        if obj.is_proposition:
+            obj.create_history_message("Création de la proposition")
+        else:
+            obj.create_history_message("Création de l'aller")
         return obj
 
     def write(self, vals):
@@ -193,6 +196,7 @@ class Aller(models.Model):
         old_address_id = self.address_id
         old_localite_depl = self.localite_id_depl
         old_localite = self.localite_id
+        old_prop_status = self.proposition_status
         old_contract = self.contract
         res = super(Aller, self).write(vals)
         if "note" in vals:
@@ -276,6 +280,8 @@ class Aller(models.Model):
                 self.create_history_message("Changement de contrat : "+ "Pas de contrat" +" -> "+ self.contract)
             elif old_contract:
                 self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ "Pas de contrat")
+        if "proposition_status" in vals:
+            self.create_history_message("Changement de statut pour la proposition : "+old_prop_status+" -> "+ self.proposition_status)
         return res
     
     def state_to_string(self, state_key):
