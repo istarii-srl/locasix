@@ -69,6 +69,14 @@
         </field>
     </record>
 
+    <record id="action_prop" model="ir.actions.act_window">
+        <field name="name">Propositions</field>
+        <field name="res_model">locasix.aller</field>
+        <field name="view_mode">tree,calendar,form</field>
+        <field name="view_id" ref="locasix.locasix_prop_tree"/>
+        <field name="search_view_id" ref="locasix.locasix_aller_search"/>
+        <field name="domain">[('is_proposition', "=", True)]</field>
+    </record>
 
     <record model="ir.actions.act_window" id="action_aller">
         <field name="name">Allers</field>
@@ -119,12 +127,32 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="locasix_prop_tree">
+        <field name="name">locasix.prop.tree</field>
+        <field name="priority">120</field>
+        <field name="model">locasix.aller</field>
+        <field name="arch" type="xml">
+            <tree string="Propositions" create="0" default_order="">
+                <field name="is_first_line" invisible="1"/>
+                <field name="aller_type" invisible="1"/>
+                <field name="asking_prop_time" />
+                <field name="product_default_code"/>
+                <field name="product_unique_ref"/>
+                <field name="address_id"/>
+                <field name="city"/>
+                <field name="contract_id"/>
+                <field name="date"/>
+                <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
+            </tree>
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="locasix_aller_day_tree">
         <field name="name">locasix.aller.day.tree</field>
         <field name="priority">100</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
-            <tree string="Allers" decoration-info="(is_weekend == True)" decoration-bf="(is_weekend == True)" create="0">
+            <tree string="Allers" decoration-info="(is_weekend == True)" decoration-warning="(is_proposition == True)" decoration-bf="(is_weekend == True)" create="0">
                 <field name="is_weekend" invisible="1"/>
                 <field name="is_first_line" invisible="1"/>
                 <field name="color" invisible="1"/>

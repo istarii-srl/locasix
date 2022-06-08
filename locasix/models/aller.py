@@ -31,6 +31,9 @@ class Aller(models.Model):
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
+    is_proposition = fields.Boolean(string="Est une proposition", default=False)
+    asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
+    proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation"), ("pending_worker", "En attente de confirmation"), ("accepted", "Accepté")])
 
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
@@ -56,6 +59,9 @@ class Aller(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
     has_been_set_done = fields.Boolean(string="Déjà fini", default=False)
+
+    def get_prop_time(self):
+        return datetime.datetime.now()
 
 
     @api.constrains("date")
@@ -108,18 +114,23 @@ class Aller(models.Model):
         for record in self:
             record.color = COLORS_BY_STATE[record.aller_type]
 
-    @api.constrains("state")
+    @api.constrains("state", "is_proposition")
     def not_done_if_not_admin(self):
         for aller in self:
             if aller.state == "zdone" and not self.env.user.has_group('locasix.group_locasix_admin'):
                 raise UserError("Seul les administrateurs peuvent mettre une ligne à 'fini' !")
             elif aller.has_been_set_done and not self.env.user.has_group('locasix.group_locasix_admin'):
                 raise UserError("Seul les administrateurs peuvent changer le statut d'une ligne finie !")
+            if aller.state == "zzprop" and not aller.is_proposition:
+                raise UserError("Le statut 'proposition' ne peut pas être changé manuellement")
+            if aller.state != "zzprop" and aller.is_proposition:
+                raise UserError("Le statut 'proposition' ne peut pas être changé manuellement")
 
     def _state_selection(self):
         select = [("aprogress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ('a', "Statut technique")]
         #if self.env.user.has_group('locasix.group_locasix_admin'):
         select.append(('zdone', "Fini"))
+        select.append(("zzprop", "Proposition"))
         return select
 
     @api.depends('localite_id', 'localite_id_depl', 'is_depl')
