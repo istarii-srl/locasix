@@ -133,7 +133,11 @@
                 <field name="city"/>
                 <field name="contract_id"/>
                 <field name="date"/>
+                <field name="proposition_status" widget="badge" decoration-success="proposition_status == 'accepted'" decoration-success="proposition_status == 'pending_worker'" decoration-warning="proposition_status == 'pending_boss'" decoration-danger="proposition_status == 'rejected'"/>
                 <button name="open_agg" string="Modifier" type="object" icon="fa-arrow-circle-o-right"/>
+                <button name="action_accept" type="object" string="Accepter" icon="fa-arrow-left" class="oe_highlight" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
+                <button name="action_ask_changes" type="object" string="Demander de modifier" class="oe_highlight" attrs="{'invisible': [('proposition_status', '!=', 'pending_worker')]}"/>
+                <button name="action_reject" type="object" string="Refuser" icon="fa-arrow-right" class="oe_highlight" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
             </tree>
         </field>
     </record>
@@ -180,6 +184,11 @@
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
             <form string="Aller" create="false">
+                <header>
+                    <button name="action_accept" type="object" icon="fa-arrow-left" class="oe_highlight" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <button name="action_ask_confirmation" type="object" string="Demander confirmation" class="oe_highlight" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
+                    <field name="state" widget="statusbar" attrs="{'invisible': [('is_proposition', '=', False)]}"/>
+                </header>
                 <sheet>
                     <widget name="web_ribbon" title="Archivé" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <field name="active" invisible="1"/>
