@@ -33,7 +33,7 @@ class Aller(models.Model):
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
     is_proposition = fields.Boolean(string="Est une proposition", default=False)
     asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
-    proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")])
+    proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")], default="pending_boss")
 
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
