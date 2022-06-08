@@ -176,6 +176,7 @@ class Aller(models.Model):
         vals["address_id"] = agg_id.address_id.id
         vals["localite_id"] = agg_id.localite_id.id
         vals["day_id"] = agg_id.day_id.id
+        vals["is_proposition"] = agg_id.is_proposition
         vals["date"] = agg_id.date
         obj = super(Aller, self).create(vals)
         if not obj.remarque_ids:
