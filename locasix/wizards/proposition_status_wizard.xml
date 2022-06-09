@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Changer le statut de la proposition">
                 <p>
-                    Veuillez entrer une raison pour laquelle des changements sont demandées.
+                    Veuillez entrer une raison pour laquelle des changements sont demandés.
                 </p>
                 <field name="is_asking_confirmation" invisible="1"/>
                 <field name="note" />
