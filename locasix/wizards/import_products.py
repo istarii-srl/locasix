@@ -143,7 +143,10 @@ class ImportProducts(models.TransientModel):
         for i in range(1, sheet.nrows):
             lines.append({
                 "actives": sheet.cell_value(i, 0), 
-                "passive": sheet.cell_value(i, 1), 
+                "passive": sheet.cell_value(i, 1),
+                "is_on_classic": sheet.cell_value(i, 2),
+                "is_on_weekend": sheet.cell_value(i, 3),
+                "is_on_sale": sheet.cell_value(i, 4),
             })
         for line in lines:
             actives = line["actives"].split(";")
@@ -158,3 +161,6 @@ class ImportProducts(models.TransientModel):
                                 "product_master_id": active_product.id,
                                 "product_linked_id": passive.id
                             })
+                        link.is_on_classic = line["is_on_classic"]
+                        link.is_on_weekend = line["is_on_weekend"]
+                        link.is_on_sale = line["is_on_sale"]

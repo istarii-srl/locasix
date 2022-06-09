@@ -139,15 +139,68 @@ class ExportProducts(models.TransientModel):
 
                     row +=1
     
+
+    def link_to_hash(self, link):
+        for wizard in self:
+            hash_link = ""
+            if link.is_on_classic:
+                hash_link += "1"
+            else:
+                hash_link += "0"
+            if link.is_on_weekend:
+                hash_link += "1"
+            else:
+                hash_link += "0"
+            if link.is_on_sale:
+                hash_link += "1"
+            else:
+                hash_link += "0"
+            return hash_link
+
+    def is_hash_on_classic(self, hash_link):
+        for wizard in self:
+            if hash_link[0]  == "1":
+                return True
+            else:
+                return False
+
+    def is_hash_on_weeekend(self, hash_link):
+        for wizard in self:
+            if hash_link[1] == "1":
+                return True
+            else:
+                return False
+
+    def is_hash_on_sale(self, hash_link):
+        for wizard in self:
+            if hash_link[2] == "1":
+                return True
+            else:
+                return False
+
     def create_links_sheet(self, worksheet):
         _logger.info("create links sheet")
         worksheet.set_column(0, 0, 20)
         worksheet.set_column(1, 1, 20)
+        worksheet.set_column(2, 2, 20)
+        worksheet.set_column(3, 3, 20)
+        worksheet.set_column(4, 4, 20)
         worksheet.write(0, 0, "Ref produit actifs")
         worksheet.write(0, 1, "Ref produits passifs")
+        worksheet.write(0, 2, "Offre location")
+        worksheet.write(0, 3, "Offre weekend")
+        worksheet.write(0, 4, "Offre vente")
         for wizard in self:
             row = 1
             links = {}
+            links["000"] = {}
+            links["001"] = {}
+            links["010"] = {}
+            links["011"] = {}
+            links["100"] = {}
+            links["101"] = {}
+            links["110"] = {}
+            links["111"] = {}
             # link structure 
             # - row
             # - set actives
@@ -155,18 +208,23 @@ class ExportProducts(models.TransientModel):
             for product in wizard.product_ids:
                 for link in product.product_master_ids:
                     if link.product_master_id.default_code and link.product_linked_id.default_code:
-                        if not link.product_linked_id.id in links:
-                            links[link.product_linked_id.id] = {
+                        hash_link = self.link_to_hash(link)
+                        if not link.product_linked_id.id in links[hash_link]:
+                            links[hash_link][link.product_linked_id.id] = {
                                 "actives": {link.product_master_id.default_code},
                                 "passive": link.product_linked_id.default_code,
                                 "row": row
                             }
                             row +=1
                         else:
-                            links[link.product_linked_id.id]["actives"].add(link.product_master_id.default_code)
+                            links[hash_link][link.product_linked_id.id]["actives"].add(link.product_master_id.default_code)
             
             # stringify actives & passive
-            for link in links.values():
-                actives = ";".join(link["actives"])
-                worksheet.write(link["row"], 0, actives)
-                worksheet.write(link["row"], 1, link["passive"])
+            for hash_link in links:
+                for link in links[hash_link].values():
+                    actives = ";".join(link["actives"])
+                    worksheet.write(link["row"], 0, actives)
+                    worksheet.write(link["row"], 1, link["passive"])
+                    worksheet.write(link["row"], 2, self.is_hash_on_classic(hash_link))
+                    worksheet.write(link["row"], 3, self.is_hash_on_weeekend(hash_link))
+                    worksheet.write(link["row"], 4, self.is_hash_on_sale(hash_link))
