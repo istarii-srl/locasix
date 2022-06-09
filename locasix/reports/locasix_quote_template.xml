@@ -302,8 +302,7 @@
                 </tr>
                 <tr t-if="line.display_type == 'line_note'">
                     <td colspan="4">
-                        <span t-if="not line.is_super_note" t-field="line.name" style="font-style: italic"/>
-                        <mark t-if="line.is_super_note"><span t-field="line.name" style="font-style: italic"/></mark>
+                        <span t-field="line.name" style="font-style: italic"/>
                     </td>
                 </tr>
             </t>
