@@ -33,6 +33,7 @@ class Aller(models.Model):
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
     is_proposition = fields.Boolean(string="Est une proposition", default=False)
     asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
+    asking_user = fields.Many2one(string="Demandeur", comodel_name="res.users", default=lambda self: self.env.user)
     proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")], default="pending_boss")
 
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
@@ -333,15 +334,17 @@ class Aller(models.Model):
         for aller in self:
             aller.proposition_status = "accepted"
             aller.state = "aprogress"
+            self.create_history_message("Proposition acceptée")  
 
     def action_reject(self):
         for aller in self:
             aller.proposition_status = "rejected"
+            self.create_history_message("Proposition refusée")  
 
     def action_ask_changes(self):
         for aller in self:
             _logger.info("action in prop status")
-            view = self.env.ref('locasix.locasix_prop_status_form')
+            view = self.env.ref('locasix.locasix_prop_status_form_changes')
             return {
             'name': 'Changer le statut de la proposition',
             'type': 'ir.actions.act_window',
@@ -353,13 +356,19 @@ class Aller(models.Model):
             'target': 'new',
             'context': {
                 "default_aller_id": aller.id,
+                "default_is_asking_confirmation": False,
                 },
-            }    
+            }
+
+    def ask_changes(self, note):
+        for aller in self:
+            aller.proposition_status = "pending_worker" 
+            self.create_history_message("Demande de changements : "+ note)   
     
     def action_ask_confirmation(self):
         for aller in self:
             _logger.info("action in prop status")
-            view = self.env.ref('locasix.locasix_prop_status_form')
+            view = self.env.ref('locasix.locasix_prop_status_form_confirmation')
             return {
             'name': 'Changer le statut de la proposition',
             'type': 'ir.actions.act_window',
@@ -371,8 +380,24 @@ class Aller(models.Model):
             'target': 'new',
             'context': {
                 "default_aller_id": aller.id,
+                "default_is_asking_confirmation": True,
                 },
-            }    
+            } 
+    
+    def ask_confirmation(self, note):
+        for aller in self:
+            aller.proposition_status = "pending_boss"
+            self.create_history_message("Demande de confirmation : "+ note)
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            mail_values = {
+                'subject': f"Demande de confirmation",
+                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name}€ a été introduite par {aller.asking_user}<br/>Type de proposition : {aller.aller_type}<br/>Date : {aller.date}<br/>Remarque : {note} <br/><br/>Cordialement,",
+                'email_to': "o.libbrecht@locasix.be",
+                'auto_delete': False,
+                'email_from': 'b.quintart@locasix.be',
+            }
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)
 
     def open_agg(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')

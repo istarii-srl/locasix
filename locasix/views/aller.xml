@@ -126,6 +126,7 @@
             <tree string="Propositions" create="0" default_order="asking_prop_time">
                 <field name="is_first_line" invisible="1"/>
                 <field name="aller_type" invisible="1"/>
+                <field name="asking_user" />
                 <field name="asking_prop_time" />
                 <field name="product_default_code"/>
                 <field name="product_unique_ref"/>
