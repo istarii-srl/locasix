@@ -389,9 +389,12 @@ class Aller(models.Model):
             aller.proposition_status = "pending_boss"
             self.create_history_message("Demande de confirmation : "+ note)
             batch_mails_sudo = self.env['mail.mail'].sudo()
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
             mail_values = {
                 'subject': f"Demande de confirmation",
-                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name}€ a été introduite par {aller.asking_user}<br/>Type de proposition : {aller.aller_type}<br/>Date : {aller.date}<br/>Remarque : {note} <br/><br/>Cordialement,",
+                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name}€ a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note} <br/><br/>Cordialement,",
                 'email_to': "o.libbrecht@locasix.be",
                 'auto_delete': False,
                 'email_from': 'b.quintart@locasix.be',
