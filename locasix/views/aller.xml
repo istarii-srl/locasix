@@ -12,6 +12,9 @@
                 <separator/>
                 <filter string="Date" name="today" date="date"/>
                 <filter string="Archive" name="inactive" domain="[('active','=',False)]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Groupement" name="agg" context="{'group_by': 'agg_id'}"/>
+                </group>
             </search>
         </field>
     </record>
@@ -126,11 +129,12 @@
             <tree string="Propositions" create="0" default_order="asking_prop_time">
                 <field name="is_first_line" invisible="1"/>
                 <field name="aller_type" invisible="1"/>
-                <field name="asking_user" />
                 <field name="asking_prop_time" />
+                <field name="asking_user" />
                 <field name="product_default_code"/>
                 <field name="product_unique_ref"/>
                 <field name="address_id"/>
+                <field name="aller_type_name" />
                 <field name="city"/>
                 <field name="contract_id"/>
                 <field name="date"/>

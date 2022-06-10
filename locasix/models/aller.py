@@ -23,6 +23,7 @@ class Aller(models.Model):
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
+    aller_type_name = fields.Char(string="Type de déplacement", store=True, compute="_compute_aller_type_name")
     color = fields.Integer(compute='_compute_color')
 
     is_first_line = fields.Boolean(default=False)
@@ -60,6 +61,17 @@ class Aller(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
     has_been_set_done = fields.Boolean(string="Déjà fini", default=False)
+
+    @api.depends("aller_type", "is_depl")
+    def _compute_aller_type_name(self):
+        for aller in self:
+            if aller.is_depl:
+                aller.aller_type_name = "Déplacement"
+            else:
+                if aller.aller_type == "out":
+                    aller.aller_type_name = "Aller"
+                else:
+                    aller.aller_type_name = "Retour"
 
     def get_prop_time(self):
         return datetime.datetime.now()
