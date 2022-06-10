@@ -83,6 +83,12 @@ class Aller(models.Model):
             if aller.state == "zdone":
                 raise UserError("Vous ne pouvez pas déplacer une ligne avec le statut fini !")
 
+    def get_record_url(self):
+        for aller in self:
+            url = self.get_base_url()
+            url = "/web#id="+str(aller.id)+"&model=locasix.aller&view_type=form&cids=1&menu_id=217"
+            return url
+
     def get_default_remarque(self):
         for aller in self:
             if aller.agg_id and not aller.remarque_ids:
@@ -365,7 +371,7 @@ class Aller(models.Model):
                 type_aller = "Déplacement"
             mail_values = {
                 'subject': f"Proposition acceptée",
-                'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date} <br/><br/>Cordialement,",
+                'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
                 'email_to': f"{aller.asking_user.email}",
                 'auto_delete': False,
                 'email_from': 'b.quintart@locasix.be',
@@ -383,7 +389,7 @@ class Aller(models.Model):
                 type_aller = "Déplacement"
             mail_values = {
                 'subject': f"Proposition refusée",
-                'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/><br/>Cordialement,",
+                'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
                 'email_to': f"{aller.asking_user.email}",
                 'auto_delete': False,
                 'email_from': 'b.quintart@locasix.be',
@@ -420,7 +426,7 @@ class Aller(models.Model):
                 type_aller = "Déplacement"
             mail_values = {
                 'subject': f"Demande de changement",
-                'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note} <br/><br/>Cordialement,",
+                'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
                 'email_to': f"{aller.asking_user.email}",
                 'auto_delete': False,
                 'email_from': 'b.quintart@locasix.be',
@@ -457,7 +463,7 @@ class Aller(models.Model):
                 type_aller = "Déplacement"
             mail_values = {
                 'subject': f"Demande de confirmation",
-                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note} <br/><br/>Cordialement,",
+                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
                 'email_to': "o.libbrecht@locasix.be",
                 'auto_delete': False,
                 'email_from': 'b.quintart@locasix.be',

@@ -31,10 +31,16 @@
             <field name="implied_ids" eval="[(4, ref('group_locasix_agenda_read'))]"/>
         </record>
 
+        <record model="res.groups" id="group_locasix_agenda_resp">
+            <field name="name" eval="'Agenda : Responsable'"/>
+            <field name="category_id" ref="locasix_group_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_locasix_agenda_user'))]"/>
+        </record>
+
         <record model="res.groups" id="group_locasix_admin">
             <field name="name" eval="'Administrateur'"/>
             <field name="category_id" ref="locasix_group_category"/>
-            <field name="implied_ids" eval="[(4, ref('group_locasix_agenda_user'))]"/>
+            <field name="implied_ids" eval="[(4, ref('group_locasix_agenda_resp'))]"/>
         </record>
 
         <record id="modify_product_rule" model="ir.rule">
