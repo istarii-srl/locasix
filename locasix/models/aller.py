@@ -86,8 +86,9 @@ class Aller(models.Model):
 
     def get_record_url(self):
         for aller in self:
-            url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-            url = "/web#id="+str(aller.id)+"&model=locasix.aller&view_type=form&cids=1&menu_id=217"
+            #url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+            url = self.get_base_url()
+            url += "/web#id="+str(aller.id)+"&model=locasix.aller&view_type=form&cids=1&menu_id=217"
             return f"<a href={url}>Lien vers l'enregistrement</a>"
 
     def get_default_remarque(self):
