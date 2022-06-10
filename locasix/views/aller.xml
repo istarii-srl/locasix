@@ -126,7 +126,7 @@
         <field name="priority">120</field>
         <field name="model">locasix.aller</field>
         <field name="arch" type="xml">
-            <tree string="Propositions" create="0" default_order="asking_prop_time">
+            <tree string="Propositions" create="0" default_order="asking_prop_time desc">
                 <field name="is_first_line" invisible="1"/>
                 <field name="aller_type" invisible="1"/>
                 <field name="asking_prop_time" />
