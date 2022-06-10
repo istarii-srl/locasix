@@ -297,9 +297,19 @@ class Aller(models.Model):
             elif old_contract:
                 self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ "Pas de contrat")
         if "proposition_status" in vals:
-            self.create_history_message("Changement de statut pour la proposition : "+old_prop_status+" -> "+ self.proposition_status)
+            self.create_history_message("Changement de statut pour la proposition : "+self.prop_status_to_string(old_prop_status)+" -> "+ self.prop_status_to_string(self.proposition_status))
         return res
-    
+
+    def prop_status_to_string(self, status):
+        if status == "accepted":
+            return "Accepté"
+        elif status == "rejected":
+            return "Refusé"
+        elif status == "pending_boss":
+            return "En attente de confirmation du responsable"
+        else:
+            return "En attente de rectification du demandeur"
+
     def state_to_string(self, state_key):
         if state_key == "aprogress":
             return "En cours"
