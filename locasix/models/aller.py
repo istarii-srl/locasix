@@ -1,5 +1,6 @@
 from odoo import fields, api, models
 from odoo.exceptions import UserError
+from odoo.http import request
 import datetime
 import logging
 _logger = logging.getLogger(__name__)
@@ -85,9 +86,9 @@ class Aller(models.Model):
 
     def get_record_url(self):
         for aller in self:
-            url = self.get_base_url()
+            url = request.httprequest.host_url
             url = "/web#id="+str(aller.id)+"&model=locasix.aller&view_type=form&cids=1&menu_id=217"
-            return url
+            return f"<a href={url}>Lien vers l'enregistrement</a>"
 
     def get_default_remarque(self):
         for aller in self:
