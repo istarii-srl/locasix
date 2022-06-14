@@ -18,7 +18,7 @@ class Aller(models.Model):
     _description = "Un aller"
     _order = "state, address_id"
 
-    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True, states={'zzprop': [('readonly', True)]})
+    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
     name = fields.Char(string="Nom", compute="_compute_name", store=True)
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date", required=True)
@@ -207,6 +207,7 @@ class Aller(models.Model):
         obj.is_depl = obj.agg_id.is_depl
         if obj.is_proposition:
             obj.create_history_message("Création de la proposition")
+            obj.send_creation_mail()
         else:
             obj.create_history_message("Création de l'aller")
         return obj
@@ -402,7 +403,7 @@ class Aller(models.Model):
     def action_ask_changes(self):
         for aller in self:
             _logger.info("action in prop status")
-            view = self.env.ref('locasix.locasix_prop_status_form_changes')
+            view = self.env.ref('locasix.locasix_prop_status_form_confirmation')
             return {
             'name': 'Changer le statut de la proposition',
             'type': 'ir.actions.act_window',
@@ -415,6 +416,14 @@ class Aller(models.Model):
             'context': {
                 "default_aller_id": aller.id,
                 "default_is_asking_confirmation": False,
+                "default_is_depl": aller.is_depl,
+                "default_address_id": aller.address_id,
+                "default_date": aller.date,
+                "default_product_id": aller.product_id,
+                "default_product_unique_ref": aller.product_unique_ref,
+                "default_contract_id": aller.contract_id,
+                "default_localite_id": aller.localite_id,
+                "default_localite_id_depl": aller.localite_id_depl,
                 },
             }
 
@@ -452,8 +461,33 @@ class Aller(models.Model):
             'context': {
                 "default_aller_id": aller.id,
                 "default_is_asking_confirmation": True,
+                "default_is_depl": aller.is_depl,
+                "default_address_id": aller.address_id,
+                "default_date": aller.date,
+                "default_product_id": aller.product_id,
+                "default_product_unique_ref": aller.product_unique_ref,
+                "default_contract_id": aller.contract_id,
+                "default_localite_id": aller.localite_id,
+                "default_localite_id_depl": aller.localite_id_depl,
                 },
-            } 
+            }
+
+
+    def send_creation_mail(self):
+        for aller in self:
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
+            mail_values = {
+                'subject': f"Demande de confirmation",
+                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
+                'email_to': "o.libbrecht@locasix.be",
+                'auto_delete': False,
+                'email_from': 'b.quintart@locasix.be',
+            }
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)            
     
     def ask_confirmation(self, note):
         for aller in self:

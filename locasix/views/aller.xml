@@ -140,7 +140,8 @@
                 <field name="date"/>
                 <field name="proposition_status" widget="badge" decoration-success="proposition_status == 'accepted'" decoration-info="proposition_status == 'pending_worker'" decoration-warning="proposition_status == 'pending_boss'" decoration-danger="proposition_status == 'rejected'"/>
                 <button name="action_accept" type="object" string="Accepter" icon="fa-check-circle" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}" groups="locasix.group_locasix_agenda_resp"/>
-                <button name="action_ask_changes" type="object" icon="fa-exclamation-circle" string="Demander modification" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
+                <button name="action_ask_changes" type="object" icon="fa-exclamation-circle" string="Adapter la proposition" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
+                <button name="action_ask_changes" type="object" icon="fa-exclamation-circle" string="Adapter la proposition" attrs="{'invisible': [('proposition_status', '!=', 'pending_worker')]}"/>
                 <button name="action_reject" type="object" string="Refuser" icon="fa-ban" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}" groups="locasix.group_locasix_agenda_resp"/>
             </tree>
         </field>
@@ -190,7 +191,12 @@
             <form string="Aller" create="false">
                 <header>
                     <button name="action_accept" type="object" icon="fa-arrow-left" class="oe_highlight" attrs="{'invisible': [('active', '=', True)]}"/>
-                    <button name="action_ask_confirmation" type="object" string="Demander confirmation" class="oe_highlight" attrs="{'invisible': [('proposition_status', '!=', 'pending_worker')]}"/>
+                    <button name="action_ask_confirmation" type="object" string="Adapter la proposition" class="oe_highlight" attrs="{'invisible': [('proposition_status', '!=', 'pending_worker')]}"/>
+                    
+                    <button name="action_accept" type="object" string="Accepter" icon="fa-check-circle" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}" groups="locasix.group_locasix_agenda_resp"/>
+                    <button name="action_ask_changes" type="object" icon="fa-exclamation-circle" string="Adapter la proposition" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
+                    <button name="action_reject" type="object" string="Refuser" icon="fa-ban" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}" groups="locasix.group_locasix_agenda_resp"/>
+                    
                     <field name="proposition_status" widget="statusbar" attrs="{'invisible': [('is_proposition', '=', False)]}"/>
                 </header>
                 <sheet>
@@ -204,17 +210,17 @@
                             <field name="color" invisible="1"/>
                             <field name="aller_type" invisible="1"/>
                             <field name="day_id" readonly="1"/>
-                            <field name="date"/>
-                            <field name="address_id"/>
-                            <field name="localite_id"/>
+                            <field name="date" attrs="{'readonly': [('state', '=', zzprop)]}"/>
+                            <field name="address_id" attrs="{'readonly': [('state', '=', zzprop)]}"/>
+                            <field name="localite_id" attrs="{'readonly': [('state', '=', zzprop)]}"/>
                             <field name="is_depl" readonly="1"/>
                             <field name="localite_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}" />
-                            <field name="city"/>
-                            <field name="contract_id"/>
+                            <field name="city" attrs="{'readonly': [('state', '=', zzprop)]}"/>
+                            <field name="contract_id" attrs="{'readonly': [('state', '=', zzprop)]}"/>
                         </group>
                         <group>
-                            <field name="product_id"/>
-                            <field name="product_unique_ref" options="{'no_create': True}"/>
+                            <field name="product_id" attrs="{'readonly': [('state', '=', zzprop)]}"/>
+                            <field name="product_unique_ref" options="{'no_create': True}" attrs="{'readonly': [('state', '=', zzprop)]}"/>
                             <field name="state"/>
                             <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
                             <field name="note"/>
