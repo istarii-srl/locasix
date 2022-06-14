@@ -20,7 +20,7 @@ class Aller(models.Model):
 
     name = fields.Char(string="Nom", compute="_compute_name", store=True)
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
-    date = fields.Date(string="Date", required=True)
+    date = fields.Date(string="Date", required=True, states={'zzprop': [('readonly', True)]},)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
@@ -86,7 +86,6 @@ class Aller(models.Model):
 
     def get_record_url(self):
         for aller in self:
-            #url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
             url = self.get_base_url()
             url += "/web#id="+str(aller.id)+"&model=locasix.aller&view_type=form&cids=1&menu_id=217"
             return f"<a href={url}>Lien vers l'enregistrement</a>"
