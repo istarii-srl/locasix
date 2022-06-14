@@ -190,13 +190,12 @@
         <field name="arch" type="xml">
             <form string="Aller" create="false">
                 <header>
-                    <button name="action_accept" type="object" icon="fa-arrow-left" class="oe_highlight" attrs="{'invisible': [('active', '=', True)]}"/>
                     <button name="action_ask_confirmation" type="object" string="Adapter la proposition" class="oe_highlight" attrs="{'invisible': [('proposition_status', '!=', 'pending_worker')]}"/>
-                    
-                    <button name="action_accept" type="object" string="Accepter" icon="fa-check-circle" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}" groups="locasix.group_locasix_agenda_resp"/>
-                    <button name="action_ask_changes" type="object" icon="fa-exclamation-circle" string="Adapter la proposition" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
-                    <button name="action_reject" type="object" string="Refuser" icon="fa-ban" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}" groups="locasix.group_locasix_agenda_resp"/>
-                    
+
+                    <button name="action_accept" class="oe_highlight" type="object" string="Accepter" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}" groups="locasix.group_locasix_agenda_resp"/>
+                    <button name="action_ask_changes" class="oe_highlight" type="object" string="Adapter la proposition" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}"/>
+                    <button name="action_reject" class="oe_highlight" type="object" string="Refuser" attrs="{'invisible': [('proposition_status', '!=', 'pending_boss')]}" groups="locasix.group_locasix_agenda_resp"/>
+
                     <field name="proposition_status" widget="statusbar" attrs="{'invisible': [('is_proposition', '=', False)]}"/>
                 </header>
                 <sheet>
