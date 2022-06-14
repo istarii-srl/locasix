@@ -18,7 +18,7 @@ class Aller(models.Model):
     _description = "Un aller"
     _order = "state, address_id"
 
-    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True, states={'zzprop': [('readonly', True)]})
+    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
     name = fields.Char(string="Nom", compute="_compute_name", store=True)
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date", required=True, states={'zzprop': [('readonly', True)]},)
