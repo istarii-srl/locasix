@@ -18,11 +18,12 @@ class Aller(models.Model):
     _description = "Un aller"
     _order = "state, address_id"
 
+    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True, states={'zzprop': [('readonly', True)]})
     name = fields.Char(string="Nom", compute="_compute_name", store=True)
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date", required=True, states={'zzprop': [('readonly', True)]},)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
-    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
+    
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
     aller_type_name = fields.Char(string="Type de déplacement", store=True, compute="_compute_aller_type_name")
     color = fields.Integer(compute='_compute_color')
