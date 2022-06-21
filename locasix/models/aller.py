@@ -1,5 +1,6 @@
 from odoo import fields, api, models
 from odoo.exceptions import UserError
+from odoo.http import request
 import datetime
 import logging
 _logger = logging.getLogger(__name__)
@@ -17,12 +18,14 @@ class Aller(models.Model):
     _description = "Un aller"
     _order = "state, address_id"
 
+    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
     name = fields.Char(string="Nom", compute="_compute_name", store=True)
     day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date", required=True)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
-    state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
+    
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
+    aller_type_name = fields.Char(string="Type de déplacement", store=True, compute="_compute_aller_type_name")
     color = fields.Integer(compute='_compute_color')
 
     is_first_line = fields.Boolean(default=False)
@@ -31,6 +34,10 @@ class Aller(models.Model):
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
+    is_proposition = fields.Boolean(string="Est une proposition", default=False)
+    asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
+    asking_user = fields.Many2one(string="Demandeur", comodel_name="res.users", default=lambda self: self.env.user)
+    proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")], default="pending_boss")
 
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
@@ -57,12 +64,32 @@ class Aller(models.Model):
     active = fields.Boolean(string="Actif", default=True)
     has_been_set_done = fields.Boolean(string="Déjà fini", default=False)
 
+    @api.depends("aller_type", "is_depl")
+    def _compute_aller_type_name(self):
+        for aller in self:
+            if aller.is_depl:
+                aller.aller_type_name = "Déplacement"
+            else:
+                if aller.aller_type == "out":
+                    aller.aller_type_name = "Aller"
+                else:
+                    aller.aller_type_name = "Retour"
+
+    def get_prop_time(self):
+        return datetime.datetime.now()
+
 
     @api.constrains("date")
     def check_date_if_done(self):
         for aller in self:
             if aller.state == "zdone":
                 raise UserError("Vous ne pouvez pas déplacer une ligne avec le statut fini !")
+
+    def get_record_url(self):
+        for aller in self:
+            url = self.get_base_url()
+            url += "/web#id="+str(aller.id)+"&model=locasix.aller&view_type=form&cids=1&menu_id=217"
+            return f"<a href={url}>Lien vers l'enregistrement</a>"
 
     def get_default_remarque(self):
         for aller in self:
@@ -108,18 +135,23 @@ class Aller(models.Model):
         for record in self:
             record.color = COLORS_BY_STATE[record.aller_type]
 
-    @api.constrains("state")
+    @api.constrains("state", "is_proposition")
     def not_done_if_not_admin(self):
         for aller in self:
             if aller.state == "zdone" and not self.env.user.has_group('locasix.group_locasix_admin'):
                 raise UserError("Seul les administrateurs peuvent mettre une ligne à 'fini' !")
             elif aller.has_been_set_done and not self.env.user.has_group('locasix.group_locasix_admin'):
                 raise UserError("Seul les administrateurs peuvent changer le statut d'une ligne finie !")
+            if aller.state == "zzprop" and not aller.is_proposition:
+                raise UserError("Le statut 'proposition' ne peut pas être changé manuellement")
+            if aller.state != "zzprop" and aller.is_proposition and aller.proposition_status != "accepted":
+                raise UserError("Le statut 'proposition' ne peut pas être changé manuellement")
 
     def _state_selection(self):
         select = [("aprogress", "En cours"), ("cancel", "Annulé"), ("move", "Déplacé"), ('a', "Statut technique")]
         #if self.env.user.has_group('locasix.group_locasix_admin'):
         select.append(('zdone', "Fini"))
+        select.append(("zzprop", "Proposition"))
         return select
 
     @api.depends('localite_id', 'localite_id_depl', 'is_depl')
@@ -165,12 +197,19 @@ class Aller(models.Model):
         vals["address_id"] = agg_id.address_id.id
         vals["localite_id"] = agg_id.localite_id.id
         vals["day_id"] = agg_id.day_id.id
+        vals["is_proposition"] = agg_id.is_proposition
+        if agg_id.is_proposition:
+            vals["state"] = "zzprop"
         vals["date"] = agg_id.date
         obj = super(Aller, self).create(vals)
         if not obj.remarque_ids:
             obj.remarque_ids = obj.agg_id.remarque_ids
         obj.is_depl = obj.agg_id.is_depl
-        obj.create_history_message("Création de l'aller")
+        if obj.is_proposition:
+            obj.create_history_message("Création de la proposition")
+            obj.send_creation_mail()
+        else:
+            obj.create_history_message("Création de l'aller")
         return obj
 
     def write(self, vals):
@@ -182,6 +221,7 @@ class Aller(models.Model):
         old_address_id = self.address_id
         old_localite_depl = self.localite_id_depl
         old_localite = self.localite_id
+        old_prop_status = self.proposition_status
         old_contract = self.contract
         res = super(Aller, self).write(vals)
         if "note" in vals:
@@ -265,8 +305,20 @@ class Aller(models.Model):
                 self.create_history_message("Changement de contrat : "+ "Pas de contrat" +" -> "+ self.contract)
             elif old_contract:
                 self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ "Pas de contrat")
+        if "proposition_status" in vals:
+            self.create_history_message("Changement de statut pour la proposition : "+self.prop_status_to_string(old_prop_status)+" -> "+ self.prop_status_to_string(self.proposition_status))
         return res
-    
+
+    def prop_status_to_string(self, status):
+        if status == "accepted":
+            return "Accepté"
+        elif status == "rejected":
+            return "Refusé"
+        elif status == "pending_boss":
+            return "En attente de confirmation du responsable"
+        else:
+            return "En attente de rectification du demandeur"
+
     def state_to_string(self, state_key):
         if state_key == "aprogress":
             return "En cours"
@@ -311,6 +363,149 @@ class Aller(models.Model):
             for remarque in aller.remarque_ids:
                 new_aller.remarque_ids = [(4, remarque.id, 0)]
     
+    def action_accept(self):
+        for aller in self:
+            aller.proposition_status = "accepted"
+            aller.state = "aprogress"
+            self.create_history_message("Proposition acceptée")
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
+            mail_values = {
+                'subject': f"Proposition acceptée",
+                'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
+                'email_to': f"{aller.asking_user.email}",
+                'auto_delete': False,
+                'email_from': 'b.quintart@locasix.be',
+            }
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)  
+
+    def action_reject(self):
+        for aller in self:
+            aller.proposition_status = "rejected"
+            self.create_history_message("Proposition refusée")  
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
+            mail_values = {
+                'subject': f"Proposition refusée",
+                'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
+                'email_to': f"{aller.asking_user.email}",
+                'auto_delete': False,
+                'email_from': 'b.quintart@locasix.be',
+            }
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)
+
+    def action_ask_changes(self):
+        for aller in self:
+            _logger.info("action in prop status")
+            view = self.env.ref('locasix.locasix_prop_status_form_confirmation')
+            return {
+            'name': 'Changer le statut de la proposition',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.prop.status.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                "default_aller_id": aller.id,
+                "default_is_asking_confirmation": False,
+                "default_is_depl": aller.is_depl,
+                "default_address_id": aller.address_id.id,
+                "default_date": aller.date,
+                "default_product_id": aller.product_id.id,
+                "default_product_unique_ref": aller.product_unique_ref.id,
+                "default_contract_id": aller.contract_id.id,
+                "default_localite_id": aller.localite_id.id,
+                "default_localite_id_depl": aller.localite_id_depl.id,
+                },
+            }
+
+    def ask_changes(self, note):
+        for aller in self:
+            aller.proposition_status = "pending_worker" 
+            self.create_history_message("Demande de changements : "+ note)
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
+            mail_values = {
+                'subject': f"Demande de changement",
+                'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
+                'email_to': f"{aller.asking_user.email}",
+                'auto_delete': False,
+                'email_from': 'b.quintart@locasix.be',
+            }
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)
+    
+    def action_ask_confirmation(self):
+        for aller in self:
+            _logger.info("action in prop status")
+            view = self.env.ref('locasix.locasix_prop_status_form_confirmation')
+            return {
+            'name': 'Changer le statut de la proposition',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'locasix.prop.status.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'context': {
+                "default_aller_id": aller.id,
+                "default_is_asking_confirmation": True,
+                "default_is_depl": aller.is_depl,
+                "default_address_id": aller.address_id.id,
+                "default_date": aller.date,
+                "default_product_id": aller.product_id.id,
+                "default_product_unique_ref": aller.product_unique_ref.id,
+                "default_contract_id": aller.contract_id.id,
+                "default_localite_id": aller.localite_id.id,
+                "default_localite_id_depl": aller.localite_id_depl.id,
+                },
+            }
+
+
+    def send_creation_mail(self):
+        for aller in self:
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
+            mail_values = {
+                'subject': f"Demande de confirmation",
+                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
+                'email_to': "o.libbrecht@locasix.be",
+                'auto_delete': False,
+                'email_from': 'b.quintart@locasix.be',
+            }
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)            
+    
+    def ask_confirmation(self, note):
+        for aller in self:
+            aller.proposition_status = "pending_boss"
+            self.create_history_message("Demande de confirmation : "+ note)
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
+            mail_values = {
+                'subject': f"Demande de confirmation",
+                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
+                'email_to': "o.libbrecht@locasix.be",
+                'auto_delete': False,
+                'email_from': 'b.quintart@locasix.be',
+            }
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)
 
     def open_agg(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')

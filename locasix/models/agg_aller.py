@@ -11,12 +11,13 @@ class AggAller(models.Model):
     name = fields.Char(string="Nom", compute="_compute_name")
     day_id = fields.Many2one(string="Journée", comodel_name="locasix.day")
     date = fields.Date(string="Date", required=True)
-    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
+    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour")], default="out")
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
+    is_proposition = fields.Boolean(string='Est une proposition', default=False)
 
     city = fields.Char(string="Ville", compute="_compute_city", store=True)
     contract = fields.Char(string="Contrat")
@@ -29,6 +30,12 @@ class AggAller(models.Model):
     date_retour = fields.Datetime(string="Date de retour", default=lambda self: self._get_default_date())
     is_retours_created = fields.Boolean(default=False)
     is_first_agg = fields.Boolean(default=False)
+    
+    @api.onchange("aller_type")
+    def on_aller_type_changed(self):
+        for aller in self:
+            if aller.aller_type != "out":
+                aller.is_depl = False
 
     def _get_default_date(self):
         return datetime.date.today()

@@ -1,0 +1,53 @@
+<odoo>
+
+    <record id="locasix_prop_status_form_changes" model="ir.ui.view">
+        <field name="name">locasix.prop.status.form</field>
+        <field name="model">locasix.prop.status.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Changer le statut de la proposition">
+                <p>
+                    Veuillez entrer une raison pour laquelle des changements sont demandés.
+                </p>
+                <field name="is_asking_confirmation" invisible="1"/>
+                <field name="note" />
+                <footer>
+                    <button name="validate" string="Confirmer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="locasix_prop_status_form_confirmation" model="ir.ui.view">
+        <field name="name">locasix.prop.status.form</field>
+        <field name="model">locasix.prop.status.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Changer le statut de la proposition">
+                <group>
+                    <group>
+                        <field name="date" />
+                        <field name="address_id" />
+                        <field name="product_id" />
+                        <field name="product_unique_ref" options="{'no_create': True}" />
+                    </group>
+                    <group>
+                        <field name="localite_id" />
+                        <field name="is_depl" invisible="1"/>
+                        <field name="localite_id_depl" attrs="{'invisible': [('is_depl', '=', False)]}" />
+                        <field name="contract_id" />
+                    </group>
+                </group>
+                <p>
+                    Veuillez entrez des remarques par rapport aux changements effectués/demandés.
+                </p>
+                <field name="is_asking_confirmation" invisible="1"/>
+                <field name="note" />
+                <footer>
+                    <button name="validate" string="Confirmer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

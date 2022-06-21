@@ -27,6 +27,8 @@ class OrderLine(models.Model):
     temporary_product = fields.Boolean(string="Temporaire", related="product_id.is_temporary_product", readonly=False, default=False)
     extra_cost_link = fields.Many2one(string="Extra costs link", comodel_name="sale.order.line")
 
+    is_super_note = fields.Boolean(string="Is super note")
+
     day_price = fields.Float(string="Prix/jour", default=0.0)
     week_price = fields.Float(string="Prix/sem.", default=0.0)
     month_price = fields.Float(string="Prix/mois", default=0.0)

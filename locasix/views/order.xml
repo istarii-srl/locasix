@@ -94,6 +94,7 @@
                 <field name="has_ref_to_condi" optional="show"/>
                 <field name="usage_rate_display" invisible="1"/>
                 <field name="has_24_price" optional="hide"/>
+                <field name="is_super_note" />
                 <field name="show_images" optional="hide"/>
                 <field name="temporary_product" optional="hide"/>
             </xpath>
@@ -105,6 +106,12 @@
             </xpath>
             <xpath expr="//tree/field[@name='tax_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//create[@name='add_note_control']" position="after">
+                <create name="add_super_note_control" string="Ajouter une note visible" context="{'default_display_type': 'line_note', 'default_is_super_note': True}"/>
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-warning">is_super_note == True</attribute>
             </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="after">
                 <field name="offer_type" invisible = "1"/>

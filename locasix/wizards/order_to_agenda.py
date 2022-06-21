@@ -32,6 +32,7 @@ class OrderToAgenda(models.TransientModel):
                         new_agg_id = self.env["locasix.agg.aller"].sudo().create({
                             "day_id": newday_id.id,
                             "aller_type": "out",
+                            "is_proposition": True,
                             "localite_id": wizard.localite_id.id,
                             "date": wizard.aller_date,
                             "address_id": wizard.order_id.partner_id.id,
@@ -41,6 +42,8 @@ class OrderToAgenda(models.TransientModel):
                         "day_id": newday_id.id,
                         "date": new_agg_id.date,
                         "agg_id": new_agg_id.id,
+                        "is_proposition": True,
+                        "state": "zzprop",
                         "localite_id": wizard.localite_id.id,
                         "aller_type": "out",
                         "order_id": wizard.order_id.id,
@@ -57,6 +60,7 @@ class OrderToAgenda(models.TransientModel):
                             new_agg_id = self.env["locasix.agg.aller"].sudo().create({
                                 "day_id": newday_id.id,
                                 "localite_id": wizard.localite_id.id,
+                                "is_proposition": True,
                                 "date": wizard.retour_date,
                                 "aller_type": "in",
                                 "address_id": wizard.order_id.partner_id.id,
@@ -67,6 +71,8 @@ class OrderToAgenda(models.TransientModel):
                             "date": new_agg_id.date,
                             "localite_id": wizard.localite_id.id,
                             "aller_type": "in",
+                            "state": "zzprop",
+                            "is_proposition": True,
                             "agg_id": new_agg_id.id,
                             "order_id": wizard.order_id.id,
                             "address_id": new_agg_id.address_id.id,
