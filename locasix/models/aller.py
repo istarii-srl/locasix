@@ -377,7 +377,7 @@ class Aller(models.Model):
                 'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
                 'email_to': f"{aller.asking_user.email}",
                 'auto_delete': False,
-                'email_from': 'b.quintart@locasix.be',
+                'email_from': "o.libbrecht@locasix.be",
             }
             batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
             batch_mails_sudo.send(auto_commit=False)  
@@ -395,7 +395,7 @@ class Aller(models.Model):
                 'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
                 'email_to': f"{aller.asking_user.email}",
                 'auto_delete': False,
-                'email_from': 'b.quintart@locasix.be',
+                'email_from': "o.libbrecht@locasix.be",
             }
             batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
             batch_mails_sudo.send(auto_commit=False)
@@ -440,7 +440,7 @@ class Aller(models.Model):
                 'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
                 'email_to': f"{aller.asking_user.email}",
                 'auto_delete': False,
-                'email_from': 'b.quintart@locasix.be',
+                'email_from': "o.libbrecht@locasix.be",
             }
             batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
             batch_mails_sudo.send(auto_commit=False)
@@ -479,12 +479,13 @@ class Aller(models.Model):
             type_aller = "Aller" if aller.aller_type == "out" else "Retour"
             if aller.is_depl:
                 type_aller = "Déplacement"
+            from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
             mail_values = {
                 'subject': f"Demande de confirmation",
                 'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
                 'email_to': "o.libbrecht@locasix.be",
                 'auto_delete': False,
-                'email_from': 'b.quintart@locasix.be',
+                'email_from': from_email,
             }
             batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
             batch_mails_sudo.send(auto_commit=False)            
@@ -497,12 +498,13 @@ class Aller(models.Model):
             type_aller = "Aller" if aller.aller_type == "out" else "Retour"
             if aller.is_depl:
                 type_aller = "Déplacement"
+            from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
             mail_values = {
                 'subject': f"Demande de confirmation",
                 'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
                 'email_to': "o.libbrecht@locasix.be",
                 'auto_delete': False,
-                'email_from': 'b.quintart@locasix.be',
+                'email_from': from_email,
             }
             batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
             batch_mails_sudo.send(auto_commit=False)
