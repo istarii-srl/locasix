@@ -365,6 +365,15 @@ class Aller(models.Model):
     
     def action_accept(self):
         i = 0
+        agg_id = False
+        for aller in self:
+            if not agg_id:
+                agg_id = aller.agg_id.id
+            elif agg_id != aller.agg_id.id:
+                raise UserError("Vous ne pouvez accepter des propositions que d'un même groupement")
+            if aller.proposition_status != "pending_boss":
+                raise UserError("Vous ne pouvez accepter que les propositions en attente de confirmation du responsable")
+
         for aller in self:
             aller.proposition_status = "accepted"
             aller.state = "aprogress"
