@@ -13,6 +13,9 @@ class OrderToAgenda(models.TransientModel):
 
     should_create_retour = fields.Boolean(string="Date de retour déjà connue ?", default=False)
     retour_date = fields.Date(string="Date du retour", default=lambda self: self._get_default_date(), required=True)
+    remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
+    note = fields.Text(string="Remarque libre")
+    
 
     def _get_default_date(self):
         return datetime.date.today()
@@ -35,6 +38,8 @@ class OrderToAgenda(models.TransientModel):
                             "is_proposition": True,
                             "localite_id": wizard.localite_id.id,
                             "date": wizard.aller_date,
+                            "remarque_ids": wizard.remarque_ids.ids,
+                            "note": wizard.note,
                             "address_id": wizard.order_id.partner_id.id,
                         })
 
@@ -46,6 +51,8 @@ class OrderToAgenda(models.TransientModel):
                         "state": "zzprop",
                         "localite_id": wizard.localite_id.id,
                         "aller_type": "out",
+                        "remarque_ids": wizard.remarque_ids.ids,
+                        "note": wizard.note,
                         "order_id": wizard.order_id.id,
                         "address_id": new_agg_id.address_id.id,
                         "product_id": line.product_id.id,
@@ -63,6 +70,8 @@ class OrderToAgenda(models.TransientModel):
                                 "is_proposition": True,
                                 "date": wizard.retour_date,
                                 "aller_type": "in",
+                                "remarque_ids": wizard.remarque_ids.ids,
+                                "note": wizard.note,
                                 "address_id": wizard.order_id.partner_id.id,
                             })
 
@@ -72,6 +81,8 @@ class OrderToAgenda(models.TransientModel):
                             "localite_id": wizard.localite_id.id,
                             "aller_type": "in",
                             "state": "zzprop",
+                            "remarque_ids": wizard.remarque_ids.ids,
+                            "note": wizard.note,
                             "is_proposition": True,
                             "agg_id": new_agg_id.id,
                             "order_id": wizard.order_id.id,

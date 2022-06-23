@@ -153,7 +153,7 @@
         <field name="view_mode">tree,calendar,form</field>
         <field name="view_id" ref="locasix.locasix_prop_tree"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
-        <field name="domain">[('is_proposition', "=", True)]</field>
+        <field name="domain">[('is_proposition', "=", True), ('proposition_status', '!=', 'accepted')]</field>
     </record>
 
 
