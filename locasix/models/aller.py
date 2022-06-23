@@ -364,41 +364,48 @@ class Aller(models.Model):
                 new_aller.remarque_ids = [(4, remarque.id, 0)]
     
     def action_accept(self):
+        i = 0
         for aller in self:
             aller.proposition_status = "accepted"
             aller.state = "aprogress"
             self.create_history_message("Proposition acceptée")
-            batch_mails_sudo = self.env['mail.mail'].sudo()
-            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
-            if aller.is_depl:
-                type_aller = "Déplacement"
-            mail_values = {
-                'subject': f"Proposition acceptée",
-                'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
-                'email_to': f"{aller.asking_user.email}",
-                'auto_delete': False,
-                'email_from': "o.libbrecht@locasix.be",
-            }
-            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
-            batch_mails_sudo.send(auto_commit=False)  
+            if i == 0:
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                if aller.is_depl:
+                    type_aller = "Déplacement"
+                mail_values = {
+                    'subject': f"Proposition acceptée",
+                    'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
+                    'email_to': f"{aller.asking_user.email}",
+                    'auto_delete': False,
+                    'email_from': "o.libbrecht@locasix.be",
+                }
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)  
+            i += 1
 
     def action_reject(self):
+        i = 0
         for aller in self:
             aller.proposition_status = "rejected"
-            self.create_history_message("Proposition refusée")  
-            batch_mails_sudo = self.env['mail.mail'].sudo()
-            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
-            if aller.is_depl:
-                type_aller = "Déplacement"
-            mail_values = {
-                'subject': f"Proposition refusée",
-                'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
-                'email_to': f"{aller.asking_user.email}",
-                'auto_delete': False,
-                'email_from': "o.libbrecht@locasix.be",
-            }
-            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
-            batch_mails_sudo.send(auto_commit=False)
+            self.create_history_message("Proposition refusée")
+            if i == 0:
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                if aller.is_depl:
+                    type_aller = "Déplacement"
+                mail_values = {
+                    'subject': f"Proposition refusée",
+                    'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Cordialement,",
+                    'email_to': f"{aller.asking_user.email}",
+                    'auto_delete': False,
+                    'email_from': "o.libbrecht@locasix.be",
+                }
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)
+            aller.unlink()
+            i += 1
 
     def action_ask_changes(self):
         for aller in self:
