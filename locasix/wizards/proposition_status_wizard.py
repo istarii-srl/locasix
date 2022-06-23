@@ -35,6 +35,6 @@ class PropositionStatusWizard(models.TransientModel):
                 wizard.aller_id.localite_id_depl = wizard.localite_id_depl
 
             if wizard.is_asking_confirmation:
-                wizard.aller_id.ask_confirmation(wizard.note)
+                wizard.aller_id.ask_confirmation(wizard.note if wizard.note else " ")
             else:
-                wizard.aller_id.ask_changes(wizard.note)
+                wizard.aller_id.ask_changes(wizard.note if wizard.note else " ")
