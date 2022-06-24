@@ -7,7 +7,7 @@
             <form string="Changer le statut de la proposition">
                 <group>
                     <group>
-                        <field name="prop_ids" />
+                        <field name="prop_ids" invisible="1"/>
                         <field name="date" />
                     </group>
                     <group>
