@@ -22,7 +22,9 @@ class PropositionMultiUpdate(models.TransientModel):
             is_boss = False
             is_boss = bool(wizard.user_id.has_group('locasix.group_locasix_admin') or wizard.user_id.has_group('locasix.group_locasix_agenda_resp'))
             _logger.info(is_boss)
-            for prop in wizard.prop_ids:      
+            _logger.info(len(wizard.prop_ids))
+            for prop in wizard.prop_ids:  
+                _logger.info(prop)    
                 if not agg_id:
                     agg_id = prop.agg_id.id
                 elif agg_id != prop.agg_id.id:
