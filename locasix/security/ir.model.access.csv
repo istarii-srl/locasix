@@ -42,3 +42,4 @@ access_locasix_partner_cron_user,locasix.locasix.partner.cron,model_locasix_part
 access_locasix_contract_user,locasix.locasix.contract,model_locasix_contract,base.group_user,1,1,1,1
 access_locasix_modify_contract_user,locasix.locasix.modify.contract,model_locasix_modify_contract,base.group_user,1,1,1,1
 access_locasix_prop_status_wizard_user,locasix.locasix.prop.status.wizard,model_locasix_prop_status_wizard,base.group_user,1,1,1,1
+access_locasix_proposition_multi_wizard_user,locasix.locasix.proposition.multi.wizard,model_locasix_proposition_multi_wizard,base.group_user,1,1,1,1

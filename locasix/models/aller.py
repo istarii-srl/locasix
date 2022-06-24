@@ -396,6 +396,14 @@ class Aller(models.Model):
 
     def action_reject(self):
         i = 0
+        agg_id = False
+        for aller in self:
+            if not agg_id:
+                agg_id = aller.agg_id.id
+            elif agg_id != aller.agg_id.id:
+                raise UserError("Vous ne pouvez rejeter des propositions que d'un même groupement")
+            if aller.proposition_status != "pending_boss":
+                raise UserError("Vous ne pouvez rejeter que les propositions en attente de confirmation du responsable")
         for aller in self:
             aller.proposition_status = "rejected"
             self.create_history_message("Proposition refusée")
@@ -443,23 +451,24 @@ class Aller(models.Model):
                 },
             }
 
-    def ask_changes(self, note):
+    def ask_changes(self, note, i=0):
         for aller in self:
             aller.proposition_status = "pending_worker" 
             self.create_history_message("Demande de changements : "+ note)
-            batch_mails_sudo = self.env['mail.mail'].sudo()
-            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
-            if aller.is_depl:
-                type_aller = "Déplacement"
-            mail_values = {
-                'subject': f"Demande de changement",
-                'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
-                'email_to': f"{aller.asking_user.email}",
-                'auto_delete': False,
-                'email_from': "o.libbrecht@locasix.be",
-            }
-            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
-            batch_mails_sudo.send(auto_commit=False)
+            if i == 0:
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                if aller.is_depl:
+                    type_aller = "Déplacement"
+                mail_values = {
+                    'subject': f"Demande de changement",
+                    'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
+                    'email_to': f"{aller.asking_user.email}",
+                    'auto_delete': False,
+                    'email_from': "o.libbrecht@locasix.be",
+                }
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)
     
     def action_ask_confirmation(self):
         for aller in self:
@@ -506,24 +515,25 @@ class Aller(models.Model):
             batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
             batch_mails_sudo.send(auto_commit=False)            
     
-    def ask_confirmation(self, note):
+    def ask_confirmation(self, note, i=0):
         for aller in self:
             aller.proposition_status = "pending_boss"
             self.create_history_message("Demande de confirmation : "+ note)
-            batch_mails_sudo = self.env['mail.mail'].sudo()
-            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
-            if aller.is_depl:
-                type_aller = "Déplacement"
-            from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
-            mail_values = {
-                'subject': f"Demande de confirmation",
-                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
-                'email_to': "o.libbrecht@locasix.be",
-                'auto_delete': False,
-                'email_from': from_email,
-            }
-            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
-            batch_mails_sudo.send(auto_commit=False)
+            if i == 0:
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                if aller.is_depl:
+                    type_aller = "Déplacement"
+                from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
+                mail_values = {
+                    'subject': f"Demande de confirmation",
+                    'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Remarque : {note}<br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
+                    'email_to': "o.libbrecht@locasix.be",
+                    'auto_delete': False,
+                    'email_from': from_email,
+                }
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)
 
     def open_agg(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')

@@ -1,0 +1,37 @@
+<odoo>
+
+    <record id="locasix_prop_status_multi_form" model="ir.ui.view">
+        <field name="name">locasix.prop.status.multi.form</field>
+        <field name="model">locasix.proposition.multi.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Changer le statut de la proposition">
+                <group>
+                    <group>
+                        <field name="date" />
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <p>
+                    Veuillez entrez des remarques par rapport aux changements effectués/demandés.
+                </p>
+                <field name="note" />
+                <footer>
+                    <button name="validate" string="Confirmer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_prop_multi_update" model="ir.actions.act_window">
+        <field name="name">Modifier les propositions</field>
+        <field name="res_model">locasix.proposition.multi.wizard</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="locasix_prop_status_multi_form"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_locasix_aller"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+</odoo>
