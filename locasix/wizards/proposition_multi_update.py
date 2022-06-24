@@ -21,21 +21,17 @@ class PropositionMultiUpdate(models.TransientModel):
             agg_id = False
             is_boss = False
             is_boss = bool(wizard.user_id.has_group('locasix.group_locasix_admin') or wizard.user_id.has_group('locasix.group_locasix_agenda_resp'))
-            _logger.info(is_boss)
-            _logger.info(len(wizard.prop_ids))
-            for prop in wizard.prop_ids:  
-                _logger.info(prop)    
+            for prop in wizard.prop_ids:   
                 if not agg_id:
                     agg_id = prop.agg_id.id
                 elif agg_id != prop.agg_id.id:
                     raise UserError("Vous ne pouvez modifier des propositions que d'un même groupement")
-                _logger.info(prop.proposition_status)
                 if (prop.proposition_status != "pending_boss" and is_boss) or (prop.proposition_status != "pending_worker" and not is_boss):
                     raise UserError("Vous ne pouvez modifier que les propositions en attente de confirmation de la même personne (responsable ou demandeur)")
             i = 0
             for prop in wizard.prop_ids:
                 prop.date = wizard.date
-                if wizard.is_asking_confirmation:
+                if not is_boss:
                     prop.ask_confirmation(wizard.note if wizard.note else " ", i)
                 else:
                     prop.ask_changes(wizard.note if wizard.note else " ", i)
