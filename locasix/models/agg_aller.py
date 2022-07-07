@@ -130,6 +130,10 @@ class AggAller(models.Model):
         _logger.info("write aggAller")
         _logger.info(vals)
         res = super(AggAller, self).write(vals)
+        if "date" in vals:
+            if self.date != self.day_id.day:
+                self.enforce_day_matches_date()
+                self.check_and_merge()
         if "address_id" in vals or "localite_id" in vals or "localite_id_depl" in vals:
             if self.date == self.day_id.day:
                 for aller in self.aller_ids:
@@ -138,10 +142,7 @@ class AggAller(models.Model):
                     aller.localite_id_depl = self.localite_id_depl
                 self.check_and_merge()                
 
-        if "date" in vals:
-            if self.date != self.day_id.day:
-                self.enforce_day_matches_date()
-                self.check_and_merge()
+
         self.weekend_check()
 
         return res
