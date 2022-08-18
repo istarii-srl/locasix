@@ -310,9 +310,9 @@ class Aller(models.Model):
         if "proposition_status" in vals:
             self.create_history_message("Changement de statut pour la proposition : "+self.prop_status_to_string(old_prop_status)+" -> "+ self.prop_status_to_string(self.proposition_status))
         if "product_unique_ref" in vals:
-            self.create_history_message("Changement du N° : "+ old_ref.name if old_ref else "Pas de numéro" +" -> "+ self.product_unique_ref.name if self.product_unique_ref else "Pas de numéro")
+            self.create_history_message("Changement du N° : "+ (old_ref.name if old_ref else "Pas de numéro") +" -> "+ (self.product_unique_ref.name if self.product_unique_ref else "Pas de numéro"))
         if "product_id" in vals:
-            self.create_history_message("Changement du produit° : "+ old_product.name if old_product else "Pas de produit" +" -> "+ self.product_id.name if self.product_id else "Pas de produit")
+            self.create_history_message("Changement du produit° : "+ (old_product.name if old_product else "Pas de produit") +" -> "+ (self.product_id.name if self.product_id else "Pas de produit"))
         return res
 
     def prop_status_to_string(self, status):
