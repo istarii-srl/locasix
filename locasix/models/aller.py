@@ -222,6 +222,8 @@ class Aller(models.Model):
         old_localite_depl = self.localite_id_depl
         old_localite = self.localite_id
         old_prop_status = self.proposition_status
+        old_product = self.product_id
+        old_ref = self.product_unique_ref
         old_contract = self.contract
         res = super(Aller, self).write(vals)
         if "note" in vals:
@@ -307,6 +309,10 @@ class Aller(models.Model):
                 self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ "Pas de contrat")
         if "proposition_status" in vals:
             self.create_history_message("Changement de statut pour la proposition : "+self.prop_status_to_string(old_prop_status)+" -> "+ self.prop_status_to_string(self.proposition_status))
+        if "product_unique_ref" in vals:
+            self.create_history_message("Changement du N° : "+ old_ref.name if old_ref else "Pas de numéro" +" -> "+ self.product_unique_ref.name if self.product_unique_ref else "Pas de numéro")
+        if "product_id" in vals:
+            self.create_history_message("Changement du produit° : "+ old_product.name if old_product else "Pas de produit" +" -> "+ self.product_id.name if self.product_id else "Pas de produit")
         return res
 
     def prop_status_to_string(self, status):
