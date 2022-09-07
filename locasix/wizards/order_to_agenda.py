@@ -12,6 +12,7 @@ class OrderToAgenda(models.TransientModel):
     aller_date = fields.Date(string="Date de l'aller", default=lambda self: self._get_default_date(), required=True)
 
     should_create_retour = fields.Boolean(string="Date de retour déjà connue ?", default=False)
+    is_weekend = fields.Boolean(string="Weekend", default=False)
     retour_date = fields.Date(string="Date du retour", default=lambda self: self._get_default_date(), required=True)
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
@@ -36,6 +37,7 @@ class OrderToAgenda(models.TransientModel):
                             "day_id": newday_id.id,
                             "aller_type": "out",
                             "is_proposition": True,
+                            "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                             "localite_id": wizard.localite_id.id,
                             "date": wizard.aller_date,
                             "remarque_ids": wizard.remarque_ids.ids,
@@ -48,6 +50,7 @@ class OrderToAgenda(models.TransientModel):
                         "date": new_agg_id.date,
                         "agg_id": new_agg_id.id,
                         "is_proposition": True,
+                        "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                         "state": "zzprop",
                         "localite_id": wizard.localite_id.id,
                         "aller_type": "out",
@@ -68,6 +71,7 @@ class OrderToAgenda(models.TransientModel):
                                 "day_id": newday_id.id,
                                 "localite_id": wizard.localite_id.id,
                                 "is_proposition": True,
+                                "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                                 "date": wizard.retour_date,
                                 "aller_type": "in",
                                 "remarque_ids": wizard.remarque_ids.ids,
@@ -80,6 +84,7 @@ class OrderToAgenda(models.TransientModel):
                             "date": new_agg_id.date,
                             "localite_id": wizard.localite_id.id,
                             "aller_type": "in",
+                            "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                             "state": "zzprop",
                             "remarque_ids": wizard.remarque_ids.ids,
                             "note": wizard.note,

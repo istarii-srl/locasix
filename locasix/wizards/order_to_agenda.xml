@@ -13,6 +13,7 @@
                         </group>
                         <group>
                             <field name="should_create_retour"/>
+                            <field name="is_weekend" attrs="{'invisible': [('should_create_retour', '=', False)]}"/>
                             <field name="retour_date" attrs="{'invisible': [('should_create_retour', '=', False)]}"/>
                         </group>
                     </group>
