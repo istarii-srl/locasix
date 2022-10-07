@@ -25,13 +25,5 @@ odoo.define("locasix.SaleOrderView", function (require) {
     },
   });
 
-  const SaleOrderView = FormView.extend({
-    config: _.extend({}, FormView.prototype.config, {
-      Controller: FormController,
-    }),
-  });
-
-  viewRegistry.add("sale_discount_form", SaleOrderView);
-
-  return SaleOrderView;
+  return FormController;
 });
