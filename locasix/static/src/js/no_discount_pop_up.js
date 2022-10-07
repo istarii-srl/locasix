@@ -27,7 +27,7 @@ odoo.define("locasix.SaleOrderView", function (require) {
 
   const SaleOrderView = FormView.extend({
     config: _.extend({}, FormView.prototype.config, {
-      Controller: SaleOrderFormController,
+      Controller: FormController,
     }),
   });
 
