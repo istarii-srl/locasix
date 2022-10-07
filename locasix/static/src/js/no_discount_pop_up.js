@@ -1,17 +1,14 @@
 odoo.define('locasix.SaleOrderView', function (require) {
     "use strict";
 
-    const FormController = require('web.FormController');
+    const FormController = require('sale.SaleOrderView');
     const FormView = require('web.FormView');
     const viewRegistry = require('web.view_registry');
     const Dialog = require('web.Dialog');
     const core = require('web.core');
     const _t = core._t;
 
-    const SaleOrderFormController = FormController.extend({
-        custom_events: _.extend({}, FormController.prototype.custom_events, {
-            open_discount_wizard: '_onOpenDiscountWizard',
-        }),
+    FormController.include({
 
         // -------------------------------------------------------------------------
         // Handlers
@@ -28,15 +25,5 @@ odoo.define('locasix.SaleOrderView', function (require) {
 
         },
     });
-
-    const SaleOrderView = FormView.extend({
-        config: _.extend({}, FormView.prototype.config, {
-            Controller: SaleOrderFormController,
-        }),
-    });
-
-    viewRegistry.add('sale_discount_form', SaleOrderView);
-
-    return SaleOrderView;
 
 });
