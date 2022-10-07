@@ -22,7 +22,7 @@ odoo.define('locasix.SaleOrderView', function (require) {
          *  (3) Discount is the same in all sale order line
          */
         _onOpenDiscountWizard(ev) {
-
+            console.log("No discount");
         },
     });
 
