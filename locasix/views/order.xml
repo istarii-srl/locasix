@@ -96,7 +96,7 @@
                 <field name="has_24_price" optional="hide"/>
                 <field name="is_super_note" />
                 <field name="show_images" optional="hide"/>
-                <field name="temporary_product" optional="hide"/>
+                <field name="temporary_product" invisible="1"/>
             </xpath>
             <xpath expr="//tree/field[@name='price_subtotal']" position="attributes">
                 <attribute name="invisible">1</attribute>
