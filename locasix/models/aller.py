@@ -402,7 +402,7 @@ class Aller(models.Model):
                     'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note}  <br/><br/>Cordialement,",
                     'email_to': f"{aller.asking_user.email}",
                     'auto_delete': False,
-                    'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') if self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') else "o.libbrecht@locasix.be",
+                    'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                 }
                 batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
                 batch_mails_sudo.send(auto_commit=False)  
@@ -431,7 +431,7 @@ class Aller(models.Model):
                     'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note} <br/><br/>Cordialement,",
                     'email_to': f"{aller.asking_user.email}",
                     'auto_delete': False,
-                    'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') if self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') else "o.libbrecht@locasix.be",
+                    'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                 }
                 batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
                 batch_mails_sudo.send(auto_commit=False)
@@ -479,7 +479,7 @@ class Aller(models.Model):
                     'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note} <br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
                     'email_to': f"{aller.asking_user.email}",
                     'auto_delete': False,
-                    'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') if self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') else "o.libbrecht@locasix.be",
+                    'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                 }
                 batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
                 batch_mails_sudo.send(auto_commit=False)
@@ -522,7 +522,7 @@ class Aller(models.Model):
             mail_values = {
                 'subject': f"Demande de confirmation",
                 'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note}  <br/><br/>Cordialement,",
-                'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') if self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') else "o.libbrecht@locasix.be",
+                'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                 'auto_delete': False,
                 'email_from': from_email,
             }
@@ -542,7 +542,7 @@ class Aller(models.Model):
                 mail_values = {
                     'subject': f"Demande de confirmation",
                     'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note}  <br/><br/>Cordialement,",
-                    'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') if self.env['ir.config_parameter'].sudo().get_param('locasix.extra_cost_transport_rate') else "o.libbrecht@locasix.be",
+                    'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                     'auto_delete': False,
                     'email_from': from_email,
                 }
