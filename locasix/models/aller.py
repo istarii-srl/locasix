@@ -397,9 +397,10 @@ class Aller(models.Model):
                 type_aller = "Aller" if aller.aller_type == "out" else "Retour"
                 if aller.is_depl:
                     type_aller = "Déplacement"
+                note = aller.note if aller.note else ""
                 mail_values = {
                     'subject': f"Proposition acceptée",
-                    'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note}  <br/><br/>Cordialement,",
+                    'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}  <br/><br/>Cordialement,",
                     'email_to': f"{aller.asking_user.email}",
                     'auto_delete': False,
                     'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
@@ -426,9 +427,10 @@ class Aller(models.Model):
                 type_aller = "Aller" if aller.aller_type == "out" else "Retour"
                 if aller.is_depl:
                     type_aller = "Déplacement"
+                note = aller.note if aller.note else ""
                 mail_values = {
                     'subject': f"Proposition refusée",
-                    'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note} <br/><br/>Cordialement,",
+                    'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note} <br/><br/>Cordialement,",
                     'email_to': f"{aller.asking_user.email}",
                     'auto_delete': False,
                     'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
@@ -474,9 +476,10 @@ class Aller(models.Model):
                 type_aller = "Aller" if aller.aller_type == "out" else "Retour"
                 if aller.is_depl:
                     type_aller = "Déplacement"
+                note = aller.note if aller.note else ""
                 mail_values = {
                     'subject': f"Demande de changement",
-                    'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note} <br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
+                    'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note} <br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
                     'email_to': f"{aller.asking_user.email}",
                     'auto_delete': False,
                     'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
@@ -519,9 +522,10 @@ class Aller(models.Model):
             if aller.is_depl:
                 type_aller = "Déplacement"
             from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
+            note = aller.note if aller.note else ""
             mail_values = {
                 'subject': f"Demande de confirmation",
-                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note}  <br/><br/>Cordialement,",
+                'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}  <br/><br/>Cordialement,",
                 'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                 'auto_delete': False,
                 'email_from': from_email,
@@ -539,9 +543,10 @@ class Aller(models.Model):
                 if aller.is_depl:
                     type_aller = "Déplacement"
                 from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
+                note = aller.note if aller.note else ""
                 mail_values = {
                     'subject': f"Demande de confirmation",
-                    'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{aller.note}  <br/><br/>Cordialement,",
+                    'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}  <br/><br/>Cordialement,",
                     'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                     'auto_delete': False,
                     'email_from': from_email,
