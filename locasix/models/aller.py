@@ -378,9 +378,10 @@ class Aller(models.Model):
                 new_aller.remarque_ids = [(4, remarque.id, 0)]
     
     def action_accept(self):
-        i = 0
+        j = 0
         agg_id = False
         for aller in self:
+            j += 1
             if not agg_id:
                 agg_id = aller.agg_id.id
             elif agg_id != aller.agg_id.id:
@@ -388,57 +389,69 @@ class Aller(models.Model):
             if aller.proposition_status != "pending_boss":
                 raise UserError("Vous ne pouvez accepter que les propositions en attente de confirmation du responsable")
 
+
+        mail_values = {
+            'subject': f"Proposition acceptée",
+            'email_to': f"{aller.asking_user.email}",
+            'auto_delete': False,
+            'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
+        }
+
+        body = f"Bonjour,"
         for aller in self:
             aller.proposition_status = "accepted"
             aller.state = "aprogress"
             self.create_history_message("Proposition acceptée")
-            if i == 0:
-                batch_mails_sudo = self.env['mail.mail'].sudo()
-                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
-                if aller.is_depl:
-                    type_aller = "Déplacement"
-                note = aller.note if aller.note else ""
-                mail_values = {
-                    'subject': f"Proposition acceptée",
-                    'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}  <br/><br/>Cordialement,",
-                    'email_to': f"{aller.asking_user.email}",
-                    'auto_delete': False,
-                    'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
-                }
-                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
-                batch_mails_sudo.send(auto_commit=False)  
-            i += 1
+            
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
+            note = aller.note if aller.note else ""
+            body += f"<br/><br/>Votre proposition {aller.name} a été acceptée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}"
+
+        if j > 0:
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            body += "<br/><br/>Cordialement,"
+            mail_values['body_html'] = body
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)  
 
     def action_reject(self):
-        i = 0
+        j = 0
         agg_id = False
         for aller in self:
+            j+= 1
             if not agg_id:
                 agg_id = aller.agg_id.id
             elif agg_id != aller.agg_id.id:
                 raise UserError("Vous ne pouvez rejeter des propositions que d'un même groupement")
             if aller.proposition_status != "pending_boss":
                 raise UserError("Vous ne pouvez rejeter que les propositions en attente de confirmation du responsable")
+
+        mail_values = {
+            'subject': f"Proposition acceptée",
+            'email_to': f"{aller.asking_user.email}",
+            'auto_delete': False,
+            'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
+        }
+        body = f"Bonjour,"
         for aller in self:
             aller.proposition_status = "rejected"
             self.create_history_message("Proposition refusée")
-            if i == 0:
-                batch_mails_sudo = self.env['mail.mail'].sudo()
-                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
-                if aller.is_depl:
-                    type_aller = "Déplacement"
-                note = aller.note if aller.note else ""
-                mail_values = {
-                    'subject': f"Proposition refusée",
-                    'body_html': f"Bonjour,<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note} <br/><br/>Cordialement,",
-                    'email_to': f"{aller.asking_user.email}",
-                    'auto_delete': False,
-                    'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
-                }
-                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
-                batch_mails_sudo.send(auto_commit=False)
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
+            note = aller.note if aller.note else ""
+            body += f"<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note} <br/><br/>Cordialement,",
+
             aller.unlink()
-            i += 1
+
+        if j > 0:
+            batch_mails_sudo = self.env['mail.mail'].sudo()
+            body += "<br/><br/>Cordialement,"
+            mail_values['body_html'] = body
+            batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+            batch_mails_sudo.send(auto_commit=False)  
 
     def action_ask_changes(self):
         for aller in self:

@@ -43,6 +43,8 @@
                 <field name="rue"/>
                 <field name="street_number"/>
                 <field name="street_note"/>
+                <field name="estimated_start_date" />
+                <field name="estimated_end_date" />
             </field>
             <field name="payment_term_id" position="attributes">
                 <attribute name="invisible">1</attribute>

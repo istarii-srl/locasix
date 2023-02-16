@@ -59,6 +59,9 @@ class Order(models.Model):
     display_front_page = fields.Boolean(string="Afficher la page de garde", default=True)
     display_confirmation_box = fields.Boolean(string="Afficher l'encadré de confirmation", default=True)
 
+    estimated_start_date = fields.Date(string="Date de début estimée")
+    estimated_end_date = fields.Date(string="Date de fin estimée")
+
 
     @api.onchange("added_terms_id")
     def on_added_terms_changed(self):
