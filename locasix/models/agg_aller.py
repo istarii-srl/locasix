@@ -30,6 +30,8 @@ class AggAller(models.Model):
     date_retour = fields.Datetime(string="Date de retour", default=lambda self: self._get_default_date())
     is_retours_created = fields.Boolean(default=False)
     is_first_agg = fields.Boolean(default=False)
+
+    prop_mail_sent = fields.Boolean(string="Prop mail sent")
     
     @api.onchange("aller_type")
     def on_aller_type_changed(self):
@@ -113,8 +115,34 @@ class AggAller(models.Model):
         obj.enforce_day_matches_date()
         obj.check_and_merge()
         obj.weekend_check()
+        obj.send_proposition_creation_mail()
         return obj
     
+    def send_proposition_creation_mail(self):
+        for agg_aller in self:
+            if agg_aller.is_proposition:
+                mail_values = {
+                        'subject': f"Demande de confirmation",
+                        'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
+                        'auto_delete': False,
+                        'email_from': from_email,
+                    }
+                body = "Bonjour,"
+                for aller in agg_aller.aller_ids:
+                
+                    type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                    if aller.is_depl:
+                        type_aller = "Déplacement"
+                    from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
+                    note = aller.note if aller.note else ""
+                    body += f"<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}"
+
+                body += "<br/><br/>Cordialement,"
+                mail_values["body_html"] = body
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)      
+
     def enforce_day_matches_date(self):
         if self.date != self.day_id.day:
             newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)
