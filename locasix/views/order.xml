@@ -150,7 +150,7 @@
         <field name="mode">primary</field>
         <field name="inherit_id" ref="sale.view_sales_order_filter"/>
         <field name="arch" type="xml">
-            <filter name="filter_create_date" position="after">
+            <filter name="my_sale_orders_filter" position="after">
                 <filter string="Estimated start date" name="estimated_start_date" date="estimated_start_date"/>
                 <filter string="Estimated end date" name="estimated_end_date" date="estimated_end_date"/>
             </filter>
