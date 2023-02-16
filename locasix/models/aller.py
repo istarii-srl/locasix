@@ -215,7 +215,8 @@ class Aller(models.Model):
         obj.is_depl = obj.agg_id.is_depl
         if obj.is_proposition:
             obj.create_history_message("Création de la proposition")
-            obj.send_creation_mail()
+            if obj.agg_id.prop_mail_sent:
+                obj.send_creation_mail()
         else:
             obj.create_history_message("Création de l'aller")
         return obj
@@ -499,7 +500,15 @@ class Aller(models.Model):
                 }
                 batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
                 batch_mails_sudo.send(auto_commit=False)
-    
+                return ""
+            else:
+                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                if aller.is_depl:
+                    type_aller = "Déplacement"
+                note = aller.note if aller.note else ""
+                body = f"<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note} <br/>Lien : {aller.get_record_url()}"
+                return body
+
     def action_ask_confirmation(self):
         for aller in self:
             _logger.info("action in prop status")

@@ -29,10 +29,34 @@ class PropositionMultiUpdate(models.TransientModel):
                 if (prop.proposition_status != "pending_boss" and is_boss) or (prop.proposition_status != "pending_worker" and not is_boss):
                     raise UserError("Vous ne pouvez modifier que les propositions en attente de confirmation de la même personne (responsable ou demandeur)")
             i = 0
-            for prop in wizard.prop_ids:
-                prop.date = wizard.date
-                if not is_boss:
-                    prop.ask_confirmation(wizard.note if wizard.note else " ", i)
+            if wizard.prop_ids:
+                if is_boss:
+                    mail_values = {
+                        'subject': f"Demande de changement",
+                        'email_to': f"{wizard.prop_ids[0].asking_user.email}",
+                        'auto_delete': False,
+                        'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
+                    }
                 else:
-                    prop.ask_changes(wizard.note if wizard.note else " ", i)
-                i += 1
+                    from_email = wizard.prop_ids[0].asking_user.email if wizard.prop_ids[0].asking_user.email else "b.quintart@locasix.be"
+                    mail_values = {
+                        'subject': f"Demande de confirmation",
+                        'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
+                        'auto_delete': False,
+                        'email_from': from_email,
+                    }
+                body = "Bonjour,"
+
+                for prop in wizard.prop_ids:
+                    prop.date = wizard.date
+                    if not is_boss:
+                        body += prop.ask_confirmation(wizard.note if wizard.note else " ", 1)
+                    else:
+                        body += prop.ask_changes(wizard.note if wizard.note else " ", 1)
+                    i += 1
+
+                body += "<br/><br/>Cordialement,"
+                mail_values["body_html"] = body
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)

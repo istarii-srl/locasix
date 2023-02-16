@@ -141,7 +141,8 @@ class AggAller(models.Model):
                 mail_values["body_html"] = body
                 batch_mails_sudo = self.env['mail.mail'].sudo()
                 batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
-                batch_mails_sudo.send(auto_commit=False)      
+                batch_mails_sudo.send(auto_commit=False)
+                agg_aller.prop_mail_sent = True  
 
     def enforce_day_matches_date(self):
         if self.date != self.day_id.day:
