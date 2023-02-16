@@ -144,12 +144,24 @@
         </field>
     </record>
 
+    <record id="locasix_sale_order_view_search_inherit_quotation_2" model="ir.ui.view">
+        <field name="name">locasix.two.sale.order.search.inherit.quotation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="arch" type="xml">
+            <filter name="order_date" position="after">
+                <filter string="Estimated start date" name="estimated_start_date" date="estimated_start_date"/>
+                <filter string="Estimated end date" name="estimated_end_date" date="estimated_end_date"/>
+            </filter>
+        </field>
+    </record>
+
     <record id="locasix_sale_order_view_search_inherit_quotation" model="ir.ui.view">
         <field name="name">locasix.sale.order.search.inherit.quotation</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
         <field name="arch" type="xml">
-            <filter name="my_sale_orders_filter" position="after">
+            <filter name="filter_create_date" position="after">
                 <filter string="Estimated start date" name="estimated_start_date" date="estimated_start_date"/>
                 <filter string="Estimated end date" name="estimated_end_date" date="estimated_end_date"/>
             </filter>
