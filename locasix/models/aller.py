@@ -445,7 +445,7 @@ class Aller(models.Model):
             if aller.is_depl:
                 type_aller = "Déplacement"
             note = aller.note if aller.note else ""
-            body += f"<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note} <br/><br/>Cordialement,",
+            body += f"<br/><br/>Votre proposition {aller.name} a été refusée. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note} <br/><br/>Cordialement,"
 
             aller.unlink()
 
