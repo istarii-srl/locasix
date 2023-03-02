@@ -394,6 +394,7 @@ class Aller(models.Model):
         mail_values = {
             'subject': f"Proposition acceptée",
             'email_to': f"{aller.asking_user.email}",
+            'date': datetime.datetime.now(),
             'auto_delete': False,
             'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
         }
@@ -432,6 +433,7 @@ class Aller(models.Model):
         mail_values = {
             'subject': f"Proposition acceptée",
             'email_to': f"{aller.asking_user.email}",
+            'date': datetime.datetime.now(),
             'auto_delete': False,
             'email_from': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
         }
@@ -493,6 +495,7 @@ class Aller(models.Model):
                 note = aller.note if aller.note else ""
                 mail_values = {
                     'subject': f"Demande de changement",
+                    'date': datetime.datetime.now(),
                     'body_html': f"Bonjour,<br/><br/>Concernant votre proposition {aller.name}, des changements doivent être apportés. <br/>Type de proposition : {type_aller}<br/>Date : {aller.date} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note} <br/>Lien : {aller.get_record_url()}  <br/><br/>Cordialement,",
                     'email_to': f"{aller.asking_user.email}",
                     'auto_delete': False,
@@ -547,6 +550,7 @@ class Aller(models.Model):
             note = aller.note if aller.note else ""
             mail_values = {
                 'subject': f"Demande de confirmation",
+                'date': datetime.datetime.now(),
                 'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}  <br/><br/>Cordialement,",
                 'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                 'auto_delete': False,
@@ -568,6 +572,7 @@ class Aller(models.Model):
                 note = aller.note if aller.note else ""
                 mail_values = {
                     'subject': f"Demande de confirmation",
+                    'date': datetime.datetime.now(),
                     'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}  <br/><br/>Cordialement,",
                     'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                     'auto_delete': False,

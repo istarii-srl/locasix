@@ -123,6 +123,7 @@ class AggAller(models.Model):
             if agg_aller.is_proposition and len(agg_aller.aller_ids) > 0:
                 mail_values = {
                         'subject': f"Demande de confirmation",
+                        'date': datetime.datetime.now(),
                         'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
                         'auto_delete': False,
                         'email_from': agg_aller.aller_ids[0].asking_user.email if agg_aller.aller_ids[0].asking_user.email else "b.quintart@locasix.be",
