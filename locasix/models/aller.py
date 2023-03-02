@@ -431,7 +431,7 @@ class Aller(models.Model):
                 raise UserError("Vous ne pouvez rejeter que les propositions en attente de confirmation du responsable")
 
         mail_values = {
-            'subject': f"Proposition acceptée",
+            'subject': f"Proposition refusée",
             'email_to': f"{aller.asking_user.email}",
             'date': datetime.datetime.now(),
             'auto_delete': False,
