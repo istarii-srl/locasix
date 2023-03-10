@@ -541,6 +541,7 @@ class Aller(models.Model):
 
 
     def send_creation_mail(self):
+        _logger.info("SEND PROP ALLER")
         for aller in self:
             batch_mails_sudo = self.env['mail.mail'].sudo()
             type_aller = "Aller" if aller.aller_type == "out" else "Retour"

@@ -119,6 +119,7 @@ class AggAller(models.Model):
         return obj
     
     def send_proposition_creation_mail(self):
+        _logger.info("SEND PROP AGG")
         for agg_aller in self:
             if agg_aller.is_proposition and len(agg_aller.aller_ids) > 0 and not agg_aller.prop_mail_sent:
                 mail_values = {
