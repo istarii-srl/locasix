@@ -60,6 +60,7 @@ class OrderToAgenda(models.TransientModel):
                         "address_id": new_agg_id.address_id.id,
                         "product_id": line.product_id.id,
                     })
+                    new_agg_id.send_proposition_creation_mail()
                     if wizard.should_create_retour:
                         newday_id = self.env["locasix.day"].sudo().search([("day", "=", wizard.retour_date)], limit=1)
                         if not newday_id:
@@ -94,3 +95,4 @@ class OrderToAgenda(models.TransientModel):
                             "address_id": new_agg_id.address_id.id,
                             "product_id": line.product_id.id,
                         })
+                        new_agg_id.send_proposition_creation_mail()
