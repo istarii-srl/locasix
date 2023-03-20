@@ -6,6 +6,11 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//sheet" position="after">
+                <sheet>
+                    <field name="general_note" />
+                </sheet>
+            </xpath>
             <div name="button_box" position="inside">
                 <button name="action_open_aller" type="object" class="oe_stat_button" icon="fa-cube" groups="locasix.group_locasix_agenda_read" attrs="{'invisible': [('aller_count', '=', 0)]}">
                     <field name="aller_count" widget="statinfo" nolabel="1"/>
@@ -45,6 +50,7 @@
                 <field name="street_note"/>
                 <field name="estimated_start_date" />
                 <field name="estimated_end_date" />
+                <field name="initial_deposit" />
             </field>
             <field name="payment_term_id" position="attributes">
                 <attribute name="invisible">1</attribute>

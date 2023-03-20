@@ -62,6 +62,9 @@ class Order(models.Model):
     estimated_start_date = fields.Date(string="Date de début estimée")
     estimated_end_date = fields.Date(string="Date de fin estimée")
 
+    initial_deposit = fields.Float(string="Caution")
+    general_note = fields.Html(string="Note générale")
+
 
     @api.onchange("added_terms_id")
     def on_added_terms_changed(self):
