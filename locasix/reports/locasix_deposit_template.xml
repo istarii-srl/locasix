@@ -43,7 +43,7 @@
                                 <span t-esc="user.name"/>
                             </div>
                         </div>
-                        <div style="padding: 10px; border-top: 2px dashed black; border-bottom: 2px solid black; margin-top:20px; margin-bottom:20px;"/>
+                        <div style="padding: 4px; border-top: 2px dashed black; border-bottom: 2px solid black; margin-top:20px; margin-bottom:20px;"/>
                         <div style="line-height: 2em;">
                             <span class="bold-underlined">Informations pour le paiement :</span><br/><br/>
                             <span>Banque : ING<br/>Numéro de compte : IBAN : BE 27 3700 9046 0873 - BIC : BBRUBEBB <br/>Montant : </span><span t-esc="doc.get_caution_amount()"/><br/><span>Communication : </span><span t-esc="doc.name"/>
