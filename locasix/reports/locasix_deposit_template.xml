@@ -3,49 +3,53 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
-                    <div class="header">
-                        <div class="row">
+                    <div class="page" style="font-calibri">
+                        <div class="header">
+                            <div class="row">
+                                <div class="col-6">
+                                    <img src="/locasix/static/img/locasix_header.png" style="max-height: 90px; padding-top: 15px;"/>
+                                </div>
+                                <div class="col-6" style="padding-top:20px; font-size: 20px; font-weight: bold; text-align: center;">
+                                    <span t-esc="'DEMANDE DE CAUTION ' + doc.name"/><br/>
+                                    <span t-esc="datetime.datetime.utcnow().strftime('%d-%m-%Y')"/>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="fat"/>
+                        <div class="row" style="font-size: 16px; font-weight: bold;">
                             <div class="col-6">
-                                <img src="/locasix/static/img/locasix_header.png" style="max-height: 90px; padding-top: 15px;"/>
+                                <span>Client : </span><span t-esc="doc.partner_id.name"/><br/>
+                                <span>À l'attention de : </span><span t-esc="doc.partner_id.name"/><br/>
+                                <span>Référence client : </span><span t-esc="doc.client_ref"/><br/>
                             </div>
-                            <div class="col-6" style="font-size: 20px; font-weight: bold; text-align: center;">
-                                <span t-esc="'DEMANDE DE CAUTION ' + doc.name"/><br/>
-                                <span t-esc="datetime.datetime.utcnow().strftime('%d-%m-%Y')"/>
+                            <div class="col-6">
+                                <span>Votre contact : </span><span t-esc="user.name"/><br/>
+                                <span t-esc="user.email"/><span> - </span><span t-esc="'Tél: '"/><br/>
+                                <span>N° R/L :</span><br/>
                             </div>
                         </div>
-                    </div>
-                    <hr/>
-                    <div class="row" style="font-size: 16px; font-weight: bold;">
-                        <div class="col-6">
-                            <span>Client : </span><span t-esc="doc.partner_id.name"/><br/>
-                            <span>À l'attention de : </span><span t-esc="doc.partner_id.name"/><br/>
-                            <span>Référence client : </span><span t-esc="doc.client_ref"/><br/>
+                        <hr class="fat"/>
+                        <div style="height: 60px"/>
+                        <div style="line-height: 3em;">
+                            <span>Bonjour Monsieur,<br/><br/>Je vous remercie pour votre commande.<br/>Après vérification, notre service comptabilité vous demande une caution de </span><span class="bold-underlined" t-esc="doc.get_caution_amount() + ' avant la livraison.'"/><br/><span>Aucune livraison ne pourra être effectuée ou planifiée sans la réception de ce paiement sur notre compte bancaire. Dans l’attente de votre paiement, je vous prie d’agréer, Monsieur , mes salutations distinguées.</span>
                         </div>
-                        <div class="col-6">
-                            <span>Votre contact : </span><span t-esc="user.name"/><br/>
-                            <span t-esc="user.email"/><span> - </span><span t-esc="'Tél: '"/><br/>
-                            <span>N° R/L :</span><br/>
+                        <div class="row">
+                            <div class="col-8"/>
+                            <div class="col-4">
+                                <br/>
+                                <br/>
+                                <span>Salutations</span><br/><br/>
+                                <span t-esc="user.name"/>
+                            </div>
                         </div>
-                    </div>
-                    <hr/>
-                    <div style="height: 60px"/>
-                    <div style="line-height: 3em;">
-                        <span>Bonjour Monsieur,<br/><br/>Je vous remercie pour votre commande.<br/>Après vérification, notre service comptabilité vous demande une caution de </span><span t-esc="doc.get_caution_amount()"/><span> avant la livraison.<br/>Aucune livraison ne pourra être effectuée ou planifiée sans la réception de ce paiement sur notre compte bancaire. Dans l’attente de votre paiement, je vous prie d’agréer, Monsieur , mes salutations distinguées.</span>
-                    </div>
-                    <div class="row">
-                        <div class="col-8"/>
-                        <div class="col-4">
-                            <span>Salutations</span><br/><br/>
-                            <span t-esc="user.name"/>
+                        <hr style="dashed" />
+                        <div style="line-height: 2em;">
+                            <span class="bold-underlined">Informations pour le paiement :</span><br/>
+                            <span>Banque : ING<br/>Numéro de compte : IBAN : BE 27 3700 9046 0873 - BIC : BBRUBEBB <br/>Montant : </span><span t-esc="doc.get_caution_amount()"/><br/><span>Communication : </span><span t-esc="doc.name"/>
                         </div>
-                    </div>
-                    <hr style="border-top: dotted 1px;" />
-                    <div style="line-height: 2em;">
-                        <span style="font-weight: bold; text-decoration: underline;">Informations pour le paiement :</span><br/>
-                        <span>Banque : ING<br/>Numéro de compte : IBAN : BE 27 3700 9046 0873 - BIC : BBRUBEBB Montant : </span><span t-esc="doc.get_caution_amount()"/><br/><span>Communication : </span><span t-esc="doc.name"/>
-                    </div>
-                    <div class="footer">
-                        <img src="/locasix/static/img/locasix_footer.png" style="max-width: 900px; padding-bottom: 10px;"/>
+                        <div class="footer">
+                            <img src="/locasix/static/img/locasix_footer.png" style="max-width: 900px; padding-bottom: 10px;"/>
+                        </div>
                     </div>
                 </t>
             </t>

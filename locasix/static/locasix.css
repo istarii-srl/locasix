@@ -98,3 +98,17 @@ div.appendix img {
     width: 800px;                
     height: 100px;              
 }
+
+hr.dashed {
+    background-color: #fff;
+    border-top: 2px dashed;
+}
+
+hr.fat {
+    border-top: 2px;
+}
+
+.bold-underlined {
+    font-weight: bold; 
+    text-decoration: underline;
+}
