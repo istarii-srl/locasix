@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-6">
                             <span>Votre contact : </span><span t-esc="user.name"/><br/>
-                            <span t-esc="user.email"/><span> - </span><span t-esc="'Tél: "/><br/>
+                            <span t-esc="user.email"/><span> - </span><span t-esc="'Tél: '"/><br/>
                             <span>N° R/L :</span><br/>
                         </div>
                     </div>
