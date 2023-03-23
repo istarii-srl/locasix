@@ -980,3 +980,7 @@ class Order(models.Model):
                         ]
             else:
                 return ['', '', '']
+            
+    def get_caution_amount(self):
+        self.ensure_one()
+        return "{:.2f}".format(self.initial_deposit) + " €"
