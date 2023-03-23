@@ -14,7 +14,7 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <hr/>
                     <div class="row" style="font-size: 16px; font-weight: bold;">
                         <div class="col-6">
                             <span>Client : </span><span t-esc="doc.partner_id.name"/><br/>
@@ -27,7 +27,7 @@
                             <span>N° R/L :</span><br/>
                         </div>
                     </div>
-                    <hr>
+                    <hr/>
                     <div style="height: 60px"/>
                     <div style="line-height: 3em;">
                         <span>Bonjour Monsieur,<br/><br/>Je vous remercie pour votre commande.<br/>Après vérification, notre service comptabilité vous demande une caution de </span><span t-esc="doc.get_caution_amount()"/><span> avant la livraison.<br/>Aucune livraison ne pourra être effectuée ou planifiée sans la réception de ce paiement sur notre compte bancaire. Dans l’attente de votre paiement, je vous prie d’agréer, Monsieur , mes salutations distinguées.</span>
