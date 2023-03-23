@@ -101,11 +101,11 @@ div.appendix img {
 
 hr.dashed {
     background-color: #fff;
-    border-top: 2px dashed;
+    border-top: 2px dashed black;
 }
 
 hr.fat {
-    border-top: 2px;
+    border-top: 2px solid black;
 }
 
 .bold-underlined {
