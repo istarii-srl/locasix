@@ -4,6 +4,7 @@
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.basic_layout">
                     <div class="page" style="font-calibri">
+                        <link href="/locasix/static/locasix.css" rel="stylesheet"/>
                         <div class="header">
                             <div class="row">
                                 <div class="col-6">
@@ -43,6 +44,8 @@
                             </div>
                         </div>
                         <hr style="dashed" />
+                        <div style="height: 1px;"/>
+                        <hr style="fat"/>
                         <div style="line-height: 2em;">
                             <span class="bold-underlined">Informations pour le paiement :</span><br/>
                             <span>Banque : ING<br/>Numéro de compte : IBAN : BE 27 3700 9046 0873 - BIC : BBRUBEBB <br/>Montant : </span><span t-esc="doc.get_caution_amount()"/><br/><span>Communication : </span><span t-esc="doc.name"/>
