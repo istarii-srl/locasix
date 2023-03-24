@@ -34,7 +34,7 @@
                         <div style="line-height: 3em;">
                             <span>Bonjour Monsieur,<br/><br/>Je vous remercie pour votre commande.<br/>Après vérification, notre service comptabilité vous demande une caution de </span><span class="bold-underlined" t-esc="doc.get_caution_amount() + ' avant la livraison.'"/><br/><span>Aucune livraison ne pourra être effectuée ou planifiée sans la réception de ce paiement sur notre compte bancaire. Dans l’attente de votre paiement, je vous prie d’agréer, Monsieur , mes salutations distinguées.</span>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding-bottom: 50px;">
                             <div class="col-8"/>
                             <div class="col-4">
                                 <br/>
