@@ -19,6 +19,11 @@
                                 <field name="extra_cost_transport_rate" widget="percentage"/>
                             </group>
                         </div>
+                        <div>
+                            <group>
+                                <field name="email_shipping_handler" />
+                            </group>
+                        </div>
                     </div>
                 </div>
             </xpath>

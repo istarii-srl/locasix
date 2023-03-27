@@ -59,6 +59,9 @@ class Order(models.Model):
     display_front_page = fields.Boolean(string="Afficher la page de garde", default=True)
     display_confirmation_box = fields.Boolean(string="Afficher l'encadré de confirmation", default=True)
 
+    estimated_start_date = fields.Date(string="Date de début estimée")
+    estimated_end_date = fields.Date(string="Date de fin estimée")
+
 
     @api.onchange("added_terms_id")
     def on_added_terms_changed(self):
@@ -945,7 +948,8 @@ class Order(models.Model):
     def action_put_in_agenda(self):
         _logger.info("action put in agenda")
         for order in self:
-            line_ids = order.order_line.filtered(lambda x: x.product_id and x.product_id.type != "service")
+            excluded_lists = ["VIDANGE", "ASSM", "FNG", "CAU", "TAR", "TA", "TR", "SURC-TA", "SURC-TR", "SURC-TAR", "FN", "CEM", "MCI", "FASSA", "FASSR", "MAIR", "TH1", "SURC-TH1", "MCADRA", "MCADRR"]
+            line_ids = order.order_line.filtered(lambda x: x.product_id and x.product_id.type != "service" and x.product_id.default_code and x.product_id.default_code not in excluded_lists )
             view = self.env.ref('locasix.locasix_order_to_agenda_form')
             return {
             'name': 'Créer les allers et retours',

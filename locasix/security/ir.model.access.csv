@@ -21,6 +21,7 @@ access_locasix_technical_counter_user,locasix.locasix.technical.counter,model_lo
 access_locasix_aller_user_sale,locasix.locasix.aller,model_locasix_aller,group_locasix_user,1,0,0,0
 access_locasix_aller_user_read,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_read,1,0,0,0
 access_locasix_aller_user_use,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_user,1,1,1,0
+access_locasix_aller_user_resp,locasix.locasix.aller,model_locasix_aller,group_locasix_agenda_resp,1,1,1,1
 access_locasix_aller_user_admin,locasix.locasix.aller,model_locasix_aller,group_locasix_admin,1,1,1,1
 access_locasix_agg_aller_user_read,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_read,1,0,0,0
 access_locasix_agg_aller_user_use,locasix.locasix.agg.aller,model_locasix_agg_aller,group_locasix_agenda_user,1,1,1,1
@@ -41,3 +42,5 @@ access_locasix_aller_cron_user,locasix.locasix.aller.cron,model_locasix_aller_cr
 access_locasix_partner_cron_user,locasix.locasix.partner.cron,model_locasix_partner_cron,base.group_user,1,1,1,1
 access_locasix_contract_user,locasix.locasix.contract,model_locasix_contract,base.group_user,1,1,1,1
 access_locasix_modify_contract_user,locasix.locasix.modify.contract,model_locasix_modify_contract,base.group_user,1,1,1,1
+access_locasix_prop_status_wizard_user,locasix.locasix.prop.status.wizard,model_locasix_prop_status_wizard,base.group_user,1,1,1,1
+access_locasix_proposition_multi_wizard_user,locasix.locasix.proposition.multi.wizard,model_locasix_proposition_multi_wizard,base.group_user,1,1,1,1

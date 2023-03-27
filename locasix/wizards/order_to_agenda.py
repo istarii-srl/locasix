@@ -12,7 +12,11 @@ class OrderToAgenda(models.TransientModel):
     aller_date = fields.Date(string="Date de l'aller", default=lambda self: self._get_default_date(), required=True)
 
     should_create_retour = fields.Boolean(string="Date de retour déjà connue ?", default=False)
+    is_weekend = fields.Boolean(string="Weekend", default=False)
     retour_date = fields.Date(string="Date du retour", default=lambda self: self._get_default_date(), required=True)
+    remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
+    note = fields.Text(string="Remarque libre")
+    
 
     def _get_default_date(self):
         return datetime.date.today()
@@ -32,8 +36,12 @@ class OrderToAgenda(models.TransientModel):
                         new_agg_id = self.env["locasix.agg.aller"].sudo().create({
                             "day_id": newday_id.id,
                             "aller_type": "out",
+                            "is_proposition": True,
+                            "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                             "localite_id": wizard.localite_id.id,
                             "date": wizard.aller_date,
+                            "remarque_ids": wizard.remarque_ids.ids,
+                            "note": wizard.note,
                             "address_id": wizard.order_id.partner_id.id,
                         })
 
@@ -41,12 +49,18 @@ class OrderToAgenda(models.TransientModel):
                         "day_id": newday_id.id,
                         "date": new_agg_id.date,
                         "agg_id": new_agg_id.id,
+                        "is_proposition": True,
+                        "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
+                        "state": "zzprop",
                         "localite_id": wizard.localite_id.id,
                         "aller_type": "out",
+                        "remarque_ids": wizard.remarque_ids.ids,
+                        "note": wizard.note,
                         "order_id": wizard.order_id.id,
                         "address_id": new_agg_id.address_id.id,
                         "product_id": line.product_id.id,
                     })
+                    new_agg_id.send_proposition_creation_mail()
                     if wizard.should_create_retour:
                         newday_id = self.env["locasix.day"].sudo().search([("day", "=", wizard.retour_date)], limit=1)
                         if not newday_id:
@@ -57,8 +71,12 @@ class OrderToAgenda(models.TransientModel):
                             new_agg_id = self.env["locasix.agg.aller"].sudo().create({
                                 "day_id": newday_id.id,
                                 "localite_id": wizard.localite_id.id,
+                                "is_proposition": True,
+                                "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                                 "date": wizard.retour_date,
                                 "aller_type": "in",
+                                "remarque_ids": wizard.remarque_ids.ids,
+                                "note": wizard.note,
                                 "address_id": wizard.order_id.partner_id.id,
                             })
 
@@ -67,8 +85,14 @@ class OrderToAgenda(models.TransientModel):
                             "date": new_agg_id.date,
                             "localite_id": wizard.localite_id.id,
                             "aller_type": "in",
+                            "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
+                            "state": "zzprop",
+                            "remarque_ids": wizard.remarque_ids.ids,
+                            "note": wizard.note,
+                            "is_proposition": True,
                             "agg_id": new_agg_id.id,
                             "order_id": wizard.order_id.id,
                             "address_id": new_agg_id.address_id.id,
                             "product_id": line.product_id.id,
                         })
+                        new_agg_id.send_proposition_creation_mail()

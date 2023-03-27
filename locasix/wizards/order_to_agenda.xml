@@ -9,12 +9,17 @@
                         <group>
                             <field name="order_id" readonly="1"/>
                             <field name="localite_id" options="{'no_create': True}"/>
-                            <field name="aller_date"/> 
+                            <field name="aller_date"/>
                         </group>
                         <group>
                             <field name="should_create_retour"/>
+                            <field name="is_weekend" attrs="{'invisible': [('should_create_retour', '=', False)]}"/>
                             <field name="retour_date" attrs="{'invisible': [('should_create_retour', '=', False)]}"/>
                         </group>
+                    </group>
+                    <group>
+                        <field name="remarque_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
+                        <field name="note"/>
                     </group>
                     <group>
                         <field name="line_ids" mode="tree">

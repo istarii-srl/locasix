@@ -11,12 +11,13 @@ class AggAller(models.Model):
     name = fields.Char(string="Nom", compute="_compute_name")
     day_id = fields.Many2one(string="Journée", comodel_name="locasix.day")
     date = fields.Date(string="Date", required=True)
-    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
+    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour")], default="out")
 
     address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
+    is_proposition = fields.Boolean(string='Est une proposition', default=False)
 
     city = fields.Char(string="Ville", compute="_compute_city", store=True)
     contract = fields.Char(string="Contrat")
@@ -29,6 +30,14 @@ class AggAller(models.Model):
     date_retour = fields.Datetime(string="Date de retour", default=lambda self: self._get_default_date())
     is_retours_created = fields.Boolean(default=False)
     is_first_agg = fields.Boolean(default=False)
+
+    prop_mail_sent = fields.Boolean(string="Prop mail sent")
+    
+    @api.onchange("aller_type")
+    def on_aller_type_changed(self):
+        for aller in self:
+            if aller.aller_type != "out":
+                aller.is_depl = False
 
     def _get_default_date(self):
         return datetime.date.today()
@@ -106,8 +115,36 @@ class AggAller(models.Model):
         obj.enforce_day_matches_date()
         obj.check_and_merge()
         obj.weekend_check()
+        obj.send_proposition_creation_mail()
         return obj
     
+    def send_proposition_creation_mail(self):
+        for agg_aller in self:
+            if agg_aller.is_proposition and len(agg_aller.aller_ids) > 0 and not agg_aller.prop_mail_sent:
+                mail_values = {
+                        'subject': f"Demande de confirmation",
+                        'date': datetime.datetime.now(),
+                        'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
+                        'auto_delete': False,
+                        'email_from': agg_aller.aller_ids[0].asking_user.email if agg_aller.aller_ids[0].asking_user.email else "b.quintart@locasix.be",
+                    }
+                body = "Bonjour,"
+                for aller in agg_aller.aller_ids:
+                
+                    type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                    if aller.is_depl:
+                        type_aller = "Déplacement"
+                    #from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
+                    note = aller.note if aller.note else ""
+                    body += f"<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}"
+
+                body += "<br/><br/>Cordialement,"
+                mail_values["body_html"] = body
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)
+                agg_aller.prop_mail_sent = True  
+
     def enforce_day_matches_date(self):
         if self.date != self.day_id.day:
             newday_id = self.env["locasix.day"].search([("day", "=", self.date)], limit=1)
@@ -123,6 +160,10 @@ class AggAller(models.Model):
         _logger.info("write aggAller")
         _logger.info(vals)
         res = super(AggAller, self).write(vals)
+        if "date" in vals:
+            if self.date != self.day_id.day:
+                self.enforce_day_matches_date()
+                self.check_and_merge()
         if "address_id" in vals or "localite_id" in vals or "localite_id_depl" in vals:
             if self.date == self.day_id.day:
                 for aller in self.aller_ids:
@@ -131,10 +172,7 @@ class AggAller(models.Model):
                     aller.localite_id_depl = self.localite_id_depl
                 self.check_and_merge()                
 
-        if "date" in vals:
-            if self.date != self.day_id.day:
-                self.enforce_day_matches_date()
-                self.check_and_merge()
+
         self.weekend_check()
 
         return res

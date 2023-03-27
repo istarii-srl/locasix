@@ -6,3 +6,5 @@ from . import no_transport_price_warning
 from . import duplicate_to_aller
 from . import order_to_agenda
 from . import modify_contract
+from . import proposition_status_wizard
+from . import proposition_multi_update

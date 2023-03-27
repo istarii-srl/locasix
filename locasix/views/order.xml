@@ -21,7 +21,7 @@
                 <field name="exported_to_agenda" invisible="1"/>
                 <button name="action_compute" type="object" string="Ajouter auto." attrs="{'invisible': [('done_order', '=', True)]}"/>
                 <button name="action_remove_computed_lines" type="object" string="Retirer ajouts" attrs="{'invisible': ['|', ('has_computed', '=', False), ('done_order', '=', True)]}"/>
-                <button name="action_put_in_agenda" type="object" string="Ajouter à l'agenda" attrs="{'invisible': ['|', ('done_order', '=', False), ('exported_to_agenda', '=', True)]}"/>
+                <button name="action_put_in_agenda" type="object" string="Ajouter à l'agenda" attrs="{'invisible': [('done_order', '=', False)]}"/>
             </button>
 
             <field name="partner_id" position="after">
@@ -43,6 +43,8 @@
                 <field name="rue"/>
                 <field name="street_number"/>
                 <field name="street_note"/>
+                <field name="estimated_start_date" />
+                <field name="estimated_end_date" />
             </field>
             <field name="payment_term_id" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -94,8 +96,9 @@
                 <field name="has_ref_to_condi" optional="show"/>
                 <field name="usage_rate_display" invisible="1"/>
                 <field name="has_24_price" optional="hide"/>
+                <field name="is_super_note" />
                 <field name="show_images" optional="hide"/>
-                <field name="temporary_product" optional="hide"/>
+                <field name="temporary_product" invisible="1"/>
             </xpath>
             <xpath expr="//tree/field[@name='price_subtotal']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -105,6 +108,12 @@
             </xpath>
             <xpath expr="//tree/field[@name='tax_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//create[@name='add_note_control']" position="after">
+                <create name="add_super_note_control" string="Ajouter une note visible" context="{'default_display_type': 'line_note', 'default_is_super_note': True}"/>
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-warning">is_super_note == True</attribute>
             </xpath>
             <xpath expr="//tree/field[@name='price_unit']" position="after">
                 <field name="offer_type" invisible = "1"/>
@@ -132,6 +141,30 @@
             <page name="optional_products" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
+        </field>
+    </record>
+
+    <record id="locasix_sale_order_view_search_inherit_quotation_2" model="ir.ui.view">
+        <field name="name">locasix.two.sale.order.search.inherit.quotation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+        <field name="arch" type="xml">
+            <filter name="order_date" position="after">
+                <filter string="Date estimée de début" name="estimated_start_date" date="estimated_start_date"/>
+                <filter string="Date estimée de fin" name="estimated_end_date" date="estimated_end_date"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="locasix_sale_order_view_search_inherit_quotation" model="ir.ui.view">
+        <field name="name">locasix.sale.order.search.inherit.quotation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+            <filter name="filter_create_date" position="after">
+                <filter string="Date estimée de début" name="estimated_start_date" date="estimated_start_date"/>
+                <filter string="Date estimée de fin" name="estimated_end_date" date="estimated_end_date"/>
+            </filter>
         </field>
     </record>
 
