@@ -16,7 +16,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'ERP',
-    'version': '0.18.647',
+    'version': '16.0.0.1',
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale_management', 'product', 'contacts'],
 
@@ -68,4 +68,12 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'locasix/static/src/js/no_discount_pop_up.js',
+            'locasix/static/src/js/product_tree_buttons.js',
+            'locasix/static/src/js/client_tree_buttons.js',
+            'locasix/static/locasix.css'
+        ]
+    }
 }
