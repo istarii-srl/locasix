@@ -7,7 +7,9 @@
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
             <field name="signature" position="after">
-                <field name="signature_image" widget="image"/>
+                <group>
+                    <field name="signature_image" widget="image"/>
+                </group>
             </field>
         </field>
     </record>
