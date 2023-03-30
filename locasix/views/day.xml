@@ -20,14 +20,10 @@
         <field name="model">locasix.day</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <!-- <calendar string="Calendar View" date_start="day" mode="month" event_limit="5" create="0">
+            <calendar string="Calendar View" date_start="day" mode="month" event_limit="5" create="0">
                 <field name="name"/>
                 <field name="aller_note" string="Notes"/>
-            </calendar> -->
-            <tree string="Calendar View">
-                <field name="name"/>
-                <field name="aller_note" string="Notes"/>
-            </tree> 
+            </calendar>
         </field>
     </record>
 
