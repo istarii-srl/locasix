@@ -33,7 +33,6 @@
 
 table.table_locasix {
     border-collapse: collapse !important;
-    background-color: red !important;
 }
 table.table_locasix tr th {
     border-bottom: 1px solid #000 !important;
