@@ -66,7 +66,7 @@
         <field name="model">locasix.aller</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <calendar string="Calendar View" date_start="date" color="color" mode="month" event_limit="5" create="0">
+            <calendar string="Calendar View" date_start="date" color="address_id" mode="month" event_limit="5" create="0">
                 <field name="color" invisible="1"/>
                 <field name="day_id"/>
                 <field name="address_id"/>
@@ -75,7 +75,7 @@
                 <field name="date" string="Date prévue"/>
                 <field name="product_id"/>
                 <field name="product_unique_ref"/>
-                <field name="aller_type" filters="1" color="color"/>
+                <field name="aller_type" filters="1" color="address_id"/>
                 <field name="state"/>
                 <field name="remarque_ids"/>
                 <field name="note"/>

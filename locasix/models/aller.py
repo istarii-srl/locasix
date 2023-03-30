@@ -26,7 +26,7 @@ class Aller(models.Model):
     
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
     aller_type_name = fields.Char(string="Type de déplacement", store=True, compute="_compute_aller_type_name")
-    color = fields.Integer(compute='_compute_color', store=True)
+    color = fields.Integer(compute='_compute_color')
 
     is_first_line = fields.Boolean(default=False)
 
