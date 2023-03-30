@@ -31,11 +31,11 @@
     font-family: "wide";
 }
 
-table {
+table.table_locasix {
     border-collapse: collapse !important;
     background-color: red !important;
 }
-table tr th {
+table.table_locasix tr th {
     border-bottom: 1px solid #000 !important;
     padding-bottom: 15px !important;
 }
