@@ -48,7 +48,7 @@
                 <div style="height: 150px;">
                     <div class="row">
                         <div style="width: 15px;"/>
-                        <div style="width: 260px; border: 1px solid black; padding: 15px 8px 15px 8px; font-size:13px">
+                        <div style="width: 290px; border: 1px solid black; padding: 15px 8px 15px 8px; font-size:13px">
                             <span>
                                 <span t-field="doc.company_id.name"/><br/>
                                 <span t-field="doc.company_id.street"/> <br/>
@@ -82,7 +82,7 @@
     <template id="locasix_body">
         <div class="page font-calibri" style="padding: 20px 15px 20px 15px !important; margin: 0px !important; font-size: 11px; page-break-before: always;">
             <div class="row">
-                <div class="col-5" style="font-size: 11px;">
+                <div class="col-5" style="font-size: 11px; padding-right: 20px">
                     <div style="height:42px;"/>
                     <div style="height: 105px; border: 1px solid black; padding: 3px 5px 3px 5px; font-size:13px">
                         <span t-field="doc.company_id.name"/><br/>
@@ -232,7 +232,7 @@
     </template>
 
     <template id="locasix_fixed_price_section">
-        <table style="width: 100%" class="table-sm">
+        <table style="width: 100%" class="table-sm table-borderless">
             <thead>
             <tr style="font-weight: bold; text-align: center;">
                 <th width="8%"><span t-esc="first_column_name"/></th>
