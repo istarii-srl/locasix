@@ -48,16 +48,6 @@
                 <field name="remarque_ids"/>
                 <field name="note"/>
             </calendar>
-            <!-- <tree string="Calendar View">
-                <field name="day_id"/>
-                <field name="address_id"/>
-                <field name="contract_id" string="Référence"/>
-                <field name="city" string="Ville"/>
-                <field name="date" string="Date prévue"/>
-                <field name="state"/>
-                <field name="remarque_ids"/>
-                <field name="note"/>
-            </tree> -->
         </field>
     </record>
 
@@ -66,7 +56,7 @@
         <field name="model">locasix.aller</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <calendar string="Calendar View" date_start="date" color="aller_type" mode="month" event_limit="5" create="0">
+            <calendar string="Calendar View" date_start="date" color="color" mode="month" event_limit="5" create="0">
                 <field name="day_id"/>
                 <field name="address_id"/>
                 <field name="contract_id" string="Contrat"/>
@@ -79,19 +69,6 @@
                 <field name="remarque_ids"/>
                 <field name="note"/>
             </calendar>
-            <!-- <tree string="Calendar View" create="0">
-                <field name="day_id"/>
-                <field name="address_id"/>
-                <field name="contract_id" string="Contrat"/>
-                <field name="city" string="Ville"/>
-                <field name="date" string="Date prévue"/>
-                <field name="product_id"/>
-                <field name="product_unique_ref"/>
-                <field name="aller_type"/>
-                <field name="state"/>
-                <field name="remarque_ids"/>
-                <field name="note"/>
-            </tree> -->
         </field>
     </record>
 
@@ -99,7 +76,6 @@
         <field name="name">Allers</field>
         <field name="res_model">locasix.aller</field>
         <field name="view_mode">calendar,tree,form</field>
-        <!-- <field name="view_mode">tree,form</field> -->
         <field name="view_id" ref="locasix.locasix_aller_calendar"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
         <field name="domain">[('aller_type', '=', 'out'), ('is_first_line', '=', False)]</field>
@@ -108,8 +84,7 @@
     <record model="ir.actions.act_window" id="action_retour">
         <field name="name">Retours</field>
         <field name="res_model">locasix.aller</field>
-        <!-- <field name="view_mode">calendar,tree,form</field> -->
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">calendar,tree,form</field>
         <field name="view_id" ref="locasix.locasix_aller_calendar"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
         <field name="domain">[('aller_type', '=', 'in'), ('is_first_line', '=', False)]</field>
@@ -119,7 +94,6 @@
         <field name="name">Allers et Retours</field>
         <field name="res_model">locasix.aller</field>
         <field name="view_mode">calendar,tree,form</field>
-        <!-- <field name="view_mode">tree,form</field> -->
         <field name="view_id" ref="locasix.locasix_both_calendar"/>
         <field name="search_view_id" ref="locasix.locasix_aller_search"/>
     </record>
