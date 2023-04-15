@@ -219,9 +219,9 @@ class OrderLine(models.Model):
     
     @api.onchange('product_uom', 'product_uom_qty')
     def product_uom_change(self):
-        res = super(OrderLine, self).product_uom_change()
+        #res = super(OrderLine, self).product_uom_change()
         self.update_line_values()
-        return res        
+        return True        
 
     @api.onchange('product_id', 'order_id', 'offer_type')
     def product_changed(self):
@@ -398,7 +398,7 @@ class OrderLine(models.Model):
                     if self.order_id.pricelist_id:
                         list_price = product.list_price
                         product.sudo().write({"is_switching": True, "list_price": product.weekend_price})
-                        vals["price_unit"] = self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(self.product_id), self.product_id.taxes_id, self.tax_id, self.company_id)
+                        vals["price_unit"] = self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(), self.product_id.taxes_id, self.tax_id, self.company_id)
                         _logger.info("reset 2")
                         _logger.info(list_price)
                         product.sudo().write({"list_price": list_price})
@@ -407,7 +407,7 @@ class OrderLine(models.Model):
                         vals["price_unit"] = product.weekend_price
                 else:
                     if self.order_id.pricelist_id:
-                        vals["price_unit"] = self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(self.product_id), self.product_id.taxes_id, self.tax_id, self.company_id)
+                        vals["price_unit"] = self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(), self.product_id.taxes_id, self.tax_id, self.company_id)
                     else:
                         vals["price_unit"] = product.list_price
             self.write(vals)
