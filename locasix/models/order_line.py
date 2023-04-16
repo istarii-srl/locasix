@@ -213,9 +213,9 @@ class OrderLine(models.Model):
 
     @api.onchange('product_id')
     def product_id_change(self):
-        res = super(OrderLine, self).product_id_change()
+        #res = super(OrderLine, self).product_id_change()
         self.update_line_values()
-        return res
+        return True
     
     @api.onchange('product_uom', 'product_uom_qty')
     def product_uom_change(self):
