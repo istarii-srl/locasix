@@ -184,7 +184,18 @@
                     </group>
                     <notebook>
                         <page name="aller_4" string="Allers">
-                            <field name="aller_ids" mode="tree">
+                            <field name="aller_ids" mode="tree" context="{
+                                        'default_remarque_ids': remarque_ids,
+                                        'default_day_id': day_id,
+                                        'default_is_depl': is_depl,
+                                        'default_localite_id': localite_id,
+                                        'default_localite_id_depl': localite_id_depl,
+                                        'default_date': date,
+                                        'default_aller_type': aller_type,
+                                        'default_address_id': address_id,
+                                        'default_state': state,
+                                        'default_note': note
+                                        }">
                                 <tree editable="bottom" string="Déplacements">
                                     <control>
                                         <create name="add_product_control" string="Ajouter un déplacement"/>
@@ -193,7 +204,9 @@
                                     <field name="product_id"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
                                     <field name="contract_id"/>
+                                    <field name="is_depl" invisible="1"/>
                                     <field name="day_id" invisible="1"/>
+                                    <field name="date" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
                                     <field name="localite_id" invisible="1"/>
                                     <field name="localite_id_depl" invisible="1" />
