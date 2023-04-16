@@ -65,8 +65,8 @@ class Order(models.Model):
     initial_deposit = fields.Float(string="Caution")
     general_note = fields.Html(string="Note générale", tracking=4)
 
-    amount_untaxed = fields.Monetary(string="Untaxed Amount", store=True, compute='_compute_amounts')
-    amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts')
+    amount_untaxed = fields.Monetary(string="Untaxed Amount", store=True, compute='_compute_amounts', tracking=False)
+    amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts', tracking=False)
 
 
     @api.onchange("added_terms_id")
@@ -158,6 +158,8 @@ class Order(models.Model):
             for name in user_names:
                 initials = initials+name[0]
             vals["name"] = vals["name"] + "-"+ initials
+        if vals.get('general_note'):
+            self.message_post(body="General note: %(old_value)s --> %(new_vale)s", old_value=self.field_name, new_value=vals.get('general_note'))
         if vals.get('adapt_front_page', False) or vals.get('adapt_sale_confirm', False):
             vals.pop('adapt_sale_confirm', 1)
             vals.pop('adapt_front_page', 1)
