@@ -20,11 +20,11 @@ class Aller(models.Model):
 
     state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
     name = fields.Char(string="Nom", compute="_compute_name", store=True)
-    day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True, default=lambda self: self.env.context.get('parent_id').day_id )
+    day_id = fields.Many2one(comodel_name="locasix.day", string="Journée", required=True)
     date = fields.Date(string="Date", required=True)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     
-    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default=lambda self: self.env.context.get('parent_id').aller_type)
+    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
     aller_type_name = fields.Char(string="Type de déplacement", store=True, compute="_compute_aller_type_name")
     color = fields.Integer(compute='_compute_color')
 
@@ -32,15 +32,15 @@ class Aller(models.Model):
 
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
-    address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True, default=lambda self: self.env.context.get('parent_id').address_id)
-    is_depl = fields.Boolean(string="Est un déplacement", default=lambda self: self.env.context.get('parent_id').is_depl)
+    address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
+    is_depl = fields.Boolean(string="Est un déplacement", default=False)
     is_proposition = fields.Boolean(string="Est une proposition", default=False)
     asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
     asking_user = fields.Many2one(string="Demandeur", comodel_name="res.users", default=lambda self: self.env.user)
     proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")], default="pending_boss")
 
-    localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité", default=lambda self: self.env.context.get('parent_id').localite_id)
-    localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement", default=lambda self: self.env.context.get('parent_id').localite_id_depl)
+    localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
+    localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
 
     full_name = fields.Char(string="Nom du client ", related="address_id.display_name")
     displayed_client = fields.Char(string="Nom du client", compute="_compute_displayed_names")

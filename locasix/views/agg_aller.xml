@@ -35,26 +35,28 @@
                     <notebook>
                         <page name="aller_4" string="Allers">
                             <field name="aller_ids" mode="tree">
-                                <tree editable="bottom" string="Allers">
+                                <tree editable="bottom" string="Allers" context="{
+                                        'default_remarque_ids': remarque_ids,
+                                        'default_day_id': day_id,
+                                        'default_is_depl': is_depl,
+                                        'default_localite_id': localite_id,
+                                        'default_localite_id_depl': localite_id_depl,
+                                        'default_date': date,
+                                        'default_aller_type': aller_type,
+                                        'default_address_id': address_id,
+                                        'default_state': state,
+                                        'default_note': note
+                                        }">
                                     <control>
-                                        <create name="add_product_control" string="Ajouter un aller" context="{
-                                        'default_remarque_ids': parent.remarque_ids,
-                                        'default_day_id': parent.day_id,
-                                        'default_is_depl': parent.is_depl,
-                                        'default_localite_id': parent.localite_id,
-                                        'default_localite_id_depl': parent.localite_id_depl,
-                                        'default_date': parent.date,
-                                        'default_aller_type': parent.aller_type,
-                                        'default_address_id': parent.address_id,
-                                        'default_state': parent.state,
-                                        'default_note': parent.note
-                                        }"/>
+                                        <create name="add_product_control" string="Ajouter un aller" />
                                     </control>
                                     <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
                                     <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
+                                    <field name="date" invisible="1"/>
+                                    <field name="is_depl" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
                                     <field name="localite_id" invisible="1"/>
                                     <field name="localite_id_depl" invisible="1" />
@@ -109,27 +111,29 @@
                     </group>
                     <notebook>
                         <page name="aller_2" string="Retours">
-                            <field name="aller_ids" mode="tree">
+                            <field name="aller_ids" mode="tree" context="{
+                                        'default_remarque_ids': remarque_ids,
+                                        'default_day_id': day_id,
+                                        'default_is_depl': is_depl,
+                                        'default_localite_id': localite_id,
+                                        'default_localite_id_depl': localite_id_depl,
+                                        'default_date': date,
+                                        'default_aller_type': aller_type,
+                                        'default_address_id': address_id,
+                                        'default_state': state,
+                                        'default_note': note
+                                        }">
                                 <tree editable="bottom" string="Allers">
                                     <control>
-                                        <create name="add_product_control_4" string="Ajouter un retour" context="{
-                                        'default_remarque_ids': parent.remarque_ids,
-                                        'default_day_id': parent.day_id,
-                                        'default_is_depl': parent.is_depl,
-                                        'default_localite_id': parent.localite_id,
-                                        'default_localite_id_depl': parent.localite_id_depl,
-                                        'default_date': parent.date,
-                                        'default_aller_type': parent.aller_type,
-                                        'default_address_id': parent.address_id,
-                                        'default_state': parent.state,
-                                        'default_note': parent.note
-                                        }"/>
+                                        <create name="add_product_control_4" string="Ajouter un retour"/>
                                     </control>
                                     <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
                                     <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
+                                    <field name="is_depl" invisble="1"/>
+                                    <field name="date" invisible="1"/>
                                     <field name="address_id" invisible="1"/>
                                     <field name="localite_id" invisible="1"/>
                                     <field name="localite_id_depl" invisible="1" />
@@ -257,28 +261,29 @@
                     </group>
                     <notebook>
                         <page name="aller_4" string="Allers">
-                            <field name="aller_ids" mode="tree">
+                            <field name="aller_ids" mode="tree" context="{
+                                        'default_remarque_ids': remarque_ids,
+                                        'default_day_id': day_id,
+                                        'default_is_depl': is_depl,
+                                        'default_localite_id': localite_id,
+                                        'default_localite_id_depl': localite_id_depl,
+                                        'default_date': date,
+                                        'default_aller_type': aller_type,
+                                        'default_address_id': address_id,
+                                        'default_state': state,
+                                        'default_note': note
+                                        }">
                                 <tree editable="bottom" string="Déplacements">
                                     <control>
-                                        <create name="add_product_control" string="Ajouter une proposition" context="{
-                                        'default_remarque_ids': parent.remarque_ids,
-                                        'default_day_id': parent.day_id,
-                                        'default_is_depl': parent.is_depl,
-                                        'default_localite_id': parent.localite_id,
-                                        'default_localite_id_depl': parent.localite_id_depl,
-                                        'default_is_proposition': True,
-                                        'default_date': parent.date,
-                                        'default_aller_type': parent.aller_type,
-                                        'default_address_id': parent.address_id,
-                                        'default_state': 'zzprop',
-                                        'default_note': parent.note
-                                        }"/>
+                                        <create name="add_product_control" string="Ajouter une proposition"/>
                                     </control>
                                     <field name="aller_type" invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
                                     <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
+                                    <field name="is_depl" invisible="1"/>
+                                    <field name="date" invisible="1" />
                                     <field name="address_id" invisible="1"/>
                                     <field name="localite_id" invisible="1"/>
                                     <field name="localite_id_depl" invisible="1" />
