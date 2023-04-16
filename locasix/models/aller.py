@@ -24,7 +24,7 @@ class Aller(models.Model):
     date = fields.Date(string="Date", required=True)
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     
-    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out", default=lambda self: self.env.context.get('parent_id').aller_type)
+    aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default=lambda self: self.env.context.get('parent_id').aller_type)
     aller_type_name = fields.Char(string="Type de déplacement", store=True, compute="_compute_aller_type_name")
     color = fields.Integer(compute='_compute_color')
 
