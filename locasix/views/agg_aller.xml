@@ -188,16 +188,16 @@
                                 <tree editable="bottom" string="Déplacements">
                                     <control>
                                         <create name="add_product_control" string="Ajouter un déplacement" context="{
-                                        'default_remarque_ids': parent.remarque_ids,
-                                        'default_day_id': parent.day_id,
-                                        'default_is_depl': parent.is_depl,
-                                        'default_localite_id': parent.localite_id,
-                                        'default_localite_id_depl': parent.localite_id_depl,
-                                        'default_date': parent.date,
-                                        'default_aller_type': parent.aller_type,
-                                        'default_address_id': parent.address_id,
-                                        'default_state': parent.state,
-                                        'default_note': parent.note
+                                        'default_remarque_ids': remarque_ids,
+                                        'default_day_id': day_id,
+                                        'default_is_depl': is_depl,
+                                        'default_localite_id': localite_id,
+                                        'default_localite_id_depl': localite_id_depl,
+                                        'default_date': date,
+                                        'default_aller_type': aller_type,
+                                        'default_address_id': address_id,
+                                        'default_state': state,
+                                        'default_note': note
                                         }"/>
                                     </control>
                                     <field name="aller_type" invisible="1"/>
