@@ -211,25 +211,23 @@ class OrderLine(models.Model):
                         nearest_top_section_id = order_line
         return nearest_top_section_id
 
-    # @api.onchange('product_id')
-    # def product_id_change(self):
-    #     #res = super(OrderLine, self).product_id_change()
-    #     self.update_line_values()
-    #     return True
+    @api.onchange('product_id')
+    def product_id_change(self):
+        #res = super(OrderLine, self).product_id_change()
+        self.update_line_values()
     
-    # @api.onchange('product_uom', 'product_uom_qty')
-    # def product_uom_change(self):
-    #     #res = super(OrderLine, self).product_uom_change()
-    #     self.update_line_values()
-    #     return True        
+    @api.onchange('product_uom', 'product_uom_qty')
+    def product_uom_change(self):
+        #res = super(OrderLine, self).product_uom_change()
+        self.update_line_values()     
 
-    # @api.onchange('product_id', 'order_id', 'offer_type')
-    # def product_changed(self):
-    #     _logger.info("product changed")
-    #     self.update_line_values()
-    #     _logger.info(self.category_id)
-    #     _logger.info(self.price_unit)
-    #     _logger.info(self._origin.price_unit)
+    @api.onchange('product_id', 'order_id', 'offer_type')
+    def product_changed(self):
+        _logger.info("product changed")
+        self.update_line_values()
+        _logger.info(self.category_id)
+        _logger.info(self.price_unit)
+        _logger.info(self._origin.price_unit)
 
     def write(self, vals):
         _logger.info("write order line")
