@@ -33,7 +33,7 @@ class Aller(models.Model):
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order")
     address_id = fields.Many2one(comodel_name="res.partner", string="Client", required=True, default=lambda self: self.env.context.get('parent_id').address_id)
-    is_depl = fields.Boolean(string="Est un déplacement", default=False, default=lambda self: self.env.context.get('parent_id').is_depl)
+    is_depl = fields.Boolean(string="Est un déplacement", default=lambda self: self.env.context.get('parent_id').is_depl)
     is_proposition = fields.Boolean(string="Est une proposition", default=False)
     asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
     asking_user = fields.Many2one(string="Demandeur", comodel_name="res.users", default=lambda self: self.env.user)
