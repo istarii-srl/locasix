@@ -34,8 +34,7 @@
                     </group>
                     <notebook>
                         <page name="aller_4" string="Allers">
-                            <field name="aller_ids" mode="tree">
-                                <tree editable="bottom" string="Allers" context="{
+                            <field name="aller_ids" mode="tree" context="{
                                         'default_remarque_ids': remarque_ids,
                                         'default_day_id': day_id,
                                         'default_is_depl': is_depl,
@@ -47,6 +46,7 @@
                                         'default_state': state,
                                         'default_note': note
                                         }">
+                                <tree editable="bottom" string="Allers" >
                                     <control>
                                         <create name="add_product_control" string="Ajouter un aller" />
                                     </control>

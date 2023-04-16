@@ -63,7 +63,7 @@ class Order(models.Model):
     estimated_end_date = fields.Date(string="Date de fin estimée")
 
     initial_deposit = fields.Float(string="Caution")
-    general_note = fields.Html(string="Note générale")
+    general_note = fields.Html(string="Note générale", tracking=True)
 
 
     @api.onchange("added_terms_id")
