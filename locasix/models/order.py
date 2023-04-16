@@ -63,7 +63,10 @@ class Order(models.Model):
     estimated_end_date = fields.Date(string="Date de fin estimée")
 
     initial_deposit = fields.Float(string="Caution")
-    general_note = fields.Html(string="Note générale", tracking=True)
+    general_note = fields.Html(string="Note générale", tracking=4)
+
+    amount_untaxed = fields.Monetary(string="Untaxed Amount", store=True, compute='_compute_amounts')
+    amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts')
 
 
     @api.onchange("added_terms_id")
