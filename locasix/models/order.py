@@ -64,6 +64,7 @@ class Order(models.Model):
 
     initial_deposit = fields.Float(string="Caution")
     general_note = fields.Html(string="Note générale")
+    rl_number = fields.Char(string="Numéro R/L")
 
 
     @api.onchange("added_terms_id")
