@@ -64,12 +64,12 @@
                     </group>
                     <field name="weekday_name" nolabel="1" invisible="1"/>
                     <group>
-                        <group style="width: 50% !important;" string="Allers">
-                            <field name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree', 'active_test': False}" domain="[('is_first_line', '=', False)]" nolabel="1"/>
+                        <group style=" width: 50% !important; display: block !important;" string="Allers">
+                            <field style=" width: 199% !important;" name="aller_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree', 'active_test': False}" domain="[('is_first_line', '=', False)]" nolabel="1"/>
 
                         </group>
-                        <group style="width: 50% !important;" string="Retours">
-                            <field name="retour_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree', 'active_test': False}" nolabel="1"/>
+                        <group style=" width: 50% !important; display: block !important;" string="Retours">
+                            <field style=" width: 199% !important;" name="retour_ids" context="{'tree_view_ref' : 'locasix.locasix_aller_day_tree', 'active_test': False}" nolabel="1"/>
 
                         </group>
                     </group>

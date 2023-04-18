@@ -6,7 +6,7 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//sheet" position="after">
+            <xpath expr="//notebook" position="after">
                 <sheet>
                     <field name="general_note" />
                 </sheet>

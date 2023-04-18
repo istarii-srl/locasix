@@ -63,8 +63,11 @@ class Order(models.Model):
     estimated_end_date = fields.Date(string="Date de fin estimée")
 
     initial_deposit = fields.Float(string="Caution")
-    general_note = fields.Html(string="Note générale")
     rl_number = fields.Char(string="Numéro R/L")
+    general_note = fields.Html(string="Note générale", tracking=4)
+
+    amount_untaxed = fields.Monetary(string="Untaxed Amount", store=True, compute='_compute_amounts', tracking=False)
+    amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts', tracking=False)
 
 
     @api.onchange("added_terms_id")
@@ -156,6 +159,8 @@ class Order(models.Model):
             for name in user_names:
                 initials = initials+name[0]
             vals["name"] = vals["name"] + "-"+ initials
+        if vals.get('general_note'):
+            self.message_post(body="General note: "+str(self.general_note)+ " --> " + str(vals.get('general_note')))
         if vals.get('adapt_front_page', False) or vals.get('adapt_sale_confirm', False):
             vals.pop('adapt_sale_confirm', 1)
             vals.pop('adapt_front_page', 1)

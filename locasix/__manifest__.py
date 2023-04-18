@@ -16,9 +16,9 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'ERP',
-    'version': '16.0.0.35',
+    'version': '16.0.0.60',
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale_management', 'product', 'contacts'],
+    'depends': ['base', 'sale', 'sale_management', 'product', 'contacts'],
 
     # always loaded
     'data': [
@@ -59,10 +59,6 @@
         'wizards/modify_contract.xml',
         'views/menus.xml',
     ],
-    'qweb': [
-        'static/src/xml/client_tree_buttons.xml',
-        'static/src/xml/product_tree_buttons.xml'
-    ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
@@ -73,6 +69,8 @@
             'locasix/static/src/js/product_tree_buttons.js',
             'locasix/static/src/js/client_tree_buttons.js',
             'locasix/static/locasix.css',
+            'locasix/static/src/xml/client_tree_buttons.xml',
+            'locasix/static/src/xml/product_tree_buttons.xml'
         ]
     }
 }
