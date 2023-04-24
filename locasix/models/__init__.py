@@ -21,3 +21,4 @@ from . import aller_history_lines
 from . import municipality
 from . import contract
 from . import settings
+from . import user

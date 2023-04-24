@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_users_form_base_locasix" model="ir.ui.view">
+        <field name="name">res.users.view.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <field name="signature" position="after">
+                <group>
+                    <field name="signature_image" widget="image"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+</odoo>
