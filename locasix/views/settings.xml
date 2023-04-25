@@ -22,6 +22,7 @@
                         <div>
                             <group>
                                 <field name="email_shipping_handler" />
+                                <field name="email_assembling_handler" />
                             </group>
                         </div>
                     </div>
