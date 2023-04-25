@@ -36,7 +36,7 @@ class Aller(models.Model):
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
     is_proposition = fields.Boolean(string="Est une proposition", default=False)
     asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
-    asking_prop_time_date = fields.Date(string="Date de la demande ", compute="_compute_asking_prop_time_date", store=True)
+    asking_prop_time_date = fields.Date(string="Date demande", compute="_compute_asking_prop_time_date", store=True)
     asking_user = fields.Many2one(string="Demandeur", comodel_name="res.users", default=lambda self: self.env.user)
     proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")], default="pending_boss")
 
