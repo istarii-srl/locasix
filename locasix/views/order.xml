@@ -30,6 +30,7 @@
             </button>
 
             <field name="partner_id" position="after">
+                <field name="rl_number"/>
                 <field name="client_ref"/>
                 <field name="offer_type"/>
                 <field name="date_aller" attrs="{'invisible': [('offer_type', '!=', 'weekend')]}"/>

@@ -63,6 +63,7 @@ class Order(models.Model):
     estimated_end_date = fields.Date(string="Date de fin estimée")
 
     initial_deposit = fields.Float(string="Caution")
+    rl_number = fields.Char(string="Numéro R/L")
     general_note = fields.Html(string="Note générale", tracking=4)
 
     amount_untaxed = fields.Monetary(string="Untaxed Amount", store=True, compute='_compute_amounts', tracking=False)
