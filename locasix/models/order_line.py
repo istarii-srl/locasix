@@ -41,6 +41,15 @@ class OrderLine(models.Model):
     months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount", store=True)
     months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount", store=True)
 
+
+    @api.depends('product_id', 'product_uom', 'product_uom_qty')
+    def _compute_price_unit(self):
+        for line in self:
+            if line.from_compute:
+                line.price_unit = line.price_unit
+            else:
+                super(OrderLine, self)._compute_price_unit()
+
     def show_discount_rates(self):
         for line in self:
             if not line.has_months_discounts or (line.product_id and not line.product_id.categ_id.has_months_discounts):
