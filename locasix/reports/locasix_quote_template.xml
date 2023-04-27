@@ -312,7 +312,7 @@
     </template>
 
     <template id="locasix_three_price_section">
-        <table style="width: 100%" class="table_locasix">
+        <table style="width: 100%" class="table-sm table-borderless table_locasix">
             <thead>
             <tr style="font-weight: bold; text-align: center;">
                 <th width="8%">Article</th>
@@ -390,7 +390,7 @@
     </template>
 
     <template id="locasix_six_price_section">
-        <table style="width: 100%; padding-bottom: 20px;" class="table_locasix">
+        <table style="width: 100%; padding-bottom: 20px;" class="table-sm table-borderless table_locasix">
             <thead>
             <tr style="font-weight: bold; text-align: center;">
                 <th width="8%"><br/>Article</th>

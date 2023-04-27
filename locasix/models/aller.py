@@ -36,6 +36,7 @@ class Aller(models.Model):
     is_depl = fields.Boolean(string="Est un déplacement", default=False)
     is_proposition = fields.Boolean(string="Est une proposition", default=False)
     asking_prop_time = fields.Datetime(string="Date de la demande", default= lambda self: self.get_prop_time())
+    asking_prop_time_date = fields.Date(string="Date demande", compute="_compute_asking_prop_time_date", store=True)
     asking_user = fields.Many2one(string="Demandeur", comodel_name="res.users", default=lambda self: self.env.user)
     proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")], default="pending_boss")
 
@@ -64,6 +65,12 @@ class Aller(models.Model):
 
     active = fields.Boolean(string="Actif", default=True)
     has_been_set_done = fields.Boolean(string="Déjà fini", default=False)
+
+    @api.depends("asking_prop_time")
+    def _compute_asking_prop_time_date(self):
+        for aller in self:
+            date = datetime.date(aller.asking_prop_time.year, aller.asking_prop_time.month, aller.asking_prop_time.day)
+            aller.asking_prop_time_date = date
 
     def _compute_remarque_string(self):
         for aller in self:
