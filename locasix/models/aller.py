@@ -63,8 +63,20 @@ class Aller(models.Model):
     note = fields.Text(string="Remarque libre ")
     displayed_note = fields.Text(string="Remarque libre", compute="_compute_displayed_names")
 
+    should_send_mail_to_assembler = fields.Boolean(string="Should send mail to assembler", compute="_compute_shoud_sent_mail_to_assembler")
+
     active = fields.Boolean(string="Actif", default=True)
     has_been_set_done = fields.Boolean(string="Déjà fini", default=False)
+
+
+    def _compute_shoud_sent_mail_to_assembler(self):
+        for aller in self:
+            flag = False
+            for remarque in aller.remarque_ids:
+                if remarque.send_mail_to_assembler:
+                    flag = True
+            
+            aller.should_send_mail_to_assembler = flag
 
     @api.depends("asking_prop_time")
     def _compute_asking_prop_time_date(self):
@@ -565,7 +577,28 @@ class Aller(models.Model):
                 'email_from': from_email,
             }
             batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
-            batch_mails_sudo.send(auto_commit=False)            
+            batch_mails_sudo.send(auto_commit=False)
+
+            if aller.should_send_mail_to_assembler:
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                if aller.is_depl:
+                    type_aller = "Déplacement"
+                from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
+                note = aller.note if aller.note else ""
+                mail_values = {
+                    'subject': f"Demande de confirmation",
+                    'date': datetime.datetime.now(),
+                    'body_html': f"Bonjour,<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}  <br/><br/>Cordialement,",
+                    'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_assembling_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_assembling_handler') else "o.libbrecht@locasix.be",
+                    'auto_delete': False,
+                    'email_from': from_email,
+                }
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)
+
+
+
     
     def ask_confirmation(self, note, i=0):
         for aller in self:
