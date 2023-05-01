@@ -25,7 +25,7 @@ class Aller(models.Model):
     agg_id = fields.Many2one(comodel_name="locasix.agg.aller", required=True)
     
     aller_type = fields.Selection(string="type de livraison", selection=[("out", "Aller"), ("in", "Retour"), ("depl", "Déplacement")], default="out")
-    aller_type_name = fields.Char(string="Type de déplacement", store=True, compute="_compute_aller_type_name")
+    aller_type_name = fields.Char(string="Type", store=True, compute="_compute_aller_type_name")
     color = fields.Integer(compute='_compute_color')
 
     is_first_line = fields.Boolean(default=False)
