@@ -32,7 +32,19 @@ class AggAller(models.Model):
     is_first_agg = fields.Boolean(default=False)
 
     prop_mail_sent = fields.Boolean(string="Prop mail sent")
+
+    should_send_mail_to_assembler = fields.Boolean(string="Should send mail to assembler", compute="_compute_shoud_sent_mail_to_assembler")
     
+    def _compute_shoud_sent_mail_to_assembler(self):
+        for aller in self:
+            flag = False
+            for remarque in aller.remarque_ids:
+                if remarque.send_mail_to_assembler:
+                    flag = True
+            
+            aller.should_send_mail_to_assembler = flag
+
+
     @api.onchange("aller_type")
     def on_aller_type_changed(self):
         for aller in self:
@@ -144,7 +156,32 @@ class AggAller(models.Model):
                 batch_mails_sudo = self.env['mail.mail'].sudo()
                 batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
                 batch_mails_sudo.send(auto_commit=False)
-                agg_aller.prop_mail_sent = True  
+                agg_aller.prop_mail_sent = True 
+            
+                if agg_aller.should_send_mail_to_assembler:
+                    mail_values = {
+                            'subject': f"Demande de confirmation",
+                            'date': datetime.datetime.now(),
+                            'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_assembling_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_assembling_handler') else "o.libbrecht@locasix.be",
+                            'auto_delete': False,
+                            'email_from': agg_aller.aller_ids[0].asking_user.email if agg_aller.aller_ids[0].asking_user.email else "b.quintart@locasix.be",
+                        }
+                    body = "Bonjour,"
+                    for aller in agg_aller.aller_ids:
+                    
+                        type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+                        if aller.is_depl:
+                            type_aller = "Déplacement"
+                        #from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
+                        note = aller.note if aller.note else ""
+                        body += f"<br/><br/>Une demande de confirmation pour la proposition {aller.name} a été introduite par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date} <br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}"
+
+                    body += "<br/><br/>Cordialement,"
+                    mail_values["body_html"] = body
+                    batch_mails_sudo = self.env['mail.mail'].sudo()
+                    batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                    batch_mails_sudo.send(auto_commit=False)
+                    agg_aller.prop_mail_sent = True 
 
     def enforce_day_matches_date(self):
         if self.date != self.day_id.day:
