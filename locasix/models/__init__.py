@@ -22,3 +22,4 @@ from . import municipality
 from . import contract
 from . import settings
 from . import user
+from . import sale_report
