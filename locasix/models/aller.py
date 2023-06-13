@@ -54,6 +54,7 @@ class Aller(models.Model):
     product_id = fields.Many2one(string="Produit", comodel_name="product.product", required=True)
     product_unique_ref = fields.Many2one(string="N°", comodel_name="locasix.product.ref")
     is_retour_created = fields.Boolean(string="Retour crée", default=False)
+    inverse_aller_id = fields.Many2one(string="Aller inverse en cas d'aller/retour", comodel_name="locasix.aller")
 
     is_weekend = fields.Boolean(string="weekend", related="agg_id.is_weekend")
 
@@ -253,6 +254,7 @@ class Aller(models.Model):
         old_product = self.product_id
         old_ref = self.product_unique_ref
         old_contract = self.contract
+        from_inverse = vals.pop("from_inverse", False)
         res = super(Aller, self).write(vals)
         if "note" in vals:
             if old_note and self.note:
@@ -341,6 +343,17 @@ class Aller(models.Model):
             self.create_history_message("Changement du N° : "+ (old_ref.name if old_ref else "Pas de numéro") +" -> "+ (self.product_unique_ref.name if self.product_unique_ref else "Pas de numéro"))
         if "product_id" in vals:
             self.create_history_message("Changement du produit° : "+ (old_product.name if old_product else "Pas de produit") +" -> "+ (self.product_id.name if self.product_id else "Pas de produit"))
+        
+        if not from_inverse and any(name in vals for name in ['product_unique_ref', 'proposition_status', 'product_id', 'contract', 'address_id', 'localite_id', 'note', 'remarque_ids', 'localite_id_depl']) :
+            self.inverse_aller_id.write({
+                'from_inverse': True, 'product_unique_ref': self.product_unique_ref,
+                'proposition_status': self.proposition_status, 'product_id': self.product_id.id,
+                'contract': self.contract, 'address_id': self.address_id.id,
+                'localite_id': self.localite_id.id, 'note': self.note,
+                'remarque_ids': self.remarque_ids.ids, 'localite_id_depl': self.localite_id_depl.id,
+                })
+
+
         return res
 
     def prop_status_to_string(self, status):

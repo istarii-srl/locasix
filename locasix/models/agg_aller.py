@@ -107,6 +107,7 @@ class AggAller(models.Model):
                         "day_id": agg_retour_id.day_id.id,
                         "aller_type": "in",
                         "is_retour_created": True,
+                        "inverse_aller_id": aller.id,
                         "date": agg_retour_id.date,
                         "agg_id": agg_retour_id.id,
                         "localite_id": aller.localite_id.id,
@@ -117,6 +118,7 @@ class AggAller(models.Model):
                         "note": aller.note,
                     })
                         aller.is_retour_created = True
+                        aller.inverse_aller_id = retour
                         for remarque in aller.remarque_ids:
                             retour.remarque_ids = [(4, remarque.id, 0)]     
                 #agg_aller.is_retours_created = True                                   
