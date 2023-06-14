@@ -44,3 +44,5 @@ access_locasix_contract_user,locasix.locasix.contract,model_locasix_contract,bas
 access_locasix_modify_contract_user,locasix.locasix.modify.contract,model_locasix_modify_contract,base.group_user,1,1,1,1
 access_locasix_prop_status_wizard_user,locasix.locasix.prop.status.wizard,model_locasix_prop_status_wizard,base.group_user,1,1,1,1
 access_locasix_proposition_multi_wizard_user,locasix.locasix.proposition.multi.wizard,model_locasix_proposition_multi_wizard,base.group_user,1,1,1,1
+access_locasix_mark_lost_user,locasix.locasix.mark.lost,model_locasix_mark_lost,base.group_user,1,1,1,1
+access_locasix_lost_reason_user,locasix.locasix.lost.reason,model_locasix_lost_reason,base.group_user,1,1,1,1
