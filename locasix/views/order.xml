@@ -27,7 +27,7 @@
                 <button name="action_compute" type="object" string="Ajouter auto." attrs="{'invisible': [('done_order', '=', True)]}"/>
                 <button name="action_remove_computed_lines" type="object" string="Retirer ajouts" attrs="{'invisible': ['|', ('has_computed', '=', False), ('done_order', '=', True)]}"/>
                 <button name="action_put_in_agenda" type="object" string="Ajouter à l'agenda" attrs="{'invisible': [('done_order', '=', False)]}"/>
-                <button name="mark_as_lost" type="object" string="Marquer comme perdu" attrs="{'invisible': ['|', ('state', '=', 'sale'), ('state', '=', 'done')]}"/>
+                <button name="mark_as_lost" type="object" string="Marquer comme perdu" attrs="{'invisible': ['|', '|', ('state', '=', 'sale'), ('state', '=', 'done'), ('state', '=', 'lost')]}"/>
             </button>
 
             <field name="partner_id" position="after">
@@ -53,6 +53,9 @@
                 <field name="estimated_start_date" />
                 <field name="estimated_end_date" />
                 <field name="initial_deposit" />
+                <field name="lost_reason" attrs="{'invisible': [('lost_reason', '=', False)]}" readonly="1" />
+                <field name="note_lost" attrs="{'invisible': [('note_lost', '=', False)]}" readonly="1"/>
+                
             </field>
             <field name="payment_term_id" position="attributes">
                 <attribute name="invisible">1</attribute>
