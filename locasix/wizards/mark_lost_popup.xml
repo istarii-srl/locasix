@@ -9,9 +9,10 @@
                     <group>
                         <field name="order_id"/>
                         <field name="lost_reason" options="{'no_create': True}"/>
+                        <field name="note" />
                     </group>
                 </group>
-                <field name="note" />
+                
                 <footer>
                     <button name="confirm" string="Confirmer" type="object" class="btn-primary"/>
                     <button string="Annuler" class="btn-secondary" special="cancel"/>
