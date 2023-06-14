@@ -1,0 +1,19 @@
+<odoo>
+
+    <record id="locasix_lost_reason_action" model="ir.actions.act_window">
+        <field name="name">Lost reason</field>
+        <field name="res_model">locasix.lost.reason</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="locasix_lost_reason_view_tree" model="ir.ui.view">
+        <field name="name">locasix.lost.reason.view.tree</field>
+        <field name="model">locasix.lost.reason</field>
+        <field name="arch" type="xml">
+            <tree string="Raisons de refus" editable="bottom">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

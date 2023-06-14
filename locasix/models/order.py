@@ -69,6 +69,39 @@ class Order(models.Model):
     amount_untaxed = fields.Monetary(string="Untaxed Amount", store=True, compute='_compute_amounts', tracking=False)
     amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts', tracking=False)
 
+    lost_reason = fields.Many2one(string="Raison de refus", comodel_name="locasix.lost.reason")
+
+    note_lost = fields.Text(string="Note")
+
+    state = fields.Selection(
+        selection=[
+            ('draft', "Quotation"),
+            ('sent', "Quotation Sent"),
+            ('sale', "Sales Order"),
+            ('done', "Locked"),
+            ('cancel', "Cancelled"),
+            ('lost', 'Perdu')
+        ],
+        string="Status",
+        readonly=True, copy=False, index=True,
+        tracking=3,
+        default='draft')
+
+    def mark_as_lost(self):
+        view = self.env.ref('locasix.locasix_mark_lost_form')
+        return {
+        'name': 'Ajout automatique',
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'locasix.mark.lost',
+        'views': [(view.id, 'form')],
+        'view_id': view.id,
+        'target': 'new',
+        'context': {
+            'default_order_id': self.id,
+            },
+        }
 
     @api.onchange("added_terms_id")
     def on_added_terms_changed(self):

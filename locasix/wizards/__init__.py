@@ -8,3 +8,4 @@ from . import order_to_agenda
 from . import modify_contract
 from . import proposition_status_wizard
 from . import proposition_multi_update
+from . import mark_lost_popup

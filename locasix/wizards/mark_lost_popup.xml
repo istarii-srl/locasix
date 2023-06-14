@@ -1,0 +1,23 @@
+<odoo>
+
+    <record id="locasix_mark_lost_form" model="ir.ui.view">
+        <field name="name">locasix.mark.lost.form</field>
+        <field name="model">locasix.mark.lost</field>
+        <field name="arch" type="xml">
+            <form string="Raison du refus">
+                <group>
+                    <group>
+                        <field name="order_id"/>
+                        <field name="lost_reason" options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <field name="note" />
+                <footer>
+                    <button name="confirm" string="Confirmer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
