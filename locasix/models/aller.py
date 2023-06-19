@@ -229,7 +229,6 @@ class Aller(models.Model):
         if agg_id.is_proposition:
             vals["state"] = "zzprop"
         vals["date"] = agg_id.date
-        vals['from_create'] = True
         obj = super(Aller, self).create(vals)
         if not obj.remarque_ids:
             obj.remarque_ids = obj.agg_id.remarque_ids
