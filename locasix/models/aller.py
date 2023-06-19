@@ -332,7 +332,10 @@ class Aller(models.Model):
                 self.day_id = newday_id
 
         if "state" in vals:
-            self.create_history_message("Changement de statut : "+str(self.state_to_string(old_state))+" -> "+str(self.state_to_string(self.state)))
+            if str(self.state_to_string(old_state)) == str(self.state_to_string(self.state)):
+                pass
+            else:
+                self.create_history_message("Changement de statut : "+str(self.state_to_string(old_state))+" -> "+str(self.state_to_string(self.state)))
             if self.state == "zdone":
                 self.has_been_set_done = True
             else:
@@ -348,7 +351,11 @@ class Aller(models.Model):
         if "proposition_status" in vals:
             self.create_history_message("Changement de statut pour la proposition : "+self.prop_status_to_string(old_prop_status)+" -> "+ self.prop_status_to_string(self.proposition_status))
         if "product_unique_ref" in vals:
-            if not old_ref or not self.product_unique_ref or old_ref.name != self.product_unique_ref.name:
+            if old_ref and self.product_unique_ref and old_ref.name == self.product_unique_ref:
+                pass
+            elif old_ref == self.product_unique_ref:
+                pass
+            else:
                 self.create_history_message("Changement du N° : "+ (old_ref.name if old_ref else "Pas de numéro") +" -> "+ (self.product_unique_ref.name if self.product_unique_ref else "Pas de numéro"))
         if "product_id" in vals:
             if not old_product or not self.product_id or old_product.id != self.product_id.id:
