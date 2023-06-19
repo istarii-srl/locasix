@@ -9,6 +9,14 @@ class SaleReport(models.Model):
 
     city = fields.Many2one(string="Ville", comodel_name="locasix.municipality")
     offer_type = fields.Selection(string="Type d'offre", selection=[("classic", "Location"), ("weekend", "Weekend"), ("sale", "Vente")], default="classic")
+    state = fields.Selection([
+        ('draft', 'Draft Quotation'),
+        ('sent', 'Quotation Sent'),
+        ('sale', 'Sales Order'),
+        ('done', 'Sales Done'),
+        ('cancel', 'Cancelled'),
+        ('lost', 'Perdu')
+        ], string='Status', readonly=True)
 
     def _select_additional_fields(self):
         res = super()._select_additional_fields()

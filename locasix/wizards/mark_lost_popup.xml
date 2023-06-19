@@ -7,7 +7,7 @@
             <form string="Raison du refus">
                 <group>
                     <group>
-                        <field name="order_id"/>
+                        <field name="order_id" readonly="1"/>
                         <field name="lost_reason" options="{'no_create': True}"/>
                         <field name="note" />
                     </group>
