@@ -229,6 +229,7 @@ class Aller(models.Model):
         if agg_id.is_proposition:
             vals["state"] = "zzprop"
         vals["date"] = agg_id.date
+        vals['from_create'] = True
         obj = super(Aller, self).create(vals)
         if not obj.remarque_ids:
             obj.remarque_ids = obj.agg_id.remarque_ids
@@ -254,41 +255,44 @@ class Aller(models.Model):
         old_product = self.product_id
         old_ref = self.product_unique_ref
         old_contract = self.contract
+        from_create = vals.pop("from_create", False)
         from_inverse = vals.pop("from_inverse", False)
         res = super(Aller, self).write(vals)
-        if "note" in vals:
-            if old_note and self.note:
-                self.create_history_message("Changement de la remarque libre : "+old_note+" -> "+self.note)
-            elif old_note:
-                self.create_history_message("Changement de la remarque libre : "+old_note+" -> pas de remarque")
-            elif self.note:
-                self.create_history_message("Changement de la remarque libre : "+ "pas de remarque -> "+self.note)
-        if "remarque_ids" in vals:
-            self.create_history_message("Une ou plusieurs remarques ont été modifiés")
+        if not from_create:
+            if "note" in vals:
+                if old_note and self.note:
+                    self.create_history_message("Changement de la remarque libre : "+old_note+" -> "+self.note)
+                elif old_note:
+                    self.create_history_message("Changement de la remarque libre : "+old_note+" -> pas de remarque")
+                elif self.note:
+                    self.create_history_message("Changement de la remarque libre : "+ "pas de remarque -> "+self.note)
+            if "remarque_ids" in vals:
+                self.create_history_message("Une ou plusieurs remarques ont été modifiés")
 
-        if "localite_id_depl" in vals:
-            if old_localite_depl and self.localite_id_depl:
-                self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_localite_depl.name+" -> "+self.localite_id_depl.name)
-            elif old_localite_depl:
-                self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_localite_depl.name+" -> Aucune addresse")
-            elif self.localite_id_depl:
-                self.create_history_message("Changement de l'addresse d'arrivée du déplacement : Aucune addresse -> "+self.localite_id_depl.name)    
+            if "localite_id_depl" in vals:
+                if old_localite_depl and self.localite_id_depl and old_localite_depl.id != self.localite_id_depl.id :
+                    self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_localite_depl.name+" -> "+self.localite_id_depl.name)
+                elif old_localite_depl:
+                    self.create_history_message("Changement de l'addresse d'arrivée du déplacement : "+old_localite_depl.name+" -> Aucune addresse")
+                elif self.localite_id_depl:
+                    self.create_history_message("Changement de l'addresse d'arrivée du déplacement : Aucune addresse -> "+self.localite_id_depl.name)    
 
-        if "localite_id" in vals:
-            if old_localite and self.localite_id:
-                self.create_history_message("Changement de l'addresse : "+old_localite.name+" -> "+self.localite_id.name)
-            elif old_localite:
-                self.create_history_message("Changement de l'addresse : "+old_localite.name+" -> Aucune addresse")
-            elif self.localite_id:
-                self.create_history_message("Changement de l'addresse : Aucune addresse -> "+self.localite_id.name)            
+            if "localite_id" in vals:
+                if old_localite and self.localite_id and old_localite.id != self.localite_id.id:
+                    self.create_history_message("Changement de l'addresse : "+old_localite.name+" -> "+self.localite_id.name)
+                elif old_localite:
+                    self.create_history_message("Changement de l'addresse : "+old_localite.name+" -> Aucune addresse")
+                elif self.localite_id:
+                    self.create_history_message("Changement de l'addresse : Aucune addresse -> "+self.localite_id.name)            
         
         if "address_id" in vals:
-            if old_address_id and self.address_id:
-                self.create_history_message("Changement de client : "+old_address_id.display_name+" -> "+self.address_id.display_name)
-            elif old_address_id:
-                self.create_history_message("Changement de client : "+old_address_id.display_name+" -> Pas de client")
-            elif self.address_id:
-                self.create_history_message("Changement de client : Pas de client -> "+self.address_id.display_name)
+            if not from_create:
+                if old_address_id and self.address_id and old_address_id.id != self.address_id.id:
+                    self.create_history_message("Changement de client : "+old_address_id.display_name+" -> "+self.address_id.display_name)
+                elif old_address_id:
+                    self.create_history_message("Changement de client : "+old_address_id.display_name+" -> Pas de client")
+                elif self.address_id:
+                    self.create_history_message("Changement de client : Pas de client -> "+self.address_id.display_name)
 
             if self.date == self.agg_id.date:
                 new_agg_id = self.env["locasix.agg.aller"].search([("date", "=", self.date), ("address_id", "=", self.address_id.id), ("aller_type", "=", self.aller_type), ("is_depl", "=", self.is_depl), ("localite_id", "=", self.localite_id.id)], limit=1)
@@ -342,7 +346,8 @@ class Aller(models.Model):
         if "product_unique_ref" in vals:
             self.create_history_message("Changement du N° : "+ (old_ref.name if old_ref else "Pas de numéro") +" -> "+ (self.product_unique_ref.name if self.product_unique_ref else "Pas de numéro"))
         if "product_id" in vals:
-            self.create_history_message("Changement du produit° : "+ (old_product.name if old_product else "Pas de produit") +" -> "+ (self.product_id.name if self.product_id else "Pas de produit"))
+            if not old_product or not self.product_id or old_product.id != self.product_id.id:
+                self.create_history_message("Changement du produit° : "+ (old_product.name if old_product else "Pas de produit") +" -> "+ (self.product_id.name if self.product_id else "Pas de produit"))
         
         if not from_inverse and any(name in vals for name in ['product_unique_ref', 'proposition_status', 'product_id', 'contract', 'address_id', 'localite_id', 'note', 'remarque_ids', 'localite_id_depl']) :
             self.inverse_aller_id.write({
