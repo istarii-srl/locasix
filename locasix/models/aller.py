@@ -361,7 +361,7 @@ class Aller(models.Model):
             if not old_product or not self.product_id or old_product.id != self.product_id.id:
                 self.create_history_message("Changement du produit° : "+ (old_product.name if old_product else "Pas de produit") +" -> "+ (self.product_id.name if self.product_id else "Pas de produit"))
         
-        if not from_inverse and any(name in vals for name in ['product_unique_ref', 'proposition_status', 'product_id', 'contract', 'address_id', 'localite_id', 'note', 'remarque_ids', 'localite_id_depl']) :
+        if self.inverse_aller_id and not from_inverse and any(name in vals for name in ['product_unique_ref', 'proposition_status', 'product_id', 'contract', 'address_id', 'localite_id', 'note', 'remarque_ids', 'localite_id_depl']) :
             self.inverse_aller_id.write({
                 'from_inverse': True, 'product_unique_ref': self.product_unique_ref,
                 'proposition_status': self.proposition_status, 'product_id': self.product_id.id,
