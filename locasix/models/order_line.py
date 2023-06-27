@@ -11,7 +11,7 @@ class OrderLine(models.Model):
 
     has_ref_to_condi = fields.Boolean(string="C.A.", default=False)
     show_images = fields.Boolean(string="Ajout Fiches", default=True)
-
+    product_description = fields.Text(string="Description Produit", compute="_compute_product_description", readonly=False, store=True)
     is_section = fields.Boolean(string="Est une section de l'offre", default=False)
     category_id = fields.Many2one(comodel_name="product.category", string="Product category")
     section_id = fields.Many2one(comodel_name="sale.order.line", string="Section")
@@ -41,6 +41,14 @@ class OrderLine(models.Model):
     months_3_discount = fields.Float(string="Remise 3", compute="_compute_3_discount", store=True)
     months_6_discount = fields.Float(string="Remise 6", compute="_compute_6_discount", store=True)
 
+
+    @api.depends("product_id")
+    def _compute_product_description(self):
+        for line in self:
+            if line.product_id:
+                line.product_description = line.product_id.product_description
+            else:
+                line.product_description = ""
 
     @api.depends('product_id', 'product_uom', 'product_uom_qty')
     def _compute_price_unit(self):
