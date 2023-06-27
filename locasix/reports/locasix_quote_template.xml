@@ -257,8 +257,8 @@
                         <span t-field="line.name"/>
                         <span t-if="line.has_ref_to_condi"> (*)</span>
                         <br/>
-                        <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
+                        <span class="small-italic" t-field="line.product_description"/>
+                        <span t-if="line.product_id.more_details_link and line.product_description and len(line.product_description) > 1"><br/></span>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}">Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
@@ -349,8 +349,8 @@
                         <span t-field="line.name"/>
                         <span t-if="line.has_ref_to_condi"> (*)</span>
                         <br/>
-                        <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
+                        <span class="small-italic" t-field="line.product_description"/>
+                        <span t-if="line.product_id.more_details_link and line.product_description and len(line.product_description) > 1"><br/></span>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}">Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
@@ -463,8 +463,8 @@
                         <span t-field="line.name"/>
                         <span t-if="line.has_ref_to_condi"> (*)</span>
                         <br/>
-                        <span class="small-italic" t-field="line.product_id.product_description"/>
-                        <span t-if="line.product_id.more_details_link and line.product_id.product_description and len(line.product_id.product_description) > 1"><br/></span>
+                        <span class="small-italic" t-field="line.product_description"/>
+                        <span t-if="line.product_id.more_details_link and line.product_description and len(line.product_description) > 1"><br/></span>
                         <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}">Plus de détails</a> 
                     </td>
                     <td width="7%" class="text-center">
