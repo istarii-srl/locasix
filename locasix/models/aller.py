@@ -16,7 +16,7 @@ COLORS_BY_STATE = {
 class Aller(models.Model):
     _name = "locasix.aller"
     _description = "Un aller"
-    _order = "state, address_id"
+    _order = "state, postal_code, address_id"
 
     state = fields.Selection(string="Statut", selection=lambda self: self._state_selection(), default="aprogress", required=True)
     name = fields.Char(string="Nom", compute="_compute_name", store=True)
@@ -40,6 +40,7 @@ class Aller(models.Model):
     asking_user = fields.Many2one(string="Demandeur", comodel_name="res.users", default=lambda self: self.env.user)
     proposition_status = fields.Selection(string="Statut de la proposition", selection=[("rejected", "Rejeté"), ("pending_boss", "En attente de confirmation du responsable"), ("pending_worker", "En attente de rectification du demandeur"), ("accepted", "Accepté")], default="pending_boss")
 
+    postal_code = fields.Char(string="Postal code", related="localite_id.postal_code", store=True)
     localite_id = fields.Many2one(comodel_name="locasix.municipality", string="Localité")
     localite_id_depl = fields.Many2one(comodel_name="locasix.municipality", string="Localité arrivé déplacement")
 
@@ -253,7 +254,7 @@ class Aller(models.Model):
         old_prop_status = self.proposition_status
         old_product = self.product_id
         old_ref = self.product_unique_ref
-        old_contract = self.contract
+        old_contract = self.contract_id
         from_inverse = vals.pop("from_inverse", False)
         res = super(Aller, self).write(vals)
         if "note" in vals:
@@ -341,13 +342,13 @@ class Aller(models.Model):
             else:
                 self.has_been_set_done = False
                 #self.active = False
-        if "contract" in vals:
-            if self.contract and old_contract:
-                self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ self.contract)
-            elif self.contract:
-                self.create_history_message("Changement de contrat : "+ "Pas de contrat" +" -> "+ self.contract)
+        if "contract_id" in vals:
+            if self.contract_id and old_contract:
+                self.create_history_message("Changement de contrat : "+ old_contract.name +" -> "+ self.contract_id.name)
+            elif self.contract_id:
+                self.create_history_message("Changement de contrat : "+ "Pas de contrat" +" -> "+ self.contract_id.name)
             elif old_contract:
-                self.create_history_message("Changement de contrat : "+ old_contract +" -> "+ "Pas de contrat")
+                self.create_history_message("Changement de contrat : "+ old_contract.name +" -> "+ "Pas de contrat")
         if "proposition_status" in vals:
             self.create_history_message("Changement de statut pour la proposition : "+self.prop_status_to_string(old_prop_status)+" -> "+ self.prop_status_to_string(self.proposition_status))
         if "product_unique_ref" in vals:
@@ -361,11 +362,11 @@ class Aller(models.Model):
             if not old_product or not self.product_id or old_product.id != self.product_id.id:
                 self.create_history_message("Changement du produit° : "+ (old_product.name if old_product else "Pas de produit") +" -> "+ (self.product_id.name if self.product_id else "Pas de produit"))
         
-        if self.inverse_aller_id and not from_inverse and any(name in vals for name in ['product_unique_ref', 'proposition_status', 'product_id', 'contract', 'address_id', 'localite_id', 'note', 'remarque_ids', 'localite_id_depl']) :
+        if self.inverse_aller_id and not from_inverse and any(name in vals for name in ['product_unique_ref', 'proposition_status', 'product_id', 'contract_id', 'address_id', 'localite_id', 'note', 'remarque_ids', 'localite_id_depl']) :
             self.inverse_aller_id.write({
                 'from_inverse': True, 'product_unique_ref': self.product_unique_ref,
                 'proposition_status': self.proposition_status, 'product_id': self.product_id.id,
-                'contract': self.contract, 'address_id': self.address_id.id,
+                'contract_id': self.contract_id.id, 'address_id': self.address_id.id,
                 'localite_id': self.localite_id.id, 'note': self.note,
                 'remarque_ids': self.remarque_ids.ids, 'localite_id_depl': self.localite_id_depl.id,
                 })
@@ -419,7 +420,7 @@ class Aller(models.Model):
                 "localite_id_depl": aller.localite_id_depl.id,
                 "address_id": aller.address_id.id,
                 "aller_type": new_agg.aller_type,
-                "contract": aller.contract,
+                "contract_id": aller.contract_id.id,
                 "product_id": aller.product_id.id,
                 "product_unique_ref": aller.product_unique_ref.id,
                 "note": aller.note,

@@ -112,7 +112,7 @@ class AggAller(models.Model):
                         "agg_id": agg_retour_id.id,
                         "localite_id": aller.localite_id.id,
                         "address_id": aller.address_id.id,
-                        "contract": aller.contract,
+                        "contract_id": aller.contract_id.id,
                         "product_id": aller.product_id.id,
                         "product_unique_ref": aller.product_unique_ref.id,
                         "note": aller.note,
