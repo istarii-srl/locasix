@@ -89,6 +89,9 @@
                 <page string="Annexe groupes électrogènes">
                     <field name="electro_annexe"/>
                 </page>
+                <page string='Fichiers additionnels'>
+                    <field name="order_file_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Ajouter un fichier'}" nolabel="1"/>
+                </page>
                 <page name="display_fix" string="Ajustement d'affichage">
                     <group>
                         <group>

@@ -24,3 +24,4 @@ from . import settings
 from . import user
 from . import sale_report
 from . import lost_reason
+from . import order_additional_file

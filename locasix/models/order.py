@@ -73,6 +73,8 @@ class Order(models.Model):
 
     note_lost = fields.Text(string="Note")
 
+    order_file_ids = fields.One2many(comodel_name="locasix.order.file", inverse_name="order_id")
+
     state = fields.Selection(
         selection=[
             ('draft', "Quotation"),
