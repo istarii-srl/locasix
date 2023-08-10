@@ -24,7 +24,6 @@ class OrderAdditionalFile(models.Model):
     def _get_name(self):
         for technical in self:
             if technical.order_id:
-                number = technical.fetch_number()
                 technical.name = "Fiche - " + technical.order_id.name + " " + str(technical.sequence)
             else:
                 technical.name = "/"
