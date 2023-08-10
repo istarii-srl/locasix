@@ -16,6 +16,7 @@
                     </div>
                     <t t-if="doc.display_front_page" t-call="locasix.locasix_front_page"/>
                     <t t-call="locasix.locasix_body"/>
+                    <t t-call="locasix.order_files"/>
                     <t t-call="locasix.plan_files"/>
                     <t t-if="doc.has_electro_annexe()" t-call="locasix.electro_appendix"/>
                     <t t-call="locasix.additional_conditions"/>
@@ -565,6 +566,15 @@
         <t t-foreach="doc.get_order_technicals()" t-as="technical_id">
             <div class="page appendix">
                 <img class="appendix" t-att-src="image_data_uri(technical_id.image_1920)"/>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="order_files">
+        <t t-foreach="doc.get_order_files()" t-as="order_file_id">
+            <div class="page appendix">
+                <img class="appendix" t-att-src="image_data_uri(order_file_id.image_1920)"/>
             </div>
         </t>
     </template>

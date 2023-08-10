@@ -439,6 +439,13 @@ class Order(models.Model):
                     if tec:
                         technicals += tec
             return technicals
+
+    def get_order_files(self):
+        for order in self:
+            order_files = []
+            for order_file in order.order_file_ids:
+                order_files += order_file
+            return order_files
     
     def get_order_plans(self):
         for order in self:
