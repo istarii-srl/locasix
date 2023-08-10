@@ -55,7 +55,7 @@
                 <field name="initial_deposit" />
                 <field name="lost_reason" attrs="{'invisible': [('lost_reason', '=', False)]}" readonly="1" />
                 <field name="note_lost" attrs="{'invisible': [('note_lost', '=', False)]}" readonly="1"/>
-                
+
             </field>
             <field name="payment_term_id" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -89,9 +89,6 @@
                 <page string="Annexe groupes électrogènes">
                     <field name="electro_annexe"/>
                 </page>
-                <page string='Fichiers additionnels'>
-                    <field name="order_file_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Ajouter un fichier'}" nolabel="1"/>
-                </page>
                 <page name="display_fix" string="Ajustement d'affichage">
                     <group>
                         <group>
@@ -104,6 +101,7 @@
                             <field name="visual_discounts"/>
                         </group>
                     </group>
+                    <field name="order_file_ids" class="o_website_sale_image_list" mode="kanban" options="{'create_text':'Ajouter un fichier'}" nolabel="1"/>
                 </page>
             </page>
             <xpath expr="//tree/field[@name='name']" position="after">
