@@ -12,6 +12,7 @@
             <tree string="Remarques" editable="bottom">
                 <field name="name"/>
                 <field name="send_mail_to_assembler" />
+                <field name="is_montage" />
                 <field name="color" widget="color_picker" />
             </tree>
         </field>

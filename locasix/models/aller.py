@@ -133,6 +133,14 @@ class Aller(models.Model):
             if aller.agg_id and not aller.remarque_ids:
                 aller.remarque_ids = aller.agg_id.remarque_ids
 
+    @api.onchange("product_id")
+    def on_product_changed(self):
+        for aller in self:
+            if aller.product_id.is_assemblage_product:
+                remarques = self.env["locasix.remarque"].search([("is_montage", "=", True)])
+                for rem in remarques:
+                    aller.remarque_ids = [(4,rem.id)]
+
     @api.depends('city', 'address_id', 'localite_id', 'localite_id_depl', 'is_depl', 'note')
     def _compute_displayed_names(self):
         for aller in self:

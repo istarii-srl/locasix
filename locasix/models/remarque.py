@@ -10,4 +10,5 @@ class Remarque(models.Model):
 
     name = fields.Char(string='Remarque', required=True)
     send_mail_to_assembler = fields.Boolean(string="Mail resp. assemblage")
+    is_montage = fields.Boolean(string="Ajout Montage & Assemblage")
     color = fields.Integer('Couleur', default=_get_default_color)
