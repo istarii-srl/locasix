@@ -7,7 +7,7 @@
             <field name="name">Agenda produits invisible pour certains utilisateurs</field>
             <field name="model_id" ref="model_locasix_aller"/>
             <field name="groups" eval="[(4,ref('locasix.group_agenda_invisible'))]"/>
-            <field name="domain_force">[('product_id.is_agenda_visible', '=', False)]</field>
+            <field name="domain_force">[('product_id.is_agenda_visible', '=', True)]</field>
         </record>
 
 
