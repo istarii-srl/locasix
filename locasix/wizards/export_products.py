@@ -76,6 +76,7 @@ class ExportProducts(models.TransientModel):
             worksheet.write(0, 8, "Prix weekend")
             worksheet.write(0, 9, "Ref condi add. ?")
             worksheet.write(0, 10, "Assemblage ?")
+            worksheet.write(0, 11, "Visible agenda ?")
             row = 1
             for product in wizard.product_ids:
                 if not product.has_multi_price:
@@ -90,6 +91,7 @@ class ExportProducts(models.TransientModel):
                     worksheet.write(row, 8, product.weekend_price)
                     worksheet.write(row, 9, product.has_ref_to_condi)
                     worksheet.write(row, 10, product.is_assemblage_product)
+                    worksheet.write(row, 11, product.is_agenda_visible)
 
                     row +=1
 
@@ -120,6 +122,7 @@ class ExportProducts(models.TransientModel):
             worksheet.write(0, 9, "Prix weekend")
             worksheet.write(0, 10, "Ref condi add. ?")
             worksheet.write(0, 11, "Assemblage ?")
+            worksheet.write(0, 12, "Visible agenda ?")
 
             row = 1
             for product in wizard.product_ids:
@@ -136,7 +139,7 @@ class ExportProducts(models.TransientModel):
                     worksheet.write(row, 9, product.weekend_price)
                     worksheet.write(row, 10, product.has_ref_to_condi)
                     worksheet.write(row, 11, product.is_assemblage_product)
-
+                    worksheet.write(row, 12, product.is_agenda_visible)
                     row +=1
     
 

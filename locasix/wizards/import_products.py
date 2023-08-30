@@ -49,7 +49,8 @@ class ImportProducts(models.TransientModel):
                 "uom": sheet.cell_value(i, 7),
                 "weekend_price": sheet.cell_value(i, 8),
                 "condi": sheet.cell_value(i, 9),
-                "assemblage": sheet.cell_value(i, 10)
+                "assemblage": sheet.cell_value(i, 10),
+                "visible_agenda": sheet.cell_value(i, 11)
             })
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
@@ -79,6 +80,7 @@ class ImportProducts(models.TransientModel):
             product.is_temporary_product = False
             product.is_assemblage_product = line["assemblage"]
             product.has_multi_price = False
+            product.is_agenda_visible = line["visible_agenda"]
             product.has_ref_to_condi = line["condi"]
             _logger.info(line["price"])
             product.list_price = line["price"]
@@ -101,6 +103,7 @@ class ImportProducts(models.TransientModel):
                 "weekend_price": sheet.cell_value(i, 9),
                 "condi": sheet.cell_value(i, 10),
                 "assemblage": sheet.cell_value(i, 11),
+                "visible_agenda": sheet.cell_value(i, 12)
             })
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
@@ -128,6 +131,7 @@ class ImportProducts(models.TransientModel):
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
             product.has_multi_price = True
+            product.is_agenda_visible = line["visible_agenda"]
             product.categ_id = categ_id
             product.is_temporary_product = False
             product.is_assemblage_product = line["assemblage"]

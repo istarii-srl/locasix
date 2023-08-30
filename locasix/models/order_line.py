@@ -357,11 +357,11 @@ class OrderLine(models.Model):
                 for section_line in section_lines:
                     if not section_line.is_insurance() and section_line.product_id:
                         if is_multi:
-                            day_price += section_line.day_price * percentage * section_line.product_uom_qty * (1-line.discount)
-                            week_price += section_line.week_price * percentage * section_line.product_uom_qty * (1-line.discount)
-                            month_price += section_line.month_price * percentage * section_line.product_uom_qty * (1-line.discount)
+                            day_price += section_line.day_price * percentage * section_line.product_uom_qty * (1-section_line.discount)
+                            week_price += section_line.week_price * percentage * section_line.product_uom_qty * (1-section_line.discount)
+                            month_price += section_line.month_price * percentage * section_line.product_uom_qty * (1-section_line.discount)
                         else:
-                            price_unit += section_line.price_unit * percentage * section_line.product_uom_qty * (1-line.discount)
+                            price_unit += section_line.price_unit * percentage * section_line.product_uom_qty * (1-section_line.discount)
 
                 if line.get_section_type() == "prix_mois":
                     uom = self.env["uom.uom"].search([("name", "=", "Mois")], limit=1)

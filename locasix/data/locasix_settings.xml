@@ -19,6 +19,11 @@
             <field name="category_id" ref="locasix_group_category"/>
         </record>
 
+        <record model="res.groups" id="group_agenda_invisible">
+            <field name="name" eval="'Agenda invisible'"/>
+            <field name="category_id" ref="locasix_group_category"/>
+        </record>
+
         <record model="res.groups" id="group_locasix_agenda_read">
             <field name="name" eval="'Agenda : lecture seule'"/>
             <field name="category_id" ref="locasix_group_category"/>

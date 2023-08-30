@@ -34,7 +34,9 @@ class ProductTemplate(models.Model):
 
     is_temporary_product = fields.Boolean(string="Temporaire", default=True)
     is_assemblage_product = fields.Boolean(string="Assemblage", default=True)
-    
+
+    is_agenda_visible = fields.Boolean(string="Est visible dans l'agenda", default=True)
+
     is_transport_address_product = fields.Boolean(default=False)
 
     show_offert = fields.Boolean(string="Affiche 'offert' si prix égal 0", default=True)
