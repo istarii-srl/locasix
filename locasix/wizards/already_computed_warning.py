@@ -42,7 +42,7 @@ class AlreadyComputedWarning(models.Model):
                 raise UserError("Montant(s) de zéro !")
             if wizard.frais_assemblage_retour == 0.0 and wizard.has_assemblage and wizard.offer_type != "sale":
                 raise UserError("Montant(s) de zéro !")
-            if wizard.crane_retour == 0.0 and wizard.has_crane and wizard.offer_type != "sale":
+            if wizard.crane_retour == 0.0 and wizard.has_crane and wizard.offer_type == "classic":
                 raise UserError("Montant(s) de zéro !")
             if wizard.crane_aller == 0.0 and wizard.has_crane:
                 raise UserError("Montant(s) de zéro !")
