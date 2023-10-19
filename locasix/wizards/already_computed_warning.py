@@ -9,6 +9,10 @@ class AlreadyComputedWarning(models.Model):
     order_id = fields.Many2one(comodel_name="sale.order", string="Offre")
     offer_type = fields.Selection(related="order_id.offer_type")
     has_assemblage = fields.Boolean(compute="_compute_has_assemblage")
+    has_crane = fields.Boolean(string="Faut-il inclure un forfait grue ?")
+
+    crane_aller = fields.Float(string="Prix forfait grue aller / weekend")
+    crane_retour = fields.Float(string="Prix forfait grue retour")
 
     already_transport = fields.Boolean(string="Transport déjà encodé", default=False)
 
@@ -38,5 +42,9 @@ class AlreadyComputedWarning(models.Model):
                 raise UserError("Montant(s) de zéro !")
             if wizard.frais_assemblage_retour == 0.0 and wizard.has_assemblage and wizard.offer_type != "sale":
                 raise UserError("Montant(s) de zéro !")
+            if wizard.crane_retour == 0.0 and wizard.has_crane and wizard.offer_type != "sale":
+                raise UserError("Montant(s) de zéro !")
+            if wizard.crane_aller == 0.0 and wizard.has_crane:
+                raise UserError("Montant(s) de zéro !")
             wizard.order_id.action_remove_computed_lines()
-            wizard.order_id.line_computations(wizard.transport_aller, wizard.transport_retour, wizard.frais_assemblage_aller, wizard.frais_assemblage_retour, wizard.already_transport)
+            wizard.order_id.line_computations(wizard.transport_aller, wizard.transport_retour, wizard.frais_assemblage_aller, wizard.frais_assemblage_retour, wizard.already_transport, wizard.crane_aller, wizard.crane_retour)
