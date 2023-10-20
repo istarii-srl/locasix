@@ -501,22 +501,25 @@ class Order(models.Model):
                 if crane_aller > 0.01:
                     crane = self.env["product.template"].search([("default_code", '=', 'FORGR')], limit=1)
                     if crane:
-                        self.env["sale.order.line"].create({
+                        line = self.env["sale.order.line"].create({
                             'order_id': self.id,
                             'product_id': crane.product_variant_id.id,
                             'price_unit': crane_aller,
                             'from_compute': True,                            
                         })
+                        line.name = crane.name
+                        
             elif order.offer_type == "sale":
                     if crane_aller > 0.01:
                         crane = self.env["product.template"].search([("default_code", '=', 'FORGR')], limit=1)
                         if crane:
-                            self.env["sale.order.line"].create({
+                            line = self.env["sale.order.line"].create({
                                 'order_id': self.id,
                                 'product_id': crane.product_variant_id.id,
                                 'price_unit': crane_aller,
                                 'from_compute': True,                            
                             })
+                            line.name = crane.name
             else:
                 crane = self.env["product.template"].search([("default_code", '=', 'FORGR-A')], limit=1)
                 if crane and crane_aller > 0.01:
@@ -526,15 +529,16 @@ class Order(models.Model):
                         'price_unit': crane_aller,
                         'from_compute': True,                            
                     })
-                    line.name = "Forfait grue aller"
+                    line.name = crane.name
                 crane = self.env["product.template"].search([("default_code", '=', 'FORGR-R')], limit=1)
                 if crane and crane_retour > 0.01:
-                    self.env["sale.order.line"].create({
+                    line = self.env["sale.order.line"].create({
                         'order_id': self.id,
                         'product_id': crane.product_variant_id.id,
                         'price_unit': crane_aller,
                         'from_compute': True,                            
                     })
+                    line.name = crane.name
 
 
     def enforce_assemblage_fee(self, assemblage_aller, assemblage_retour):
