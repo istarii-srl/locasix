@@ -69,7 +69,7 @@ class Order(models.Model):
     amount_untaxed = fields.Monetary(string="Untaxed Amount", store=True, compute='_compute_amounts', tracking=False)
     amount_total = fields.Monetary(string="Total", store=True, compute='_compute_amounts', tracking=False)
 
-    lost_reason = fields.Many2one(string="Raison de refus", comodel_name="locasix.lost.reason")
+    lost_reason = fields.Many2one(string="Raison de refus", comodel_name="locasix.lost.reason", copy=False)
 
     note_lost = fields.Text(string="Note")
 
