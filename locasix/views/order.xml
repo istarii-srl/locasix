@@ -34,8 +34,10 @@
                 <field name="rl_number"/>
                 <field name="client_ref"/>
                 <field name="offer_type"/>
-                <field name="date_aller" attrs="{'invisible': [('offer_type', '!=', 'weekend')]}"/>
-                <field name="date_retour" attrs="{'invisible': [('offer_type', '!=', 'weekend')]}"/>
+                <field name="date_aller" attrs="{'invisible': [('date_aller', '=', False)]}"/>
+                <field name="date_retour" attrs="{'invisible': [('date_retour', '=', False)]}"/>
+                <field name="date_aller_2" attrs="{'invisible': ['|', ('date_aller', '=', False), ('offer_type', '!=', 'weekend')]}"/>
+                <field name="date_retour_2" attrs="{'invisible': ['|', ('date_aller', '=', False), ('offer_type', '!=', 'weekend')]}"/>
                 <field name="show_discount2"/>
                 <field name="show_discount3"/>
                 <field name="show_discount6"/>

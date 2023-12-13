@@ -31,8 +31,11 @@ class Order(models.Model):
     months_3_discount_rate = fields.Float(string="G.E. 3 mois", default=0.15)
     months_6_discount_rate = fields.Float(string="G.E. 6 mois", default=0.2)
 
-    date_aller = fields.Char(string="Date aller")
-    date_retour = fields.Char(string="Date retour")
+    date_aller = fields.Char(string="Date aller ")
+    date_retour = fields.Char(string="Date retour ")
+
+    date_aller_2 = fields.Date(string="Date aller")
+    date_retour_2 = fields.Date(string="Date retour")
 
     city = fields.Many2one(string="Ville", comodel_name="locasix.municipality")
     rue = fields.Char(string="Rue")
@@ -664,7 +667,7 @@ class Order(models.Model):
                     'from_compute': True, 
                 })
             if order.offer_type == "weekend":
-                if order.date_aller:
+                if order.date_aller_2:
                     date_aller_product_id = self.env["product.template"].search([("name", "=", "Date aller")], limit=1)
                     if not date_aller_product_id:
                         date_aller_product_id = self.env["product.template"].create({
@@ -678,11 +681,11 @@ class Order(models.Model):
                         self.env["sale.order.line"].create({
                             'order_id': self.id,
                             'product_id': date_aller_product_id.product_variant_id.id,
-                            'name': order.date_aller,
+                            'name': order.date_aller_2.strftime("%m/%d/%Y"),
                             #'section_id': line.section_id.id,
                             'from_compute': True, 
                         })
-                if order.date_retour:
+                if order.date_retour_2:
                     date_retour_product_id = self.env["product.template"].search([("name", "=", "Date retour")], limit=1)
                     if not date_retour_product_id:
                         date_retour_product_id = self.env["product.template"].create({
@@ -696,7 +699,7 @@ class Order(models.Model):
                         self.env["sale.order.line"].create({
                             'order_id': self.id,
                             'product_id': date_retour_product_id.product_variant_id.id,
-                            'name': order.date_retour,
+                            'name': order.date_retour_2.strftime("%m/%d/%Y"),
                             #'section_id': line.section_id.id,
                             'from_compute': True, 
                         })
@@ -1062,8 +1065,8 @@ class Order(models.Model):
             'target': 'new',
             'context': {
                 "default_order_id": order.id,
-                "default_aller_date": order.date_aller,
-                "default_retour_date": order.date_retour,
+                "default_aller_date": order.date_aller_2,
+                "default_retour_date": order.date_retour_2,
                 "default_should_create_retour": order.offer_type == "weekend",
                 "default_is_weekend": order.offer_type == "weekend",
                 "default_line_ids": line_ids.mapped('product_id').ids,
