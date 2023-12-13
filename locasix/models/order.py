@@ -681,7 +681,7 @@ class Order(models.Model):
                         self.env["sale.order.line"].create({
                             'order_id': self.id,
                             'product_id': date_aller_product_id.product_variant_id.id,
-                            'name': order.date_aller_2.strftime("%m/%d/%Y"),
+                            'name': order.date_aller_2.strftime("/%d/%m/%Y"),
                             #'section_id': line.section_id.id,
                             'from_compute': True, 
                         })
@@ -699,7 +699,7 @@ class Order(models.Model):
                         self.env["sale.order.line"].create({
                             'order_id': self.id,
                             'product_id': date_retour_product_id.product_variant_id.id,
-                            'name': order.date_retour_2.strftime("%m/%d/%Y"),
+                            'name': order.date_retour_2.strftime("%d/%m/%Y"),
                             #'section_id': line.section_id.id,
                             'from_compute': True, 
                         })
