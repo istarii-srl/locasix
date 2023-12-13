@@ -1,5 +1,10 @@
 from odoo import fields, api, models
 import datetime
+import logging
+
+
+_logger = logging.getLogger(__name__)
+
 
 class OrderToAgenda(models.TransientModel):
     _name = "locasix.order.agenda"
@@ -26,6 +31,8 @@ class OrderToAgenda(models.TransientModel):
         for wizard in self:
             wizard.order_id.exported_to_agenda = True
             for line in wizard.line_ids:
+                _logger.info(line)
+                _logger.info(line.name)
                 if line:
                     newday_id = self.env["locasix.day"].sudo().search([("day", "=", wizard.aller_date)], limit=1)
                     if not newday_id:
