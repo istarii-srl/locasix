@@ -6,7 +6,7 @@ class OrderToAgenda(models.TransientModel):
     _description = "Assistant permettant de créer des allers et retours depuis une offre"
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order", required=True)
-    line_ids = fields.Many2many(string="Lignes", comodel_name="sale.order.line")
+    line_ids = fields.Many2many(string="Lignes", comodel_name="product.product")
     localite_id = fields.Many2one(string="Ville", comodel_name="locasix.municipality")
 
     aller_date = fields.Date(string="Date de l'aller", default=lambda self: self._get_default_date(), required=True)
@@ -26,7 +26,7 @@ class OrderToAgenda(models.TransientModel):
         for wizard in self:
             wizard.order_id.exported_to_agenda = True
             for line in wizard.line_ids:
-                if line.product_id:
+                if line:
                     newday_id = self.env["locasix.day"].sudo().search([("day", "=", wizard.aller_date)], limit=1)
                     if not newday_id:
                         newday_id = self.env["locasix.day"].sudo().create({"day": wizard.aller_date})
@@ -37,6 +37,7 @@ class OrderToAgenda(models.TransientModel):
                             "day_id": newday_id.id,
                             "aller_type": "out",
                             "is_proposition": True,
+                            "is_retours_created": wizard.should_create_retour,
                             "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                             "localite_id": wizard.localite_id.id,
                             "date": wizard.aller_date,
@@ -58,7 +59,7 @@ class OrderToAgenda(models.TransientModel):
                         "note": wizard.note,
                         "order_id": wizard.order_id.id,
                         "address_id": new_agg_id.address_id.id,
-                        "product_id": line.product_id.id,
+                        "product_id": line.id,
                     })
                     new_agg_id.send_proposition_creation_mail()
                     if wizard.should_create_retour:
@@ -72,6 +73,7 @@ class OrderToAgenda(models.TransientModel):
                                 "day_id": newday_id.id,
                                 "localite_id": wizard.localite_id.id,
                                 "is_proposition": True,
+                                "is_retours_created": wizard.should_create_retour,
                                 "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                                 "date": wizard.retour_date,
                                 "aller_type": "in",
@@ -93,6 +95,6 @@ class OrderToAgenda(models.TransientModel):
                             "agg_id": new_agg_id.id,
                             "order_id": wizard.order_id.id,
                             "address_id": new_agg_id.address_id.id,
-                            "product_id": line.product_id.id,
+                            "product_id": line.id,
                         })
                         new_agg_id.send_proposition_creation_mail()

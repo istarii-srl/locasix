@@ -1050,6 +1050,7 @@ class Order(models.Model):
             excluded_lists = ["VIDANGE", "ASSM", "FNG", "CAU", "TAR", "TA", "TR", "SURC-TA", "SURC-TR", "SURC-TAR", "FN", "CEM", "MCI", "FASSA", "FASSR", "MAIR", "TH1", "SURC-TH1", "MCADRA", "MCADRR"]
             line_ids = order.order_line.filtered(lambda x: x.product_id and x.product_id.type != "service" and x.product_id.default_code and x.product_id.default_code not in excluded_lists )
             view = self.env.ref('locasix.locasix_order_to_agenda_form')
+
             return {
             'name': 'Créer les allers et retours',
             'type': 'ir.actions.act_window',
@@ -1061,7 +1062,11 @@ class Order(models.Model):
             'target': 'new',
             'context': {
                 "default_order_id": order.id,
-                "default_line_ids": line_ids.ids,
+                "default_aller_date": order.date_aller,
+                "default_retour_date": order.date_retour,
+                "default_should_create_retour": order.offer_type == "weekend",
+                "default_is_weekend": order.offer_type == "weekend",
+                "default_line_ids": line_ids.mapped('product_id').ids,
                 "default_localite_id": order.city.id,
                 },
             }    
