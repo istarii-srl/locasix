@@ -1,4 +1,5 @@
 from odoo import fields, api, models
+from odoo.exceptions import UserError
 import datetime
 import logging
 
@@ -18,7 +19,7 @@ class OrderToAgenda(models.TransientModel):
 
     should_create_retour = fields.Boolean(string="Date de retour déjà connue ?", default=False)
     is_weekend = fields.Boolean(string="Weekend", default=False)
-    retour_date = fields.Date(string="Date du retour", default=lambda self: self._get_default_date(), required=True)
+    retour_date = fields.Date(string="Date du retour", default=lambda self: self._get_default_date())
     remarque_ids = fields.Many2many(string="Remarques", comodel_name="locasix.remarque")
     note = fields.Text(string="Remarque libre")
     
@@ -30,6 +31,8 @@ class OrderToAgenda(models.TransientModel):
     def action_create(self):
         for wizard in self:
             wizard.order_id.exported_to_agenda = True
+            if wizard.should_create_retour and not wizard.retour_date:
+                raise UserError('Vous devez mettre une date de retour')
             _logger.info(wizard.line_ids)
             for line in wizard.line_ids:
                 _logger.info(line)
@@ -45,7 +48,7 @@ class OrderToAgenda(models.TransientModel):
                             "day_id": newday_id.id,
                             "aller_type": "out",
                             "is_proposition": True,
-                            #"is_retours_created": wizard.should_create_retour,
+                            "is_retours_created": wizard.should_create_retour,
                             "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                             "localite_id": wizard.localite_id.id,
                             "date": wizard.aller_date,
@@ -81,7 +84,7 @@ class OrderToAgenda(models.TransientModel):
                                 "day_id": newday_id.id,
                                 "localite_id": wizard.localite_id.id,
                                 "is_proposition": True,
-                                #"is_retours_created": wizard.should_create_retour,
+                                "is_retours_created": wizard.should_create_retour,
                                 "is_weekend": wizard.is_weekend and wizard.should_create_retour, 
                                 "date": wizard.retour_date,
                                 "aller_type": "in",
