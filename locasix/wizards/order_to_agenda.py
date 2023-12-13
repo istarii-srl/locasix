@@ -30,6 +30,7 @@ class OrderToAgenda(models.TransientModel):
     def action_create(self):
         for wizard in self:
             wizard.order_id.exported_to_agenda = True
+            _logger.info(wizard.line_ids)
             for line in wizard.line_ids:
                 _logger.info(line)
                 _logger.info(line.name)
