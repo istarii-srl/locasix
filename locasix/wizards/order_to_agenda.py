@@ -37,8 +37,8 @@ class OrderToAgenda(models.TransientModel):
             _logger.info(wizard.line_ids)
             for line in wizard.line_ids:
                 _logger.info(line)
-                _logger.info(line.name)
                 if line.product_id:
+                    _logger.info(line.product_id.name)
                     newday_id = self.env["locasix.day"].sudo().search([("day", "=", wizard.aller_date)], limit=1)
                     if not newday_id:
                         newday_id = self.env["locasix.day"].sudo().create({"day": wizard.aller_date})
