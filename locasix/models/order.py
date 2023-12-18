@@ -1052,10 +1052,14 @@ class Order(models.Model):
         for order in self:
             excluded_lists = ["VIDANGE", "ASSM", "FNG", "CAU", "TAR", "TA", "TR", "SURC-TA", "SURC-TR", "SURC-TAR", "FN", "CEM", "MCI", "FASSA", "FASSR", "MAIR", "TH1", "SURC-TH1", "MCADRA", "MCADRR"]
             line_ids = order.order_line.filtered(lambda x: x.product_id and x.product_id.type != "service" and x.product_id.default_code and x.product_id.default_code not in excluded_lists )
+            new_list = []
+            for line in line_ids:
+                for q in range(0, line.product_uom_qty):
+                    new_list.append(line.product_id.id)
             wizard = self.env['locasix.order.agenda'].create({
                 'line_ids': [(0, 0, {
-                    'product_id': line.product_id.id,
-                }) for line in line_ids],
+                    'product_id': line,
+                }) for line in new_list],
                 "order_id": order.id,
                 "aller_date": order.date_aller_2,
                 "retour_date": order.date_retour_2,
