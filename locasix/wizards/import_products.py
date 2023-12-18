@@ -64,7 +64,7 @@ class ImportProducts(models.TransientModel):
                     "name": line["cat"],
                     "show_section_order": True,
                 })
-            if not product:
+            if not product and line["ref"]:
                 product = self.env["product.template"].create({
                     "name": line["name"],
                     "default_code": line["ref"],
@@ -117,7 +117,7 @@ class ImportProducts(models.TransientModel):
                     "show_section_order": True,
                 })
 
-            if not product:
+            if not product and line["ref"]:
                 product = self.env["product.template"].create({
                     "name": line["name"],
                     "default_code": line["ref"],
