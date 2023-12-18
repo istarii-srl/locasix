@@ -1052,27 +1052,27 @@ class Order(models.Model):
         for order in self:
             excluded_lists = ["VIDANGE", "ASSM", "FNG", "CAU", "TAR", "TA", "TR", "SURC-TA", "SURC-TR", "SURC-TAR", "FN", "CEM", "MCI", "FASSA", "FASSR", "MAIR", "TH1", "SURC-TH1", "MCADRA", "MCADRR"]
             line_ids = order.order_line.filtered(lambda x: x.product_id and x.product_id.type != "service" and x.product_id.default_code and x.product_id.default_code not in excluded_lists )
-            view = self.env.ref('locasix.locasix_order_to_agenda_form')
+            wizard = self.env['locasix.order.agenda'].create({
+                'line_ids': [(0, 0, {
+                    'product_id': line.product_id.id,
+                }) for line in line_ids],
+                "order_id": order.id,
+                "aller_date": order.date_aller_2,
+                "retour_date": order.date_retour_2,
+                "should_create_retour": order.offer_type == "weekend",
+                "is_weekend": order.offer_type == "weekend",
+                "localite_id": order.city.id,
+            })
 
-            return {
-            'name': 'Créer les allers et retours',
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'locasix.order.agenda',
-            'views': [(view.id, 'form')],
-            'view_id': view.id,
-            'target': 'new',
-            'context': {
-                "default_order_id": order.id,
-                "default_aller_date": order.date_aller_2,
-                "default_retour_date": order.date_retour_2,
-                "default_should_create_retour": order.offer_type == "weekend",
-                "default_is_weekend": order.offer_type == "weekend",
-                "default_line_ids": line_ids.mapped('product_id').ids,
-                "default_localite_id": order.city.id,
-                },
-            }    
+        return {
+            "name": "Créer les allers et retours",
+            "type": "ir.actions.act_window",
+            "res_model": "locasix.order.agenda",
+            "views": [[False, "form"]],
+            "target": "new",
+            "res_id": wizard.id
+        }
+
     
     def get_discount_rates(self, section_line):
         for order in self:

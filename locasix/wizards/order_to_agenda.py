@@ -12,8 +12,9 @@ class OrderToAgenda(models.TransientModel):
     _description = "Assistant permettant de créer des allers et retours depuis une offre"
 
     order_id = fields.Many2one(string="Offre", comodel_name="sale.order", required=True)
-    line_ids = fields.Many2many(string="Lignes", comodel_name="product.product")
+    line_ids = fields.One2many(string="Lignes", comodel_name="locasix.order.agenda.line", inverse_name="wizard_id")
     localite_id = fields.Many2one(string="Ville", comodel_name="locasix.municipality")
+
 
     aller_date = fields.Date(string="Date de l'aller", default=lambda self: self._get_default_date(), required=True)
 
@@ -37,7 +38,7 @@ class OrderToAgenda(models.TransientModel):
             for line in wizard.line_ids:
                 _logger.info(line)
                 _logger.info(line.name)
-                if line:
+                if line.product_id:
                     newday_id = self.env["locasix.day"].sudo().search([("day", "=", wizard.aller_date)], limit=1)
                     if not newday_id:
                         newday_id = self.env["locasix.day"].sudo().create({"day": wizard.aller_date})
@@ -70,7 +71,7 @@ class OrderToAgenda(models.TransientModel):
                         "note": wizard.note,
                         "order_id": wizard.order_id.id,
                         "address_id": new_agg_id.address_id.id,
-                        "product_id": line.id,
+                        "product_id": line.product_id.id,
                     })
                     new_agg_id.send_proposition_creation_mail()
                     if wizard.should_create_retour:
@@ -106,6 +107,6 @@ class OrderToAgenda(models.TransientModel):
                             "agg_id": new_agg_id.id,
                             "order_id": wizard.order_id.id,
                             "address_id": new_agg_id.address_id.id,
-                            "product_id": line.id,
+                            "product_id": line.product_id.id,
                         })
                         new_agg_id.send_proposition_creation_mail()
