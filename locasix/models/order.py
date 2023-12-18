@@ -1051,7 +1051,7 @@ class Order(models.Model):
         _logger.info("action put in agenda")
         for order in self:
             excluded_lists = ["VIDANGE", "ASSM", "FNG", "CAU", "TAR", "TA", "TR", "SURC-TA", "SURC-TR", "SURC-TAR", "FN", "CEM", "MCI", "FASSA", "FASSR", "MAIR", "TH1", "SURC-TH1", "MCADRA", "MCADRR"]
-            line_ids = order.order_line.filtered(lambda x: x.product_id and x.product_id.type != "service" and x.product_id.default_code and x.product_id.default_code not in excluded_lists )
+            line_ids = order.order_line.filtered(lambda x: x.product_id and x.product_id.is_agenda_visible and x.product_id.type != "service" and x.product_id.default_code and x.product_id.default_code not in excluded_lists )
             new_list = []
             for line in line_ids:
                 for q in range(0, int(line.product_uom_qty)):

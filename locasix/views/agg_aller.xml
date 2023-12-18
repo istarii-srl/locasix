@@ -51,7 +51,7 @@
                                         <create name="add_product_control" string="Ajouter un aller" />
                                     </control>
                                     <field name="aller_type" invisible="1"/>
-                                    <field name="product_id"/>
+                                    <field name="product_id" domain="[('is_agenda_visible', '=', True)]"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
                                     <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
@@ -128,7 +128,7 @@
                                         <create name="add_product_control_4" string="Ajouter un retour"/>
                                     </control>
                                     <field name="aller_type" invisible="1"/>
-                                    <field name="product_id"/>
+                                    <field name="product_id" domain="[('is_agenda_visible', '=', True)]"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
                                     <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
@@ -205,7 +205,7 @@
                                         <create name="add_product_control" string="Ajouter un déplacement"/>
                                     </control>
                                     <field name="aller_type" invisible="1"/>
-                                    <field name="product_id"/>
+                                    <field name="product_id" domain="[('is_agenda_visible', '=', True)]"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
                                     <field name="contract_id"/>
                                     <field name="is_depl" invisible="1"/>
@@ -278,7 +278,7 @@
                                         <create name="add_product_control" string="Ajouter une proposition"/>
                                     </control>
                                     <field name="aller_type" invisible="1"/>
-                                    <field name="product_id"/>
+                                    <field name="product_id" domain="[('is_agenda_visible', '=', True)]"/>
                                     <field name="product_unique_ref" options="{'no_create': True}"/>
                                     <field name="contract_id"/>
                                     <field name="day_id" invisible="1"/>
