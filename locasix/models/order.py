@@ -427,7 +427,9 @@ class Order(models.Model):
 
 
     def action_cancel(self):
+        _logger.info("Action cancel")
         super(Order, self).action_cancel()
+        self.write({'state': 'cancel'})
         self.done_order = False
         return True        
 
