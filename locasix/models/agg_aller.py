@@ -96,7 +96,6 @@ class AggAller(models.Model):
                 for prop in agg_aller.aller_ids:
                     prop.date = agg_aller.date
                     body += prop.ask_confirmation(" ", 1)
-                    i += 1
 
                 body += "<br/><br/>Cordialement,"
                 mail_values["body_html"] = body
