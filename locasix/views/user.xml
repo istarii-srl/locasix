@@ -8,11 +8,9 @@
         <field name="arch" type="xml">
             <field name="signature" position="after">
                 <group>
+                    <field name="work_location"/>
                     <field name="signature_image" widget="image"/>
                 </group>
-            </field>
-            <field name="lang" position="after">
-                <field name="work_location"/>
             </field>
         </field>
     </record>

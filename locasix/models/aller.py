@@ -660,6 +660,9 @@ class Aller(models.Model):
                 }
                 batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
                 batch_mails_sudo.send(auto_commit=False)
+            else:
+                body = f"la proposition {aller.name} a été modifiée par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}"
+                return body
 
     def open_agg(self):
         view = self.env.ref('locasix.locasix_agg_aller_form')
