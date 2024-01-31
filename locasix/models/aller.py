@@ -643,11 +643,11 @@ class Aller(models.Model):
         for aller in self:
             aller.proposition_status = "pending_boss"
             self.create_history_message("Demande de confirmation : "+ note)
+            type_aller = "Aller" if aller.aller_type == "out" else "Retour"
+            if aller.is_depl:
+                type_aller = "Déplacement"
             if i == 0:
                 batch_mails_sudo = self.env['mail.mail'].sudo()
-                type_aller = "Aller" if aller.aller_type == "out" else "Retour"
-                if aller.is_depl:
-                    type_aller = "Déplacement"
                 from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
                 note = aller.note if aller.note else ""
                 mail_values = {
@@ -661,6 +661,7 @@ class Aller(models.Model):
                 batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
                 batch_mails_sudo.send(auto_commit=False)
             else:
+
                 body = f"la proposition {aller.name} a été modifiée par {aller.asking_user.name}<br/>Type de proposition : {type_aller}<br/>Date : {aller.date}<br/>Lien : {aller.get_record_url()}<br/><br/>Remarque: {aller.remarque_string}<br/>Remarque libre:{note}"
                 return body
 
