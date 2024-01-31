@@ -6,7 +6,7 @@
             <form string="Allers">
                 <header>
                     <button name="action_open_duplicate_wizard" type="object" string="Dupliquer" class="oe_highlight"/>
-                    <button name="update_proposition" type="object" string="Modifier la proposition" class="oe_highlight" attrs="{'invisible': [('is_waiting_worked_modif', '=', False)]}"/>
+                    <button name="update_proposition" type="object" string="Demander la confirmation" class="oe_highlight" attrs="{'invisible': [('is_waiting_worked_modif', '=', False)]}"/>
                     <button name="action_archive" type="object" string="Archiver" groups="locasix.group_locasix_admin"/>
                 </header>
                 <sheet>
