@@ -78,6 +78,8 @@ class Order(models.Model):
 
     order_file_ids = fields.One2many(comodel_name="locasix.order.file", inverse_name="order_id")
 
+    work_location = fields.Selection([('ghislain', 'Saint-Ghislain'), ('thimister', 'Thimister')], string="Lieu de travail", related="user_id.work_location", readonly=True, store=True)
+
     state = fields.Selection(
         selection=[
             ('draft', "Quotation"),
