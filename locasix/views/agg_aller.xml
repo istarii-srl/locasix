@@ -16,7 +16,7 @@
                             <field name="aller_type" invisible="1"/>
                             <field name="day_id" invisible="1"/>
                             <field name="is_depl" invisible="1"/>
-                            <field name="is_waiting_worked_modif" groups="base.group_no_one"></field>
+                            <field name="is_waiting_worked_modif" invisible="1"></field>
                             <field name="date"/>
                             <field name="address_id"/>
                             <field name="localite_id" required="1"/>
