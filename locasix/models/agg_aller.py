@@ -34,6 +34,16 @@ class AggAller(models.Model):
     prop_mail_sent = fields.Boolean(string="Prop mail sent")
 
     should_send_mail_to_assembler = fields.Boolean(string="Should send mail to assembler", compute="_compute_shoud_sent_mail_to_assembler")
+
+    is_waiting_worked_modif = fields.Boolean(string="Is waiting for worked modif", compute="_compute_is_waiting_worked_modif")
+
+    def _compute_is_waiting_worked_modif(self):
+        for agg_aller in self:
+            flag = False
+            for aller in agg_aller.aller_ids:
+                if aller.proposition_status == "pending_worker" and aller.is_proposition:
+                    flag = True
+            agg_aller.is_waiting_worked_modif = flag
     
     def _compute_shoud_sent_mail_to_assembler(self):
         for aller in self:
@@ -70,6 +80,29 @@ class AggAller(models.Model):
                 else:
                     aller.city = "/"
 
+    def update_proposition(self):
+        for agg_aller in self:
+            waiting_prop = agg_aller.aller_ids.filtered(lambda x: x.proposition_status == "pending_worker")
+            if waiting_prop:
+                from_email = waiting_prop.asking_user.email if waiting_prop.asking_user.email else "b.quintart@locasix.be"
+                mail_values = {
+                    'subject': f"Demande de confirmation",
+                    'email_to': self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') if self.env['ir.config_parameter'].sudo().get_param('locasix.email_shipping_handler') else "o.libbrecht@locasix.be",
+                    'auto_delete': False,
+                    'email_from': from_email,
+                }
+                body = "Bonjour,"
+
+                for prop in agg_aller.aller_ids:
+                    prop.date = agg_aller.date
+                    body += prop.ask_confirmation(" ", 1)
+                    i += 1
+
+                body += "<br/><br/>Cordialement,"
+                mail_values["body_html"] = body
+                batch_mails_sudo = self.env['mail.mail'].sudo()
+                batch_mails_sudo |= self.env['mail.mail'].sudo().create(mail_values)
+                batch_mails_sudo.send(auto_commit=False)
 
     # TODO USE THAT IN WRITE AND CREATE
     def check_and_merge(self):
