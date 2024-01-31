@@ -11,6 +11,9 @@
                     <field name="signature_image" widget="image"/>
                 </group>
             </field>
+            <field name="lang" position="after">
+                <field name="work_location"/>
+            </field>
         </field>
     </record>
 
