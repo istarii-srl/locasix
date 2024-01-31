@@ -91,7 +91,7 @@ class AggAller(models.Model):
                     'auto_delete': False,
                     'email_from': from_email,
                 }
-                body = "Bonjour,"
+                body = "Bonjour,<br/><br/>"
 
                 for prop in agg_aller.aller_ids:
                     prop.date = agg_aller.date
