@@ -15,8 +15,12 @@ class Municipality(models.Model):
     @api.depends("postal_code")
     def _compute_province(self):
         for municipality in self:
-            if municipality.postal_code:
+            postal_code = False
+            try:
                 postal_code = int(municipality.postal_code)
+            except:
+                pass
+            if postal_code:
                 if postal_code >= 1300 and postal_code <= 1499:
                     municipality.province = "brabant_wallon"
                 elif postal_code >= 4000 and postal_code <= 4999:
