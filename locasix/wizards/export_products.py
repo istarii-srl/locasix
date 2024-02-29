@@ -65,6 +65,9 @@ class ExportProducts(models.TransientModel):
             worksheet.set_column(7, 7, 15)
             worksheet.set_column(8, 8, 15)
             worksheet.set_column(9, 9, 15)
+            worksheet.set_column(10, 10, 15)
+            worksheet.set_column(11, 11, 15)
+            worksheet.set_column(12, 12, 15)
             worksheet.write(0, 0, "Nom")
             worksheet.write(0, 1, "Ref")
             worksheet.write(0, 2, "Description")
@@ -77,6 +80,7 @@ class ExportProducts(models.TransientModel):
             worksheet.write(0, 9, "Ref condi add. ?")
             worksheet.write(0, 10, "Assemblage ?")
             worksheet.write(0, 11, "Visible agenda ?")
+            worksheet.write(0, 12, "Notifier assembleur ?")
             row = 1
             for product in wizard.product_ids:
                 if not product.has_multi_price:
@@ -92,6 +96,7 @@ class ExportProducts(models.TransientModel):
                     worksheet.write(row, 9, product.has_ref_to_condi)
                     worksheet.write(row, 10, product.is_assemblage_product)
                     worksheet.write(row, 11, product.is_agenda_visible)
+                    worksheet.write(row, 12, product.should_notify_assembler)
 
                     row +=1
 
@@ -110,6 +115,9 @@ class ExportProducts(models.TransientModel):
             worksheet.set_column(8, 8, 15)
             worksheet.set_column(9, 9, 15)
             worksheet.set_column(10, 10, 20)
+            worksheet.set_column(11, 11, 15)
+            worksheet.set_column(12, 12, 15)
+            worksheet.set_column(13, 13, 15)
             worksheet.write(0, 0, "Nom")
             worksheet.write(0, 1, "Ref")
             worksheet.write(0, 2, "Description")
@@ -123,6 +131,7 @@ class ExportProducts(models.TransientModel):
             worksheet.write(0, 10, "Ref condi add. ?")
             worksheet.write(0, 11, "Assemblage ?")
             worksheet.write(0, 12, "Visible agenda ?")
+            worksheet.write(0, 13, "Notifier assembleur ?")
 
             row = 1
             for product in wizard.product_ids:
@@ -140,6 +149,7 @@ class ExportProducts(models.TransientModel):
                     worksheet.write(row, 10, product.has_ref_to_condi)
                     worksheet.write(row, 11, product.is_assemblage_product)
                     worksheet.write(row, 12, product.is_agenda_visible)
+                    worksheet.write(row, 13, product.should_notify_assembler)
                     row +=1
     
 

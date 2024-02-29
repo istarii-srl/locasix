@@ -31,6 +31,7 @@
                 <field name="insurance_percentage" attrs="{'invisible': [('is_insurance', '=', False)]}" widget="percentage"/>
                 <field name="is_temporary_product" groups="locasix.group_locasix_admin"/>
                 <field name="is_assemblage_product"/>
+                <field name="should_notify_assembler" groups="locasix.group_locasix_admin"></field>
             </field>
 
             <page name="general_information" position="after">

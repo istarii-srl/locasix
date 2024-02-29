@@ -36,6 +36,7 @@ class ProductTemplate(models.Model):
     is_assemblage_product = fields.Boolean(string="Assemblage", default=True)
 
     is_agenda_visible = fields.Boolean(string="Est visible dans l'agenda", default=True)
+    should_notify_assembler = fields.Boolean(string="Notifier l'assembleur", default=False)
 
     is_transport_address_product = fields.Boolean(default=False)
 

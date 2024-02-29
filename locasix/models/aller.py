@@ -77,6 +77,8 @@ class Aller(models.Model):
             for remarque in aller.remarque_ids:
                 if remarque.send_mail_to_assembler:
                     flag = True
+            if aller.product_id and aller.product_id.should_notify_assembler:
+                flag = True
             
             aller.should_send_mail_to_assembler = flag
 
