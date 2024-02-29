@@ -73,6 +73,9 @@ class ImportProducts(models.TransientModel):
             else:
                 product.name = line["name"]
 
+
+            _logger.info(product.name + " " + str(product.should_notify_assembler))
+
             product.uom_id = uom_id
             product.uom_po_id = uom_id
             product.product_description = line["description"]
@@ -84,7 +87,7 @@ class ImportProducts(models.TransientModel):
             product.has_multi_price = False
             product.is_agenda_visible = line["visible_agenda"]
             product.has_ref_to_condi = line["condi"]
-            _logger.info(line["price"])
+            
             product.list_price = line["price"]
             product.weekend_price = line["weekend_price"]
             product.more_details_link = line["details"]
