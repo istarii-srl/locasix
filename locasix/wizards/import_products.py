@@ -73,24 +73,24 @@ class ImportProducts(models.TransientModel):
             else:
                 product.name = line["name"]
 
+            if product:
+                _logger.info(str(product.name) + " " + str(product.should_notify_assembler))
 
-            _logger.info(product.name + " " + str(product.should_notify_assembler))
-
-            product.uom_id = uom_id
-            product.uom_po_id = uom_id
-            product.product_description = line["description"]
-            product.has_24_price = line["24h"]
-            product.categ_id = categ_id
-            product.should_notify_assembler = line["should_notify_assembler"]
-            product.is_temporary_product = False
-            product.is_assemblage_product = line["assemblage"]
-            product.has_multi_price = False
-            product.is_agenda_visible = line["visible_agenda"]
-            product.has_ref_to_condi = line["condi"]
-            
-            product.list_price = line["price"]
-            product.weekend_price = line["weekend_price"]
-            product.more_details_link = line["details"]
+                product.uom_id = uom_id
+                product.uom_po_id = uom_id
+                product.product_description = line["description"]
+                product.has_24_price = line["24h"]
+                product.categ_id = categ_id
+                product.should_notify_assembler = line["should_notify_assembler"]
+                product.is_temporary_product = False
+                product.is_assemblage_product = line["assemblage"]
+                product.has_multi_price = False
+                product.is_agenda_visible = line["visible_agenda"]
+                product.has_ref_to_condi = line["condi"]
+                
+                product.list_price = line["price"]
+                product.weekend_price = line["weekend_price"]
+                product.more_details_link = line["details"]
             
     def create_multi_tarif_products(self, sheet):
         lines = []
@@ -132,22 +132,23 @@ class ImportProducts(models.TransientModel):
                 product.name = line["name"]
                 
             uom_id = self.env["uom.uom"].search([("name", "=", "Unité(s)")], limit=1)
-            product.uom_id = uom_id
-            product.uom_po_id = uom_id  
-            product.product_description = line["description"]
-            product.has_24_price = line["24h"]
-            product.has_multi_price = True
-            product.should_notify_assembler = line["should_notify_assembler"]
-            product.is_agenda_visible = line["visible_agenda"]
-            product.categ_id = categ_id
-            product.is_temporary_product = False
-            product.is_assemblage_product = line["assemblage"]
-            product.has_ref_to_condi = line["condi"]
-            product.weekend_price = line["weekend_price"]
-            product.more_details_link = line["details"]
-            product.day_price = line["day_price"]
-            product.week_price = line["week_price"]
-            product.month_price = line["month_price"]
+            if product:
+                product.uom_id = uom_id
+                product.uom_po_id = uom_id  
+                product.product_description = line["description"]
+                product.has_24_price = line["24h"]
+                product.has_multi_price = True
+                product.should_notify_assembler = line["should_notify_assembler"]
+                product.is_agenda_visible = line["visible_agenda"]
+                product.categ_id = categ_id
+                product.is_temporary_product = False
+                product.is_assemblage_product = line["assemblage"]
+                product.has_ref_to_condi = line["condi"]
+                product.weekend_price = line["weekend_price"]
+                product.more_details_link = line["details"]
+                product.day_price = line["day_price"]
+                product.week_price = line["week_price"]
+                product.month_price = line["month_price"]
 
     def create_links(self, sheet):
         lines = []
