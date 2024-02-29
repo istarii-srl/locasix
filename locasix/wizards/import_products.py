@@ -105,7 +105,8 @@ class ImportProducts(models.TransientModel):
                 "weekend_price": sheet.cell_value(i, 9),
                 "condi": sheet.cell_value(i, 10),
                 "assemblage": sheet.cell_value(i, 11),
-                "visible_agenda": sheet.cell_value(i, 12)
+                "visible_agenda": sheet.cell_value(i, 12),
+                "should_notify_assembler": sheet.cell_value(i, 13),
             })
         for line in lines:
             product = self.env["product.template"].search([("default_code", "=", line["ref"])], limit=1)
@@ -133,6 +134,7 @@ class ImportProducts(models.TransientModel):
             product.product_description = line["description"]
             product.has_24_price = line["24h"]
             product.has_multi_price = True
+            product.should_notify_assembler = line["should_notify_assembler"]
             product.is_agenda_visible = line["visible_agenda"]
             product.categ_id = categ_id
             product.is_temporary_product = False
