@@ -74,7 +74,7 @@ class ImportProducts(models.TransientModel):
                 product.name = line["name"]
 
             if product:
-                _logger.info(str(product.name) + " " + str(product.should_notify_assembler))
+                _logger.info(str(product.name) + " " + str(product.should_notify_assembler)+ " " + str(product.list_price))
 
                 product.uom_id = uom_id
                 product.uom_po_id = uom_id
