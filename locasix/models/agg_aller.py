@@ -52,6 +52,10 @@ class AggAller(models.Model):
                 if remarque.send_mail_to_assembler:
                     flag = True
             
+            for line in aller.aller_line_ids:
+                if line.product_id and line.product_id.should_notify_assembler:
+                    flag = True
+            
             aller.should_send_mail_to_assembler = flag
 
 
