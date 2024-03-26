@@ -406,19 +406,20 @@ class Order(models.Model):
     def enforce_cuve(self):
         _logger.info("enforce cuve")
         for order in self:
-            cuve_line = False
-            has_electro = False
-            for line in order.order_line:
-                if line.product_id:
-                    if line.product_id.default_code == "CUK2":
-                        cuve_line = line
-                    if line.product_id.categ_id and line.product_id.categ_id.show_electro_annexe:
-                        has_electro = True
-            if cuve_line and has_electro:
-                cuve_line.price_unit = 50.0
-            elif cuve_line and not has_electro:
-                if cuve_line.price_unit == 50:
-                    cuve_line.price_unit = cuve_line.product_id.lst_price
+            pass
+            # cuve_line = False
+            # has_electro = False
+            # for line in order.order_line:
+            #     if line.product_id:
+            #         if line.product_id.default_code == "CUK2":
+            #             cuve_line = line
+            #         if line.product_id.categ_id and line.product_id.categ_id.show_electro_annexe:
+            #             has_electro = True
+            # if cuve_line and has_electro:
+            #     cuve_line.price_unit = 50.0
+            # elif cuve_line and not has_electro:
+            #     if cuve_line.price_unit == 50:
+            #         cuve_line.price_unit = cuve_line.product_id.lst_price
 
     def has_transport_prices(self):
         for order in self:
