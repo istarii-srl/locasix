@@ -15,7 +15,7 @@
     <template id="locasix.locasix_quote_report_document_six">
         <t t-call="web.basic_layout">
             <link href="/locasix/static/locasix.css" rel="stylesheet"/>
-            <div class="header not-first-page">
+            <div class="header">
                 <img src="/locasix/static/img/six_header.png" style="max-height: 90px; padding-top: 15px;"/>
             </div>
             <t t-call="locasix.locasix_body"/>
@@ -24,7 +24,7 @@
             <t t-if="doc.has_electro_annexe()" t-call="locasix.electro_appendix"/>
             <t t-call="locasix.additional_conditions"/>
             <t t-call="locasix.technical_files"/>
-            <t t-call="locasix.cgv"/>
+            <t t-call="locasix.six_cgv"/>
             <div t-if="doc.display_front_page" class="footer not-first-page">
                 <img src="/locasix/static/img/locasix_footer.png" style="max-width: 900px; padding-bottom: 10px;"/>
             </div>
@@ -711,4 +711,118 @@
             </ul>
         </div>
     </template>
+
+    <template id="six_cgv">
+        <div class="page cgv font-calibri" style="page-break-before:always;font-size: 8px;">
+            <div class="col-12" style="text-align:center;">
+                <span class="text-center appendix-title">Conditions générales de vente </span>
+            </div>
+            <div class="row" style="padding-top: 30px;">
+                <div class="col-6" style="padding-right: 2px">
+                    <span ><strong>1) Informations sur la Société</strong><br/>
+                    </span>
+                    <span>Nom de la société: NICOLAS SIX UNITS SRL<br/>
+Numéro de TVA: BE0719.889.755<br/>
+Siège social: Rue de Tournai (Sta) 290, 7973 Beloeil<br/>
+Usine : Rue de la Hamaide 117/10 à 7333 Tertre<br/>
+E-mail: atelier@sixunits.be <br/>
+</span>
+<br/>
+<br/>
+<span><strong>2) Définitions </strong><br/>
+</span>
+<span>Pour l’application des présentes conditions générales, les termes repris ci-dessous auront la signification suivante, sauf si le contexte dans lequel ils sont utilisés commande qu’on leur donne une signification différente :<br/>
+
+<span class="underlined">Client</span> : Consommateur ou Entreprise concluant un contrat avec la Société.<br/>
+<span class="underlined">Consommateur</span> : Toute personne physique agissant à des fins sortant du cadre de ses activités professionnelles, industrielles ou artisanales et qui conclut un contrat avec la Société.<br/>
+<span class="underlined">Entreprise</span> : Toute personne physique ou morale poursuivant durablement un but économique et qui conclut un contrat avec la Société.<br/>
+<span class="underlined">Force majeure</span> : Sont considérés comme des cas de force majeure, notamment les incendies, les épidémies, les pandémies, les catastrophes naturelles et événements climatiques exceptionnels, les grèves, lock-out, guerres, émeutes et troubles de l’ordre public, les ordres ou commandements des autorités publiques belges, européennes ou étrangères, les changements de réglementation belge, européenne ou étrangère, les bris de machine, les défaillance des fournisseurs ou sous-traitants, le fait de tiers ou tout événement extérieur imprévisible de nature à retarder, à empêcher l’exécution des engagements pris et généralement tous les évènements indépendants de la volonté de la Société de nature à retarder ou empêcher totalement ou partiellement l’exécution des obligations de la Société.<br/>
+<span class="underlined">Jour Ouvrable</span> : Tous les jours sauf le samedi, le dimanche et les jours fériés en Belgique.<br/>
+<span class="underlined">Marchandise</span> : Les biens meubles corporels vendus par la Société.<br/>
+<span class="underlined">Société</span> : La société à responsabilité limitée de droit belge Nicolas Six Units, dont le siège est établi à Rue de Tournai (Sta) 290, 7973 Beloeil inscrite à la Banque-Carrefour des Entreprises sous le numéro 0719.889.755. (RPM Hainaut – division Tournai)<br/>
+</span>
+<br/>
+<br/>
+<span><strong>3) Applications et dérogations</strong><br/>
+</span>
+<span>Les présentes conditions générales de vente sont applicables à l’ensemble des relations commerciales (offres, commandes, factures, contrats et obligations qui en découlent) entre la Société et le Client.
+La Société se réserve le droit de refuser d’être liées par les conditions du Client, elle communiquera expressément son refus préalablement à l’acceptation du Client ou sans retard après la réception de celui-ci.
+Les dérogations émanant des représentants devront être confirmées par écrit par la Société. En tout état de cause, les présentes conditions resteront valables pour tous les autres points auxquels il n’aura pas été expressément dérogé.
+</span>
+<br/>
+<br/>
+<span><strong>4) Conclusion du contrat</strong><br/>
+</span>
+<span>Le délai de validité des offres de la Société est de 30 jours à dater de leur émission. Le Client doit transmettre son accord avant l’expiration de ce délai. Passé ce délai, l’offre ne liera plus la Société. Toute commande ou modification de commande non précédée d’une offre de la Société ne liera celle-ci qu’après son acceptation expresse.</span>
+<br/>
+<br/>
+<span><strong>5) Délais d’exécution</strong><br/>
+</span>
+<span>Les délais d’exécution sont purement indicatifs et n’engagent pas la Société à une quelconque exécution à date fixe. Ils ne peuvent donner lieu à des pénalités de retard.</span>
+<br/>
+<br/>
+<span><strong>6) Autorisations administratives, permis et normes</strong><br/>
+</span>
+<span>Le Client est seul responsable de l’obtention préalable des permis ou autres autorisations administratives qui seraient rendues nécessaires pour la livraison, l’installation et la mise en service des Marchandises livrées sur le site qu’il aura préalablement désigné.</span>
+<br/>
+<br/>
+<span><strong>7) Réserve de propriété, transport, risques et livraison</strong><br/>
+</span>
+<span>Les Marchandises demeurent la propriété de la Société jusqu’à paiement intégral du prix, des éventuels frais de livraison et de tout montant généralement quelconque dont le Client serait redevable envers la Société. 
+Le Client n’est pas autorisé à grever, à mettre en gage, ni à aliéner d’une quelconque manière des Marchandises livrées sous réserve de propriété. Le Client n’est pas non plus autorisé à apporter une quelconque modification à la Marchandise. 
+Sauf convention écrite contraire, les livraisons de la Société s’effectuent au départ de nos usines, les transports étant toujours à charge du Client. Les risques sont transférés au Client au moment de la livraison ou, lorsqu’elle est retardée pour causes qui ne sont pas imputables à la Société, au moment où elle aurait dû avoir lieu. Sauf stipulation contraire écrite, les Marchandises doivent être réceptionnées dans la quinzaine de leur mise à la disposition du Client. 
+A défaut de l’enlèvement dans ce délai, ou dans un délai spécialement convenu par écrit, la Société sera en droit, sans mise en demeure préalable et à son choix, soit de facturer les Marchandises et d’en exiger le paiement, soit de considérer la vente comme résiliée aux torts du Client sans que cette résiliation nécessite une décision judiciaire. Dans le second cas, le Client sera redevable d’une indemnité forfaitaire et irréductible égale à 12% du prix convenu de la vente, sans préjudice du droit de la Société de réclamer un montant supérieur si elle établit qu’elle subit un dommage plus important.
+</span>
+</div>
+<div class="col-6" style="padding-left: 2px">
+<span><strong>8) Réclamation</strong><br/>
+</span>
+<span>Le Client est tenu de contrôler les Marchandises livrées immédiatement au moment de la livraison afin de vérifier leur conformité avec les Marchandises prévues au contrat et la présence de tout vice apparent. Le Client doit signaler l’existence de tout vice à la Société dans un délai de trois Jours Ouvrables suivant la réception des Marchandises en produisant toutes les justifications visant à établir la réalité de ce vice. A défaut d’avoir signalé à la Société la présence d’un vice apparent dans les trois Jours Ouvrables suivant la réception des Marchandises vendues, le Client est présumé couvrir ce vice. Le Client doit en outre permettre à la Société de constater ce vice et le cas, échéant, d’y remédier.</span>
+<br/>
+<br/>
+<span><strong>9) Prix</strong><br/>
+</span>
+<span>Les prix mentionnés sont en euros et s’entendent hors TVA et frais de livraison. Le prix applicable est celui en vigueur au moment de la passation de la commande. Au cas où un fournisseur, une autorité belge ou européenne imposerait une augmentation du prix ou une taxe ou contribution environnementale, la Société aura le droit de répercuter le coût supplémentaire à charge du Client. La Société s’engage à notifier et démontrer au Client ces éventuels suppléments de prix. Le Client accepte ce droit de répercussion et s’engage à le respecter.</span>
+<br/>
+<br/>
+<span><strong>10) Payement</strong><br/>
+</span>
+<span>La Société établit une facture qui devra être payée dans les 15 jours de la date de la facture pour les clients assujettis à la TVA. La première facture pour un nouveau client ou les factures pour les particuliers doivent être payées au grand comptant, sauf stipulation contraire écrite préalable. Toute somme non payée à l’échéance convenue sera augmentée de plein droit et sans mise en demeure préalable d’un intérêt de 12% l’an. En outre, le montant de la facture sera majoré d'une indemnité forfaitaire de 10% à titre de clause pénale forfaitaire irréductible, non compris l’indemnité de procédure et les frais de justice et sans préjudice du droit de la Société de réclamer un montant supérieur si elle établit qu’elle subit un dommage plus important.</span>
+<br/>
+<br/>
+<span><strong>11) Limitation de responsabilité</strong><br/>
+</span>
+<span>La responsabilité de la Société ne pourra être engagée que si une faute lourde est démontrée dans son chef ou dans celui de ses préposés. En aucun cas la Société ne peut être tenue responsable des lésions corporelles, ni des dommages directs ou indirects, matériels ou immatériels, de quelque nature qu’ils soient, résultant de cas de force majeure ou de cas fortuits tels que décrit à l’article 12. 
+La responsabilité de la Société ne pourra pas être engagée si le Client subit un dommage en raison d’omissions ou d’erreurs dans les informations qu’il a communiquées à la Société. 
+Dans les cas où la responsabilité de la Société est engagée, il est expressément convenu que le montant des dommages et intérêts auquel la société pourrait être tenue est limité au montant payé par l’assureur responsabilité de la Société majoré de l’éventuelle franchise à prendre en charge par la Société ou, en l’absence d’intervention d’un assureur, soit au montant de 5% du prix hors taxe de la Marchandise vendue, étant entendu qu’en aucun cas le montant ne pourra excéder cinquante mille euros, quel que soit le dommage, direct, indirect, matériel, immatériel, etc….. Les parties reconnaissent expressément que les obligations de la Société sont des obligations de moyens.
+</span>
+<br/>
+<br/>
+<span><strong>12) Force majeure – Cas fortuit – Imprévision</strong><br/>
+</span>
+<span>En cas de Force majeure la Société se réserve le droit de reporter l’exécution du contrat à concurrence de la durée de l’empêchement et même, si la Force majeure rend l’exécution définitivement impossible, d’annuler totalement ou partiellement les commandes, de résoudre les contrats non encore exécutés, ou d’en résilier la partie non encore exécutée, sans préavis, ni indemnités à charge de la Société. 
+En outre, si en raison d’un changement de circonstances indépendant de sa volonté et imprévisible lors de la conclusion du contrat, la Société voit l’exécution de ses obligations rendue excessivement plus onéreuse, la Société et le Client s’engagent à négocier de bonne foi et loyalement une adaptation des conditions contractuelles en vue de restaurer l’équilibre contractuel dans un délai de 30 Jours Ouvrables suivant la notification de ces circonstances par la Société au Client. A défaut d’accord dans le délai précité, chacune des parties pourra s’adresser au juge compétent dans les formes du référé pour demander que les conditions soient adaptées ou qu’il soit mis fin au contrat en application des dispositions de l’article 5.74 du Code civil.
+</span>
+<br/>
+<br/>
+<span><strong>13) Utilisation des données à caractère personnel</strong><br/></span>
+<span>La Société collecte et traite les données à caractère personnel du Client dans le cadre de ses services. Les données à caractère personnel ne sont transmises et stockées que dans la mesure où c’est nécessaire, et uniquement pendant la période requise à cette fin. Le Client dispose d’un droit de regard, de rectification, de suppression et d’objection, ainsi que d’un droit de plainte auprès de l’autorité de protection des données. Le Client est responsable de l’exactitude des données à caractère personnel qu’il fournit et s’engage à respecter le RGPD à l’égard des personnes dont il transfère les données à caractère personnel.</span>
+<br/>
+<br/>
+<span><strong>14) Modification</strong><br/>
+</span>
+<span>La Société peut modifier les présentes conditions générales de temps à autre. Les conditions générales en vigueur au moment de la commande des Marchandises s’appliqueront au contrat entre la Société et le Client.</span>
+<br/>
+<br/>
+<span><strong>15) Nullité</strong><br/>
+</span>
+<span>La nullité de l’une des clauses des présentes conditions générales se limitera à la clause nulle et n’affectera pas le reste des conditions.</span>
+<br/>
+<br/>
+<span><strong>16) Droit applicable et juridictions compétentes</strong><br/></span>
+<span>Tout litige relatif à la négociation, la formation, l’exécution ou la dissolution des relations contractuelles entre la Société et le Client sera, à défaut de règlement amiable, de la compétence exclusive des Cours et Tribunaux de l’arrondissement judiciaire du Hainaut, division Tournai. Les conditions générales sont soumises au droit belge.</span>
+</div>
+</div>
+</div>
+</template>
 </odoo>
