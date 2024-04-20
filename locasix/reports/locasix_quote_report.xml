@@ -1,6 +1,6 @@
 <odoo>
     <record id="action_locasix_quote" model="ir.actions.report">
-        <field name="name">Offre de prix Locasix</field>
+        <field name="name">Offre de prix</field>
         <field name="model">sale.order</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">locasix.locasix_quote_report_document_2</field>
