@@ -85,7 +85,7 @@
                     <field name="added_terms" attrs="{'invisible': ['|', '|', ('added_terms_id', '!=', False), ('offer_type', '!=', 'classic'), ('company_type', '=', 'six')]}"/>
                     <field name="added_terms_week_end" attrs="{'invisible': ['|', '|', ('added_terms_id', '!=', False), ('offer_type', '!=', 'weekend'), ('company_type', '=', 'six')]}"/>
                     <field name="added_terms_sale" attrs="{'invisible': ['|', '|', ('added_terms_id', '!=', False), ('offer_type', '!=', 'sale'), ('company_type', '=', 'six')]}"/>
-                    <field name="added_terms_six" attrs="{'invisible': [('company_type', '!=', 'six')]}"/>
+                    <!--<field name="added_terms_six" attrs="{'invisible': [('company_type', '!=', 'six')]}"/>-->
                 </page>
                 <page name="confirm" string="Confirmation de la commande">
                     <field name="sale_confirm"/>
