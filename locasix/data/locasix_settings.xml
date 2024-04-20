@@ -124,6 +124,13 @@
     </data>
 
     <data noupdate="1">
+        <record model="locasix.template.html" id="locasix_template_condi_six">
+            <field name="name" eval="'Template conditions additionnelles pour Six Units'"/>
+            <field name="template" eval="'Texte à remplir'"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
         <record model="locasix.template.html" id="locasix_template_confirm_sale">
             <field name="name" eval="'Template confirmation de commande'"/>
             <field name="template" eval="'Texte à remplir'"/>
