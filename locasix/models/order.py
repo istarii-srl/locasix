@@ -16,7 +16,7 @@ class Order(models.Model):
     added_terms_template = fields.Html(string="Conditions additionnelles ")
     added_terms = fields.Html(string="Conditions additionnelles", default=lambda self: self._get_added_terms())
     added_terms_week_end = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_weekend())
-    added_terms_six = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_six())
+    #added_terms_six = fields.Html(string="Conditions additionnelles de week-end", default=lambda self: self._get_added_terms_six())
     added_terms_sale = fields.Html(string="Conditions additionnelles de vente", default=lambda self: self._get_added_terms_sale())
     electro_annexe = fields.Html(string="Annexe groupes électrogènes", default=lambda self: self._get_electro_annexe())
     sale_confirm = fields.Html(string="Confirmation de la commande", default=lambda self: self._get_sale_confirm())
