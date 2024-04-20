@@ -81,6 +81,7 @@
                     <field name="front_page_body"/>
                 </page>
                 <page name="terms" string="Conditions additionnelles">
+                    <field name="company_type" invisible="1"/>
                     <field name="added_terms_template" attrs="{'invisible': ['|', ('added_terms_id', '=', False), ('company_type', '=', 'six')]}"/>
                     <field name="added_terms" attrs="{'invisible': ['|', '|', ('added_terms_id', '!=', False), ('offer_type', '!=', 'classic'), ('company_type', '=', 'six')]}"/>
                     <field name="added_terms_week_end" attrs="{'invisible': ['|', '|', ('added_terms_id', '!=', False), ('offer_type', '!=', 'weekend'), ('company_type', '=', 'six')]}"/>
