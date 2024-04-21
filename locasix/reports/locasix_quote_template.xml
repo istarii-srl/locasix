@@ -29,7 +29,7 @@
                 <div class="row" style="text-align: center;font-size:12px;">
                     <span t-field="doc.company_id.partner_id.name" />
                 </div>
-                <div class="row">
+                <div class="row" style="font-size:12px;">
                     <span t-field="doc.company_id.partner_id.street" t-options="{'widget': 'text'}" />
                     <span
                         t-esc="', ' + doc.company_id.partner_id.country_id.code + ' ' + doc.company_id.partner_id.zip + ' '" />
