@@ -27,15 +27,15 @@
             <t t-call="locasix.six_cgv"/>
             <div class="footer o_standard_footer">
                 <div class="row" style="text-align: center;font-size:12px;">
-                    <span t-field="o.company_id.partner_id.name" />
+                    <span t-field="doc.company_id.partner_id.name" />
                 </div>
                 <div class="row">
-                    <span t-field="o.company_id.partner_id.street" t-options="{'widget': 'text'}" />
+                    <span t-field="doc.company_id.partner_id.street" t-options="{'widget': 'text'}" />
                     <span
-                        t-esc="', ' + company.partner_id.country_id.code + ' ' + company.partner_id.zip + ' '" />
-                    <span t-field="o.company_id.partner_id.city" t-options="{'widget': 'text'}" />
+                        t-esc="', ' + doc.company_id.partner_id.country_id.code + ' ' + doc.company_id.partner_id.zip + ' '" />
+                    <span t-field="doc.company_id.partner_id.city" t-options="{'widget': 'text'}" />
                     <span> - TVA</span> 
-                    <span t-esc="o.company_id.vat" />
+                    <span t-esc="doc.company_id.vat" />
                     <span> - Banque Belfius : BE56 0689 3321 4088</span>
                     
                 </div>
