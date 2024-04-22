@@ -65,6 +65,7 @@ class Order(models.Model):
     display_front_page = fields.Boolean(string="Afficher la page de garde", default=True)
     display_confirmation_box = fields.Boolean(string="Afficher l'encadré de confirmation", default=True)
 
+
     estimated_start_date = fields.Date(string="Date de début estimée")
     estimated_end_date = fields.Date(string="Date de fin estimée")
 
@@ -82,6 +83,7 @@ class Order(models.Model):
     order_file_ids = fields.One2many(comodel_name="locasix.order.file", inverse_name="order_id")
 
     work_location = fields.Selection([('ghislain', 'Saint-Ghislain'), ('thimister', 'Thimister')], string="Lieu de travail", related="user_id.work_location", readonly=True, store=True)
+    display_condi = fields.Boolean(string="affichage des conditions additionnelles", compute="_compute_display_condi", store=True, readonly=False)
 
     state = fields.Selection(
         selection=[
@@ -112,6 +114,14 @@ class Order(models.Model):
             'default_order_id': self.id,
             },
         }
+    
+    @api.depends("order_line", "order_line", "order_line.project_id")
+    def _compute_display_condi(self):
+        for order in self:
+            if order.company_id.company_type == "locasix":
+                order.display_condi = True
+            else:
+                order.display_condi = False
 
     @api.onchange("added_terms_id")
     def on_added_terms_changed(self):

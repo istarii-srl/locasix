@@ -172,7 +172,15 @@
                         <span t-field="section_line.name"/>
                     </div>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_fixe'">
+                <t t-if="doc.company_id == 'locasix'">
+                    <t t-set="first_column_name" t-value="'Article'"/>
+                    <t t-set="price_column_name" t-value="'Prix total'"/>
+                    <t t-set="column_names_n_lines" t-value="1"/>
+                    <t t-set="column_names_second_line" t-value="[]"/>
+                    <t t-set="coefficient" t-value="1"/>
+                    <t t-call="locasix.locasix_fixed_price_section_six_units"/>
+                </t>
+                <t t-if="section_line.get_section_type() == 'prix_fixe' and not doc.company_id == 'locasix'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
@@ -180,7 +188,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'weekend'">
+                <t t-if="section_line.get_section_type() == 'weekend' and not doc.company_id == 'locasix'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total weekend'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
@@ -188,7 +196,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['weekend_8', 'weekend_double']">
+                <t t-if="section_line.get_section_type() in ['weekend_8', 'weekend_double'] and not doc.company_id == 'locasix'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total weekend'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -196,7 +204,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['weekend_24', 'weekend_double']">
+                <t t-if="section_line.get_section_type() in ['weekend_24', 'weekend_double'] and not doc.company_id == 'locasix'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total weekend'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -204,7 +212,7 @@
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_mois'">
+                <t t-if="section_line.get_section_type() == 'prix_mois' and not doc.company_id == 'locasix'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total / mois'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
@@ -214,13 +222,13 @@
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_jour'">
                     <t t-set="first_column_name" t-value="'Article'"/>
-                    <t t-set="price_column_name" t-value="'Prix total / jour calendrier'"/>
+                    <t t-set="price_column_name" t-value="'Prix total / jour calendrier' and not doc.company_id == 'locasix'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_jour_8', 'prix_jour_double']">
+                <t t-if="section_line.get_section_type() in ['prix_jour_8', 'prix_jour_double'] and not doc.company_id == 'locasix'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total / jour calendrier'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -228,7 +236,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_jour_24', 'prix_jour_double']">
+                <t t-if="section_line.get_section_type() in ['prix_jour_24', 'prix_jour_double'] and not doc.company_id == 'locasix'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total / jour calendrier'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -236,39 +244,39 @@
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_3'">
+                <t t-if="section_line.get_section_type() == 'prix_3' and not doc.company_id == 'locasix'">
                     <t t-set="column_names_n_lines" t-value="1"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_three_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_3_8', 'prix_3_double']">
+                <t t-if="section_line.get_section_type() in ['prix_3_8', 'prix_3_double'] and not doc.company_id == 'locasix'">
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois']"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_three_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_3_24', 'prix_3_double']">
+                <t t-if="section_line.get_section_type() in ['prix_3_24', 'prix_3_double'] and not doc.company_id == 'locasix'">
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h']"/>
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_three_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_6'">
+                <t t-if="section_line.get_section_type() == 'prix_6' and not doc.company_id == 'locasix'">
                     <t t-set="column_names_n_lines" t-value="1"/>
                     <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_6_8', 'prix_6_double']">
+                <t t-if="section_line.get_section_type() in ['prix_6_8', 'prix_6_double'] and not doc.company_id == 'locasix'">
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois', '', '', '']"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_6_24', 'prix_6_double']">
+                <t t-if="section_line.get_section_type() in ['prix_6_24', 'prix_6_double'] and not doc.company_id == 'locasix'">
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
                     <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h', '24/24h', '24/24h', '24/24h']"/>
@@ -278,6 +286,187 @@
                 <span t-if="section_line.is_section_condi()"><br/>(*) Consultez la page "Conditions additionnelles" ci-dessous.</span>
             </t>
         </div>
+    </template>
+
+    <template id="locasix_fixed_price_section_six_units">
+        <table style="width: 100%" class="table-sm table-borderless table_locasix">
+            <thead>
+            <tr style="font-weight: bold; text-align: center;">
+                <th width="50%">Article</th>
+                <th width="5%">Qté</th>
+                <th width="45%">
+                    <div class="col">
+                        <span class="block" t-esc="price_column_name"/>
+                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <t t-foreach="doc.retrieve_lines_from_section_without_id(section_line)" t-as="line">
+                <t t-set="line_coefficient" t-value="coefficient if line.product_id.has_24_price else 1"/>
+                <tr t-if="not line.is_section and line.display_type != 'line_note' and not line.product_id.is_transport_address_product and not line.product_id.name in ['Date aller', 'Date retour']" class="space_above">
+                    <td width="50%" class="text-left">
+                        <span t-field="line.name"/>
+                        <span t-if="line.has_ref_to_condi"> (*)</span>
+                        <br/>
+                        <span class="small-italic" t-field="line.product_description"/>
+                        <span t-if="line.product_id.more_details_link and line.product_description and len(line.product_description) > 1"><br/></span>
+                        <a target="_blank" class="small-italic underlined" t-if="line.product_id.more_details_link" t-attf-href="{{line.product_id.more_details_link}}">Plus de détails</a> 
+                    </td>
+                    <td width="5%" class="text-center">
+                        <span t-esc="str(int(line.product_uom_qty))"/>
+                    </td>
+                    <td width="45%" class="text-center">
+                        <div t-if="line.price_unit != 0 and (not doc.visual_discounts or line.discount == 0)">
+                            <span t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span> HT</span>
+                            <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
+                        </div>
+                        <div t-elif="line.price_unit == 0">
+                            <span class="reduction text-center">Offert !</span>
+                        </div>
+                        <div t-else="">
+                            <span style="text-decoration: line-through; text-decoration-color: rgb(199, 55, 58); text-decoration-thickness: 3px;" t-esc="line.price_unit * line_coefficient * line.product_uom_qty" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span class="reduction" t-esc="'-' + str(int(line.discount)) + '% = '"/>
+                            <span class="reduction" t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span class="reduction"> HT</span>
+                            <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="background-color: rgba(244,244,244,0.7)" t-if="line.product_id.is_transport_address_product">
+                    <td colspan="1"></td>
+                    <td colspan="3" style="padding-top:10px;">
+                        <span style="text-decoration: underline">Adresse de livraison</span><span>: </span><span t-field="line.name"/>
+                    </td>
+                </tr>
+                <tr style="background-color: rgba(244,244,244,0.7)" t-if="line.product_id.name == 'Date aller'">
+                    <td colspan="1"></td>
+                    <td colspan="3" style="padding-top:0px;">
+                        <span style="">Date aller</span><span>: </span><span t-field="line.name"/>
+                    </td>
+                </tr>
+                <tr style="background-color: rgba(244,244,244,0.7)" t-if="line.product_id.name == 'Date retour'">
+                    <td colspan="1"></td>
+                    <td colspan="3" style="padding-bottom:10px;">
+                        <span>Date retour</span><span>: </span><span t-field="line.name"/>
+                    </td>
+                </tr>
+                <tr t-if="line.display_type == 'line_note'">
+                    <td colspan="4">
+                        <span t-if="not line.is_super_note" t-field="line.name" style="font-style: italic"/>
+                        <span t-if="line.is_super_note" t-field="line.name" style="font-style: italic; background-color: #FFFF00"/>
+                    </td>
+                </tr>
+            </t>
+                                <t t-set="tax_totals" t-value="doc.tax_totals" />
+                               <!-- <t t-call="account.document_tax_totals"/> -->
+                                <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
+                                    <tr>
+                                        <td/>
+                                        <td/>
+                                        <td/>
+                                        <td/>
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span><strong>Total HT</strong></span>
+                                        </td>
+                                        <td class="text-center" style="font-size:12px;">
+                                            <strong><span t-att-class="oe_subtotal_footer_separator" t-esc="subtotal['amount']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></strong>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-set="subtotal_to_show" t-value="subtotal['name']"/>
+                                <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" t-as="amount_by_group">
+                                    <tr>
+                                        <t t-if="tax_totals['display_tax_base']">
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td class="text-center" style="font-size:12px;">
+                                                <span t-esc="amount_by_group['tax_group_name']" style="text-center;"/>
+                                                <span class="text-center"> on
+                                                    <t t-esc="amount_by_group['formatted_tax_group_base_amount']" style="text-center;"/>
+                                                </span>
+                                            </td>
+                                            <td class="text-center" style="font-size:12px;">
+                                                <span class="text-nowrap" t-esc="amount_by_group['formatted_tax_group_amount']"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td class="text-center"><span class="text-center" style="font-size:12px;text-center !important;" t-esc="amount_by_group['tax_group_name']"/></td>
+                                            <td class="text-center" style="font-size:12px;text-center;">
+                                                <span class="text-center" t-esc="amount_by_group['formatted_tax_group_amount']" />
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <!-- <t t-set="subtotal_to_show" t-value="subtotal['name']" />
+                                <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
+                                    <tr>
+                                        <td/>
+                                        <td/>
+                                        <td/>
+                                        <td/>
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span><strong>Total HT</strong></span>
+                                        </td>
+                                        <td class="text-center" style="font-size:12px;">
+                                            <strong><span t-att-class="oe_subtotal_footer_separator" t-esc="subtotal['amount']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></strong>
+                                        </td>
+                                    </tr>
+                                </t>
+                            
+                                
+                                <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" t-as="amount_by_group">
+                                    <tr>
+                                        <t>
+                                            <td />
+                                            <td />
+                                            <td />
+                                            <td/>
+                                            <td class="text-center" style="font-size:12px;"> 
+                                                <strong><t t-esc="amount_by_group['tax_group_name']" style="text-center"/></strong>
+                                            </td>
+                                            <td class="text-center o_price_total" style="font-size:12px;"> 
+                                                <strong><span class="text-center" t-esc="amount_by_group['formatted_tax_group_amount']"/></strong>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t> -->
+                                <t t-if="doc.get_total_amount_discount() > 0">
+                                    <tr>
+                                        <td />
+                                        <td />
+                                        <td />
+                                        <td />
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span class="text-center"><strong>Montant total de la remise</strong></span>
+                                        </td>
+                                        <td class="text-center" style="font-size:12px;"> <!--style="padding-left:75px;"-->
+                                            <strong><span t-esc="doc.get_total_amount_discount()" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></strong>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td />
+                                    <td />
+                                    <td />
+                                    <td />
+                                    <td class="text-center" style="font-size:12px;">
+                                        <span class="text-center"><strong>Total TTC</strong></span>
+                                    </td>
+                                    <td class="text-center o_price_total" style="font-size:12px;"> <!--style="padding-left:75px;"-->
+                                        <strong><span t-esc="tax_totals['amount_total']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></strong>
+                                    </td>
+                                </tr> 
+            </tbody>
+        </table>
     </template>
 
     <template id="locasix_fixed_price_section">
