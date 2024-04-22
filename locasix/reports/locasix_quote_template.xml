@@ -780,9 +780,10 @@
                     <t t-set="added_terms_sale" t-value="added_terms_sale.replace('&lt;p&gt;','')"/>
                     <t t-set="added_terms_sale" t-value="added_terms_sale.replace('&lt;/p&gt;','')"/>
 
-                    <div t-if="doc.offer_type == 'classic'"><p style="font-size:10px;" t-raw="added_terms"/></div>
-                    <div t-if="doc.offer_type == 'weekend'"><p style="font-size:10px;" t-raw="added_terms_week_end"/></div>
-                    <div t-if="doc.offer_type == 'sale'"><p style="font-size:10px;" t-raw="added_terms_sale"/></div>
+                    <div t-if="doc.company_id.company_type == 'six'"><p style="font-size:10px;" t-raw="added_terms_six"/></div>
+                    <div t-if="doc.offer_type == 'classic' and not doc.company_id.company_type == 'six'"><p style="font-size:10px;" t-raw="added_terms"/></div>
+                    <div t-if="doc.offer_type == 'weekend' and not doc.company_id.company_type == 'six'"><p style="font-size:10px;" t-raw="added_terms_week_end"/></div>
+                    <div t-if="doc.offer_type == 'sale' and not doc.company_id.company_type == 'six'"><p style="font-size:10px;" t-raw="added_terms_sale"/></div>
                 
                 </t>
 
