@@ -691,11 +691,14 @@
                 </t>
                 <t t-else="">
                     <t t-set="added_terms" t-value="doc.added_terms.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
+                    <t t-set="added_terms_six" t-value="doc.added_terms_six.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
                     <t t-set="added_terms_week_end" t-value="doc.added_terms_week_end.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
                     <t t-set="added_terms_sale" t-value="doc.added_terms_sale.replace('font-family: Roboto, &quot;Odoo Unicode Support Noto&quot;, sans-serif;','')"/>
 
                     <t t-set="added_terms" t-value="added_terms.replace('&lt;p&gt;','')"/>
                     <t t-set="added_terms" t-value="added_terms.replace('&lt;/p&gt;','')"/>
+                    <t t-set="added_terms_six" t-value="added_terms_six.replace('&lt;p&gt;','')"/>
+                    <t t-set="added_terms_six" t-value="added_terms_six.replace('&lt;/p&gt;','')"/>
                     <t t-set="added_terms_week_end" t-value="added_terms_week_end.replace('&lt;p&gt;','')"/>
                     <t t-set="added_terms_week_end" t-value="added_terms_week_end.replace('&lt;/p&gt;','')"/>
                     <t t-set="added_terms_sale" t-value="added_terms_sale.replace('&lt;p&gt;','')"/>
