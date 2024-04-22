@@ -285,6 +285,8 @@
                 </t>
                 <span t-if="section_line.is_section_condi()"><br/>(*) Consultez la page "Conditions additionnelles" ci-dessous.</span>
             </t>
+            <br/>
+            <br/>
             <div class="clearfix" name="so_total_summary">
                 <div id="total" class="row" name="total">
                     <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
@@ -305,12 +307,8 @@
             <tr style="font-weight: bold; text-align: center;">
                 <th width="50%">Article</th>
                 <th width="5%">Qté</th>
-                <th width="45%">
-                    <div class="col">
-                        <span class="block" t-esc="price_column_name"/>
-                        <span class="block small-italic" t-if="column_names_n_lines > 1" t-esc="column_names_second_line[0]"/>
-                    </div>
-                </th>
+                <th width="25%"> Prix unitaire</th>
+                <th width="30%"> Total</th>
             </tr>
             </thead>
             <tbody>
@@ -328,9 +326,9 @@
                     <td width="5%" class="text-center">
                         <span t-esc="str(int(line.product_uom_qty))"/>
                     </td>
-                    <td width="45%" class="text-center">
+                    <td width="25%" class="text-center">
                         <div t-if="line.price_unit != 0 and (not doc.visual_discounts or line.discount == 0)">
-                            <span t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </div>
@@ -338,9 +336,26 @@
                             <span class="reduction text-center">Offert !</span>
                         </div>
                         <div t-else="">
-                            <span style="text-decoration: line-through; text-decoration-color: rgb(199, 55, 58); text-decoration-thickness: 3px;" t-esc="line.price_unit * line_coefficient * line.product_uom_qty" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span style="text-decoration: line-through; text-decoration-color: rgb(199, 55, 58); text-decoration-thickness: 3px;" t-esc="line.price_unit * line_coefficient" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span class="reduction" t-esc="'-' + str(int(line.discount)) + '% = '"/>
-                            <span class="reduction" t-esc="(line.price_unit * line_coefficient * line.product_uom_qty) * (1 - line.discount/100)" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span class="reduction" t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span class="reduction"> HT</span>
+                            <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
+                        </div>
+                    </td>
+                    <td width="30%" class="text-center">
+                        <div t-if="line.price_unit != 0 and (not doc.visual_discounts or line.discount == 0)">
+                            <span t-esc="line.price_unit * line.product_uom_qty" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span> HT</span>
+                            <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
+                        </div>
+                        <div t-elif="line.price_unit == 0">
+                            <span class="reduction text-center">Offert !</span>
+                        </div>
+                        <div t-else="">
+                            <span style="text-decoration: line-through; text-decoration-color: rgb(199, 55, 58); text-decoration-thickness: 3px;" t-esc="line.price_unit * line.product_uom_qty" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
+                            <span class="reduction" t-esc="'-' + str(int(line.discount)) + '% = '"/>
+                            <span class="reduction" t-esc="line.price_unit * line.product_uom_qty" t-options='{"widget": "monetary", "display_currency": doc.company_id.currency_id}'/>
                             <span class="reduction"> HT</span>
                             <span t-if="line.product_id.product_tmpl_id.should_display_hour()"> / heure</span>
                         </div>
