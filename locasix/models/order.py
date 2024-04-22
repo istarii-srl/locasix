@@ -115,7 +115,7 @@ class Order(models.Model):
             },
         }
     
-    @api.depends("order_line", "order_line", "order_line.project_id")
+    @api.depends("company_id", "company_type",)
     def _compute_display_condi(self):
         for order in self:
             if order.company_id.company_type == "locasix":
