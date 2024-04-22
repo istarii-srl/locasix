@@ -285,6 +285,17 @@
                 </t>
                 <span t-if="section_line.is_section_condi()"><br/>(*) Consultez la page "Conditions additionnelles" ci-dessous.</span>
             </t>
+            <div class="clearfix" name="so_total_summary">
+                <div id="total" class="row" name="total">
+                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+                        <table class="table table-sm table-borderless">
+                            <!-- Tax totals -->
+                            <t t-set="tax_totals" t-value="doc.tax_totals"/>
+                            <t t-call="account.document_tax_totals"/>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </template>
 
@@ -360,111 +371,6 @@
                     </td>
                 </tr>
             </t>
-                                <t t-set="tax_totals" t-value="doc.tax_totals" />
-                               <!-- <t t-call="account.document_tax_totals"/> -->
-                                <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
-                                    <tr>
-                                        <td/>
-                                        <td/>
-                                        <td/>
-                                        <td/>
-                                        <td class="text-center" style="font-size:12px;">
-                                            <span><strong>Total HT</strong></span>
-                                        </td>
-                                        <td class="text-center" style="font-size:12px;">
-                                            <strong><span t-att-class="oe_subtotal_footer_separator" t-esc="subtotal['amount']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></strong>
-                                        </td>
-                                    </tr>
-                                </t>
-                                <t t-set="subtotal_to_show" t-value="subtotal['name']"/>
-                                <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" t-as="amount_by_group">
-                                    <tr>
-                                        <t t-if="tax_totals['display_tax_base']">
-                                            <td/>
-                                            <td/>
-                                            <td/>
-                                            <td/>
-                                            <td class="text-center" style="font-size:12px;">
-                                                <span t-esc="amount_by_group['tax_group_name']" style="text-center;"/>
-                                                <span class="text-center"> on
-                                                    <t t-esc="amount_by_group['formatted_tax_group_base_amount']" style="text-center;"/>
-                                                </span>
-                                            </td>
-                                            <td class="text-center" style="font-size:12px;">
-                                                <span class="text-nowrap" t-esc="amount_by_group['formatted_tax_group_amount']"/>
-                                            </td>
-                                        </t>
-                                        <t t-else="">
-                                            <td/>
-                                            <td/>
-                                            <td/>
-                                            <td/>
-                                            <td class="text-center"><span class="text-center" style="font-size:12px;text-center !important;" t-esc="amount_by_group['tax_group_name']"/></td>
-                                            <td class="text-center" style="font-size:12px;text-center;">
-                                                <span class="text-center" t-esc="amount_by_group['formatted_tax_group_amount']" />
-                                            </td>
-                                        </t>
-                                    </tr>
-                                </t>
-                                <!-- <t t-set="subtotal_to_show" t-value="subtotal['name']" />
-                                <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
-                                    <tr>
-                                        <td/>
-                                        <td/>
-                                        <td/>
-                                        <td/>
-                                        <td class="text-center" style="font-size:12px;">
-                                            <span><strong>Total HT</strong></span>
-                                        </td>
-                                        <td class="text-center" style="font-size:12px;">
-                                            <strong><span t-att-class="oe_subtotal_footer_separator" t-esc="subtotal['amount']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></strong>
-                                        </td>
-                                    </tr>
-                                </t>
-                            
-                                
-                                <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" t-as="amount_by_group">
-                                    <tr>
-                                        <t>
-                                            <td />
-                                            <td />
-                                            <td />
-                                            <td/>
-                                            <td class="text-center" style="font-size:12px;"> 
-                                                <strong><t t-esc="amount_by_group['tax_group_name']" style="text-center"/></strong>
-                                            </td>
-                                            <td class="text-center o_price_total" style="font-size:12px;"> 
-                                                <strong><span class="text-center" t-esc="amount_by_group['formatted_tax_group_amount']"/></strong>
-                                            </td>
-                                        </t>
-                                    </tr>
-                                </t> -->
-                                <t t-if="doc.get_total_amount_discount() > 0">
-                                    <tr>
-                                        <td />
-                                        <td />
-                                        <td />
-                                        <td />
-                                        <td class="text-center" style="font-size:12px;">
-                                            <span class="text-center"><strong>Montant total de la remise</strong></span>
-                                        </td>
-                                        <td class="text-center" style="font-size:12px;"> <!--style="padding-left:75px;"-->
-                                            <strong><span t-esc="doc.get_total_amount_discount()" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></strong>
-                                        </td>
-                                    </tr>
-                                </t>
-                                <tr>
-                                    <td />
-                                    <td />
-                                    <td />
-                                    <td />
-                                    <td class="text-center" style="font-size:12px;">
-                                        <span class="text-center"><strong>Total TTC</strong></span>
-                                    </td>
-                                    <td class="text-center o_price_total" style="font-size:12px;"> <!--style="padding-left:75px;"-->
-                                        <strong><span t-esc="tax_totals['amount_total']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></strong>
-                                    </td>
-                                </tr> 
             </tbody>
         </table>
     </template>
