@@ -42,6 +42,7 @@
                 <field name="show_discount3"/>
                 <field name="show_discount6"/>
                 <field name="usage_rate_display"/>
+                <field name="display_condi"/>
                 <field name="has_computed" invisible="1"/>
             </field>
             <field name="validity_date" position="attributes">

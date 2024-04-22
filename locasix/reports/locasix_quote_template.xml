@@ -22,7 +22,7 @@
             <t t-call="locasix.order_files"/>
             <t t-call="locasix.plan_files"/>
             <t t-if="doc.has_electro_annexe()" t-call="locasix.electro_appendix"/>
-            <t t-call="locasix.additional_conditions"/>
+            <t t-if="doc.display_condi" t-call="locasix.additional_conditions"/>
             <t t-call="locasix.technical_files"/>
             <t t-call="locasix.six_cgv"/>
             <div class="footer o_standard_footer">
