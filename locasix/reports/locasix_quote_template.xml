@@ -172,7 +172,7 @@
                         <span t-field="section_line.name"/>
                     </div>
                 </t>
-                <t t-if="doc.company_id == 'locasix'">
+                <t t-if="doc.company_id == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
@@ -180,7 +180,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section_six_units"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_fixe' and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() == 'prix_fixe' and not doc.company_id == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
@@ -188,7 +188,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'weekend' and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() == 'weekend' and not doc.company_id == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total weekend'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
@@ -196,7 +196,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['weekend_8', 'weekend_double'] and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() in ['weekend_8', 'weekend_double'] and not doc.company_id == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total weekend'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -204,7 +204,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['weekend_24', 'weekend_double'] and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() in ['weekend_24', 'weekend_double'] and not doc.company_id == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total weekend'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -212,7 +212,7 @@
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_mois' and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() == 'prix_mois' and not doc.company_id == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total / mois'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
@@ -222,13 +222,13 @@
                 </t>
                 <t t-if="section_line.get_section_type() == 'prix_jour'">
                     <t t-set="first_column_name" t-value="'Article'"/>
-                    <t t-set="price_column_name" t-value="'Prix total / jour calendrier' and not doc.company_id == 'locasix'"/>
+                    <t t-set="price_column_name" t-value="'Prix total / jour calendrier' and not doc.company_id == 'six'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_jour_8', 'prix_jour_double'] and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() in ['prix_jour_8', 'prix_jour_double'] and not doc.company_id == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total / jour calendrier'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -236,7 +236,7 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_jour_24', 'prix_jour_double'] and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() in ['prix_jour_24', 'prix_jour_double'] and not doc.company_id == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
                     <t t-set="price_column_name" t-value="'Prix total / jour calendrier'"/>
                     <t t-set="column_names_n_lines" t-value="2"/>
@@ -244,39 +244,39 @@
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_3' and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() == 'prix_3' and not doc.company_id == 'six'">
                     <t t-set="column_names_n_lines" t-value="1"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_three_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_3_8', 'prix_3_double'] and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() in ['prix_3_8', 'prix_3_double'] and not doc.company_id == 'six'">
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois']"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_three_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_3_24', 'prix_3_double'] and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() in ['prix_3_24', 'prix_3_double'] and not doc.company_id == 'six'">
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h']"/>
                     <t t-set="coefficient" t-value="2"/>
                     <t t-call="locasix.locasix_three_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_6' and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() == 'prix_6' and not doc.company_id == 'six'">
                     <t t-set="column_names_n_lines" t-value="1"/>
                     <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_6_8', 'prix_6_double'] and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() in ['prix_6_8', 'prix_6_double'] and not doc.company_id == 'six'">
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
                     <t t-set="column_names_second_line" t-value="['8h/jour', '40h/semaine', '180h/mois', '', '', '']"/>
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() in ['prix_6_24', 'prix_6_double'] and not doc.company_id == 'locasix'">
+                <t t-if="section_line.get_section_type() in ['prix_6_24', 'prix_6_double'] and not doc.company_id == 'six'">
                     <t t-set="column_names_n_lines" t-value="2"/>
                     <t t-set="column_names_before_first_line" t-value="['', '', ''] + doc.get_discount_rates(section_line)"/>
                     <t t-set="column_names_second_line" t-value="['24/24h', '24/24h', '24/24h', '24/24h', '24/24h', '24/24h']"/>
