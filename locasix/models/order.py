@@ -528,7 +528,7 @@ class Order(models.Model):
         for order in self:
             if order.offer_type == "weekend":
                 if crane_aller > 0.01:
-                    crane = self.env["product.template"].search([("default_code", '=', 'FORGR')], limit=1)
+                    crane = self.env["product.template"].search([("default_code", '=', 'FORGR'), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                     if crane:
                         line = self.env["sale.order.line"].create({
                             'order_id': self.id,
@@ -540,7 +540,7 @@ class Order(models.Model):
                         
             elif order.offer_type == "sale":
                     if crane_aller > 0.01:
-                        crane = self.env["product.template"].search([("default_code", '=', 'FORGR')], limit=1)
+                        crane = self.env["product.template"].search([("default_code", '=', 'FORGR'), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                         if crane:
                             line = self.env["sale.order.line"].create({
                                 'order_id': self.id,
@@ -550,7 +550,7 @@ class Order(models.Model):
                             })
                             line.name = crane.name
             else:
-                crane = self.env["product.template"].search([("default_code", '=', 'FORGR-A')], limit=1)
+                crane = self.env["product.template"].search([("default_code", '=', 'FORGR-A'), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                 if crane and crane_aller > 0.01:
                     line = self.env["sale.order.line"].create({
                         'order_id': self.id,
@@ -559,7 +559,7 @@ class Order(models.Model):
                         'from_compute': True,                            
                     })
                     line.name = crane.name
-                crane = self.env["product.template"].search([("default_code", '=', 'FORGR-R')], limit=1)
+                crane = self.env["product.template"].search([("default_code", '=', 'FORGR-R'), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                 if crane and crane_retour > 0.01:
                     line = self.env["sale.order.line"].create({
                         'order_id': self.id,
@@ -584,7 +584,7 @@ class Order(models.Model):
                         "name": "Montage et assemblage",
                         "show_section_order": True,
                     })
-                montage = self.env["product.template"].search([("default_code", "=", "FASSA")], limit=1)
+                montage = self.env["product.template"].search([("default_code", "=", "FASSA"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                 if not montage:
                     montage = self.env["product.template"].create({"default_code": "FASSA", "name": "Frais de montage et assemblage aller", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
 
@@ -598,7 +598,7 @@ class Order(models.Model):
                     'from_compute': True,
                 })
                 if order.offer_type != "sale":
-                    demontage = self.env["product.template"].search([("default_code", "=", "FASSR")], limit=1)
+                    demontage = self.env["product.template"].search([("default_code", "=", "FASSR"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                     if not demontage:
                         demontage = self.env["product.template"].create({"default_code": "FASSR", "name": "Frais de montage et assemblage retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                     demontage_in_order = self.env["sale.order.line"].search([("product_id", "=", demontage.product_variant_id.id), ("order_id", '=', order.id)], limit=1)
@@ -630,7 +630,7 @@ class Order(models.Model):
 
             if not already_transport:
                 if order.offer_type == "weekend":
-                    tar = self.env["product.template"].search([("default_code", "=", "TAR")], limit=1)
+                    tar = self.env["product.template"].search([("default_code", "=", "TAR"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                     if not tar:
                         tar = self.env["product.template"].create({"default_code": "TAR", "name": "Transport aller et retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                     
@@ -646,10 +646,10 @@ class Order(models.Model):
 
 
                 else:
-                    ta = self.env["product.template"].search([("default_code", "=", "TA")], limit=1)
+                    ta = self.env["product.template"].search([("default_code", "=", "TA"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                     if not ta:
                         ta = self.env["product.template"].create({"default_code": "TA", "name": "Transport aller", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-                    tr = self.env["product.template"].search([("default_code", "=", "TR")], limit=1)
+                    tr = self.env["product.template"].search([("default_code", "=", "TR"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                     if not tr:
                         tr = self.env["product.template"].create({"default_code": "TR", "name": "Transport retour", "categ_id": categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                     
@@ -674,7 +674,7 @@ class Order(models.Model):
                             'from_compute': True,
                         })
 
-            transport_address_product_id = self.env["product.template"].search([("is_transport_address_product", "=", True)], limit=1)
+            transport_address_product_id = self.env["product.template"].search([("is_transport_address_product", "=", True), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
             if not transport_address_product_id:
                 transport_address_product_id = self.env["product.template"].create({
                     "name": "Adresse de transport",
@@ -694,7 +694,7 @@ class Order(models.Model):
                 })
             if order.offer_type == "weekend":
                 if order.date_aller_2:
-                    date_aller_product_id = self.env["product.template"].search([("name", "=", "Date aller")], limit=1)
+                    date_aller_product_id = self.env["product.template"].search([("name", "=", "Date aller"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                     if not date_aller_product_id:
                         date_aller_product_id = self.env["product.template"].create({
                             "name": "Date aller",
@@ -712,7 +712,7 @@ class Order(models.Model):
                             'from_compute': True, 
                         })
                 if order.date_retour_2:
-                    date_retour_product_id = self.env["product.template"].search([("name", "=", "Date retour")], limit=1)
+                    date_retour_product_id = self.env["product.template"].search([("name", "=", "Date retour"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                     if not date_retour_product_id:
                         date_retour_product_id = self.env["product.template"].create({
                             "name": "Date retour",
@@ -821,16 +821,16 @@ class Order(models.Model):
                     "show_section_order": True,
                 })
 
-            surc_a = self.env["product.template"].search([('default_code', "=", "SURCA")], limit=1)
+            surc_a = self.env["product.template"].search([('default_code', "=", "SURCA"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
             if not surc_a:
                 surc_a = self.env["product.template"].create({"default_code": "SURCA", "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-            surc_r = self.env["product.template"].search([('default_code', "=", "SURCR")], limit=1)
+            surc_r = self.env["product.template"].search([('default_code', "=", "SURCR"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
             if not surc_r:
                 surc_r = self.env["product.template"].create({"default_code": "SURCR", "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-            surc_ar = self.env["product.template"].search([('default_code', "=", "SURCAR")], limit=1)
+            surc_ar = self.env["product.template"].search([('default_code', "=", "SURCAR"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
             if not surc_ar:
                 surc_ar = self.env["product.template"].create({"default_code": "SURCAR", "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
-            surc_h = self.env["product.template"].search([('default_code', "=", "SURCH")], limit=1)
+            surc_h = self.env["product.template"].search([('default_code', "=", "SURCH"), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
             if not surc_h:
                 surc_h = self.env["product.template"].sudo().create({"default_code": "SURCH", "name": "Surcoût transport horaire", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
 
@@ -845,7 +845,7 @@ class Order(models.Model):
                         date_retour = line
                     elif line.product_id and line.product_id.default_code in ["TAR", "TA/RC", "TA/R"]:
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_temp1 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        surc_temp1 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                         if not surc_temp1:
                             surc_temp1 = self.env["product.template"].sudo().create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
@@ -864,7 +864,7 @@ class Order(models.Model):
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TA" in line.product_id.default_code:
                         _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_temp2 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        surc_temp2 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                         if not surc_temp2:
                             surc_temp2 = self.env["product.template"].sudo().create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
@@ -886,7 +886,7 @@ class Order(models.Model):
                     elif line.product_id and line.product_id.default_code in ["TH1", "TH2", "TH1 ", "TH2 "]:
                         _logger.info("checko")
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_temp4 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        surc_temp4 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                         if not surc_temp4:
                             surc_temp4 = self.env["product.template"].sudo().create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
@@ -907,7 +907,7 @@ class Order(models.Model):
                         sections[line.section_id.id]["next_available"] += 2
                     elif line.product_id and line.product_id.categ_id.id == categ_id.id and "TR" in line.product_id.default_code:
                         line.sequence = sections[line.section_id.id]["next_available"]
-                        surc_temp3 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code)], limit=1)
+                        surc_temp3 = self.env["product.template"].search([('default_code', "=", "SURC-"+line.product_id.default_code), '|', ("company_id", "=", False), ('company_id', '=', order.company_id.id)], limit=1)
                         if not surc_temp3:
                             surc_temp3 = self.env["product.template"].sudo().create({"default_code": "SURC-"+line.product_id.default_code, "name": "Surcoût", "categ_id":categ_id.id, "list_price": 0.0, "is_assemblage_product": False})
                         if order.has_extra_cost_transport:
