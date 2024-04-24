@@ -220,9 +220,9 @@
                     <t t-set="coefficient" t-value="1"/>
                     <t t-call="locasix.locasix_fixed_price_section"/>
                 </t>
-                <t t-if="section_line.get_section_type() == 'prix_jour'">
+                <t t-if="section_line.get_section_type() == 'prix_jour' and not doc.company_type == 'six'">
                     <t t-set="first_column_name" t-value="'Article'"/>
-                    <t t-set="price_column_name" t-value="'Prix total / jour calendrier' and not doc.company_type == 'six'"/>
+                    <t t-set="price_column_name" t-value="'Prix total / jour calendrier'"/>
                     <t t-set="column_names_n_lines" t-value="1"/>
                     <t t-set="column_names_second_line" t-value="[]"/>
                     <t t-set="coefficient" t-value="1"/>
