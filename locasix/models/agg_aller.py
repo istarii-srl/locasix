@@ -120,7 +120,7 @@ class AggAller(models.Model):
                     other_aller.agg_id = agg_aller
                 allers = self.env["locasix.aller"].search([("active", "=", False), ('agg_id', "=", other_agg.id)])
                 for aller in allers:
-                    aller.agg_id = agg_aller
+                    aller.unlink()
                 other_agg.unlink()
         return
  
