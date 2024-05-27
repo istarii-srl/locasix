@@ -552,7 +552,7 @@ class Aller(models.Model):
                 type_aller = "Aller" if aller.aller_type == "out" else "Retour"
                 if aller.is_depl:
                     type_aller = "Déplacement"
-                note = aller.note if aller.note else ""
+                #note = aller.note if aller.note else ""
                 mail_values = {
                     'subject': f"Demande de changement",
                     'date': datetime.datetime.now(),
@@ -651,7 +651,7 @@ class Aller(models.Model):
             if i == 0:
                 batch_mails_sudo = self.env['mail.mail'].sudo()
                 from_email = aller.asking_user.email if aller.asking_user.email else "b.quintart@locasix.be"
-                note = aller.note if aller.note else ""
+                #note = aller.note if aller.note else ""
                 mail_values = {
                     'subject': f"Demande de confirmation",
                     'date': datetime.datetime.now(),
