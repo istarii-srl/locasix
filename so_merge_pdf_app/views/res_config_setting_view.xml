@@ -21,10 +21,14 @@
                                 <div attrs="{'invisible':[('sale_merge_report', '=', False)]}">
                                     <field name="so_report_template_ids" widget="many2many_tags"/>
                                 </div>
-                                <div class="col-12 col-lg-6 o_setting_box" attrs="{'invisible':[('sale_merge_report', '=', False)]}">
-                                    <label for="so_merge_report_with_attachments"/>
-                                    <field name="so_merge_report_with_attachments"/>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" attrs="{'invisible':[('sale_merge_report', '=', False)]}">
+                            <div class="o_setting_left_pane">
+                                <field name="so_merge_report_with_attachments"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="so_merge_report_with_attachments"/>
                             </div>
                         </div>
                     </div>
