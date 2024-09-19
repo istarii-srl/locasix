@@ -9,10 +9,10 @@
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="so_merge_report" invisible="1"/>
                     <!-- <field name="id" invisible="1"/> -->
-                    <field name="so_merge_report_attachment" invisible ="so_merge_report == False"/> 
+                    <field name="so_merge_report_attachment" attrs="{'invisible':[('so_merge_report', '=', False)]}"/> 
                     <field name="attachment_ids" widget="many2many_tags" 
                         domain="[('res_id','=',id), ('res_model','=','sale.order')]"
-                        invisible="so_merge_report_attachment == False"/>
+                        attrs="{'invisible':[('so_merge_report_attachment', '=', False)]}"/>
                 </xpath>
             </field>
         </record>
