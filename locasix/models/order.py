@@ -99,6 +99,10 @@ class Order(models.Model):
         tracking=3,
         default='draft')
 
+    # so_merge_report = fields.Boolean(string="Report To Merge" , compute='_compute_so_merge_report' , store=True)
+    # so_merge_report_attachment = fields.Boolean(string="Afficher la pub SixUnits ?"  , store=True)
+    # attachment_ids = fields.Many2many('ir.attachment', string='Merge Attachments' )
+ 
     def mark_as_lost(self):
         view = self.env.ref('locasix.locasix_mark_lost_form')
         return {
