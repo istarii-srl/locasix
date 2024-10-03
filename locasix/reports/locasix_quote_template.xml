@@ -285,6 +285,8 @@
                 </t>
                 <span t-if="section_line.is_section_condi()"><br/>(*) Consultez la page "Conditions additionnelles" ci-dessous.</span>
             </t>
+
+            <!-- Afficher pub six cleaning si booléen -->
             <t t-if="doc.company_type == 'six'">
                 <br/>
                 <br/>
