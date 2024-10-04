@@ -1,4 +1,6 @@
+import base64
 from email.policy import default
+import os
 from odoo import fields, api, models
 
 import datetime
@@ -102,6 +104,23 @@ class Order(models.Model):
     # so_merge_report = fields.Boolean(string="Report To Merge" , compute='_compute_so_merge_report' , store=True)
     # so_merge_report_attachment = fields.Boolean(string="Afficher la pub SixUnits ?"  , store=True)
     # attachment_ids = fields.Many2many('ir.attachment', string='Merge Attachments' )
+    
+    so_merge_report_attachment = fields.Boolean("Afficher la pub SixUnits ?", store=True)
+    attachment_ids = fields.Many2many('ir.attachment', string='Merge Attachments')
+
+    @api.onchange('so_merge_report_attachment')
+    def _onchange_so_merge_report_attachment(self):
+        if self.so_merge_report_attachment:
+
+            attachment = self.env['ir.attachment'].search([
+                ('name', '=', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf'),
+                ('res_model', '=', 'sale.order'),
+                ('res_id', '=', self.id)
+            ], limit=1)
+            if not attachment:
+                pass
+            else:
+                self.attachment_ids = [(4, attachment.id)]
  
     def mark_as_lost(self):
         view = self.env.ref('locasix.locasix_mark_lost_form')
