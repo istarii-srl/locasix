@@ -110,6 +110,8 @@ class Order(models.Model):
 
     @api.onchange('so_merge_report_attachment')
     def _onchange_so_merge_report_attachment(self):
+        pdf_path = os.path.join(os.path.dirname(__file__), 'static/src/pdf/pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf')
+        _logger.warning(pdf_path)
         if self.so_merge_report_attachment:
 
             attachment = self.env['ir.attachment'].search([
@@ -117,10 +119,16 @@ class Order(models.Model):
                 ('res_model', '=', 'sale.order'),
                 ('res_id', '=', self.id)
             ], limit=1)
-            if not attachment:
-                pass
-            else:
-                self.attachment_ids = [(4, attachment.id)]
+            # if not attachment:
+            #     attachment = self.env['ir.attachment'].create({
+            #         "name": "pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf",
+            #         "res_model": "sale.order",
+            #         "res_id": self.id,
+            #         "mimetype": "application/pdf",
+            #         # "datas": ,
+            #     })
+            # else:
+            #     self.attachment_ids = [(4, attachment.id)]
  
     def mark_as_lost(self):
         view = self.env.ref('locasix.locasix_mark_lost_form')
