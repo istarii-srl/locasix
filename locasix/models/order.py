@@ -110,7 +110,7 @@ class Order(models.Model):
 
     @api.onchange('so_merge_report_attachment')
     def _onchange_so_merge_report_attachment(self):
-        pdf_path = os.path.join(os.path.dirname(__file__), '../static/src/pdf/pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf')
+        pdf_path = '/home/odoo/src/user/locasix/static/src/pdf/pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf'
         _logger.warning(pdf_path)
         if self.so_merge_report_attachment:
 
