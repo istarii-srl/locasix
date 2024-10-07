@@ -287,7 +287,7 @@
             </t>
 
             <!-- Afficher pub six cleaning si booléen -->
-            <t t-if="o.so_show_sixcleaning_ad">
+            <t t-if="doc.so_show_sixcleaning_ad">
                 <div class="sixcleaning_ad" style="text-align: center; margin-top: 20px;">
                     <img t-att-src="'/locasix/static/src/img/pub_sixcleaning.png'" alt="SixCleaning Ad" style="max-width: 100%;"/>
                 </div>
