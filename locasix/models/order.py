@@ -107,16 +107,19 @@ class Order(models.Model):
         'ir.attachment',
         string='Fusionner le fichier',
         compute='_compute_attachment_ids',
-        store=False,
+        store=True,
     )
 
     @api.depends('so_merge_report_attachment')
     def _compute_attachment_ids(self):
         for order in self:
             if order.so_merge_report_attachment:
-                pdf_path = get_module_resource('locasix', 'static/src/pdf', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf')
+                pdf_path = get_module_resource('locasix', 'static', 'src', 'pdf', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf')
+                if not pdf_path or not os.path.exists(pdf_path):
+                    raise FileNotFoundError(f"Le fichier PDF prédéfini n'a pas été trouvé à l'emplacement : {pdf_path}")
                 with open(pdf_path, 'rb') as pdf_file:
                     pdf_data = pdf_file.read()
+                    
                 attachment = self.env['ir.attachment'].search([
                     ('name', '=', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf'),
                     ('res_model', '=', 'sale.order'),
@@ -131,7 +134,7 @@ class Order(models.Model):
                         'res_id': order.id,
                         'mimetype': 'application/pdf',
                     })
-                order.attachment_ids = [(4, attachment.id)]
+                order.attachment_ids = [(6, 0, [attachment.id])]
             else:
                 order.attachment_ids = [(5, 0, 0)]
  
