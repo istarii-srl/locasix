@@ -119,16 +119,20 @@ class Order(models.Model):
                 ('res_model', '=', 'sale.order'),
                 ('res_id', '=', self.id)
             ], limit=1)
-            # if not attachment:
-            #     attachment = self.env['ir.attachment'].create({
-            #         "name": "pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf",
-            #         "res_model": "sale.order",
-            #         "res_id": self.id,
-            #         "mimetype": "application/pdf",
-            #         # "datas": ,
-            #     })
-            # else:
-            #     self.attachment_ids = [(4, attachment.id)]
+            if not attachment:
+                with open(pdf_path, 'rb') as pdf_file:
+                    pdf_data = pdf_file.read()
+                    pdf_base64 = base64.b64encode(pdf_data).decode('utf-8')
+                    
+                attachment = self.env['ir.attachment'].create({
+                    "name": "pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf",
+                    "res_model": "sale.order",
+                    "res_id": self.id,
+                    "type": "binary",
+                    "datas": pdf_base64,
+                })
+            
+            self.attachment_ids = [(4, attachment.id)]
  
     def mark_as_lost(self):
         view = self.env.ref('locasix.locasix_mark_lost_form')
