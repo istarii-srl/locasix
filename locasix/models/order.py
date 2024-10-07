@@ -2,6 +2,8 @@ import base64
 from email.policy import default
 import os
 from odoo import fields, api, models
+from odoo.modules.module import get_module_resource
+
 
 import datetime
 import logging
@@ -101,40 +103,37 @@ class Order(models.Model):
         tracking=3,
         default='draft')
 
-    # so_merge_report = fields.Boolean(string="Report To Merge" , compute='_compute_so_merge_report' , store=True)
-    # so_merge_report_attachment = fields.Boolean(string="Afficher la pub SixUnits ?"  , store=True)
-    # attachment_ids = fields.Many2many('ir.attachment', string='Merge Attachments' )
-    
-    so_merge_report_attachment = fields.Boolean("Afficher la pub SixUnits ?", store=True)
-    attachment_ids = fields.Many2many('ir.attachment', string='Merge Attachments')
+    attachment_ids = fields.Many2many(
+        'ir.attachment',
+        string='Fusionner le fichier',
+        compute='_compute_attachment_ids',
+        store=False,
+    )
 
-    @api.onchange('so_merge_report_attachment')
-    def _onchange_so_merge_report_attachment(self):
-        pdf_path = '/home/odoo/src/user/locasix/static/src/pdf/pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf'
-        _logger.warning(pdf_path)
-        if self.so_merge_report_attachment:
-
-            attachment = self.env['ir.attachment'].search([
-                ('name', '=', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf'),
-                ('res_model', '=', 'sale.order'),
-                ('res_id', '=', self.id)
-            ], limit=1)
-            if not attachment:
+    @api.depends('so_merge_report_attachment')
+    def _compute_attachment_ids(self):
+        for order in self:
+            if order.so_merge_report_attachment:
+                pdf_path = get_module_resource('locasix', 'static/src/pdf', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf')
                 with open(pdf_path, 'rb') as pdf_file:
                     pdf_data = pdf_file.read()
-                    pdf_base64 = base64.b64encode(pdf_data).decode('utf-8')
-                    
-                attachment = self.env['ir.attachment'].create({
-                    "name": "pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf",
-                    "res_model": "sale.order",
-                    "res_id": self.id,
-                    "type": "binary",
-                    "datas": pdf_base64,
-                })
-                _logger.warning("Attachment created with ID: %s", attachment.id)
-            
-            self.attachment_ids = [(4, attachment.id)]
-            _logger.warning("Current attachment_ids: %s", self.attachment_ids)
+                attachment = self.env['ir.attachment'].search([
+                    ('name', '=', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf'),
+                    ('res_model', '=', 'sale.order'),
+                    ('res_id', '=', order.id),
+                ], limit=1)
+                if not attachment:
+                    attachment = self.env['ir.attachment'].create({
+                        'name': 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf',
+                        'type': 'binary',
+                        'datas': base64.b64encode(pdf_data),
+                        'res_model': 'sale.order',
+                        'res_id': order.id,
+                        'mimetype': 'application/pdf',
+                    })
+                order.attachment_ids = [(4, attachment.id)]
+            else:
+                order.attachment_ids = [(5, 0, 0)]
  
     def mark_as_lost(self):
         view = self.env.ref('locasix.locasix_mark_lost_form')
