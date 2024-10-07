@@ -131,8 +131,10 @@ class Order(models.Model):
                     "type": "binary",
                     "datas": pdf_base64,
                 })
+                _logger.warning("Attachment created with ID: %s", attachment.id)
             
             self.attachment_ids = [(4, attachment.id)]
+            _logger.warning("Current attachment_ids: %s", self.attachment_ids)
  
     def mark_as_lost(self):
         view = self.env.ref('locasix.locasix_mark_lost_form')
