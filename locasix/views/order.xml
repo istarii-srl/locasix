@@ -49,7 +49,7 @@
                 <field name="id" invisible="1"/>
     
                 <field name="so_merge_report_attachment" attrs="{'invisible':[('so_merge_report', '=', False)]}"/>
-                <field name="attachment_ids" invisible="1" />
+                <field name="attachment_ids" />
             </field>
 
 
