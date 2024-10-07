@@ -109,6 +109,8 @@ class Order(models.Model):
         compute='_compute_attachment_ids',
         store=True,
     )
+    
+    so_show_sixcleaning_ad = fields.Boolean(string="Afficher la pub SixCleaning ?")
 
     @api.depends('so_merge_report_attachment')
     def _compute_attachment_ids(self):
