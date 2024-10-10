@@ -116,20 +116,20 @@ class Order(models.Model):
     def _compute_attachment_ids(self):
         for order in self:
             if order.so_merge_report_attachment:
-                pdf_path = get_module_resource('locasix', 'static', 'src', 'pdf', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web_compressed.pdf')
+                pdf_path = get_module_resource('locasix', 'static', 'src', 'pdf', 'pub_fin_de_doc.pdf')
                 if not pdf_path or not os.path.exists(pdf_path):
                     raise FileNotFoundError(f"Le fichier PDF prédéfini n'a pas été trouvé à l'emplacement : {pdf_path}")
                 with open(pdf_path, 'rb') as pdf_file:
                     pdf_data = pdf_file.read()
                     
                 attachment = self.env['ir.attachment'].search([
-                    ('name', '=', 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf'),
+                    ('name', '=', 'pub_fin_de_doc.pdf'),
                     ('res_model', '=', 'sale.order'),
                     ('res_id', '=', order.id),
                 ], limit=1)
                 if not attachment:
                     attachment = self.env['ir.attachment'].create({
-                        'name': 'pub_SixUnits_A4RV_v9_Modules_et_containers_web.pdf',
+                        'name': 'pub_fin_de_doc.pdf',
                         'type': 'binary',
                         'datas': base64.b64encode(pdf_data),
                         'res_model': 'sale.order',
