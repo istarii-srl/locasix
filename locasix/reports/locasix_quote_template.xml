@@ -288,7 +288,7 @@
                 <t t-if="section_line.name == 'Location de modules habitables - containers maritimes'">
                     <t t-if="doc.so_show_sixcleaning_ad">
                         <div class="sixcleaning_ad">
-                            <a t-att-href="'https://www.squareflow.be/'" target="_blank">
+                            <a t-att-href="'https://www.sixcleaning.be/'" target="_blank">
                                 <img src="/locasix/static/img/pub_sixcleaning.png" alt="SixCleaning Ad" style="max-width: 100%;"/>
                             </a>
                         </div>
