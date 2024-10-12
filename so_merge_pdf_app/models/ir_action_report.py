@@ -22,17 +22,17 @@ class IrActionsReport(models.Model):
 			streams = [io.BytesIO(res[0])]
 			record_ids = self.env[report_sudo.model].browse([res_id for res_id in res_ids if res_id])
 			if record_ids.so_merge_report_attachment == True:
-				if record_ids.attachment_ids:
-					for attachment_id in record_ids.attachment_ids:
-						packet = io.BytesIO()
-						can = canvas.Canvas(packet)
-						if attachment_id.mimetype.endswith('application/pdf'):
-							try:
-								merge_attachment_file = base64.b64decode(attachment_id.datas)
-								merge_attachment = io.BytesIO(merge_attachment_file)
-							except Exception:
-								continue
-							streams.append(merge_attachment)
+				attachment_id = self.env.company.pub_six_units_attachment_id
+				if attachment_id:
+					packet = io.BytesIO()
+					can = canvas.Canvas(packet)
+					if attachment_id.mimetype.endswith('application/pdf'):
+						try:
+							merge_attachment_file = base64.b64decode(attachment_id.datas)
+							merge_attachment = io.BytesIO(merge_attachment_file)
+						except Exception:
+							_logger.error('Error while reading attachment file')
+						streams.append(merge_attachment)
 
 				if len(streams) == 1:
 					result = streams[0].getvalue()
