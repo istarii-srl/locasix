@@ -284,7 +284,19 @@
                     <t t-call="locasix.locasix_six_price_section"/>
                 </t>
                 <span t-if="section_line.is_section_condi()"><br/>(*) Consultez la page "Conditions additionnelles" ci-dessous.</span>
+                <!-- Afficher pub six cleaning si booléen -->
+                <t t-if="section_line.name == 'Location de modules habitables - containers maritimes'">
+                    <t t-if="doc.so_show_sixcleaning_ad">
+                        <div class="sixcleaning_ad">
+                            <a t-att-href="'https://www.sixcleaning.be/'" target="_blank" style="display: block;">
+                                <img src="/locasix/static/img/pub_sixcleaning.png" alt="SixCleaning Ad" style="max-width: 100%;"/>
+                            </a>
+                        </div>
+                    </t>
+                </t>
             </t>
+
+
             <t t-if="doc.company_type == 'six'">
                 <br/>
                 <br/>

@@ -1,5 +1,9 @@
+import base64
 from email.policy import default
+import os
 from odoo import fields, api, models
+from odoo.modules.module import get_module_resource
+
 
 import datetime
 import logging
@@ -99,6 +103,43 @@ class Order(models.Model):
         tracking=3,
         default='draft')
 
+    attachment_ids = fields.Many2many(
+        'ir.attachment',
+        string='Fusionner le fichier',
+        compute='_compute_attachment_ids',
+        store=True,
+    )
+    
+    so_show_sixcleaning_ad = fields.Boolean(string="Afficher la pub SixCleaning ?")
+
+    @api.depends('so_merge_report_attachment')
+    def _compute_attachment_ids(self):
+        for order in self:
+            if order.so_merge_report_attachment:
+                pdf_path = get_module_resource('locasix', 'static', 'src', 'pdf', 'pub_fin_de_doc.pdf')
+                if not pdf_path or not os.path.exists(pdf_path):
+                    raise FileNotFoundError(f"Le fichier PDF prédéfini n'a pas été trouvé à l'emplacement : {pdf_path}")
+                with open(pdf_path, 'rb') as pdf_file:
+                    pdf_data = pdf_file.read()
+                    
+                attachment = self.env['ir.attachment'].search([
+                    ('name', '=', 'pub_fin_de_doc.pdf'),
+                    ('res_model', '=', 'sale.order'),
+                    ('res_id', '=', order.id),
+                ], limit=1)
+                if not attachment:
+                    attachment = self.env['ir.attachment'].create({
+                        'name': 'pub_fin_de_doc.pdf',
+                        'type': 'binary',
+                        'datas': base64.b64encode(pdf_data),
+                        'res_model': 'sale.order',
+                        'res_id': order.id,
+                        'mimetype': 'application/pdf',
+                    })
+                order.attachment_ids = [(6, 0, [attachment.id])]
+            else:
+                order.attachment_ids = [(5, 0, 0)]
+ 
     def mark_as_lost(self):
         view = self.env.ref('locasix.locasix_mark_lost_form')
         return {

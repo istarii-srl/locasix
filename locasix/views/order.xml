@@ -44,7 +44,16 @@
                 <field name="usage_rate_display"/>
                 <field name="display_condi"/>
                 <field name="has_computed" invisible="1"/>
+                
+                <field name="so_merge_report" invisible="1"/>
+                <field name="id" invisible="1"/>
+    
+                <field name="so_merge_report_attachment" attrs="{'invisible':[('so_merge_report', '=', False)]}"/>
+                <field name="attachment_ids" invisible="1" />
+                <field name="so_show_sixcleaning_ad"/>
             </field>
+
+
             <field name="validity_date" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>

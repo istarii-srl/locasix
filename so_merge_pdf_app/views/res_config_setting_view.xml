@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="sale_config_views_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.sale</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='catalog_setting_container']" position="after">
+                    <h2>Sale Order Attachment Merge</h2>
+                    <div class="row mt16 o_settings_container" name="sale_order_attachment_view">
+                        <div class="col-12 col-lg-6 o_setting_box" id="select_attachement">
+                            <div class="o_setting_left_pane">
+                                <field name="sale_merge_report"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="sale_merge_report"/>
+                                <div class="text-muted">
+                                    Select the attachment will be merge
+                                </div>
+                                <div attrs="{'invisible':[('sale_merge_report', '=', False)]}">
+                                    <field name="so_report_template_ids" widget="many2many_tags"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" attrs="{'invisible':[('sale_merge_report', '=', False)]}">
+                            <div class="o_setting_left_pane">
+                                <field name="so_merge_report_with_attachments"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="so_merge_report_with_attachments"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+		
+	</data>
+</odoo>
