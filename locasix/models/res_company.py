@@ -11,3 +11,4 @@ class ResCompany(models.Model):
 
 
     company_type = fields.Selection(string="Type de société", selection=[("locasix", "Locasix"), ("six", "Six Units")], default="locasix", required=True)
+    pub_six_units_attachment_id = fields.Many2one('ir.attachment', string="Pub Six Units", help="La publicité Six Units à ajouter à la fin des devis")
