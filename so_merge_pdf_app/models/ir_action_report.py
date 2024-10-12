@@ -31,7 +31,7 @@ class IrActionsReport(models.Model):
 							merge_attachment_file = base64.b64decode(attachment_id.datas)
 							merge_attachment = io.BytesIO(merge_attachment_file)
 						except Exception:
-							continue
+							_logger.error('Error while reading attachment file')
 						streams.append(merge_attachment)
 
 				if len(streams) == 1:
