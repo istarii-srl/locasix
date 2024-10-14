@@ -22,7 +22,7 @@ class IrActionsReport(models.Model):
 			streams = [io.BytesIO(res[0])]
 			record_ids = self.env[report_sudo.model].browse([res_id for res_id in res_ids if res_id])
 			if record_ids.so_merge_report_attachment == True:
-				attachment_id = self.env.company.pub_six_units_attachment_id
+				attachment_id = self.env.company.sudo().pub_six_units_attachment_id
 				if attachment_id:
 					packet = io.BytesIO()
 					can = canvas.Canvas(packet)
